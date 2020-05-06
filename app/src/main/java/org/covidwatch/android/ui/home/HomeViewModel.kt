@@ -4,6 +4,10 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.covidwatch.android.R
+import org.covidwatch.android.data.FirstTimeUser
+import org.covidwatch.android.data.Setup
+import org.covidwatch.android.data.UserFlow
+import org.covidwatch.android.data.UserFlowRepository
 import org.covidwatch.android.domain.*
 
 class HomeViewModel(
@@ -61,7 +65,7 @@ class HomeViewModel(
     fun onStart() {
         val userFlow = userFlowRepository.getUserFlow()
         if (userFlow is FirstTimeUser) {
-            userFlowRepository.updateFirstTimeUserFlow()
+            userFlowRepository.markFirstLaunch()
         }
         if (userFlow !is Setup) {
             checkIfUserTestedPositive()

@@ -5,11 +5,10 @@ import androidx.room.Room
 import androidx.work.WorkManager
 import com.google.android.gms.nearby.Nearby
 import okhttp3.OkHttpClient
-import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.data.AppDatabase
 import org.covidwatch.android.data.FirebaseService
 import org.covidwatch.android.data.TestedRepositoryImpl
-import org.covidwatch.android.data.UserFlowRepositoryImpl
+import org.covidwatch.android.data.UserFlowRepository
 import org.covidwatch.android.data.exposureinformation.ExposureInformationLocalSource
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRemoteSource
@@ -19,11 +18,11 @@ import org.covidwatch.android.data.pref.SharedPreferenceStorage
 import org.covidwatch.android.domain.AppCoroutineDispatchers
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
 import org.covidwatch.android.domain.TestedRepository
-import org.covidwatch.android.domain.UserFlowRepository
+import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.ui.exposurenotification.ExposureNotificationViewModel
 import org.covidwatch.android.ui.home.EnsureTcnIsStartedUseCase
 import org.covidwatch.android.ui.home.HomeViewModel
 import org.covidwatch.android.ui.settings.SettingsViewModel
-import org.covidwatch.android.ui.exposurenotification.ExposureNotificationViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -78,9 +77,9 @@ val appModule = module {
     }
 
     factory {
-        UserFlowRepositoryImpl(
-            preferences = get()
-        ) as UserFlowRepository
+        UserFlowRepository(
+            prefs = get()
+        )
     }
 
     factory {

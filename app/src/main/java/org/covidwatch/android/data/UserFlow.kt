@@ -1,4 +1,4 @@
-package org.covidwatch.android.domain
+package org.covidwatch.android.data
 
 sealed class UserFlow
 

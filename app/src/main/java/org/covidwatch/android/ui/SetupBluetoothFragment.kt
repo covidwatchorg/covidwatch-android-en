@@ -7,7 +7,7 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.R
-import org.covidwatch.android.domain.UserFlowRepository
+import org.covidwatch.android.data.UserFlowRepository
 import org.koin.android.ext.android.inject
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -63,7 +63,7 @@ class SetupBluetoothFragment : Fragment(R.layout.fragment_setup_bluetooth),
     }
 
     private fun permissionGranted() {
-        userFlowRepository.updateSetupUserFlow()
+        userFlowRepository.finishOnboarding()
         findNavController().popBackStack(R.id.homeFragment, false)
     }
 }

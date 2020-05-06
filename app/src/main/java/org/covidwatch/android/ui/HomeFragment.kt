@@ -13,9 +13,9 @@ import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.BuildConfig
 import org.covidwatch.android.R
 import org.covidwatch.android.databinding.FragmentHomeBinding
-import org.covidwatch.android.domain.FirstTimeUser
-import org.covidwatch.android.domain.ReturnUser
-import org.covidwatch.android.domain.Setup
+import org.covidwatch.android.data.FirstTimeUser
+import org.covidwatch.android.data.ReturnUser
+import org.covidwatch.android.data.Setup
 import org.covidwatch.android.ui.home.HomeViewModel
 import org.covidwatch.android.ui.home.InfoBannerState
 import org.covidwatch.android.ui.home.WarningBannerState
