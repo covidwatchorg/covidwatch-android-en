@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.work.WorkManager
 import com.google.android.gms.nearby.Nearby
 import okhttp3.OkHttpClient
-import org.covidwatch.android.ExposureNotificationManager
+import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.data.AppDatabase
 import org.covidwatch.android.data.FirebaseService
 import org.covidwatch.android.data.TestedRepositoryImpl
@@ -20,9 +20,9 @@ import org.covidwatch.android.domain.AppCoroutineDispatchers
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
 import org.covidwatch.android.domain.TestedRepository
 import org.covidwatch.android.domain.UserFlowRepository
-import org.covidwatch.android.presentation.home.EnsureTcnIsStartedUseCase
-import org.covidwatch.android.presentation.home.HomeViewModel
-import org.covidwatch.android.presentation.settings.SettingsViewModel
+import org.covidwatch.android.ui.home.EnsureTcnIsStartedUseCase
+import org.covidwatch.android.ui.home.HomeViewModel
+import org.covidwatch.android.ui.settings.SettingsViewModel
 import org.covidwatch.android.ui.exposurenotification.ExposureNotificationViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -36,7 +36,9 @@ val appModule = module {
     }
 
     single {
-        ExposureNotificationManager(exposureNotification = get())
+        ExposureNotificationManager(
+            exposureNotification = get()
+        )
     }
 
     viewModel {
