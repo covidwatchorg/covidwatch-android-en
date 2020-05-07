@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="org.covidwatch.android.ui.HomeFragment"
+        android:name="org.covidwatch.android.ui.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -69,7 +69,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="org.covidwatch.android.ui.SettingsFragment"
+        android:name="org.covidwatch.android.ui.settings.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings" />
     <fragment

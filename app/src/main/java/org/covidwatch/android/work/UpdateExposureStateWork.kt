@@ -12,7 +12,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.WorkerParameters
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
-import org.covidwatch.android.ui.ExposureNotificationActivity
+import org.covidwatch.android.ui.exposurenotification.ExposureNotificationActivity
 import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.pref.PreferenceStorage

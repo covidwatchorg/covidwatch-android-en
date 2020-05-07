@@ -1,4 +1,4 @@
-package org.covidwatch.android.ui
+package org.covidwatch.android.ui.settings
 
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.R
 import org.covidwatch.android.databinding.FragmentSettingsBinding
-import org.covidwatch.android.ui.settings.SettingsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.AppSettingsDialog

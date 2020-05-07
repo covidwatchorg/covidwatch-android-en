@@ -1,4 +1,4 @@
-package org.covidwatch.android.ui
+package org.covidwatch.android.ui.home
 
 import android.content.Intent
 import android.os.Bundle
