@@ -1,6 +1,9 @@
 package org.covidwatch.android.ui
 
+import android.content.ComponentName
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,14 +15,16 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.BuildConfig
 import org.covidwatch.android.R
-import org.covidwatch.android.databinding.FragmentHomeBinding
+import org.covidwatch.android.createFirebaseId
 import org.covidwatch.android.data.FirstTimeUser
 import org.covidwatch.android.data.ReturnUser
 import org.covidwatch.android.data.Setup
+import org.covidwatch.android.databinding.FragmentHomeBinding
 import org.covidwatch.android.ui.home.HomeViewModel
 import org.covidwatch.android.ui.home.InfoBannerState
 import org.covidwatch.android.ui.home.WarningBannerState
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class HomeFragment : Fragment() {
 
@@ -44,7 +49,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        //Add meta-data test here
+        getFirebaseIdIfTester()
         binding.swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
 
         homeViewModel.onStart()
@@ -140,5 +146,26 @@ class HomeFragment : Fragment() {
         binding.homeSubtitle.setText(R.string.reported_tested_positive_text)
         binding.testedButton.isVisible = false
         binding.testedButtonText.isVisible = false
+    }
+
+    private fun getFirebaseIdIfTester() {
+        val context = requireContext()
+        val packageManager: PackageManager = context.packageManager
+        val componentName = ComponentName(context, MainActivity::class.java)
+        val ai: ActivityInfo = packageManager.getActivityInfo(
+            componentName,
+            PackageManager.GET_ACTIVITIES or PackageManager.GET_META_DATA
+        )
+        val metaData = ai.metaData
+        if (metaData == null) {
+            return;
+        } else {
+            val value = metaData["showFirebaseId"]
+            if (value != true)return
+            //Get Firebase Id and save it
+            val firebaseId: String = createFirebaseId()
+            binding.testerId.setText("Your Firebase tester id is: " + firebaseId)
+            return
+        }
     }
 }

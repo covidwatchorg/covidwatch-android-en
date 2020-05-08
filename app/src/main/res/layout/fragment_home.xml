@@ -109,9 +109,9 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="32dp"
                 android:layout_marginTop="16dp"
-                android:text="Your tester id is: "
+                android:text=""
                 android:textAlignment="center" />
-            
+
         </LinearLayout>
     </ScrollView>
 
