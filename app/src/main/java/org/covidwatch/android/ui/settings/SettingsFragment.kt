@@ -7,11 +7,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.R
 import org.covidwatch.android.databinding.FragmentSettingsBinding
+import org.covidwatch.android.ui.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -20,23 +20,15 @@ import pub.devrel.easypermissions.EasyPermissions
 private const val LOCATION_PERMISSION = 100
 private const val REQUEST_ENABLE_BT = 101
 
-class SettingsFragment : Fragment(), EasyPermissions.PermissionCallbacks {
-
-    private var _binding: FragmentSettingsBinding? = null
-    private val binding get() = _binding!!
+class SettingsFragment : BaseFragment<FragmentSettingsBinding>(),
+    EasyPermissions.PermissionCallbacks {
 
     private val settingsViewModel: SettingsViewModel by viewModel()
 
     private val bluetoothAdapter: BluetoothAdapter? by lazy { BluetoothAdapter.getDefaultAdapter() }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override fun binding(inflater: LayoutInflater, container: ViewGroup?): FragmentSettingsBinding =
+        FragmentSettingsBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,11 +51,6 @@ class SettingsFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         binding.locationButton.setOnClickListener {
             ensureLocationPermissionIsGranted()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onRequestPermissionsResult(
@@ -115,7 +102,8 @@ class SettingsFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private fun turnOnBluetooth() {
         val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-        startActivityForResult(enableBtIntent,
+        startActivityForResult(
+            enableBtIntent,
             REQUEST_ENABLE_BT
         )
     }
