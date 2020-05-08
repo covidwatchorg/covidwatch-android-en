@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefreshLayout"
@@ -20,7 +19,7 @@
             android:paddingBottom="32dp">
 
             <include
-                android:id="@+id/toolbar"
+                android:id="@+id/actionbar"
                 layout="@layout/layout_toolbar" />
 
             <TextView
@@ -28,8 +27,8 @@
                 style="@style/AlertBanner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:background="@color/tangerine"
+                android:visibility="gone"
                 tools:text="You may have been in contact with COVID-19"
                 tools:visibility="visible" />
 
@@ -38,8 +37,8 @@
                 style="@style/AlertBanner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:background="@color/aqua"
+                android:visibility="gone"
                 tools:text="Turn Bluetooth on for  this device"
                 tools:visibility="visible" />
 

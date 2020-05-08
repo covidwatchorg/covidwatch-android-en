@@ -12,13 +12,10 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.BuildConfig
 import org.covidwatch.android.R
-import org.covidwatch.android.databinding.FragmentHomeBinding
 import org.covidwatch.android.data.FirstTimeUser
 import org.covidwatch.android.data.ReturnUser
 import org.covidwatch.android.data.Setup
-import org.covidwatch.android.ui.home.HomeViewModel
-import org.covidwatch.android.ui.home.InfoBannerState
-import org.covidwatch.android.ui.home.WarningBannerState
+import org.covidwatch.android.databinding.FragmentHomeBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
@@ -45,7 +42,12 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
+        binding.swipeRefreshLayout.setColorSchemeColors(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorPrimary
+            )
+        )
 
         homeViewModel.onStart()
         homeViewModel.userFlow.observe(viewLifecycleOwner, Observer { userFlow ->
@@ -97,7 +99,7 @@ class HomeFragment : Fragment() {
         binding.testedButton.setOnClickListener {
             findNavController().navigate(R.id.testQuestionsFragment)
         }
-        binding.toolbar.menuButton.setOnClickListener {
+        binding.actionbar.menuButton.setOnClickListener {
             findNavController().navigate(R.id.menuFragment)
         }
         binding.shareAppButton.setOnClickListener {
