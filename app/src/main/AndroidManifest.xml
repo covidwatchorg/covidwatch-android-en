@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.covidwatch.android">
-    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
     <uses-feature android:name="android.hardware.bluetooth" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -24,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".ui.exposurenotification.ExposureNotificationActivity" />
         <!-- TODO -->
         <!-- android:permission="com.google.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK"-->
         <receiver android:name=".receiver.ExposureNotificationReceiver">
