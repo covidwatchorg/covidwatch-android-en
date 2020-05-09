@@ -3,6 +3,7 @@ package org.covidwatch.android
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.analytics.FirebaseAnalytics
 import android.os.Bundle
+import java.util.Date
 
 /*
 This is not a class because we need a "static" variable to hold the isTesting value
@@ -24,18 +25,19 @@ fun setAnalyticsInstance(instance: FirebaseAnalytics){
     firebaseAnalytics = instance
 }
 
+/*
+To use Firebase DebugView, type this into the console:
+adb shell setprop debug.firebase.analytics.app "edu.stanford.covidwatch.android"
+ */
+
 fun sendEvent(name: String){
     if (isTesting == false) return
     val bundle = Bundle()
-    /*
+    var date: Date = Date()
+
     bundle.putString(FirebaseAnalytics.Param.ITEM_ID, getFirebaseId())
     bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name)
+    bundle.putString("event_date", date.toString())
     firebaseAnalytics?.logEvent(FirebaseAnalytics.Event.SELECT_ITEM, bundle)
-    */
-    bundle.putString("item_id", getFirebaseId())
-    bundle.putString("item_name", name)
-    firebaseAnalytics?.logEvent(FirebaseAnalytics.Event.SELECT_ITEM, bundle)
-    firebaseAnalytics?.logEvent("covid_watch_item", bundle)
-
 }
 
