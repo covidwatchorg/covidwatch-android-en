@@ -16,5 +16,6 @@
     <dimen name="tested_button_vertical_margin">10dp</dimen>
     <dimen name="tested_button_font_size">18dp</dimen>
     <dimen name="default_padding">16dp</dimen>
+    <dimen name="toolbar_title">13pt</dimen>
 
 </resources>
