@@ -18,9 +18,13 @@
             android:orientation="vertical"
             android:paddingBottom="32dp">
 
-            <include
-                android:id="@+id/actionbar"
-                layout="@layout/layout_toolbar" />
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                style="@style/Widget.MaterialComponents.Toolbar.Surface"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:logo="@drawable/ic_cw_brandmark_blue"
+                app:menu="@menu/menu_home" />
 
             <TextView
                 android:id="@+id/warning_banner"

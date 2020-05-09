@@ -99,8 +99,11 @@ class HomeFragment : Fragment() {
         binding.testedButton.setOnClickListener {
             findNavController().navigate(R.id.testQuestionsFragment)
         }
-        binding.actionbar.menuButton.setOnClickListener {
-            findNavController().navigate(R.id.menuFragment)
+        binding.toolbar.setOnMenuItemClickListener {
+            if (R.id.action_menu == it.itemId) {
+                findNavController().navigate(R.id.menuFragment)
+            }
+            true
         }
         binding.shareAppButton.setOnClickListener {
             shareApp()
