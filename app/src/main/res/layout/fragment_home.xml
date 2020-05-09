@@ -110,8 +110,8 @@
                 android:paddingHorizontal="32dp"
                 android:layout_marginTop="16dp"
                 android:text=""
+                android:visibility = "gone"
                 android:textAlignment="center" />
-
         </LinearLayout>
     </ScrollView>
 

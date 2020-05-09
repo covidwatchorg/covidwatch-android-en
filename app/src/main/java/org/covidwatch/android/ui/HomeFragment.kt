@@ -1,10 +1,6 @@
 package org.covidwatch.android.ui
 
-import android.content.ComponentName
 import android.content.Intent
-import android.content.pm.ActivityInfo
-import android.content.pm.PackageManager
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.BuildConfig
 import org.covidwatch.android.R
-import org.covidwatch.android.createFirebaseId
 import org.covidwatch.android.data.FirstTimeUser
 import org.covidwatch.android.data.ReturnUser
 import org.covidwatch.android.data.Setup
@@ -24,7 +19,15 @@ import org.covidwatch.android.ui.home.HomeViewModel
 import org.covidwatch.android.ui.home.InfoBannerState
 import org.covidwatch.android.ui.home.WarningBannerState
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
+import org.covidwatch.android.getFirebaseId
+import org.covidwatch.android.setTester
+import org.covidwatch.android.setAnalyticsInstance
+import org.covidwatch.android.sendEvent
+import android.content.ComponentName
+import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
+import android.os.Bundle
+import com.google.firebase.analytics.FirebaseAnalytics
 
 class HomeFragment : Fragment() {
 
@@ -150,21 +153,22 @@ class HomeFragment : Fragment() {
 
     private fun getFirebaseIdIfTester() {
         val context = requireContext()
-        val packageManager: PackageManager = context.packageManager
+        val packageManager: PackageManager = requireContext().packageManager
         val componentName = ComponentName(context, MainActivity::class.java)
-        val ai: ActivityInfo = packageManager.getActivityInfo(
-            componentName,
-            PackageManager.GET_ACTIVITIES or PackageManager.GET_META_DATA
-        )
+        val ai: ActivityInfo = packageManager.getActivityInfo(componentName, PackageManager.GET_META_DATA)
         val metaData = ai.metaData
-        if (metaData == null) {
+        if (metaData == null || metaData["firebaseDebugging"] != true) {
+            binding.testerId.visibility = View.GONE
+            setTester(false)
             return;
         } else {
-            val value = metaData["showFirebaseId"]
-            if (value != true)return
-            //Get Firebase Id and save it
-            val firebaseId: String = createFirebaseId()
+            val firebaseId: String = getFirebaseId()
             binding.testerId.setText("Your Firebase tester id is: " + firebaseId)
+            binding.testerId.visibility = View.VISIBLE
+            setTester(true)
+            setAnalyticsInstance(FirebaseAnalytics.getInstance(context))
+            //Test event
+            sendEvent("TestEvent")
             return
         }
     }

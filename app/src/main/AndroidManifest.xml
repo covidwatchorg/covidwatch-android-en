@@ -23,7 +23,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <meta-data android:name="showFirebaseId"
+            <meta-data android:name="firebaseDebugging"
                 android:value="true" />
         </activity>
 

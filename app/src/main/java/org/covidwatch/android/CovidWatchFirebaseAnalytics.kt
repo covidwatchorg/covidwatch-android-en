@@ -1,12 +1,34 @@
 package org.covidwatch.android
 
-val firebaseUserId: String = ""
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.analytics.FirebaseAnalytics
+import android.os.Bundle
 
-fun createFirebaseId(): String{
-    //return firebaseUserId
-    return "12345"
-}
+/*
+This is not a class because we need a "static" variable to hold the isTesting value
+ */
+
+var isTesting: Boolean = false
+var firebaseAnalytics: FirebaseAnalytics? = null
 
 fun getFirebaseId(): String {
-    return firebaseUserId
+    val instanceId = FirebaseInstanceId.getInstance().id
+    return instanceId
 }
+
+fun setTester(testing: Boolean) {
+    isTesting = testing
+}
+
+fun setAnalyticsInstance(instance: FirebaseAnalytics){
+    firebaseAnalytics = instance
+}
+
+fun sendEvent(name: String){
+    if (isTesting == false) return
+    val bundle = Bundle()
+    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, getFirebaseId())
+    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name)
+    firebaseAnalytics?.logEvent(FirebaseAnalytics.Event.SELECT_ITEM, bundle)
+}
+
