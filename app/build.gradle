@@ -28,14 +28,13 @@ android {
             testCoverageEnabled false
             buildConfigField("String", "FIREBASE_CLOUD_FUNCTIONS_ENDPOINT", '"https://us-central1-tagstwo-431e3.cloudfunctions.net"')
             buildConfigField("boolean", "FIREBASE_DEBUGGING", "false")
-            applicationIdSuffix = kotlin_version
-            versionNameSuffix = kotlin_version
             signingConfig signingConfigs.debug
         }
         debug {
             testCoverageEnabled true
             buildConfigField("String", "FIREBASE_CLOUD_FUNCTIONS_ENDPOINT", '"https://us-central1-tagstwo-431e3.cloudfunctions.net"')
             buildConfigField "boolean", "FIREBASE_DEBUGGING", "true"
+            applicationIdSuffix = ".debug"
         }
     }
 
