@@ -18,13 +18,12 @@ import org.covidwatch.android.databinding.FragmentHomeBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.covidwatch.android.getFirebaseId
 import org.covidwatch.android.setTester
-import org.covidwatch.android.setAnalyticsInstance
+import org.covidwatch.android.setAnalyticsInstanceFromContext
 import org.covidwatch.android.sendEvent
 import android.content.ComponentName
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
-import com.google.firebase.analytics.FirebaseAnalytics
 import org.covidwatch.android.ui.MainActivity
 
 class HomeFragment : Fragment() {
@@ -167,7 +166,7 @@ class HomeFragment : Fragment() {
             binding.testerId.visibility = View.VISIBLE
             setTester(true)
             val context = requireContext()
-            setAnalyticsInstance(FirebaseAnalytics.getInstance(context))
+            setAnalyticsInstanceFromContext(context)
             //Test event
             sendEvent("TestEvent")
             return

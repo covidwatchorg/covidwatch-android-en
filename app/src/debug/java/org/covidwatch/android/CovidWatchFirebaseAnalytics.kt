@@ -1,5 +1,6 @@
 package org.covidwatch.android
 
+import android.content.Context
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.analytics.FirebaseAnalytics
 import android.os.Bundle
@@ -21,8 +22,8 @@ fun setTester(testing: Boolean) {
     isTesting = testing
 }
 
-fun setAnalyticsInstance(instance: FirebaseAnalytics){
-    firebaseAnalytics = instance
+fun setAnalyticsInstanceFromContext(context: Context){
+    firebaseAnalytics = FirebaseAnalytics.getInstance(context)
 }
 
 /*
