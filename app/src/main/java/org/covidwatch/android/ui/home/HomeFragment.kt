@@ -15,12 +15,6 @@ import org.covidwatch.android.data.FirstTimeUser
 import org.covidwatch.android.data.ReturnUser
 import org.covidwatch.android.data.Setup
 import org.covidwatch.android.databinding.FragmentHomeBinding
-<<<<<<< HEAD:app/src/main/java/org/covidwatch/android/ui/HomeFragment.kt
-import org.covidwatch.android.ui.home.HomeViewModel
-import org.covidwatch.android.ui.home.InfoBannerState
-import org.covidwatch.android.ui.home.WarningBannerState
-=======
->>>>>>> 0f0f0a82c2efec68da81c164f93a22ea1402da53:app/src/main/java/org/covidwatch/android/ui/home/HomeFragment.kt
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.covidwatch.android.getFirebaseId
 import org.covidwatch.android.setTester
@@ -31,6 +25,7 @@ import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
+import org.covidwatch.android.ui.MainActivity
 
 class HomeFragment : Fragment() {
 
@@ -164,7 +159,7 @@ class HomeFragment : Fragment() {
     private fun getFirebaseIdIfTester() {
         val context = requireContext()
         val packageManager: PackageManager = requireContext().packageManager
-        val componentName = ComponentName(context, MainActivity::class.java)
+        val componentName: ComponentName = ComponentName(context, MainActivity::class.java)
         val ai: ActivityInfo = packageManager.getActivityInfo(componentName, PackageManager.GET_META_DATA)
         val metaData = ai.metaData
         if (metaData == null || metaData["firebaseDebugging"] != true) {
