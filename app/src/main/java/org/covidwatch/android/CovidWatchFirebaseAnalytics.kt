@@ -27,8 +27,15 @@ fun setAnalyticsInstance(instance: FirebaseAnalytics){
 fun sendEvent(name: String){
     if (isTesting == false) return
     val bundle = Bundle()
+    /*
     bundle.putString(FirebaseAnalytics.Param.ITEM_ID, getFirebaseId())
     bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name)
     firebaseAnalytics?.logEvent(FirebaseAnalytics.Event.SELECT_ITEM, bundle)
+    */
+    bundle.putString("item_id", getFirebaseId())
+    bundle.putString("item_name", name)
+    firebaseAnalytics?.logEvent(FirebaseAnalytics.Event.SELECT_ITEM, bundle)
+    firebaseAnalytics?.logEvent("covid_watch_item", bundle)
+
 }
 

@@ -18,11 +18,10 @@
         android:id="@+id/setupBluetoothFragment"
         android:name="org.covidwatch.android.ui.SetupBluetoothFragment"
         android:label="SetupBluetoothFragment"
-        tools:layout="@layout/fragment_setup_bluetooth">
-    </fragment>
+        tools:layout="@layout/fragment_setup_bluetooth" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="org.covidwatch.android.ui.HomeFragment"
+        android:name="org.covidwatch.android.ui.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -69,12 +68,12 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="org.covidwatch.android.ui.SettingsFragment"
+        android:name="org.covidwatch.android.ui.settings.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/potentialRiskFragment"
         android:name="org.covidwatch.android.ui.test.PotentialRiskFragment"
         android:label="PotentialRiskFragment"
-        tools:layout="@layout/fragment_potential_risk"/>
+        tools:layout="@layout/fragment_potential_risk" />
 </navigation>

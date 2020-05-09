@@ -1,4 +1,4 @@
-package org.covidwatch.android.ui
+package org.covidwatch.android.ui.home
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -15,9 +15,12 @@ import org.covidwatch.android.data.FirstTimeUser
 import org.covidwatch.android.data.ReturnUser
 import org.covidwatch.android.data.Setup
 import org.covidwatch.android.databinding.FragmentHomeBinding
+<<<<<<< HEAD:app/src/main/java/org/covidwatch/android/ui/HomeFragment.kt
 import org.covidwatch.android.ui.home.HomeViewModel
 import org.covidwatch.android.ui.home.InfoBannerState
 import org.covidwatch.android.ui.home.WarningBannerState
+=======
+>>>>>>> 0f0f0a82c2efec68da81c164f93a22ea1402da53:app/src/main/java/org/covidwatch/android/ui/home/HomeFragment.kt
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.covidwatch.android.getFirebaseId
 import org.covidwatch.android.setTester
@@ -54,8 +57,12 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //Add meta-data test here
         getFirebaseIdIfTester()
-        binding.swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
-
+        binding.swipeRefreshLayout.setColorSchemeColors(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorPrimary
+            )
+        )
         homeViewModel.onStart()
         homeViewModel.userFlow.observe(viewLifecycleOwner, Observer { userFlow ->
             when (userFlow) {
@@ -106,8 +113,11 @@ class HomeFragment : Fragment() {
         binding.testedButton.setOnClickListener {
             findNavController().navigate(R.id.testQuestionsFragment)
         }
-        binding.toolbar.menuButton.setOnClickListener {
-            findNavController().navigate(R.id.menuFragment)
+        binding.toolbar.setOnMenuItemClickListener {
+            if (R.id.action_menu == it.itemId) {
+                findNavController().navigate(R.id.menuFragment)
+            }
+            true
         }
         binding.shareAppButton.setOnClickListener {
             shareApp()

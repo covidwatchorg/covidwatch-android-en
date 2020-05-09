@@ -136,4 +136,5 @@
     <string name="notification_message">Someone you were near has tested positive for COVID-19. Tap for more info.</string>
     <string name="notification_channel_name">Exposure Notification</string>
     <string name="notification_channel_description">Exposure notification alerts.</string>
+    <string name="menu">Menu</string>
 </resources>

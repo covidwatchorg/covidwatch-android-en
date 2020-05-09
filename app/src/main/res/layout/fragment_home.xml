@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefreshLayout"
@@ -19,17 +18,21 @@
             android:orientation="vertical"
             android:paddingBottom="32dp">
 
-            <include
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
-                layout="@layout/layout_toolbar" />
+                style="@style/Widget.MaterialComponents.Toolbar.Surface"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:logo="@drawable/ic_cw_brandmark_blue"
+                app:menu="@menu/menu_home" />
 
             <TextView
                 android:id="@+id/warning_banner"
                 style="@style/AlertBanner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:background="@color/tangerine"
+                android:visibility="gone"
                 tools:text="You may have been in contact with COVID-19"
                 tools:visibility="visible" />
 
@@ -38,8 +41,8 @@
                 style="@style/AlertBanner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:background="@color/aqua"
+                android:visibility="gone"
                 tools:text="Turn Bluetooth on for  this device"
                 tools:visibility="visible" />
 
