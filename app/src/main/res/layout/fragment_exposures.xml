@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="org.covidwatch.android.ui.ItemBindings" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="org.covidwatch.android.ui.exposures.ExposuresViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="org.covidwatch.android.ui.exposurenotification.ExposureNotificationFragment">
+
+        <ImageView
+            android:id="@+id/btn_close"
+            style="@style/ImageView.BtnClose"
+            android:padding="@dimen/padding_content"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            style="@style/TextView.ScreenTitle"
+            android:paddingStart="@dimen/padding_content"
+            android:paddingEnd="@dimen/padding_content"
+            android:text="@string/title_exposures" />
+
+        <Switch
+            android:id="@+id/enable_exposure_notification"
+            style="@style/Switch.EnableExposureNotification"
+            android:checked="@{viewModel.exposureNotificationEnabled}"
+            android:paddingStart="@dimen/padding_content"
+            android:paddingEnd="@dimen/padding_content" />
+
+        <TextView
+            style="@style/TextView.ScreenSubtitle"
+            android:paddingStart="@dimen/padding_content"
+            android:paddingEnd="@dimen/padding_content"
+            android:text="@string/exposures_subtitle" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/padding_content"
+            android:background="#828282"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/padding_content"
+            android:paddingEnd="@dimen/padding_content"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="Exposure last checked today at 3:15pm" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/exposure_info_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/padding_content"
+            android:paddingEnd="@dimen/padding_content"
+            app:itemBinding="@{ItemBindings.bind(viewModel)}"
+            app:items="@{viewModel.exposureInfo}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/exposure_summary"
+            tools:listitem="@layout/item_exposure" />
+
+        <include
+            android:id="@+id/powered_by"
+            layout="@layout/powered_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+</layout>

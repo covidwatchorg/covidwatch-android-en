@@ -137,4 +137,9 @@
     <string name="notification_channel_name">Exposure Notification</string>
     <string name="notification_channel_description">Exposure notification alerts.</string>
     <string name="menu">Menu</string>
+    <string name="powered_by">Powered by</string>
+    <string name="title_exposures">Possible Exposures</string>
+    <string name="exposures_subtitle">You will be notified if you are exposed to COVID-19</string>
+    <string name="switch_exposure_notifications">Enable Exposure Notifications</string>
+    <string name="exposure_risk_icon_description">High risk of exposure</string>
 </resources>

@@ -16,12 +16,14 @@ data class CovidExposureInformation(
     val id: Int = 0
 ) {
 
-    val howClose: Int
-        get() = when (attenuationValue) {
-            in 0..100 -> R.string.far_exposure_distance
-            in 101..200 -> R.string.close_exposure_distance
-            else -> R.string.near_exposure_distance
-        }
+    val howClose = when (attenuationValue) {
+        in 0..100 -> R.string.far_exposure_distance
+        in 101..200 -> R.string.close_exposure_distance
+        else -> R.string.near_exposure_distance
+    }
+
+    //TODO: Check what is our risk level for showing the high risk icon
+    val highRisk = totalRiskScore > 6
 }
 
 fun ExposureInformation.toCovidExposureInformation() = CovidExposureInformation(
