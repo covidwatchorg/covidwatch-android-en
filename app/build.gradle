@@ -27,10 +27,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             testCoverageEnabled false
             buildConfigField("String", "FIREBASE_CLOUD_FUNCTIONS_ENDPOINT", '"https://us-central1-tagstwo-431e3.cloudfunctions.net"')
+            buildConfigField("boolean", "FIREBASE_DEBUGGING", "false")
+            signingConfig signingConfigs.debug
         }
         debug {
             testCoverageEnabled true
             buildConfigField("String", "FIREBASE_CLOUD_FUNCTIONS_ENDPOINT", '"https://us-central1-tagstwo-431e3.cloudfunctions.net"')
+            buildConfigField "boolean", "FIREBASE_DEBUGGING", "true"
+            applicationIdSuffix = ".debug"
         }
     }
 
@@ -91,9 +95,9 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation "androidx.fragment:fragment-ktx:1.2.4"
     implementation "androidx.work:work-runtime-ktx:2.3.4"
-    //Google Analytics dependency.
+    // Google Analytics dependency.
     debugImplementation 'com.google.firebase:firebase-analytics:17.4.0'
-    //Firebase Crashlytics dependency.
+    // Firebase Crashlytics dependency.
     debugImplementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     def nav_version = "2.2.2"

@@ -106,6 +106,15 @@
                 android:text="@string/main_subtext_2"
                 android:textAlignment="center" />
 
+            <TextView
+                android:id="@+id/tester_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="32dp"
+                android:layout_marginTop="16dp"
+                android:text=""
+                android:visibility = "gone"
+                android:textAlignment="center" />
         </LinearLayout>
     </ScrollView>
 

@@ -1,7 +1,6 @@
 package org.covidwatch.android.ui.home
 
 import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,15 @@ import org.covidwatch.android.data.ReturnUser
 import org.covidwatch.android.data.Setup
 import org.covidwatch.android.databinding.FragmentHomeBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.covidwatch.android.getFirebaseId
+import org.covidwatch.android.setTester
+import org.covidwatch.android.setAnalyticsInstanceFromContext
+import org.covidwatch.android.sendEvent
+import android.content.ComponentName
+import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
+import android.os.Bundle
+import org.covidwatch.android.ui.MainActivity
 
 class HomeFragment : Fragment() {
 
@@ -41,14 +49,14 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        //Add meta-data test here
+        getFirebaseIdIfTester()
         binding.swipeRefreshLayout.setColorSchemeColors(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.colorPrimary
             )
         )
-
         homeViewModel.onStart()
         homeViewModel.userFlow.observe(viewLifecycleOwner, Observer { userFlow ->
             when (userFlow) {
@@ -145,5 +153,23 @@ class HomeFragment : Fragment() {
         binding.homeSubtitle.setText(R.string.reported_tested_positive_text)
         binding.testedButton.isVisible = false
         binding.testedButtonText.isVisible = false
+    }
+
+    private fun getFirebaseIdIfTester() {
+        if (BuildConfig.FIREBASE_DEBUGGING == false) {
+            binding.testerId.visibility = View.GONE
+            setTester(false)
+            return;
+        } else {
+            val firebaseId: String = getFirebaseId()
+            binding.testerId.setText("Your COVID Watch Tester Id is: " + firebaseId)
+            binding.testerId.visibility = View.VISIBLE
+            setTester(true)
+            val context = requireContext()
+            setAnalyticsInstanceFromContext(context)
+            //Test event
+            sendEvent("TestEvent")
+            return
+        }
     }
 }
