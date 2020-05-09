@@ -157,20 +157,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun getFirebaseIdIfTester() {
-        val context = requireContext()
-        val packageManager: PackageManager = requireContext().packageManager
-        val componentName: ComponentName = ComponentName(context, MainActivity::class.java)
-        val ai: ActivityInfo = packageManager.getActivityInfo(componentName, PackageManager.GET_META_DATA)
-        val metaData = ai.metaData
-        if (metaData == null || metaData["firebaseDebugging"] != true) {
+        if (BuildConfig.FIREBASE_DEBUGGING == false) {
             binding.testerId.visibility = View.GONE
             setTester(false)
             return;
         } else {
             val firebaseId: String = getFirebaseId()
-            binding.testerId.setText("Your Firebase tester id is: " + firebaseId)
+            binding.testerId.setText("Your COVID Watch Tester Id is: " + firebaseId)
             binding.testerId.visibility = View.VISIBLE
             setTester(true)
+            val context = requireContext()
             setAnalyticsInstance(FirebaseAnalytics.getInstance(context))
             //Test event
             sendEvent("TestEvent")
