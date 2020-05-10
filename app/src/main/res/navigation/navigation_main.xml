@@ -14,11 +14,13 @@
             android:id="@+id/action_splashFragment_to_setupBluetoothFragment2"
             app:destination="@id/setupBluetoothFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/setupBluetoothFragment"
         android:name="org.covidwatch.android.ui.SetupBluetoothFragment"
         android:label="SetupBluetoothFragment"
         tools:layout="@layout/fragment_setup_bluetooth" />
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="org.covidwatch.android.ui.home.HomeFragment"
@@ -39,7 +41,11 @@
         <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_possibles_exposures"
+            app:destination="@id/possibleExposures" />
     </fragment>
+
     <fragment
         android:id="@+id/testQuestionsFragment"
         android:name="org.covidwatch.android.ui.test.TestQuestionsFragment"
@@ -49,11 +55,13 @@
             android:id="@+id/action_testQuestionsFragment_to_testConfirmationFragment"
             app:destination="@id/testConfirmationFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/testConfirmationFragment"
         android:name="org.covidwatch.android.ui.test.TestConfirmationFragment"
         android:label="TestConfirmationFragment"
         tools:layout="@layout/fragment_test_confirmation" />
+
     <fragment
         android:id="@+id/menuFragment"
         android:name="org.covidwatch.android.ui.menu.MenuFragment"
@@ -66,14 +74,38 @@
             android:id="@+id/action_menuFragment_to_testQuestionsFragment"
             app:destination="@id/testQuestionsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/settingsFragment"
         android:name="org.covidwatch.android.ui.settings.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings" />
+
     <fragment
         android:id="@+id/potentialRiskFragment"
         android:name="org.covidwatch.android.ui.test.PotentialRiskFragment"
         android:label="PotentialRiskFragment"
         tools:layout="@layout/fragment_potential_risk" />
+
+    <fragment
+        android:id="@+id/possibleExposures"
+        android:name="org.covidwatch.android.ui.exposures.ExposuresFragment"
+        android:label="Possible Exposures"
+        tools:layout="@layout/fragment_exposures">
+        <action
+            android:id="@+id/action_homeFragment_to_exposure_details"
+            app:destination="@id/exposureDetails" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/exposureDetails"
+        android:name="org.covidwatch.android.ui.exposuredetails.ExposureDetailsFragment"
+        android:label="Exposure Details"
+        tools:layout="@layout/fragment_exposure_details">
+        <argument
+            android:name="exposure_information"
+            android:defaultValue="@null"
+            app:argType="org.covidwatch.android.data.CovidExposureInformation"
+            app:nullable="true" />
+    </fragment>
 </navigation>

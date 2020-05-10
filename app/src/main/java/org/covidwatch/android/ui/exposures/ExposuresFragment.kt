@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.databinding.FragmentExposuresBinding
+import org.covidwatch.android.extension.observe
 import org.covidwatch.android.ui.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -28,6 +29,12 @@ class ExposuresFragment : BaseFragment<FragmentExposuresBinding>() {
             }
             enableExposureNotification.setOnCheckedChangeListener { _, _ ->
                 exposuresViewModel.toggleExposureNotifications()
+            }
+        }
+        with(exposuresViewModel) {
+            observe(showExposureDetails) {
+                val action = ExposuresFragmentDirections.actionHomeFragmentToExposureDetails(it)
+                findNavController().navigate(action)
             }
         }
     }

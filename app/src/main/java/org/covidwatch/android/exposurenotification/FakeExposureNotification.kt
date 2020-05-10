@@ -2,13 +2,10 @@ package org.covidwatch.android.exposurenotification
 
 import com.google.android.gms.common.api.Api
 import com.google.android.gms.common.api.internal.ApiKey
-import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
-import com.google.android.gms.nearby.exposurenotification.ExposureInformation
-import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
-import com.google.android.gms.nearby.exposurenotification.ExposureSummary
-import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
+import com.google.android.gms.nearby.exposurenotification.*
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
+import java.util.*
 import kotlin.random.Random
 
 class FakeExposureNotification : ExposureNotificationClient {
@@ -79,10 +76,10 @@ object RandomEnObjects {
 
     val exposureInformation
         get() = ExposureInformation.ExposureInformationBuilder()
-            .setAttenuationValue(Random.nextInt())
-            .setDateMillisSinceEpoch(Random.nextLong())
-            .setDurationMinutes(Random.nextInt())
-            .setTotalRiskScore(Random.nextInt())
-            .setTransmissionRiskLevel(Random.nextInt())
+            .setAttenuationValue(Random.nextInt(255))
+            .setDateMillisSinceEpoch(Random.nextLong(Date().time, Date().time + 66666))
+            .setDurationMinutes(Random.nextInt(50))
+            .setTotalRiskScore(Random.nextInt(8))
+            .setTransmissionRiskLevel(Random.nextInt(8))
             .build()
 }

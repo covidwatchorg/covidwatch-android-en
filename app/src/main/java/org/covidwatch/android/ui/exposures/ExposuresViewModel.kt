@@ -19,6 +19,9 @@ class ExposuresViewModel(
     private val _exposureNotificationEnabled = MutableLiveData<Boolean>()
     val exposureNotificationEnabled: LiveData<Boolean> = _exposureNotificationEnabled
 
+    private val _showExposureDetails = MutableLiveData<CovidExposureInformation>()
+    val showExposureDetails: LiveData<CovidExposureInformation> = _showExposureDetails
+
     val exposureInfo: LiveData<List<CovidExposureInformation>> =
         exposureInformationRepository.exposureInformation()
 
@@ -43,7 +46,7 @@ class ExposuresViewModel(
     }
 
     fun showExposureDetails(exposureInformation: CovidExposureInformation) {
-        TODO()
+        _showExposureDetails.value = exposureInformation
     }
 
     private fun <R : ENStatus, L> Either<R, L>.result(): L? {
