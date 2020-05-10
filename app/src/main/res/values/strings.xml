@@ -142,4 +142,5 @@
     <string name="exposures_subtitle">You will be notified if you are exposed to COVID-19</string>
     <string name="switch_exposure_notifications">Enable Exposure Notifications</string>
     <string name="exposure_risk_icon_description">High risk of exposure</string>
+    <string name="exposure_info_explanation">Exposure notifications are saved in this app and you can access them any time in the future</string>
 </resources>
