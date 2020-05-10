@@ -24,4 +24,45 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
+    <style name="ImageView" />
+
+    <style name="ImageView.BtnClose">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+        <item name="android:clickable">true</item>
+        <item name="android:contentDescription">@string/close_button_content_descriptor</item>
+        <item name="android:focusable">true</item>
+        <item name="android:src">@drawable/ic_close</item>
+    </style>
+
+    <style name="TextView" />
+
+    <style name="TextView.ScreenTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/title_font_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextView.ScreenSubtitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/padding_content</item>
+        <item name="android:textSize">@dimen/subtitle_font_size</item>
+    </style>
+
+    <style name="Switch" />
+    <style name="Switch.EnableExposureNotification">
+        <item name="android:text">@string/switch_exposure_notifications</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/padding_content</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <dimen name="subtitle_font_size">16sp</dimen>
+    <dimen name="title_font_size">31sp</dimen>
 </resources>

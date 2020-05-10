@@ -4,6 +4,7 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding
 import org.covidwatch.android.BR
 import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureInformation
+import org.covidwatch.android.ui.exposures.ExposuresViewModel
 
 object ItemBindings {
 
@@ -13,4 +14,11 @@ object ItemBindings {
             BR.item,
             R.layout.item_exposure_info
         )
+
+    @JvmStatic
+    fun bind(viewModel: ExposuresViewModel): ItemBinding<CovidExposureInformation> =
+        ItemBinding.of<CovidExposureInformation>(
+            BR.item,
+            R.layout.item_exposure
+        ).bindExtra(BR.viewModel, viewModel)
 }
