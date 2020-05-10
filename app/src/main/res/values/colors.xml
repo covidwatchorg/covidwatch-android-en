@@ -6,9 +6,10 @@
     <color name="colorAccentExposure">#A5E33C68</color>
     <dimen name="exposure_summary_text">20sp</dimen>
     <dimen name="padding_content">16dp</dimen>
+    <dimen name="small_padding_content">8dp</dimen>
 
     <!-- Imported from UX Repo -->
-    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimary">#2C58B1</color>
     <color name="colorSecondary">#FFFFFF</color>
     <color name="colorTertiary">#779F98</color>
     <color name="colorPrimaryDark">#3700B3</color>
@@ -25,7 +26,7 @@
     <color name="primaryBackground">#2C58B1</color>
     <color name="secondaryBackground">#FFFFFF</color>
 
-    <color name="primaryText">#686868</color>
+    <color name="primaryText">#585858</color>
     <color name="secondaryText">#FFFFFF</color>
 
     <color name="black">#000000</color>
@@ -34,15 +35,15 @@
     <color name="maroon_shadow">#A0A0A0</color>
     <color name="colorPrimaryLight">#DFDFDF</color>
 
-<!-- FROM DESIGN LIBRARY AT https://www.figma.com/file/0qkRp3TrKBRnpEnmQeA5m4/-->
+    <!-- FROM DESIGN LIBRARY AT https://www.figma.com/file/0qkRp3TrKBRnpEnmQeA5m4/-->
     <color name="bluejay">#2C58B1</color>
     <color name="aqua">#43C4D9</color>
     <color name="plum">#4B0A70</color>
     <color name="elderberry">#2C007B</color>
     <color name="lavender">#A680B7</color>
     <color name="tangerine">#F05452</color>
-    <color name="peachy">#F05452</color>
-    <color name="lightGray">#BDBDBD</color>
+    <color name="lightGray">#EFEFEF</color>
+    <color name="gray">#BDBDBD</color>
     <color name="darkGray">#828282</color>
 
 

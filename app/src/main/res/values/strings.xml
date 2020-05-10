@@ -30,7 +30,7 @@
     <string name="share_subj">Secure COVID-19 contact alert app</string>
     <string name="share_body">I found this privacy-aware COVID-19 app that doesn\'t upload any information.</string>
 
-    <string name="date">Date</string>
+    <string name="exposure_information_date">Date</string>
     <string name="datepicker">datePicker</string>
     <string name="textView" />
     <string name="disclaimer"><![CDATA[By clicking Report, you acknowledge, understand and further agree to our Privacy Policy and Terms & Conditions]]></string>
@@ -138,9 +138,30 @@
     <string name="notification_channel_description">Exposure notification alerts.</string>
     <string name="menu">Menu</string>
     <string name="powered_by">Powered by</string>
+
+    <!-- POSSIBLE EXPOSURES-->
     <string name="title_exposures">Possible Exposures</string>
     <string name="exposures_subtitle">You will be notified if you are exposed to COVID-19</string>
     <string name="switch_exposure_notifications">Enable Exposure Notifications</string>
     <string name="exposure_risk_icon_description">High risk of exposure</string>
     <string name="exposure_info_explanation">Exposure notifications are saved in this app and you can access them any time in the future</string>
+
+    <!-- EXPOSURE DETAILS-->
+    <string name="exposure_details_subtitle">You were near someone who has shared a <b>positive</b> and <b>verified</b> diagnosis of COVID-19.</string>
+    <string name="details">Details</string>
+    <string name="btn_share_positive_diagnosis">Share a Positive Diagnosis</string>
+    <string name="btn_find_covid_test_site">Find COVID-19 Test Site</string>
+    <string name="exposure_information_date_title">Date</string>
+    <string name="exposure_information_duration_title">Duration</string>
+    <string name="exposure_information_duration_text">%d min</string>
+    <string name="exposure_information_attenuation_title">Attenuation</string>
+    <string name="exposure_information_attenuation_text">%d db</string>
+    <string name="exposure_information_total_risk_title">Total Risk Score</string>
+    <string name="low_total_exposure_risk">Low: %d of 100</string>
+    <string name="middle_total_exposure_risk">Middle: %d of 100</string>
+    <string name="high_total_exposure_risk">High: %d of 100</string>
+    <string name="exposure_information_transmission_risk_title">Transmission Risk</string>
+    <string name="exposure_information_transmission_risk_text">%d of 8</string>
+    <string name="share_positive_diagnosis_btn_explanation">Share your result anonymously to help your community stay safe.</string>
+    <string name="next_steps">Next Steps</string>
 </resources>
