@@ -23,8 +23,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:onClick="@{()->viewModel.showExposureDetails(item)}"
-        android:paddingTop="@dimen/padding_content"
-        android:paddingBottom="@dimen/padding_content">
+        android:paddingVertical="@dimen/padding_content">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -32,8 +31,7 @@
             android:layout_marginEnd="18sp"
             android:contentDescription="@string/exposure_risk_icon_description"
             android:src="@drawable/ic_info_red"
-            android:visibility="@{item.highRisk ? View.VISIBLE : View.INVISIBLE}"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:visibility="@{item.highRisk ? View.VISIBLE : View.INVISIBLE}" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/date"
@@ -41,7 +39,6 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             app:date="@{item.dateMillisSinceEpoch}"
-            app:layout_constraintTop_toTopOf="parent"
             tools:text="May 20, 2020" />
     </LinearLayout>
 </layout>

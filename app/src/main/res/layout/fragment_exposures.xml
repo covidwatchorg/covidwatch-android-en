@@ -7,8 +7,6 @@
 
         <import type="org.covidwatch.android.ui.ItemBindings" />
 
-        <import type="android.view.View" />
-
         <variable
             name="viewModel"
             type="org.covidwatch.android.ui.exposures.ExposuresViewModel" />
@@ -28,33 +26,27 @@
 
         <TextView
             style="@style/TextView.ScreenTitle"
-            android:paddingStart="@dimen/padding_content"
-            android:paddingEnd="@dimen/padding_content"
+            android:paddingHorizontal="@dimen/padding_content"
             android:text="@string/title_exposures" />
 
         <Switch
             android:id="@+id/enable_exposure_notification"
             style="@style/Switch.EnableExposureNotification"
             android:checked="@{viewModel.exposureNotificationEnabled}"
-            android:paddingStart="@dimen/padding_content"
-            android:paddingEnd="@dimen/padding_content" />
+            android:paddingHorizontal="@dimen/padding_content" />
 
         <TextView
             style="@style/TextView.ScreenSubtitle"
-            android:paddingStart="@dimen/padding_content"
-            android:paddingEnd="@dimen/padding_content"
+            android:paddingHorizontal="@dimen/padding_content"
             android:text="@string/exposures_subtitle" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            style="@style/TextView.ScreenSubtitle"
             android:layout_marginTop="@dimen/padding_content"
-            android:background="#828282"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/padding_content"
-            android:paddingEnd="@dimen/padding_content"
+            android:background="@color/darkGray"
+            android:paddingHorizontal="@dimen/padding_content"
+            android:paddingVertical="@dimen/padding_content"
             android:textColor="@color/white"
-            android:textSize="16sp"
             android:textStyle="bold"
             tools:text="Exposure last checked today at 3:15pm" />
 
@@ -64,8 +56,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:clipToPadding="false"
-            android:paddingStart="@dimen/padding_content"
-            android:paddingEnd="@dimen/padding_content"
+            android:paddingHorizontal="@dimen/padding_content"
             app:itemBinding="@{ItemBindings.bind(viewModel)}"
             app:items="@{viewModel.exposureInfo}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
