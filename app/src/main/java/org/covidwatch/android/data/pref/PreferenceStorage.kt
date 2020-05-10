@@ -39,7 +39,7 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
 
     override var firstLaunch by Preference(prefs, FIRST_LAUNCH, true)
 
-    override var onboardingFinished by Preference(prefs, ONBOARDING_FINISHED, true)
+    override var onboardingFinished by Preference(prefs, ONBOARDING_FINISHED, false)
 
     override var exposureSummary: CovidExposureSummary? by NullablePreference(
         prefs,

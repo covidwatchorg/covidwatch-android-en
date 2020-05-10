@@ -8,7 +8,7 @@
     <dimen name="padding_content">16dp</dimen>
 
     <!-- Imported from UX Repo -->
-    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimary">@color/bluejay</color>
     <color name="colorSecondary">#FFFFFF</color>
     <color name="colorTertiary">#779F98</color>
     <color name="colorPrimaryDark">#3700B3</color>
