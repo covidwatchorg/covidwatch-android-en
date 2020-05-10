@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/padding_large"
+            android:layout_marginHorizontal="@dimen/padding_normal"
             android:text="@string/how_it_works" />
 
         <TextView
@@ -21,7 +21,7 @@
             style="@style/TextView.ScreenTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/padding_large"
+            android:layout_marginHorizontal="@dimen/padding_normal"
             tools:text="Safe Communities" />
 
         <ImageView
@@ -36,7 +36,7 @@
             style="@style/TextView.ScreenSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/padding_large"
+            android:layout_marginHorizontal="@dimen/padding_normal"
             tools:text="Jane and Sam help keep their communities safe. They share the app so that others can, too." />
     </LinearLayout>
 
