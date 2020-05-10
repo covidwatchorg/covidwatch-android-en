@@ -20,6 +20,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
         val onBackPressed: OnBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                // quit app if user presses back in splash screen
                 requireActivity().finish()
             }
         }

@@ -44,7 +44,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
             userFlowRepository.finishOnboarding()
             // Remove previous onboarding fragments from the stack so we can't go back.
             findNavController().popBackStack(R.id.homeFragment, false)
-            findNavController().navigate(R.id.enableExposureNotificationsFragment)
+            findNavController().navigate(R.id.onboardingFinishFragment)
         }
     }
 

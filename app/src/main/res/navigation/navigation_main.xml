@@ -77,12 +77,12 @@
         android:label="OnboardingFragment"
         tools:layout="@layout/fragment_onboarding">
         <action
-            android:id="@+id/action_onboardingFragment_to_enableExposureNotificationsFragment2"
-            app:destination="@id/enableExposureNotificationsFragment" />
+            android:id="@+id/action_onboardingFragment_to_onboardingFInishFragment"
+            app:destination="@id/onboardingFinishFragment" />
     </fragment>
     <fragment
-        android:id="@+id/enableExposureNotificationsFragment"
-        android:name="org.covidwatch.android.ui.onboarding.EnableExposureNotificationsFragment"
-        android:label="EnableExposureNotificationsFragment"
-        tools:layout="@layout/fragment_enable_exposure_notifications" />
+        android:id="@+id/onboardingFinishFragment"
+        android:name="org.covidwatch.android.ui.onboarding.OnboardingFinishFragment"
+        android:label="OnboardingFinishFragment"
+        tools:layout="@layout/fragment_onboarding_finish" />
 </navigation>

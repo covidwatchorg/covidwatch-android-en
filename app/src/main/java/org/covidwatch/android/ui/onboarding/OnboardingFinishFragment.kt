@@ -6,17 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.R
-import org.covidwatch.android.databinding.FragmentEnableExposureNotificationsBinding
+import org.covidwatch.android.databinding.FragmentOnboardingFinishBinding
 import org.covidwatch.android.ui.BaseFragment
 
-class EnableExposureNotificationsFragment :
-    BaseFragment<FragmentEnableExposureNotificationsBinding>() {
+class OnboardingFinishFragment : BaseFragment<FragmentOnboardingFinishBinding>() {
 
     override fun binding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentEnableExposureNotificationsBinding =
-        FragmentEnableExposureNotificationsBinding.inflate(inflater, container, false)
+    ): FragmentOnboardingFinishBinding =
+        FragmentOnboardingFinishBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
