@@ -31,4 +31,9 @@ class ExposuresFragment : BaseFragment<FragmentExposuresBinding>() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        exposuresViewModel.start()
+    }
 }

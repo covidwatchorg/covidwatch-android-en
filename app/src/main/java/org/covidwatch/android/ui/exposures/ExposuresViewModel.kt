@@ -22,6 +22,12 @@ class ExposuresViewModel(
     val exposureInfo: LiveData<List<CovidExposureInformation>> =
         exposureInformationRepository.exposureInformation()
 
+    fun start() {
+        viewModelScope.launch {
+            _exposureNotificationEnabled.value = enManager.isEnabled().result()
+        }
+    }
+
     fun toggleExposureNotifications() {
         viewModelScope.launch {
             // Check if we need to stop the service
