@@ -13,7 +13,7 @@ class ExposuresFragment : BaseFragment<FragmentExposuresBinding>() {
 
     private val exposuresViewModel: ExposuresViewModel by viewModel()
 
-    override fun binding(
+    override fun bind(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentExposuresBinding = FragmentExposuresBinding.inflate(inflater, container, false)
