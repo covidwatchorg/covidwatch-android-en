@@ -63,7 +63,7 @@
     <dimen name="subtitle_font_size">16sp</dimen>
     <dimen name="title_font_size">31sp</dimen>
 
-    <style name="MyExposuresContainer">
+    <style name="ExposureSummary">
         <item name="android:background">@drawable/bg_my_possible_exposures</item>
         <item name="android:paddingStart">@dimen/padding_normal</item>
         <item name="android:paddingEnd">@dimen/padding_normal</item>
