@@ -1,10 +1,10 @@
 package org.covidwatch.android.ui
 
-import android.text.format.DateFormat
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureSummary
+import org.covidwatch.android.ui.util.DateFormatter
 
 @BindingAdapter("exposureSummary")
 fun TextView.setExposureSummary(exposureSummary: CovidExposureSummary?) {
@@ -23,9 +23,7 @@ fun TextView.setExposureSummary(exposureSummary: CovidExposureSummary?) {
 
 @BindingAdapter("date")
 fun TextView.setTextFromTime(time: Long?) {
-    time?.let {
-        text = DateFormat.format("mmm dd, yyyy", it)
-    }
+    text = DateFormatter.format(time)
 }
 
 @BindingAdapter("total_risk")
