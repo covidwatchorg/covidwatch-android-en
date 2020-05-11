@@ -54,23 +54,23 @@
             android:text="@string/my_possible_exposures_title" />
 
         <include
-            android:id="@+id/exposures"
-            layout="@layout/my_possible_exposures"
+            android:id="@+id/exposure_summary"
+            layout="@layout/exposure_summary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
-            android:layout_marginVertical="@dimen/padding_small" />
+            android:layout_marginVertical="@dimen/padding_small"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <TextView
-            android:id="@+id/exposures_empty"
+            android:id="@+id/empty_exposure_summary"
             style="@style/MyExposuresContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
             android:layout_marginVertical="@dimen/padding_small"
-            android:text="@string/my_exposures_empty_state"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:text="@string/empty_exposure_summary" />
 
         <Button
             android:id="@+id/notify_others_button"

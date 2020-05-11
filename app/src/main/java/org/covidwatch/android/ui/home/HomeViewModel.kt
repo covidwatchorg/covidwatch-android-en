@@ -1,18 +1,21 @@
 package org.covidwatch.android.ui.home
 
 import androidx.lifecycle.*
+import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.covidwatch.android.R
 import org.covidwatch.android.data.FirstTimeUser
 import org.covidwatch.android.data.UserFlowRepository
 import org.covidwatch.android.domain.TestedRepository
+import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.ui.event.Event
 
 class HomeViewModel(
     private val userFlowRepository: UserFlowRepository,
     private val testedRepository: TestedRepository,
-    private val ensureTcnIsStartedUseCase: EnsureTcnIsStartedUseCase
+    private val ensureTcnIsStartedUseCase: EnsureTcnIsStartedUseCase,
+    private val exposureNotificationManager: ExposureNotificationManager
 ) : ViewModel(), EnsureTcnIsStartedPresenter {
 
     private val isUserTestedPositive: Boolean get() = testedRepository.isUserTestedPositive()
@@ -27,6 +30,9 @@ class HomeViewModel(
 
     private val _navigateToOnboardingEvent = MutableLiveData<Event<Unit>>()
     val navigateToOnboardingEvent: LiveData<Event<Unit>> get() = _navigateToOnboardingEvent
+
+    private val _exposureSummary = MutableLiveData<ExposureSummary>()
+    val exposureSummary: LiveData<ExposureSummary> get() = _exposureSummary
 
     private val hasPossiblyInteractedWithInfected: LiveData<Boolean> = MutableLiveData()
 
@@ -67,6 +73,7 @@ class HomeViewModel(
 
         checkIfUserTestedPositive()
         ensureTcnIsStarted()
+        getExposureSummary()
     }
 
     private fun checkIfUserTestedPositive() {
@@ -79,6 +86,13 @@ class HomeViewModel(
     private fun ensureTcnIsStarted() {
         viewModelScope.launch(Dispatchers.IO) {
             ensureTcnIsStartedUseCase.execute(this@HomeViewModel)
+        }
+    }
+
+    private fun getExposureSummary() {
+        viewModelScope.launch {
+            val exposureSummary = exposureNotificationManager.getExposureSummary().right
+            _exposureSummary.value = exposureSummary
         }
     }
 }

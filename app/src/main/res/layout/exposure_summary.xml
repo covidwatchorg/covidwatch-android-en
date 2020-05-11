@@ -4,55 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MyExposuresContainer"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <FrameLayout
-        android:id="@+id/dummy_container"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="?selectableItemBackgroundBorderless"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:layout_height="wrap_content"
+    android:foreground="?selectableItemBackground">
 
     <TextView
-        android:id="@+id/days"
+        android:id="@+id/days_since_last_exposure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="01"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="01" />
 
     <TextView
         android:id="@+id/total_exposures"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="13"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/days" />
+        app:layout_constraintTop_toBottomOf="@+id/days_since_last_exposure"
+        tools:text="13" />
 
     <TextView
         android:id="@+id/high_risk_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="91"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="@color/tangerine"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/total_exposures" />
+        app:layout_constraintTop_toBottomOf="@+id/total_exposures"
+        tools:text="91" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="end"
-        app:constraint_referenced_ids="days,total_exposures,high_risk_score"
+        app:constraint_referenced_ids="days_since_last_exposure,total_exposures,high_risk_score"
         tools:layout_editor_absoluteX="395dp"
         tools:layout_editor_absoluteY="16dp" />
 
@@ -72,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/padding_small"
         android:text="@string/days_subtext"
-        app:layout_constraintBaseline_toBaselineOf="@+id/days"
+        app:layout_constraintBaseline_toBaselineOf="@+id/days_since_last_exposure"
         app:layout_constraintStart_toEndOf="@+id/barrier2" />
 
     <TextView

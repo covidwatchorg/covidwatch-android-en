@@ -161,8 +161,8 @@
     <string name="total_exposures_text">total exposures</string>
     <string name="total_exposures_subtext">in the last 14 days</string>
     <string name="high_risk_score_text">high risk score</string>
-    <string name="high_risk_score_subtext">(0–100 scale)</string>
+    <string name="high_risk_score_subtext">(1–8 scale)</string>
     <string name="my_possible_exposures_title">My Possible Exposures</string>
-    <string name="my_exposures_empty_state">Thank you for installing the app. You will be notified of possible exposure to COVID-19, so come back later to review your updated exposure status.</string>
+    <string name="empty_exposure_summary">Thank you for installing the app. You will be notified of possible exposure to COVID-19, so come back later to review your updated exposure status.</string>
 
 </resources>

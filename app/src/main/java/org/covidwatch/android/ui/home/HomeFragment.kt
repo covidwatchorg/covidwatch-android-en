@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import org.covidwatch.android.*
 import org.covidwatch.android.databinding.FragmentHomeBinding
 import org.covidwatch.android.ui.BaseFragment
@@ -29,6 +30,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         homeViewModel.navigateToOnboardingEvent.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.splashFragment)
         })
+        homeViewModel.exposureSummary.observe(viewLifecycleOwner, Observer(::bindExposureSummary))
         homeViewModel.infoBannerState.observe(viewLifecycleOwner, Observer { banner ->
             when (banner) {
                 is InfoBannerState.Visible -> {
@@ -77,9 +79,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.infoBanner.setOnClickListener {
             findNavController().navigate(R.id.settingsFragment)
         }
-        binding.exposures.dummyContainer.setOnClickListener {
+        binding.exposureSummary.root.setOnClickListener {
 
         }
+    }
+
+    private fun bindExposureSummary(exposureSummary: ExposureSummary?) {
+        binding.emptyExposureSummary.isVisible = exposureSummary == null
+        binding.exposureSummary.root.isVisible = exposureSummary != null
+
+        binding.exposureSummary.daysSinceLastExposure.text = exposureSummary?.daysSinceLastExposure?.toString()
+        binding.exposureSummary.totalExposures.text = exposureSummary?.matchedKeyCount?.toString()
+        binding.exposureSummary.highRiskScore.text = exposureSummary?.maximumRiskScore?.toString()
     }
 
     private fun shareApp() {

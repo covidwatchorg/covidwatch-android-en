@@ -102,7 +102,8 @@ val appModule = module {
         HomeViewModel(
             userFlowRepository = get(),
             testedRepository = get(),
-            ensureTcnIsStartedUseCase = get()
+            ensureTcnIsStartedUseCase = get(),
+            exposureNotificationManager = get()
         )
     }
 
