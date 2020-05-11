@@ -12,7 +12,7 @@ import org.covidwatch.android.ui.BaseFragment
 
 class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
-    override fun binding(inflater: LayoutInflater, container: ViewGroup?): FragmentSplashBinding =
+    override fun bind(inflater: LayoutInflater, container: ViewGroup?): FragmentSplashBinding =
         FragmentSplashBinding.inflate(inflater, container, false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
