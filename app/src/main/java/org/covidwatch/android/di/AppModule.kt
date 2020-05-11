@@ -22,6 +22,7 @@ import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.ui.exposurenotification.ExposureNotificationViewModel
 import org.covidwatch.android.ui.home.EnsureTcnIsStartedUseCase
 import org.covidwatch.android.ui.home.HomeViewModel
+import org.covidwatch.android.ui.onboarding.EnableExposureNotificationsViewModel
 import org.covidwatch.android.ui.settings.SettingsViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -116,4 +117,12 @@ val appModule = module {
             preferences = get()
         ) as TestedRepository
     }
+
+    // Onboarding start
+
+    viewModel {
+        EnableExposureNotificationsViewModel(exposureNotificationManager = get())
+    }
+
+    // Onboarding end
 }

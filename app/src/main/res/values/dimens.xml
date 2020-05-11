@@ -17,4 +17,11 @@
     <dimen name="tested_button_font_size">18dp</dimen>
     <dimen name="default_padding">16dp</dimen>
 
+    <dimen name="onboarding_tab_indicator_thickness">8dp</dimen>
+    <dimen name="onboarding_footer_elevation">20dp</dimen>
+    <dimen name="padding_normal">16dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_micro">4dp</dimen>
+    <dimen name="padding_large">24dp</dimen>
+    <dimen name="padding_extra_large">32dp</dimen>
 </resources>
