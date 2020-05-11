@@ -2,7 +2,6 @@ package org.covidwatch.android.ui.home
 
 import androidx.lifecycle.*
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.covidwatch.android.R
 import org.covidwatch.android.data.FirstTimeUser
@@ -14,9 +13,8 @@ import org.covidwatch.android.ui.event.Event
 class HomeViewModel(
     private val userFlowRepository: UserFlowRepository,
     private val testedRepository: TestedRepository,
-    private val ensureTcnIsStartedUseCase: EnsureTcnIsStartedUseCase,
     private val exposureNotificationManager: ExposureNotificationManager
-) : ViewModel(), EnsureTcnIsStartedPresenter {
+) : ViewModel() {
 
     private val isUserTestedPositive: Boolean get() = testedRepository.isUserTestedPositive()
     private val _userTestedPositive = MutableLiveData<Unit>()
@@ -52,18 +50,6 @@ class HomeViewModel(
         hasPossiblyInteractedWithInfected.removeObserver(interactedWithInfectedObserver)
     }
 
-    override fun showLocationPermissionBanner() {
-        _infoBannerState.postValue(InfoBannerState.Visible(R.string.allow_location_access))
-    }
-
-    override fun showEnableBluetoothBanner() {
-        _infoBannerState.postValue(InfoBannerState.Visible(R.string.turn_bluetooth_on))
-    }
-
-    override fun hideBanner() {
-        _infoBannerState.postValue(InfoBannerState.Hidden)
-    }
-
     fun onStart() {
         val userFlow = userFlowRepository.getUserFlow()
         if (userFlow is FirstTimeUser) {
@@ -72,7 +58,6 @@ class HomeViewModel(
         }
 
         checkIfUserTestedPositive()
-        ensureTcnIsStarted()
         getExposureSummary()
     }
 
@@ -80,12 +65,6 @@ class HomeViewModel(
         if (isUserTestedPositive) {
             _userTestedPositive.value = Unit
             _warningBannerState.value = WarningBannerState.Visible(R.string.reported_alert_text)
-        }
-    }
-
-    private fun ensureTcnIsStarted() {
-        viewModelScope.launch(Dispatchers.IO) {
-            ensureTcnIsStartedUseCase.execute(this@HomeViewModel)
         }
     }
 
