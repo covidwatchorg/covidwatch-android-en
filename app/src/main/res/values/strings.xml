@@ -142,4 +142,7 @@
     <string name="exposures_subtitle">You will be notified if you are exposed to COVID-19</string>
     <string name="switch_exposure_notifications">Enable Exposure Notifications</string>
     <string name="exposure_risk_icon_description">High risk of exposure</string>
+
+    <!-- Firebase logging -->
+    <string name="sent_infection_notification">sent_infection_notification</string>
 </resources>

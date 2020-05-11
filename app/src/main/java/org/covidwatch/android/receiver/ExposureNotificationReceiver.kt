@@ -9,6 +9,9 @@ import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
 import org.covidwatch.android.domain.UpdateExposureStateUseCase
 import org.covidwatch.android.extension.launchUseCase
 import org.koin.java.KoinJavaComponent.inject
+import org.covidwatch.android.sendEvent
+import org.covidwatch.android.R
+
 
 class ExposureNotificationReceiver : BroadcastReceiver() {
     private val provideDiagnosisKeysUseCase by inject(
@@ -23,6 +26,7 @@ class ExposureNotificationReceiver : BroadcastReceiver() {
         when (intent?.action) {
             ExposureNotificationClient.ACTION_EXPOSURE_STATE_UPDATED -> {
                 GlobalScope.launchUseCase(updateExposureStateUseCase)
+                sendEvent(context!!.getString(R.string.sent_infection_notification))
             }
             ExposureNotificationClient.ACTION_REQUEST_DIAGNOSIS_KEYS -> {
                 GlobalScope.launchUseCase(provideDiagnosisKeysUseCase)
