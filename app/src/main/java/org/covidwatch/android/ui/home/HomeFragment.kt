@@ -80,7 +80,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             findNavController().navigate(R.id.settingsFragment)
         }
         binding.exposureSummary.root.setOnClickListener {
-
+            findNavController().navigate(R.id.exposuresFragment)
         }
     }
 

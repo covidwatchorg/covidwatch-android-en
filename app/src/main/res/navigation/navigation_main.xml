@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_exposuresFragment"
+            app:destination="@id/exposuresFragment" />
     </fragment>
     <fragment
         android:id="@+id/testQuestionsFragment"
@@ -85,4 +88,9 @@
         android:name="org.covidwatch.android.ui.onboarding.EnableExposureNotificationsFragment"
         android:label="EnableExposureNotificationsFragment"
         tools:layout="@layout/fragment_enable_exposure_notifications" />
+    <fragment
+        android:id="@+id/exposuresFragment"
+        android:name="org.covidwatch.android.ui.exposures.ExposuresFragment"
+        android:label="ExposuresFragment"
+        tools:layout="@layout/fragment_exposures" />
 </navigation>
