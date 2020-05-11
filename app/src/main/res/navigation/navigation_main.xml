@@ -7,19 +7,13 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="org.covidwatch.android.ui.SplashFragment"
+        android:name="org.covidwatch.android.ui.onboarding.SplashFragment"
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
         <action
-            android:id="@+id/action_splashFragment_to_setupBluetoothFragment2"
-            app:destination="@id/setupBluetoothFragment" />
+            android:id="@+id/action_splashFragment_to_onboardingFragment"
+            app:destination="@id/onboardingFragment" />
     </fragment>
-
-    <fragment
-        android:id="@+id/setupBluetoothFragment"
-        android:name="org.covidwatch.android.ui.SetupBluetoothFragment"
-        android:label="SetupBluetoothFragment"
-        tools:layout="@layout/fragment_setup_bluetooth" />
 
     <fragment
         android:id="@+id/homeFragment"
@@ -108,4 +102,20 @@
             app:argType="org.covidwatch.android.data.CovidExposureInformation"
             app:nullable="true" />
     </fragment>
+
+    <fragment
+        android:id="@+id/onboardingFragment"
+        android:name="org.covidwatch.android.ui.onboarding.OnboardingFragment"
+        android:label="OnboardingFragment"
+        tools:layout="@layout/fragment_onboarding">
+        <action
+            android:id="@+id/action_onboardingFragment_to_enableExposureNotificationsFragment"
+            app:destination="@id/enableExposureNotificationsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/enableExposureNotificationsFragment"
+        android:name="org.covidwatch.android.ui.onboarding.EnableExposureNotificationsFragment"
+        android:label="EnableExposureNotificationsFragment"
+        tools:layout="@layout/fragment_enable_exposure_notifications" />
 </navigation>

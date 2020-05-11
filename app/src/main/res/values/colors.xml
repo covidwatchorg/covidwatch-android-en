@@ -9,7 +9,7 @@
     <dimen name="small_padding_content">8dp</dimen>
 
     <!-- Imported from UX Repo -->
-    <color name="colorPrimary">#2C58B1</color>
+    <color name="colorPrimary">@color/bluejay</color>
     <color name="colorSecondary">#FFFFFF</color>
     <color name="colorTertiary">#779F98</color>
     <color name="colorPrimaryDark">#3700B3</color>

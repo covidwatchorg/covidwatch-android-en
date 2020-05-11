@@ -17,9 +17,7 @@
     <string name="notification_current_user_was_exposed">You have been notified</string>
 
     <!--  FROM THE UX REPO  -->
-    <string name="splash_text">Help your community stay safe, anonymously.</string>
     <string name="start">Start</string>
-    <string name="grant_location_access">Grant Location Access</string>
 
     <string name="onboarding_button">Let\'s do this!</string>
     <string name="onboarding_steps">Protect your privacy and your community with just 3 steps.</string>
@@ -81,8 +79,6 @@
     <string name="stanford_university">Stanford University</string>
 
     <string name="bluetooth_explanation_subtext">Apps using Bluetooth® Low Energy (BLE) are required to have location access enabled.</string>
-    <string name="bluetooth_explanation_text">We use Bluetooth to anonymously log interactions with other Covid Watch users. Your personal data is always private and never shared.</string>
-    <string name="bluetooth_explanation_title">Privately Connect</string>
     <string name="logo_image_content_descriptor">Logo image</string>
     <string name="menu_button_content_descriptor">Menu button</string>
     <string name="people_bluetooth_connection_content_descriptor">People connecting over bluetooth</string>
@@ -164,4 +160,26 @@
     <string name="exposure_information_transmission_risk_text">%d of 8</string>
     <string name="share_positive_diagnosis_btn_explanation">Share your result anonymously to help your community stay safe.</string>
     <string name="next_steps">Next Steps</string>
+
+    <!--  Onboarding  -->
+    <string name="splash_screen_title">The power to stop COVID-19 in the palm of your hand.</string>
+    <string name="get_started_button">Get Started</string>
+    <string name="onboarding_welcome_title">Welcome to the {UCSF Health Covid Watch} App</string>
+    <string name="onboarding_welcome_subtitle">Welcome Text. Aliquet urna feugiat donec dictum. Massa dignissim commodo ut et.  Massa dignissim commodo ut et.</string>
+    <string name="always_anonymous_title">Always Anonymous</string>
+    <string name="always_anonymous_subtitle">While Sam and Jane chat, their phones note each others’ anonymous signals and list them securely.</string>
+    <string name="diagnosis_reports_title">Diagnosis Reports</string>
+    <string name="diagnosis_reports_subtitle">A few days later, Sam tests positive for COVID-19. He enters the verified results into the Covid Watch app.</string>
+    <string name="exposure_alerts_title">Exposure Alerts</string>
+    <string name="exposure_alerts_subtitle">Jane’s phone gets an alert that someone she’s seen has now tested positive. The app tells her how to take action.</string>
+    <string name="safe_communities_title">Safe Communities</string>
+    <string name="safe_communities_subtitle">Jane and Sam help keep their communities safe. They share the app so that others can, too.</string>
+    <string name="enable_exposure_notifications_title">Enable Exposure Notifications</string>
+    <string name="enable_exposure_notifications_subtitle">These notifications are designed to notify you if you’ve been exposed to a user who later reports themselves as testing positive for COVID-19. You can choose to turn off these notifications at any time. Exposure notifications rely on the sharing and collection of random IDs. These IDs are a random string of numbers that won’t identify you to other users and change many times a day to protect your privacy.</string>
+    <string name="enable_button">Enable</string>
+    <string name="not_now_button">Not now</string>
+    <string name="how_it_works">HOW IT WORKS</string>
+    <string name="continue_setup_button">Continue Setup</string>
+    <string name="generic_error_message">Internal error, please try again.</string>
+
 </resources>
