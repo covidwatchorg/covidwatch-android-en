@@ -143,6 +143,7 @@
     <string name="exposure_info_explanation">Exposure notifications are saved in this app and you can access them any time in the future</string>
 
     <!-- EXPOSURE DETAILS-->
+    <string name="title_exposure_details">Possible Exposure</string>
     <string name="exposure_details_subtitle">You were near someone who has shared a <b>positive</b> and <b>verified</b> diagnosis of COVID-19.</string>
     <string name="details">Details</string>
     <string name="btn_share_positive_diagnosis">Share a Positive Diagnosis</string>

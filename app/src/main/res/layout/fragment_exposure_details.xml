@@ -27,7 +27,7 @@
         <TextView
             style="@style/TextView.ScreenTitle"
             android:paddingHorizontal="@dimen/padding_content"
-            android:text="@string/title_exposures"
+            android:text="@string/title_exposure_details"
             android:textColor="@color/tangerine" />
 
         <ScrollView
@@ -35,12 +35,13 @@
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/padding_content"
             android:layout_weight="1"
-            android:paddingHorizontal="@dimen/padding_content">
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/padding_content">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -87,41 +88,32 @@
                         android:drawablePadding="@dimen/padding_content"
                         android:text="Varius non, quis fermentum, feugiat maecenas eu." />
                 </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_share_positive_diagnosis"
+                    style="@style/Button.Action"
+                    android:layout_marginTop="@dimen/padding_content"
+                    android:text="@string/btn_share_positive_diagnosis" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/small_padding_content"
+                    android:text="@string/share_positive_diagnosis_btn_explanation" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_find_test_site"
+                    style="@style/Button.Action"
+                    android:text="@string/btn_find_covid_test_site" />
+
+                <include
+                    android:id="@+id/powered_by"
+                    layout="@layout/powered_by"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal" />
             </LinearLayout>
         </ScrollView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="18dp"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/padding_content"
-            android:translationZ="4dp">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_share_positive_diagnosis"
-                style="@style/Button.Action"
-                android:layout_marginTop="@dimen/padding_content"
-                android:text="@string/btn_share_positive_diagnosis" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingBottom="@dimen/small_padding_content"
-                android:text="@string/share_positive_diagnosis_btn_explanation" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_find_test_site"
-                style="@style/Button.Action"
-                android:text="@string/btn_find_covid_test_site" />
-
-            <include
-                android:id="@+id/powered_by"
-                layout="@layout/powered_by"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal" />
-        </LinearLayout>
     </LinearLayout>
 </layout>
