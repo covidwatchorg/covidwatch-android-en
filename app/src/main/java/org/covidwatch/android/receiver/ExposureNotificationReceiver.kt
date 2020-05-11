@@ -29,6 +29,7 @@ class ExposureNotificationReceiver : BroadcastReceiver() {
                 sendEvent(context!!.getString(R.string.sent_infection_notification))
             }
             ExposureNotificationClient.ACTION_REQUEST_DIAGNOSIS_KEYS -> {
+                //Get diagnosis key from server?
                 GlobalScope.launchUseCase(provideDiagnosisKeysUseCase)
             }
         }

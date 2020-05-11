@@ -10,6 +10,7 @@ import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.asTemporaryExposureKey
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
+import org.covidwatch.android.sendEvent
 import org.koin.java.KoinJavaComponent.inject
 import timber.log.Timber
 import java.util.Date
@@ -30,6 +31,7 @@ class ProvideDiagnosisKeysWork(
 
         val diagnosisKeys = diagnosisRepository.diagnosisKeys(Date())
         Timber.d("Adding ${diagnosisKeys.size} positive diagnoses to exposure notification framework")
+        sendEvent("successfully_pulled_keys_from_firebase")
 
         diagnosisKeys.forEach { diagnosis ->
             diagnosis.diagnosisKeys
@@ -55,7 +57,6 @@ class ProvideDiagnosisKeysWork(
             exposureSummary.matchedKeyCount,
             exposureSummary.maximumRiskScore
         )
-
         return Result.success()
     }
 
