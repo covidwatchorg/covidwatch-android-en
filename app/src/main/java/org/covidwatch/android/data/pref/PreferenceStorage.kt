@@ -15,7 +15,6 @@ import kotlin.reflect.KProperty
  */
 interface PreferenceStorage {
     var lastFetchDate: Long
-    var firstLaunch: Boolean
     var onboardingFinished: Boolean
     var exposureSummary: CovidExposureSummary?
     val observableExposureSummary: LiveData<CovidExposureSummary?>
@@ -37,8 +36,6 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
 
     override var lastFetchDate by Preference(prefs, LAST_FETCH_DATE, 0L)
 
-    override var firstLaunch by Preference(prefs, FIRST_LAUNCH, true)
-
     override var onboardingFinished by Preference(prefs, ONBOARDING_FINISHED, false)
 
     override var exposureSummary: CovidExposureSummary? by NullablePreference(
@@ -54,7 +51,6 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
         private const val NAME = "ag_minimal_prefs"
         private const val LAST_FETCH_DATE = "last_fetch_date"
         private const val EXPOSURE_SUMMARY = "exposure_summary"
-        private const val FIRST_LAUNCH = "first_launch"
         private const val ONBOARDING_FINISHED = "onboarding_finished"
     }
 }

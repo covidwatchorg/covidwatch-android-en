@@ -5,10 +5,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.covidwatch.android.R
 import org.covidwatch.android.data.FirstTimeUser
-import org.covidwatch.android.data.Setup
-import org.covidwatch.android.data.UserFlow
 import org.covidwatch.android.data.UserFlowRepository
-import org.covidwatch.android.domain.*
+import org.covidwatch.android.domain.TestedRepository
+import org.covidwatch.android.ui.event.Event
 
 class HomeViewModel(
     private val userFlowRepository: UserFlowRepository,
@@ -26,11 +25,8 @@ class HomeViewModel(
     private val _warningBannerState = MutableLiveData<WarningBannerState>()
     val warningBannerState: LiveData<WarningBannerState> get() = _warningBannerState
 
-    private val _userFlow = MutableLiveData<UserFlow>()
-    val userFlow: LiveData<UserFlow> get() = _userFlow
-
-    private val _isRefreshing = MediatorLiveData<Boolean>()
-    val isRefreshing: LiveData<Boolean> get() = _isRefreshing
+    private val _navigateToOnboardingEvent = MutableLiveData<Event<Unit>>()
+    val navigateToOnboardingEvent: LiveData<Event<Unit>> get() = _navigateToOnboardingEvent
 
     private val hasPossiblyInteractedWithInfected: LiveData<Boolean> = MutableLiveData()
 
@@ -65,17 +61,12 @@ class HomeViewModel(
     fun onStart() {
         val userFlow = userFlowRepository.getUserFlow()
         if (userFlow is FirstTimeUser) {
-            userFlowRepository.markFirstLaunch()
+            _navigateToOnboardingEvent.value = Event(Unit)
+            return
         }
-        if (userFlow !is Setup) {
-            checkIfUserTestedPositive()
-            ensureTcnIsStarted()
-        }
-        _userFlow.value = userFlow
-    }
 
-    fun onRefreshRequested() {
-        TODO()
+        checkIfUserTestedPositive()
+        ensureTcnIsStarted()
     }
 
     private fun checkIfUserTestedPositive() {

@@ -83,19 +83,14 @@
     <string name="menu_button_content_descriptor">Menu button</string>
     <string name="people_bluetooth_connection_content_descriptor">People connecting over bluetooth</string>
     <string name="female_superhero_content_descriptor">Female superhero</string>
-    <string name="share_the_app">Share the app</string>
-    <string name="text_for_covid_text">Tested for COVID-19?</string>
-    <string name="you_re_all_set_title">You’re all set!</string>
-    <string name="thank_you_text">Thank you for helping protect your communities. You will be notified of potential contact to COVID-19..</string>
+    <string name="share_app_button">Share the app</string>
+    <string name="notify_others_button">Notify Others</string>
+    <string name="notify_others_button_text">Share your result anonymously to help your community stay safe.</string>
     <string name="welcome_back_title">Welcome Back!</string>
-    <string name="not_detected_text">Covid Watch has not detected exposure to COVID-19. Share the app with family and friends to help your community stay safe.</string>
     <string name="detected_thank_you_text">Thank you for helping your community stay safe, anonymously.</string>
-    <string name="main_subtext_1">It works best when everyone uses it.</string>
-    <string name="main_subtext_2">Share your result anonymously to help your community stay safe.</string>
     <string name="contact_alert_text">You may have been in contact with COVID-19</string>
     <string name="reported_alert_text">You reported that you tested positive for COVID-19</string>
     <string name="share_intent_text">Help your community stay safe, anonymously:</string>
-    <string name="reported_tested_positive_text">Thank you for helping your community stay safe, anonymously.</string>
     <string name="covid_title">COVID-19</string>
     <string name="risk_subtitle">Potential Risk</string>
     <string name="risk_description">of infection based on your anonymous exposure logs</string>
@@ -159,5 +154,15 @@
     <string name="how_it_works">HOW IT WORKS</string>
     <string name="continue_setup_button">Continue Setup</string>
     <string name="generic_error_message">Internal error, please try again.</string>
+
+    <!-- Home Screen-->
+    <string name="days_text">days</string>
+    <string name="days_subtext">since last exposure</string>
+    <string name="total_exposures_text">total exposures</string>
+    <string name="total_exposures_subtext">in the last 14 days</string>
+    <string name="high_risk_score_text">high risk score</string>
+    <string name="high_risk_score_subtext">(0–100 scale)</string>
+    <string name="my_possible_exposures_title">My Possible Exposures</string>
+    <string name="my_exposures_empty_state">Thank you for installing the app. You will be notified of possible exposure to COVID-19, so come back later to review your updated exposure status.</string>
 
 </resources>
