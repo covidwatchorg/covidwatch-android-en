@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.databinding.FragmentExposuresBinding
-import org.covidwatch.android.extension.observe
+import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -32,7 +32,7 @@ class ExposuresFragment : BaseFragment<FragmentExposuresBinding>() {
             }
         }
         with(exposuresViewModel) {
-            observe(showExposureDetails) {
+            observeEvent(showExposureDetails) {
                 val action = ExposuresFragmentDirections.actionHomeFragmentToExposureDetails(it)
                 findNavController().navigate(action)
             }
