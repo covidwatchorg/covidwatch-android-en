@@ -37,7 +37,7 @@ task clean(type: Delete) {
 
 sonarqube {
     properties {
-        property "sonar.projectKey", "covid19risk_covidwatch-android"
+        property "sonar.projectKey", "covid19risk_covidwatch-android-en"
         property "sonar.organization", "covid19risk"
         property "sonar.host.url", "https://sonarcloud.io"
     }
@@ -49,7 +49,7 @@ subprojects {
     if ( project.path != ":tcn-client-android") {
         sonarqube {
             properties {
-                property "sonar.projectKey", "covid19risk_covidwatch-android:${project.name}"
+                property "sonar.projectKey", "covid19risk_covidwatch-android-en:${project.name}"
                 property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/debug/jacoco.xml,${buildDir}/reports/jacoco/release/jacoco.xml,${buildDir}/reports/jacocoCombined/debug/jacoco.xml"
                 property 'sonar.androidLint.reportPaths', "${buildDir}/reports/lint-results.xml"
             }
