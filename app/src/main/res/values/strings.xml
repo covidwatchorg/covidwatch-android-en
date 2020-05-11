@@ -144,6 +144,7 @@
     <string name="exposure_risk_icon_description">High risk of exposure</string>
 
     <!-- Firebase logging -->
-    <string name="sent_infection_notification">sent_infection_notification</string>
+    <string name="sent_infection_notification_to_phone">sent_infection_notification_to_phone</string>
     <string name="successfully_pulled_keys_from_firebase">successfully_pulled_keys_from_firebase</string>
+    <string name="uploaded_infection_info_from_phone_to_firebase">uploaded_infection_info_from_phone_to_firebase</string>
 </resources>

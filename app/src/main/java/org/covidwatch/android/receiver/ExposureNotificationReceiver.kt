@@ -26,7 +26,7 @@ class ExposureNotificationReceiver : BroadcastReceiver() {
         when (intent?.action) {
             ExposureNotificationClient.ACTION_EXPOSURE_STATE_UPDATED -> {
                 GlobalScope.launchUseCase(updateExposureStateUseCase)
-                sendEvent(context!!.getString(R.string.sent_infection_notification))
+                sendEvent(context!!.getString(R.string.sent_infection_notification_to_phone))
             }
             ExposureNotificationClient.ACTION_REQUEST_DIAGNOSIS_KEYS -> {
                 //Get diagnosis key from server?

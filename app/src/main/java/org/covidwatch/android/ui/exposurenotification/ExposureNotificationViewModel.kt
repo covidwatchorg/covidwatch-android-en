@@ -19,6 +19,7 @@ import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
 import org.covidwatch.android.extension.doOnNext
 import org.covidwatch.android.extension.launchUseCase
 import org.covidwatch.android.functional.Either
+import org.covidwatch.android.sendEvent
 
 class ExposureNotificationViewModel(
     private val enManager: ExposureNotificationManager,
@@ -56,6 +57,7 @@ class ExposureNotificationViewModel(
                             phaNumber
                         )
                     diagnosisRepository.uploadDiagnosisKeys(positiveDiagnosis)
+                    sendEvent("uploaded_infection_info_from_phone_to_firebase")
                 }
             }
         }
