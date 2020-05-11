@@ -10,7 +10,7 @@ import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.functional.Either
 import org.covidwatch.android.ui.event.Event
 
-class OnboardingFinishViewModel(
+class EnableExposureNotificationsViewModel(
     private val exposureNotificationManager: ExposureNotificationManager
 ) : ViewModel() {
 
