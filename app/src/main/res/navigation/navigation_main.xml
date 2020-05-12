@@ -118,4 +118,9 @@
         android:name="org.covidwatch.android.ui.onboarding.EnableExposureNotificationsFragment"
         android:label="EnableExposureNotificationsFragment"
         tools:layout="@layout/fragment_enable_exposure_notifications" />
+    <fragment
+        android:id="@+id/exposuresFragment"
+        android:name="org.covidwatch.android.ui.exposures.ExposuresFragment"
+        android:label="ExposuresFragment"
+        tools:layout="@layout/fragment_exposures" />
 </navigation>

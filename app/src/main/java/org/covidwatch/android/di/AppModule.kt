@@ -21,7 +21,6 @@ import org.covidwatch.android.domain.TestedRepository
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.ui.exposurenotification.ExposureNotificationViewModel
 import org.covidwatch.android.ui.exposures.ExposuresViewModel
-import org.covidwatch.android.ui.home.EnsureTcnIsStartedUseCase
 import org.covidwatch.android.ui.home.HomeViewModel
 import org.covidwatch.android.ui.onboarding.EnableExposureNotificationsViewModel
 import org.covidwatch.android.ui.settings.SettingsViewModel
@@ -100,17 +99,11 @@ val appModule = module {
         )
     }
 
-    factory {
-        EnsureTcnIsStartedUseCase(
-            context = androidContext()
-        )
-    }
-
     viewModel {
         HomeViewModel(
             userFlowRepository = get(),
             testedRepository = get(),
-            ensureTcnIsStartedUseCase = get()
+            preferenceStorage = get()
         )
     }
 

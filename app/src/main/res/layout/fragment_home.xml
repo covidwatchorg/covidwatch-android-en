@@ -1,122 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="none">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            style="@style/Widget.MaterialComponents.Toolbar.Surface"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:logo="@drawable/ic_california_logo"
+            app:menu="@menu/menu_home" />
+
+        <TextView
+            android:id="@+id/warning_banner"
+            style="@style/AlertBanner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="32dp">
+            android:background="@color/tangerine"
+            android:visibility="gone"
+            tools:text="You may have been in contact with COVID-19"
+            tools:visibility="visible" />
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                style="@style/Widget.MaterialComponents.Toolbar.Surface"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:logo="@drawable/ic_cw_brandmark_blue"
-                app:menu="@menu/menu_home" />
+        <TextView
+            android:id="@+id/info_banner"
+            style="@style/AlertBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/aqua"
+            android:visibility="gone"
+            tools:text="Turn Bluetooth on for  this device"
+            tools:visibility="visible" />
 
-            <TextView
-                android:id="@+id/warning_banner"
-                style="@style/AlertBanner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/tangerine"
-                android:visibility="gone"
-                tools:text="You may have been in contact with COVID-19"
-                tools:visibility="visible" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_onboarding_start"
+            app:srcCompat="@drawable/ic_family" />
 
-            <TextView
-                android:id="@+id/info_banner"
-                style="@style/AlertBanner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/aqua"
-                android:visibility="gone"
-                tools:text="Turn Bluetooth on for  this device"
-                tools:visibility="visible" />
+        <TextView
+            style="@style/TextView.ScreenTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginTop="@dimen/padding_normal"
+            android:text="@string/my_possible_exposures_title" />
 
-            <ImageView
-                android:id="@+id/test_delete"
-                android:layout_width="300sp"
-                android:layout_height="300dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
-                app:srcCompat="@drawable/ic_woman_hero" />
+        <include
+            android:id="@+id/exposure_summary"
+            layout="@layout/exposure_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginVertical="@dimen/padding_small" />
 
-            <TextView
-                android:id="@+id/home_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:paddingHorizontal="32dp"
-                android:text="@string/you_re_all_set_title"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textSize="30sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/notify_others_button_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:text="@string/notify_others_button_question"
+            android:textAlignment="center" />
 
-            <TextView
-                android:id="@+id/home_subtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:paddingHorizontal="32dp"
-                android:text="@string/thank_you_text" />
+        <Button
+            android:id="@+id/notify_others_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:text="@string/notify_others_button"
+            android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/share_app_button"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginHorizontal="32dp"
-                android:layout_marginTop="24dp"
-                android:backgroundTint="@color/bluejay"
-                android:text="@string/share_the_app"
-                android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/notify_others_button_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:text="@string/notify_others_button_text"
+            android:textAlignment="center" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="32dp"
-                android:text="@string/main_subtext_1"
-                android:textAlignment="center" />
+        <Button
+            android:id="@+id/share_app_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginTop="@dimen/padding_normal"
+            android:text="@string/share_app_button" />
 
-            <Button
-                android:id="@+id/tested_button"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginHorizontal="32dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/text_for_covid_text" />
+        <TextView
+            android:id="@+id/tester_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingHorizontal="32dp"
+            android:textAlignment="center"
+            android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/tested_button_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="32dp"
-                android:text="@string/main_subtext_2"
-                android:textAlignment="center" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/tester_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="32dp"
-                android:layout_marginTop="16dp"
-                android:text=""
-                android:visibility = "gone"
-                android:textAlignment="center" />
-        </LinearLayout>
-    </ScrollView>
-
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <include layout="@layout/powered_by" />
+    </LinearLayout>
+</ScrollView>
