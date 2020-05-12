@@ -9,6 +9,8 @@ import org.covidwatch.android.data.AppDatabase
 import org.covidwatch.android.data.FirebaseService
 import org.covidwatch.android.data.TestedRepositoryImpl
 import org.covidwatch.android.data.UserFlowRepository
+import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenLocalSource
+import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.exposureinformation.ExposureInformationLocalSource
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRemoteSource
@@ -76,6 +78,13 @@ val appModule = module {
     }
     single { ExposureInformationLocalSource(database = get()) }
     single { ExposureInformationRepository(local = get()) }
+
+    single {
+        val appDatabase: AppDatabase = get()
+        appDatabase.diagnosisKeysTokenDao()
+    }
+    single { DiagnosisKeysTokenLocalSource(keysTokenDao = get()) }
+    single { DiagnosisKeysTokenRepository(local = get()) }
 
     factory {
         ProvideDiagnosisKeysUseCase(
