@@ -76,7 +76,6 @@ class ExposureNotificationFragment : Fragment() {
                     }
                 }
                 R.id.action_start_stop -> exposureNotificationViewModel.startStopService()
-                R.id.action_reset -> exposureNotificationViewModel.resetAllData()
             }
 
             true

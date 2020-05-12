@@ -1,6 +1,5 @@
 package org.covidwatch.android.exposurenotification
 
-import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import org.covidwatch.android.extension.await
@@ -11,10 +10,7 @@ class ExposureNotificationManager(
 ) {
 
     /* API */
-    suspend fun start() =
-        exposureNotification.start(
-            ExposureConfiguration.ExposureConfigurationBuilder().build()
-        ).awaitWithStatus()
+    suspend fun start() = exposureNotification.start().awaitWithStatus()
 
     suspend fun temporaryExposureKeyHistory() =
         exposureNotification.temporaryExposureKeyHistory.awaitWithStatus()
@@ -25,8 +21,6 @@ class ExposureNotificationManager(
     suspend fun stop() = exposureNotification.stop().awaitWithStatus()
 
     suspend fun isEnabled() = exposureNotification.isEnabled.awaitWithStatus()
-
-    suspend fun resetAllData() = exposureNotification.resetAllData().awaitWithStatus()
 
     suspend fun getMaxDiagnosisKeys() = exposureNotification.maxDiagnosisKeyCount.await()
 

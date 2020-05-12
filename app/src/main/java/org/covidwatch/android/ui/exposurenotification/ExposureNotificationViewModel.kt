@@ -93,12 +93,6 @@ class ExposureNotificationViewModel(
         }
     }
 
-    fun resetAllData() {
-        viewModelScope.launch {
-            enManager.resetAllData()
-        }
-    }
-
     private suspend fun <R : ENStatus, L> Either<R, L>.success(block: suspend (value: L) -> Unit = {}) {
         right?.let { block(it) }
         left?.let { handleError(it) }
