@@ -13,4 +13,5 @@ class DiagnosisKeysTokenLocalSource(private val keysTokenDao: DiagnosisKeysToken
         keysTokenDao.delete(tokens)
 
     suspend fun findByToken(token: String) = keysTokenDao.findByToken(token)
+    suspend fun deleteByToken(token: String) = keysTokenDao.deleteByToken(token)
 }

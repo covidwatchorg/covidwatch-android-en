@@ -37,13 +37,14 @@ class ExposureNotificationManager(
 
     suspend fun isEnabled() = exposureNotification.isEnabled.awaitWithStatus()
 
-    suspend fun provideDiagnosisKeys(keys: List<File>) =
+    suspend fun provideDiagnosisKeys(keys: List<File>, token: String) =
         exposureNotification.provideDiagnosisKeys(
             keys,
             //TODO: Use a proper configuration source
             ExposureConfiguration.ExposureConfigurationBuilder().build(),
-            randomToken
+            token
         ).await()
 
-    suspend fun getExposureSummary() = exposureNotification.getExposureSummary(token).await()
+    suspend fun getExposureSummary(token: String) =
+        exposureNotification.getExposureSummary(token).await()
 }

@@ -13,6 +13,8 @@ class DiagnosisKeysTokenRepository(private val local: DiagnosisKeysTokenLocalSou
 
     suspend fun setExposed(token: String) {
         val exposedToken = local.findByToken(token).copy(potentialExposure = true)
-        update(exposedToken)
+        local.update(exposedToken)
     }
+
+    suspend fun delete(token: String) = local.deleteByToken(token)
 }

@@ -12,4 +12,7 @@ interface DiagnosisKeysTokenDao : BaseDao<DiagnosisKeysToken> {
 
     @Query("SELECT * FROM diagnosis_keys_token WHERE token = :token")
     suspend fun findByToken(token: String): DiagnosisKeysToken
+
+    @Query("DELETE FROM diagnosis_keys_token WHERE token = :token")
+    suspend fun deleteByToken(token: String)
 }
