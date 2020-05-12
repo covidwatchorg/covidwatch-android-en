@@ -20,8 +20,9 @@ import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
 import org.covidwatch.android.domain.TestedRepository
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.ui.exposurenotification.ExposureNotificationViewModel
-import org.covidwatch.android.ui.home.EnsureTcnIsStartedUseCase
+import org.covidwatch.android.ui.exposures.ExposuresViewModel
 import org.covidwatch.android.ui.home.HomeViewModel
+import org.covidwatch.android.ui.onboarding.EnableExposureNotificationsViewModel
 import org.covidwatch.android.ui.settings.SettingsViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -47,6 +48,13 @@ val appModule = module {
             exposureInformationRepository = get(),
             provideDiagnosisKeysUseCase = get(),
             preferenceStorage = get()
+        )
+    }
+
+    viewModel {
+        ExposuresViewModel(
+            enManager = get(),
+            exposureInformationRepository = get()
         )
     }
 
@@ -91,17 +99,11 @@ val appModule = module {
         )
     }
 
-    factory {
-        EnsureTcnIsStartedUseCase(
-            context = androidContext()
-        )
-    }
-
     viewModel {
         HomeViewModel(
             userFlowRepository = get(),
             testedRepository = get(),
-            ensureTcnIsStartedUseCase = get()
+            preferenceStorage = get()
         )
     }
 
@@ -116,4 +118,12 @@ val appModule = module {
             preferences = get()
         ) as TestedRepository
     }
+
+    // Onboarding start
+
+    viewModel {
+        EnableExposureNotificationsViewModel(exposureNotificationManager = get())
+    }
+
+    // Onboarding end
 }

@@ -17,9 +17,7 @@
     <string name="notification_current_user_was_exposed">You have been notified</string>
 
     <!--  FROM THE UX REPO  -->
-    <string name="splash_text">Help your community stay safe, anonymously.</string>
     <string name="start">Start</string>
-    <string name="grant_location_access">Grant Location Access</string>
 
     <string name="onboarding_button">Let\'s do this!</string>
     <string name="onboarding_steps">Protect your privacy and your community with just 3 steps.</string>
@@ -30,7 +28,7 @@
     <string name="share_subj">Secure COVID-19 contact alert app</string>
     <string name="share_body">I found this privacy-aware COVID-19 app that doesn\'t upload any information.</string>
 
-    <string name="date">Date</string>
+    <string name="exposure_information_date">Date</string>
     <string name="datepicker">datePicker</string>
     <string name="textView" />
     <string name="disclaimer"><![CDATA[By clicking Report, you acknowledge, understand and further agree to our Privacy Policy and Terms & Conditions]]></string>
@@ -72,8 +70,6 @@
 
     <string name="issues_needs_to_be_resolved">The following issue(s) need to be resolved for the app to work properly</string>
     <string name="turn_on_bluetooth">Turn on Bluetooth</string>
-    <string name="turn_bluetooth_on">Turn Bluetooth on for this device</string>
-    <string name="allow_location_access">Allow Location Access to this device</string>
     <string name="turn_on_bluetooth_subtext">Bluetooth is required for this app to work</string>
     <string name="location_access_on">Location Access On</string>
 
@@ -81,25 +77,12 @@
     <string name="stanford_university">Stanford University</string>
 
     <string name="bluetooth_explanation_subtext">Apps using Bluetooth® Low Energy (BLE) are required to have location access enabled.</string>
-    <string name="bluetooth_explanation_text">We use Bluetooth to anonymously log interactions with other Covid Watch users. Your personal data is always private and never shared.</string>
-    <string name="bluetooth_explanation_title">Privately Connect</string>
     <string name="logo_image_content_descriptor">Logo image</string>
     <string name="menu_button_content_descriptor">Menu button</string>
     <string name="people_bluetooth_connection_content_descriptor">People connecting over bluetooth</string>
     <string name="female_superhero_content_descriptor">Female superhero</string>
-    <string name="share_the_app">Share the app</string>
-    <string name="text_for_covid_text">Tested for COVID-19?</string>
-    <string name="you_re_all_set_title">You’re all set!</string>
-    <string name="thank_you_text">Thank you for helping protect your communities. You will be notified of potential contact to COVID-19..</string>
     <string name="welcome_back_title">Welcome Back!</string>
-    <string name="not_detected_text">Covid Watch has not detected exposure to COVID-19. Share the app with family and friends to help your community stay safe.</string>
     <string name="detected_thank_you_text">Thank you for helping your community stay safe, anonymously.</string>
-    <string name="main_subtext_1">It works best when everyone uses it.</string>
-    <string name="main_subtext_2">Share your result anonymously to help your community stay safe.</string>
-    <string name="contact_alert_text">You may have been in contact with COVID-19</string>
-    <string name="reported_alert_text">You reported that you tested positive for COVID-19</string>
-    <string name="share_intent_text">Help your community stay safe, anonymously:</string>
-    <string name="reported_tested_positive_text">Thank you for helping your community stay safe, anonymously.</string>
     <string name="covid_title">COVID-19</string>
     <string name="risk_subtitle">Potential Risk</string>
     <string name="risk_description">of infection based on your anonymous exposure logs</string>
@@ -138,6 +121,8 @@
     <string name="notification_channel_description">Exposure notification alerts.</string>
     <string name="menu">Menu</string>
     <string name="powered_by">Powered by</string>
+
+    <!-- POSSIBLE EXPOSURES-->
     <string name="title_exposures">Possible Exposures</string>
     <string name="exposures_subtitle">You will be notified if you are exposed to COVID-19</string>
     <string name="switch_exposure_notifications">Enable Exposure Notifications</string>
@@ -147,4 +132,65 @@
     <string name="sent_infection_notification_to_phone">sent_infection_notification_to_phone</string>
     <string name="successfully_pulled_keys_from_firebase">successfully_pulled_keys_from_firebase</string>
     <string name="uploaded_infection_info_from_phone_to_firebase">uploaded_infection_info_from_phone_to_firebase</string>
+
+    <string name="exposure_info_explanation">Exposure notifications are saved in this app and you can access them any time in the future</string>
+
+    <!-- EXPOSURE DETAILS-->
+    <string name="title_exposure_details">Possible Exposure</string>
+    <string name="exposure_details_subtitle">You were near someone who has shared a <b>positive</b> and <b>verified</b> diagnosis of COVID-19.</string>
+    <string name="details">Details</string>
+    <string name="btn_share_positive_diagnosis">Share a Positive Diagnosis</string>
+    <string name="btn_find_covid_test_site">Find COVID-19 Test Site</string>
+    <string name="exposure_information_date_title">Date</string>
+    <string name="exposure_information_duration_title">Duration</string>
+    <string name="exposure_information_duration_text">%d min</string>
+    <string name="exposure_information_attenuation_title">Attenuation</string>
+    <string name="exposure_information_attenuation_text">%d db</string>
+    <string name="exposure_information_total_risk_title">Total Risk Score</string>
+    <string name="low_total_exposure_risk">Low: %d of 100</string>
+    <string name="middle_total_exposure_risk">Middle: %d of 100</string>
+    <string name="high_total_exposure_risk">High: %d of 100</string>
+    <string name="exposure_information_transmission_risk_title">Transmission Risk</string>
+    <string name="exposure_information_transmission_risk_text">%d of 8</string>
+    <string name="share_positive_diagnosis_btn_explanation">Share your result anonymously to help your community stay safe.</string>
+    <string name="next_steps">Next Steps</string>
+
+    <!--  Onboarding  -->
+    <string name="splash_screen_title">The power to stop COVID-19 in the palm of your hand.</string>
+    <string name="get_started_button">Get Started</string>
+    <string name="onboarding_welcome_title">Welcome to the {UCSF Health Covid Watch} App</string>
+    <string name="onboarding_welcome_subtitle">Welcome Text. Aliquet urna feugiat donec dictum. Massa dignissim commodo ut et.  Massa dignissim commodo ut et.</string>
+    <string name="always_anonymous_title">Always Anonymous</string>
+    <string name="always_anonymous_subtitle">While Sam and Jane chat, their phones note each others’ anonymous signals and store them securely.</string>
+    <string name="diagnosis_reports_title">Diagnosis Reports</string>
+    <string name="diagnosis_reports_subtitle">A few days later, Sam tests positive for COVID-19. He enters the verified results into the Covid Watch app.</string>
+    <string name="exposure_alerts_title">Exposure Alerts</string>
+    <string name="exposure_alerts_subtitle">Jane’s phone gets an alert that someone she’s seen has now tested positive. The app tells her how to take action.</string>
+    <string name="safe_communities_title">Safe Communities</string>
+    <string name="safe_communities_subtitle">Jane and Sam help keep their communities safe. They share the app so that others can, too.</string>
+    <string name="enable_exposure_notifications_title">Enable Exposure Notifications</string>
+    <string name="enable_exposure_notifications_subtitle">These notifications are designed to notify you if you’ve been exposed to a user who later reports themselves as testing positive for COVID-19. You can choose to turn off these notifications at any time. Exposure notifications rely on the sharing and collection of random IDs. These IDs are a random string of numbers that won’t identify you to other users and change many times a day to protect your privacy.</string>
+    <string name="enable_button">Enable</string>
+    <string name="not_now_button">Not now</string>
+    <string name="how_it_works">HOW IT WORKS</string>
+    <string name="continue_setup_button">Continue Setup</string>
+    <string name="generic_error_message">Internal error, please try again.</string>
+
+    <!-- Home Screen-->
+    <string name="days_text">days</string>
+    <string name="days_subtext">since last exposure</string>
+    <string name="total_exposures_text">total exposures</string>
+    <string name="total_exposures_subtext">in the last 14 days</string>
+    <string name="high_risk_score_text">high risk score</string>
+    <string name="high_risk_score_subtext">(1–8 scale)</string>
+    <string name="my_possible_exposures_title">My Possible Exposures</string>
+    <string name="empty_exposure_summary">0</string>
+    <string name="share_app_button">Share the app</string>
+    <string name="notify_others_button_question">Got a positive diagnosis?</string>
+    <string name="notify_others_button">Notify Others</string>
+    <string name="notify_others_button_text">Share your result anonymously to help your community stay safe.</string>
+    <string name="contact_alert_text">You may have been in contact with COVID-19</string>
+    <string name="reported_alert_text">You reported that you tested positive for COVID-19</string>
+    <string name="share_intent_text">Help your community stay safe, anonymously:</string>
+
 </resources>

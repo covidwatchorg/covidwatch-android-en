@@ -7,13 +7,8 @@ class UserFlowRepository(
     private val prefs: PreferenceStorage
 ) {
     fun getUserFlow() = when {
-        !prefs.onboardingFinished -> Setup
-        prefs.firstLaunch -> FirstTimeUser
+        !prefs.onboardingFinished -> FirstTimeUser
         else -> ReturnUser
-    }
-
-    fun markFirstLaunch() {
-        prefs.firstLaunch = false
     }
 
     fun finishOnboarding() {

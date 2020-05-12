@@ -10,6 +10,7 @@ import org.covidwatch.android.data.exposureinformation.ExposureInformationReposi
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.functional.Either
+import org.covidwatch.android.ui.event.Event
 
 class ExposuresViewModel(
     private val enManager: ExposureNotificationManager,
@@ -18,6 +19,9 @@ class ExposuresViewModel(
 
     private val _exposureNotificationEnabled = MutableLiveData<Boolean>()
     val exposureNotificationEnabled: LiveData<Boolean> = _exposureNotificationEnabled
+
+    private val _showExposureDetails = MutableLiveData<Event<CovidExposureInformation>>()
+    val showExposureDetails: LiveData<Event<CovidExposureInformation>> = _showExposureDetails
 
     val exposureInfo: LiveData<List<CovidExposureInformation>> =
         exposureInformationRepository.exposureInformation()
@@ -43,7 +47,7 @@ class ExposuresViewModel(
     }
 
     fun showExposureDetails(exposureInformation: CovidExposureInformation) {
-        TODO()
+        _showExposureDetails.value = Event(exposureInformation)
     }
 
     private fun <R : ENStatus, L> Either<R, L>.result(): L? {
