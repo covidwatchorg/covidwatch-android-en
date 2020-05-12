@@ -12,6 +12,7 @@ object DateFormatter {
             if (locale == Locale.getDefault()) {
                 return field
             }
+            locale = Locale.getDefault()
             return SimpleDateFormat(DATE_PATTERN, locale).also { field = it }
         }
 
