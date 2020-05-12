@@ -11,7 +11,7 @@ internal const val ONBOARDING_PAGE_PARAMETERS_KEY = "ONBOARDING_PAGE_PARAMETERS_
 
 class OnboardingPageFragment : BaseFragment<FragmentOnboardingPageBinding>() {
 
-    override fun binding(
+    override fun bind(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentOnboardingPageBinding =

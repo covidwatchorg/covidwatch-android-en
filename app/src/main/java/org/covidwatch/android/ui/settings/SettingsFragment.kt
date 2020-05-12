@@ -27,7 +27,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(),
 
     private val bluetoothAdapter: BluetoothAdapter? by lazy { BluetoothAdapter.getDefaultAdapter() }
 
-    override fun binding(inflater: LayoutInflater, container: ViewGroup?): FragmentSettingsBinding =
+    override fun bind(inflater: LayoutInflater, container: ViewGroup?): FragmentSettingsBinding =
         FragmentSettingsBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

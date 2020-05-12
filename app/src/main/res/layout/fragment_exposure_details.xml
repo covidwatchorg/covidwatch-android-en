@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="org.covidwatch.android.ui.ItemBindings" />
+
+        <variable
+            name="exposureInformation"
+            type="org.covidwatch.android.data.CovidExposureInformation" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="org.covidwatch.android.ui.exposurenotification.ExposureNotificationFragment">
+
+        <ImageView
+            android:id="@+id/btn_close"
+            style="@style/ImageView.BtnClose"
+            android:paddingHorizontal="@dimen/padding_content"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            style="@style/TextView.ScreenTitle"
+            android:paddingHorizontal="@dimen/padding_content"
+            android:text="@string/title_exposure_details"
+            android:textColor="@color/tangerine" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/padding_content"
+            android:layout_weight="1"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/padding_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/details"
+                    android:textSize="@dimen/big_font_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/TextView.ScreenSubtitle"
+                    android:text="@string/exposure_details_subtitle" />
+
+                <include
+                    layout="@layout/exposure_information_details"
+                    app:exposureInformation="@{exposureInformation}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/padding_content"
+                    android:text="@string/next_steps"
+                    android:textSize="@dimen/big_font_size"
+                    android:textStyle="bold" />
+
+                <!--TODO: Change to dynamic inserting of data or use real static data-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/padding_content"
+                        android:drawableStart="@drawable/next_step_bullet_point"
+                        android:drawablePadding="@dimen/padding_content"
+                        android:text="Varius non, quis fermentum, feugiat maecenas eu." />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/padding_content"
+                        android:drawableStart="@drawable/next_step_bullet_point"
+                        android:drawablePadding="@dimen/padding_content"
+                        android:text="Varius non, quis fermentum, feugiat maecenas eu." />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_share_positive_diagnosis"
+                    style="@style/Button.Action"
+                    android:layout_marginTop="@dimen/padding_content"
+                    android:text="@string/btn_share_positive_diagnosis" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/small_padding_content"
+                    android:text="@string/share_positive_diagnosis_btn_explanation" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_find_test_site"
+                    style="@style/Button.Action"
+                    android:text="@string/btn_find_covid_test_site" />
+
+                <include
+                    android:id="@+id/powered_by"
+                    layout="@layout/powered_by"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

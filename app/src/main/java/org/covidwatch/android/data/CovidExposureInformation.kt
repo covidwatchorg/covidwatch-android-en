@@ -6,6 +6,7 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import org.covidwatch.android.R
+import java.io.Serializable
 
 @Entity(tableName = "exposure_information")
 data class CovidExposureInformation(
@@ -16,7 +17,7 @@ data class CovidExposureInformation(
     val totalRiskScore: Int,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
-) {
+) : Serializable {
 
     @Ignore
     @StringRes
@@ -32,9 +33,9 @@ data class CovidExposureInformation(
 }
 
 fun ExposureInformation.toCovidExposureInformation() = CovidExposureInformation(
-    dateMillisSinceEpoch,
-    durationMinutes,
-    attenuationValue,
-    transmissionRiskLevel,
-    totalRiskScore
+    dateMillisSinceEpoch = dateMillisSinceEpoch,
+    durationMinutes = durationMinutes,
+    attenuationValue = attenuationValue,
+    transmissionRiskLevel = transmissionRiskLevel,
+    totalRiskScore = totalRiskScore
 )

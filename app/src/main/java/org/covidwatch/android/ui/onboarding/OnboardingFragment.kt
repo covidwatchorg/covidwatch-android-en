@@ -28,7 +28,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
         }
     }
 
-    override fun binding(
+    override fun bind(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentOnboardingBinding = FragmentOnboardingBinding.inflate(inflater, container, false)

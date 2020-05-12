@@ -63,6 +63,14 @@
             app:layout_constraintTop_toBottomOf="@id/exposure_summary"
             tools:listitem="@layout/item_exposure" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_content"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/padding_content"
+            android:text="@string/exposure_info_explanation" />
+
         <include
             android:id="@+id/powered_by"
             layout="@layout/powered_by"

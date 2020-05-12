@@ -13,11 +13,12 @@ import org.covidwatch.android.ui.BaseFragment
 import org.covidwatch.android.ui.event.EventObserver
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class EnableExposureNotificationsFragment : BaseFragment<FragmentEnableExposureNotificationsBinding>() {
+class EnableExposureNotificationsFragment :
+    BaseFragment<FragmentEnableExposureNotificationsBinding>() {
 
     private val enableExposureNotificationsViewModel: EnableExposureNotificationsViewModel by viewModel()
 
-    override fun binding(
+    override fun bind(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentEnableExposureNotificationsBinding =
@@ -33,15 +34,17 @@ class EnableExposureNotificationsFragment : BaseFragment<FragmentEnableExposureN
             findNavController().popBackStack(R.id.homeFragment, false)
         }
 
-        enableExposureNotificationsViewModel.exposureNotificationResult.observe(viewLifecycleOwner, EventObserver {
-            val enStatus = it.left
-            if (enStatus == ENStatus.SUCCESS) {
-                findNavController().popBackStack(R.id.homeFragment, false)
-                return@EventObserver
-            }
+        enableExposureNotificationsViewModel.exposureNotificationResult.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                val enStatus = it.left
+                if (enStatus == ENStatus.SUCCESS) {
+                    findNavController().popBackStack(R.id.homeFragment, false)
+                    return@EventObserver
+                }
 
-            showError(enStatus)
-        })
+                showError(enStatus)
+            })
     }
 
     private fun showError(enStatus: ENStatus?) {
