@@ -19,7 +19,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val homeViewModel: HomeViewModel by viewModel()
 
-    override fun binding(inflater: LayoutInflater, container: ViewGroup?): FragmentHomeBinding =
+    override fun bind(inflater: LayoutInflater, container: ViewGroup?): FragmentHomeBinding =
         FragmentHomeBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
