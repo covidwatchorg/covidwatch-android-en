@@ -1,24 +1,25 @@
 package org.covidwatch.android.ui.home
 
-import androidx.lifecycle.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import org.covidwatch.android.R
+import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.FirstTimeUser
-import org.covidwatch.android.data.Setup
-import org.covidwatch.android.data.UserFlow
 import org.covidwatch.android.data.UserFlowRepository
-import org.covidwatch.android.domain.*
+import org.covidwatch.android.data.pref.PreferenceStorage
+import org.covidwatch.android.domain.TestedRepository
+import org.covidwatch.android.ui.event.Event
 
 class HomeViewModel(
     private val userFlowRepository: UserFlowRepository,
     private val testedRepository: TestedRepository,
-    private val ensureTcnIsStartedUseCase: EnsureTcnIsStartedUseCase
-) : ViewModel(), EnsureTcnIsStartedPresenter {
+    private val preferenceStorage: PreferenceStorage
+) : ViewModel() {
 
-    private val isUserTestedPositive: Boolean get() = testedRepository.isUserTestedPositive()
-    private val _userTestedPositive = MutableLiveData<Unit>()
-    val userTestedPositive: LiveData<Unit> get() = _userTestedPositive
+    private val _isUserTestedPositive = MutableLiveData<Boolean>()
+    val isUserTestedPositive: LiveData<Boolean> get() = _isUserTestedPositive
 
     private val _infoBannerState = MutableLiveData<InfoBannerState>()
     val infoBannerState: LiveData<InfoBannerState> get() = _infoBannerState
@@ -26,68 +27,29 @@ class HomeViewModel(
     private val _warningBannerState = MutableLiveData<WarningBannerState>()
     val warningBannerState: LiveData<WarningBannerState> get() = _warningBannerState
 
-    private val _userFlow = MutableLiveData<UserFlow>()
-    val userFlow: LiveData<UserFlow> get() = _userFlow
+    private val _navigateToOnboardingEvent = MutableLiveData<Event<Unit>>()
+    val navigateToOnboardingEvent: LiveData<Event<Unit>> get() = _navigateToOnboardingEvent
 
-    private val _isRefreshing = MediatorLiveData<Boolean>()
-    val isRefreshing: LiveData<Boolean> get() = _isRefreshing
-
-    private val hasPossiblyInteractedWithInfected: LiveData<Boolean> = MutableLiveData()
-
-    private val interactedWithInfectedObserver =
-        Observer<Boolean> { hasPossiblyInteractedWithInfected ->
-            if (hasPossiblyInteractedWithInfected && !isUserTestedPositive) {
-                _warningBannerState.value = WarningBannerState.Visible(R.string.contact_alert_text)
-            }
+    val exposureSummary: LiveData<CovidExposureSummary>
+        get() = preferenceStorage.observableExposureSummary.map { summary ->
+            summary ?: CovidExposureSummary(0, 0, 0)
         }
-
-    init {
-        hasPossiblyInteractedWithInfected.observeForever(interactedWithInfectedObserver)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        hasPossiblyInteractedWithInfected.removeObserver(interactedWithInfectedObserver)
-    }
-
-    override fun showLocationPermissionBanner() {
-        _infoBannerState.postValue(InfoBannerState.Visible(R.string.allow_location_access))
-    }
-
-    override fun showEnableBluetoothBanner() {
-        _infoBannerState.postValue(InfoBannerState.Visible(R.string.turn_bluetooth_on))
-    }
-
-    override fun hideBanner() {
-        _infoBannerState.postValue(InfoBannerState.Hidden)
-    }
 
     fun onStart() {
         val userFlow = userFlowRepository.getUserFlow()
         if (userFlow is FirstTimeUser) {
-            userFlowRepository.markFirstLaunch()
+            _navigateToOnboardingEvent.value = Event(Unit)
+            return
         }
-        if (userFlow !is Setup) {
-            checkIfUserTestedPositive()
-            ensureTcnIsStarted()
-        }
-        _userFlow.value = userFlow
-    }
 
-    fun onRefreshRequested() {
-        TODO()
+        checkIfUserTestedPositive()
     }
 
     private fun checkIfUserTestedPositive() {
+        val isUserTestedPositive = testedRepository.isUserTestedPositive()
+        _isUserTestedPositive.value = isUserTestedPositive
         if (isUserTestedPositive) {
-            _userTestedPositive.value = Unit
             _warningBannerState.value = WarningBannerState.Visible(R.string.reported_alert_text)
-        }
-    }
-
-    private fun ensureTcnIsStarted() {
-        viewModelScope.launch(Dispatchers.IO) {
-            ensureTcnIsStartedUseCase.execute(this@HomeViewModel)
         }
     }
 }
