@@ -17,6 +17,7 @@ class ExposureNotificationReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent?.action == ExposureNotificationClient.ACTION_EXPOSURE_STATE_UPDATED) {
+            val token = intent.getStringExtra(ExposureNotificationClient.EXTRA_TOKEN)
             GlobalScope.launchUseCase(updateExposureStateUseCase)
         }
     }
