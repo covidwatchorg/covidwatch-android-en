@@ -70,9 +70,9 @@ object RandomEnObjects {
 
     val exposureInformation
         get() = ExposureInformation.ExposureInformationBuilder()
-            .setAttenuationValue(Random.nextInt(255))
+            .setAttenuationValue(Random.nextInt(8))
             .setDateMillisSinceEpoch(Random.nextLong(Date().time, Date().time + 66666))
-            .setDurationMinutes(Random.nextInt(50))
+            .setDurationMinutes(Random.nextInt(10) * 5)
             .setTotalRiskScore(Random.nextInt(8))
             .setTransmissionRiskLevel(Random.nextInt(8))
             .build()
