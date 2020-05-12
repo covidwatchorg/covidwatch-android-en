@@ -103,7 +103,7 @@ val appModule = module {
         HomeViewModel(
             userFlowRepository = get(),
             testedRepository = get(),
-            exposureNotificationManager = get()
+            preferenceStorage = get()
         )
     }
 

@@ -11,32 +11,32 @@
         android:id="@+id/days_since_last_exposure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/empty_exposure_summary"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="01" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/total_exposures"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/empty_exposure_summary"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/days_since_last_exposure"
-        tools:text="13" />
+        app:layout_constraintTop_toBottomOf="@+id/days_since_last_exposure" />
 
     <TextView
         android:id="@+id/high_risk_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/empty_exposure_summary"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="@color/tangerine"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/total_exposures"
-        tools:text="91" />
+        app:layout_constraintTop_toBottomOf="@+id/total_exposures" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier2"

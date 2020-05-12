@@ -132,7 +132,7 @@
     <string name="onboarding_welcome_title">Welcome to the {UCSF Health Covid Watch} App</string>
     <string name="onboarding_welcome_subtitle">Welcome Text. Aliquet urna feugiat donec dictum. Massa dignissim commodo ut et.  Massa dignissim commodo ut et.</string>
     <string name="always_anonymous_title">Always Anonymous</string>
-    <string name="always_anonymous_subtitle">While Sam and Jane chat, their phones note each others’ anonymous signals and list them securely.</string>
+    <string name="always_anonymous_subtitle">While Sam and Jane chat, their phones note each others’ anonymous signals and store them securely.</string>
     <string name="diagnosis_reports_title">Diagnosis Reports</string>
     <string name="diagnosis_reports_subtitle">A few days later, Sam tests positive for COVID-19. He enters the verified results into the Covid Watch app.</string>
     <string name="exposure_alerts_title">Exposure Alerts</string>
@@ -155,8 +155,9 @@
     <string name="high_risk_score_text">high risk score</string>
     <string name="high_risk_score_subtext">(1–8 scale)</string>
     <string name="my_possible_exposures_title">My Possible Exposures</string>
-    <string name="empty_exposure_summary">Thank you for installing the app. You will be notified of possible exposure to COVID-19, so come back later to review your updated exposure status.</string>
+    <string name="empty_exposure_summary">0</string>
     <string name="share_app_button">Share the app</string>
+    <string name="notify_others_button_question">Got a positive diagnosis?</string>
     <string name="notify_others_button">Notify Others</string>
     <string name="notify_others_button_text">Share your result anonymously to help your community stay safe.</string>
     <string name="contact_alert_text">You may have been in contact with COVID-19</string>

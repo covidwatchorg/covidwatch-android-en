@@ -1,24 +1,25 @@
 package org.covidwatch.android.ui.home
 
-import androidx.lifecycle.*
-import com.google.android.gms.nearby.exposurenotification.ExposureSummary
-import kotlinx.coroutines.launch
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import org.covidwatch.android.R
+import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.FirstTimeUser
 import org.covidwatch.android.data.UserFlowRepository
+import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.domain.TestedRepository
-import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.ui.event.Event
 
 class HomeViewModel(
     private val userFlowRepository: UserFlowRepository,
     private val testedRepository: TestedRepository,
-    private val exposureNotificationManager: ExposureNotificationManager
+    private val preferenceStorage: PreferenceStorage
 ) : ViewModel() {
 
-    private val isUserTestedPositive: Boolean get() = testedRepository.isUserTestedPositive()
-    private val _userTestedPositive = MutableLiveData<Unit>()
-    val userTestedPositive: LiveData<Unit> get() = _userTestedPositive
+    private val _isUserTestedPositive = MutableLiveData<Boolean>()
+    val isUserTestedPositive: LiveData<Boolean> get() = _isUserTestedPositive
 
     private val _infoBannerState = MutableLiveData<InfoBannerState>()
     val infoBannerState: LiveData<InfoBannerState> get() = _infoBannerState
@@ -29,26 +30,10 @@ class HomeViewModel(
     private val _navigateToOnboardingEvent = MutableLiveData<Event<Unit>>()
     val navigateToOnboardingEvent: LiveData<Event<Unit>> get() = _navigateToOnboardingEvent
 
-    private val _exposureSummary = MutableLiveData<ExposureSummary>()
-    val exposureSummary: LiveData<ExposureSummary> get() = _exposureSummary
-
-    private val hasPossiblyInteractedWithInfected: LiveData<Boolean> = MutableLiveData()
-
-    private val interactedWithInfectedObserver =
-        Observer<Boolean> { hasPossiblyInteractedWithInfected ->
-            if (hasPossiblyInteractedWithInfected && !isUserTestedPositive) {
-                _warningBannerState.value = WarningBannerState.Visible(R.string.contact_alert_text)
-            }
+    val exposureSummary: LiveData<CovidExposureSummary>
+        get() = preferenceStorage.observableExposureSummary.map { summary ->
+            summary ?: CovidExposureSummary(0, 0, 0)
         }
-
-    init {
-        hasPossiblyInteractedWithInfected.observeForever(interactedWithInfectedObserver)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        hasPossiblyInteractedWithInfected.removeObserver(interactedWithInfectedObserver)
-    }
 
     fun onStart() {
         val userFlow = userFlowRepository.getUserFlow()
@@ -58,20 +43,13 @@ class HomeViewModel(
         }
 
         checkIfUserTestedPositive()
-        getExposureSummary()
     }
 
     private fun checkIfUserTestedPositive() {
+        val isUserTestedPositive = testedRepository.isUserTestedPositive()
+        _isUserTestedPositive.value = isUserTestedPositive
         if (isUserTestedPositive) {
-            _userTestedPositive.value = Unit
             _warningBannerState.value = WarningBannerState.Visible(R.string.reported_alert_text)
-        }
-    }
-
-    private fun getExposureSummary() {
-        viewModelScope.launch {
-            val exposureSummary = exposureNotificationManager.getExposureSummary().right
-            _exposureSummary.value = exposureSummary
         }
     }
 }

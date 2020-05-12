@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,18 +60,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
-            android:layout_marginVertical="@dimen/padding_small"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:layout_marginVertical="@dimen/padding_small" />
 
         <TextView
-            android:id="@+id/empty_exposure_summary"
-            style="@style/ExposureSummary"
+            android:id="@+id/notify_others_button_question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
-            android:layout_marginVertical="@dimen/padding_small"
-            android:text="@string/empty_exposure_summary" />
+            android:text="@string/notify_others_button_question"
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/notify_others_button"

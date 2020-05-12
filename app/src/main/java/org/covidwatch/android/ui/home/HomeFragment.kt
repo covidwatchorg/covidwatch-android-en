@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import org.covidwatch.android.*
+import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.databinding.FragmentHomeBinding
 import org.covidwatch.android.ui.BaseFragment
 import org.covidwatch.android.ui.event.EventObserver
@@ -53,9 +53,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 }
             }
         })
-        homeViewModel.userTestedPositive.observe(viewLifecycleOwner, Observer {
-            updateUiForTestedPositive()
-        })
+        homeViewModel.isUserTestedPositive.observe(viewLifecycleOwner, Observer(::updateUiForTestedPositive))
 
         initClickListeners()
     }
@@ -84,15 +82,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    private fun bindExposureSummary(exposureSummary: ExposureSummary?) {
-        binding.emptyExposureSummary.isVisible = exposureSummary == null
-        binding.exposureSummary.root.isVisible = exposureSummary != null
-
-        binding.exposureSummary.daysSinceLastExposure.text = exposureSummary?.daysSinceLastExposure?.toString()
-        binding.exposureSummary.totalExposures.text = exposureSummary?.matchedKeyCount?.toString()
-        binding.exposureSummary.highRiskScore.text = exposureSummary?.maximumRiskScore?.toString()
-    }
-
     private fun shareApp() {
         val shareText = getString(R.string.share_intent_text)
         val sendIntent = Intent()
@@ -105,9 +94,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         startActivity(Intent.createChooser(sendIntent, getString(R.string.share_text)))
     }
 
-    private fun updateUiForTestedPositive() {
-        binding.notifyOthersButton.isVisible = false
-        binding.notifyOthersButtonText.isVisible = false
+    private fun bindExposureSummary(exposureSummary: CovidExposureSummary) {
+        binding.exposureSummary.daysSinceLastExposure.text = exposureSummary.daySinceLastExposure.toString()
+        binding.exposureSummary.totalExposures.text = exposureSummary.matchedKeyCount.toString()
+        binding.exposureSummary.highRiskScore.text = exposureSummary.maximumRiskScore.toString()
+    }
+
+    private fun updateUiForTestedPositive(isUserTestedPositive: Boolean) {
+        binding.notifyOthersButtonQuestion.isVisible = !isUserTestedPositive
+        binding.notifyOthersButton.isVisible = !isUserTestedPositive
+        binding.notifyOthersButtonText.isVisible = !isUserTestedPositive
     }
 
     private fun getFirebaseIdIfTester() {
