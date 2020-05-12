@@ -31,9 +31,7 @@ class HomeViewModel(
     val navigateToOnboardingEvent: LiveData<Event<Unit>> get() = _navigateToOnboardingEvent
 
     val exposureSummary: LiveData<CovidExposureSummary>
-        get() = preferenceStorage.observableExposureSummary.map { summary ->
-            summary ?: CovidExposureSummary(0, 0, 0)
-        }
+        get() = preferenceStorage.observableExposureSummary
 
     fun onStart() {
         val userFlow = userFlowRepository.getUserFlow()
