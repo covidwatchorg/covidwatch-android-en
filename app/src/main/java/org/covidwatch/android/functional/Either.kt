@@ -35,6 +35,18 @@ sealed class Either<out L, out R> {
             is Left -> fnL(a)
             is Right -> fnR(b)
         }
+
+    inline fun success(s: (R) -> Unit) {
+        if (this is Right) {
+            s(b)
+        }
+    }
+
+    inline fun failure(f: (L) -> Unit) {
+        if (this is Left) {
+            f(a)
+        }
+    }
 }
 
 // Credits to Alex Hart -> https://proandroiddev.com/kotlins-nothing-type-946de7d464fb
