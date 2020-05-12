@@ -19,6 +19,9 @@
     <dimen name="title_font_size">31sp</dimen>
     <dimen name="subtitle_font_size">16sp</dimen>
     <dimen name="big_font_size">18sp</dimen>
+    <dimen name="exposure_summary_text">20sp</dimen>
+    <dimen name="padding_content">16dp</dimen>
+    <dimen name="small_padding_content">8dp</dimen>
 
     <dimen name="onboarding_tab_indicator_thickness">8dp</dimen>
     <dimen name="onboarding_footer_elevation">20dp</dimen>
