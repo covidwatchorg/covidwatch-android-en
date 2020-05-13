@@ -33,7 +33,7 @@ class ExposuresFragment : BaseFragment<FragmentExposuresBinding>() {
         }
         with(exposuresViewModel) {
             observeEvent(showExposureDetails) {
-                val action = ExposuresFragmentDirections.actionHomeFragmentToExposureDetails(it)
+                val action = ExposuresFragmentDirections.actionExposuresFragmentToExposureDetailsFragment(it)
                 findNavController().navigate(action)
             }
         }

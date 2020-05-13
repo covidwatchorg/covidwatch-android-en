@@ -1,18 +1,18 @@
 package org.covidwatch.android.work
 
-import android.annotation.SuppressLint
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.WorkerParameters
-import org.covidwatch.android.exposurenotification.ExposureNotificationManager
-import org.covidwatch.android.data.CovidExposureSummary
-import org.covidwatch.android.data.asTemporaryExposureKey
+import com.google.common.io.BaseEncoding
+import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
+import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
-import org.covidwatch.android.data.pref.PreferenceStorage
+import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.koin.java.KoinJavaComponent.inject
 import timber.log.Timber
-import java.util.Date
+import java.security.SecureRandom
+import java.util.*
 
 class ProvideDiagnosisKeysWork(
     context: Context,
@@ -21,40 +21,27 @@ class ProvideDiagnosisKeysWork(
 
     private val exposureNotification by inject(ExposureNotificationManager::class.java)
     private val diagnosisRepository by inject(PositiveDiagnosisRepository::class.java)
-    private val preferenceStorage by inject(PreferenceStorage::class.java)
+    private val diagnosisKeysTokenRepository by inject(DiagnosisKeysTokenRepository::class.java)
 
-    @SuppressLint("BinaryOperationInTimber")
+    private val base64 = BaseEncoding.base64()
+    private val randomTokenByteLength = 32
+    private val secureRandom: SecureRandom = SecureRandom()
+
+    private fun randomToken(): String {
+        val bytes = ByteArray(randomTokenByteLength)
+        secureRandom.nextBytes(bytes)
+        return base64.encode(bytes)
+    }
+
     override suspend fun doWork(): Result {
-        val maxKeysResult = exposureNotification.getMaxDiagnosisKeys()
-        val maxKeys = maxKeysResult.right ?: return failure(maxKeysResult.left)
-
         val diagnosisKeys = diagnosisRepository.diagnosisKeys(Date())
         Timber.d("Adding ${diagnosisKeys.size} positive diagnoses to exposure notification framework")
 
-        diagnosisKeys.forEach { diagnosis ->
-            diagnosis.diagnosisKeys
-                .map { it.asTemporaryExposureKey() }
-                .chunked(maxKeys)
-                .forEach {
-                    Timber.d(
-                        "Processing the ${it.size} diagnosis keys of the positive diagnosis " +
-                            "with permission number ${diagnosis.phaPermissionNumber}"
-                    )
+        val token = randomToken()
+        val result = exposureNotification.provideDiagnosisKeys(diagnosisKeys, token)
+        result.left?.let { return failure(it) }
 
-                    val result = exposureNotification.provideDiagnosisKeys(it)
-                    result.left?.let { status -> return failure(status) }
-                }
-        }
-
-        val exposureSummaryResult = exposureNotification.getExposureSummary()
-        val exposureSummary =
-            exposureSummaryResult.right ?: return failure(exposureSummaryResult.left)
-
-        preferenceStorage.exposureSummary = CovidExposureSummary(
-            exposureSummary.daysSinceLastExposure,
-            exposureSummary.matchedKeyCount,
-            exposureSummary.maximumRiskScore
-        )
+        diagnosisKeysTokenRepository.insert(DiagnosisKeysToken(token))
 
         return Result.success()
     }

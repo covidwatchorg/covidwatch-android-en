@@ -5,6 +5,7 @@ import com.google.android.gms.common.api.internal.ApiKey
 import com.google.android.gms.nearby.exposurenotification.*
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
+import java.io.File
 import java.util.*
 import kotlin.random.Random
 
@@ -12,7 +13,7 @@ class FakeExposureNotification : ExposureNotificationClient {
 
     private var started = false
 
-    override fun start(exposureConfiguration: ExposureConfiguration?): Task<Void> {
+    override fun start(): Task<Void> {
         return Tasks.call {
             started = true
             null
@@ -33,29 +34,22 @@ class FakeExposureNotification : ExposureNotificationClient {
             List(10) { RandomEnObjects.temporaryExposureKey }
         }
 
-    override fun provideDiagnosisKeys(keys: List<TemporaryExposureKey>): Task<Void> =
-        Tasks.call { null }
+    override fun provideDiagnosisKeys(
+        keys: List<File>,
+        configuration: ExposureConfiguration,
+        token: String
+    ): Task<Void> = Tasks.call { null }
 
-    override fun getMaxDiagnosisKeyCount(): Task<Int> = Tasks.call { 10 }
-
-    override fun getExposureSummary(): Task<ExposureSummary> =
+    override fun getExposureSummary(token: String): Task<ExposureSummary> =
         Tasks.call { RandomEnObjects.exposureSummary }
 
-    override fun getExposureInformation(): Task<List<ExposureInformation>> =
+    override fun getExposureInformation(token: String?): Task<List<ExposureInformation>> =
         Tasks.call {
             List(10) { RandomEnObjects.exposureInformation }
         }
 
     override fun getApiKey(): ApiKey<Api.ApiOptions.NoOptions> {
         TODO("not implemented")
-    }
-
-    override fun resetTemporaryExposureKey(): Task<Void> = Tasks.call {
-        null
-    }
-
-    override fun resetAllData(): Task<Void> = Tasks.call {
-        null
     }
 }
 
@@ -76,9 +70,9 @@ object RandomEnObjects {
 
     val exposureInformation
         get() = ExposureInformation.ExposureInformationBuilder()
-            .setAttenuationValue(Random.nextInt(255))
+            .setAttenuationValue(Random.nextInt(8))
             .setDateMillisSinceEpoch(Random.nextLong(Date().time, Date().time + 66666))
-            .setDurationMinutes(Random.nextInt(50))
+            .setDurationMinutes(Random.nextInt(10) * 5)
             .setTotalRiskScore(Random.nextInt(8))
             .setTransmissionRiskLevel(Random.nextInt(8))
             .build()

@@ -12,9 +12,4 @@
         android:id="@+id/action_start_stop"
         android:title="@string/start"
         app:showAsAction="always" />
-
-    <item
-        android:id="@+id/action_reset"
-        android:title="@string/reset_all_data"
-        app:showAsAction="never" />
 </menu>

@@ -2,36 +2,34 @@ package org.covidwatch.android.exposurenotification
 
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
-import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import org.covidwatch.android.extension.await
 import org.covidwatch.android.extension.awaitWithStatus
+import java.io.File
 
 class ExposureNotificationManager(
     private val exposureNotification: ExposureNotificationClient
 ) {
-
     /* API */
-    suspend fun start() =
-        exposureNotification.start(
-            ExposureConfiguration.ExposureConfigurationBuilder().build()
-        ).awaitWithStatus()
+    suspend fun start() = exposureNotification.start().awaitWithStatus()
 
     suspend fun temporaryExposureKeyHistory() =
         exposureNotification.temporaryExposureKeyHistory.awaitWithStatus()
 
-    suspend fun getExposureInformation() =
-        exposureNotification.exposureInformation.awaitWithStatus()
+    suspend fun getExposureInformation(token: String) =
+        exposureNotification.getExposureInformation(token).awaitWithStatus()
 
     suspend fun stop() = exposureNotification.stop().awaitWithStatus()
 
     suspend fun isEnabled() = exposureNotification.isEnabled.awaitWithStatus()
 
-    suspend fun resetAllData() = exposureNotification.resetAllData().awaitWithStatus()
+    suspend fun provideDiagnosisKeys(keys: List<File>, token: String) =
+        exposureNotification.provideDiagnosisKeys(
+            keys,
+            //TODO: Use a proper configuration source
+            ExposureConfiguration.ExposureConfigurationBuilder().build(),
+            token
+        ).await()
 
-    suspend fun getMaxDiagnosisKeys() = exposureNotification.maxDiagnosisKeyCount.await()
-
-    suspend fun provideDiagnosisKeys(keys: List<TemporaryExposureKey>) =
-        exposureNotification.provideDiagnosisKeys(keys).await()
-
-    suspend fun getExposureSummary() = exposureNotification.exposureSummary.await()
+    suspend fun getExposureSummary(token: String) =
+        exposureNotification.getExposureSummary(token).await()
 }

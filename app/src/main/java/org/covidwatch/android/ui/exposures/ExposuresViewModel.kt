@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
+import org.covidwatch.android.domain.UpdateExposureInformationUseCase
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.functional.Either
@@ -14,6 +15,7 @@ import org.covidwatch.android.ui.event.Event
 
 class ExposuresViewModel(
     private val enManager: ExposureNotificationManager,
+    private val updateExposureInformationUseCase: UpdateExposureInformationUseCase,
     exposureInformationRepository: ExposureInformationRepository
 ) : ViewModel() {
 
@@ -29,6 +31,8 @@ class ExposuresViewModel(
     fun start() {
         viewModelScope.launch {
             _exposureNotificationEnabled.value = enManager.isEnabled().result()
+
+            updateExposureInformationUseCase(this)
         }
     }
 
