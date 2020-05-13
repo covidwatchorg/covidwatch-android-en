@@ -5,8 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import org.covidwatch.android.exposurenotification.ENStatus
-import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.PositiveDiagnosis
@@ -14,8 +12,10 @@ import org.covidwatch.android.data.asDiagnosisKey
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
-import org.covidwatch.android.data.toCovidExposureInformation
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
+import org.covidwatch.android.domain.UpdateExposureInformationUseCase
+import org.covidwatch.android.exposurenotification.ENStatus
+import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.extension.doOnNext
 import org.covidwatch.android.extension.launchUseCase
 import org.covidwatch.android.functional.Either
@@ -23,8 +23,9 @@ import org.covidwatch.android.functional.Either
 class ExposureNotificationViewModel(
     private val enManager: ExposureNotificationManager,
     private val diagnosisRepository: PositiveDiagnosisRepository,
-    private val exposureInformationRepository: ExposureInformationRepository,
     private val provideDiagnosisKeysUseCase: ProvideDiagnosisKeysUseCase,
+    private val updateExposureInformationUseCase: UpdateExposureInformationUseCase,
+    exposureInformationRepository: ExposureInformationRepository,
     preferenceStorage: PreferenceStorage
 ) : ViewModel() {
 
@@ -34,9 +35,9 @@ class ExposureNotificationViewModel(
     val exposureInfo: LiveData<List<CovidExposureInformation>> =
         exposureInformationRepository.exposureInformation()
 
-    val exposureSummary: LiveData<CovidExposureSummary?> =
+    val exposureSummary: LiveData<CovidExposureSummary> =
         preferenceStorage.observableExposureSummary.doOnNext {
-            _showLoadButton.value = it != null
+            _showLoadButton.value = true
         }
 
     private val _isRefreshing = MutableLiveData<Boolean>()
@@ -83,20 +84,7 @@ class ExposureNotificationViewModel(
     }
 
     fun loadExposureInformation() {
-        viewModelScope.launch {
-            enManager.getExposureInformation().success {
-                val exposureInformation = it.map { information ->
-                    information.toCovidExposureInformation()
-                }
-                exposureInformationRepository.saveExposureInformation(exposureInformation)
-            }
-        }
-    }
-
-    fun resetAllData() {
-        viewModelScope.launch {
-            enManager.resetAllData()
-        }
+        viewModelScope.launchUseCase(updateExposureInformationUseCase)
     }
 
     private suspend fun <R : ENStatus, L> Either<R, L>.success(block: suspend (value: L) -> Unit = {}) {

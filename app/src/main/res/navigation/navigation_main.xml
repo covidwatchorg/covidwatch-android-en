@@ -36,8 +36,8 @@
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_possibles_exposures"
-            app:destination="@id/possibleExposures" />
+            android:id="@+id/action_homeFragment_to_exposuresFragment"
+            app:destination="@id/exposuresFragment" />
         <action
             android:id="@+id/action_homeFragment_to_notifyOthersFragment"
             app:destination="@id/notifyOthersFragment" />
@@ -85,17 +85,17 @@
         tools:layout="@layout/fragment_potential_risk" />
 
     <fragment
-        android:id="@+id/possibleExposures"
+        android:id="@+id/exposuresFragment"
         android:name="org.covidwatch.android.ui.exposures.ExposuresFragment"
         android:label="Possible Exposures"
         tools:layout="@layout/fragment_exposures">
         <action
-            android:id="@+id/action_homeFragment_to_exposure_details"
-            app:destination="@id/exposureDetails" />
+            android:id="@+id/action_exposuresFragment_to_exposureDetailsFragment"
+            app:destination="@id/exposureDetailsFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/exposureDetails"
+        android:id="@+id/exposureDetailsFragment"
         android:name="org.covidwatch.android.ui.exposuredetails.ExposureDetailsFragment"
         android:label="Exposure Details"
         tools:layout="@layout/fragment_exposure_details">
@@ -121,11 +121,6 @@
         android:name="org.covidwatch.android.ui.onboarding.EnableExposureNotificationsFragment"
         android:label="EnableExposureNotificationsFragment"
         tools:layout="@layout/fragment_enable_exposure_notifications" />
-    <fragment
-        android:id="@+id/exposuresFragment"
-        android:name="org.covidwatch.android.ui.exposures.ExposuresFragment"
-        android:label="ExposuresFragment"
-        tools:layout="@layout/fragment_exposures" />
     <fragment
         android:id="@+id/notifyOthersFragment"
         android:name="org.covidwatch.android.ui.reporting.NotifyOthersFragment"

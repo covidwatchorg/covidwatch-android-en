@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
 import org.covidwatch.android.data.CovidExposureSummary
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -16,8 +17,8 @@ import kotlin.reflect.KProperty
 interface PreferenceStorage {
     var lastFetchDate: Long
     var onboardingFinished: Boolean
-    var exposureSummary: CovidExposureSummary?
-    val observableExposureSummary: LiveData<CovidExposureSummary?>
+    var exposureSummary: CovidExposureSummary
+    val observableExposureSummary: LiveData<CovidExposureSummary>
 }
 
 class SharedPreferenceStorage(context: Context) : PreferenceStorage {
@@ -38,13 +39,20 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
 
     override var onboardingFinished by Preference(prefs, ONBOARDING_FINISHED, false)
 
-    override var exposureSummary: CovidExposureSummary? by NullablePreference(
+    override var exposureSummary: CovidExposureSummary by ObjectPreference(
         prefs,
         EXPOSURE_SUMMARY,
-        null
+        CovidExposureSummary(
+            0,
+            0,
+            0,
+            intArrayOf(),
+            0
+        ),
+        CovidExposureSummary::class.java
     )
 
-    override val observableExposureSummary: LiveData<CovidExposureSummary?>
+    override val observableExposureSummary: LiveData<CovidExposureSummary>
         get() = _exposureSummary.also { it.value = exposureSummary }
 
     companion object {
@@ -52,6 +60,31 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
         private const val LAST_FETCH_DATE = "last_fetch_date"
         private const val EXPOSURE_SUMMARY = "exposure_summary"
         private const val ONBOARDING_FINISHED = "onboarding_finished"
+    }
+}
+
+class ObjectPreference<T>(
+    private val preferences: SharedPreferences,
+    private val name: String,
+    private val defaultValue: T,
+    private val clazz: Class<T>,
+    private val gson: Gson = Gson()
+) : ReadWriteProperty<Any, T> {
+
+    private var value: T? = null
+
+    @WorkerThread
+    override fun getValue(thisRef: Any, property: KProperty<*>): T {
+        return preferences.getString(name, null)?.let { json ->
+            value ?: gson.fromJson(json, clazz).also { value = it }
+        } ?: defaultValue
+    }
+
+    override fun setValue(thisRef: Any, property: KProperty<*>, value: T) {
+        this.value = value
+        preferences.edit()
+            .putString(name, gson.toJson(value))
+            .apply()
     }
 }
 

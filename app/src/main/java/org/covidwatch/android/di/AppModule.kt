@@ -9,15 +9,15 @@ import org.covidwatch.android.data.AppDatabase
 import org.covidwatch.android.data.FirebaseService
 import org.covidwatch.android.data.TestedRepositoryImpl
 import org.covidwatch.android.data.UserFlowRepository
+import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenLocalSource
+import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.exposureinformation.ExposureInformationLocalSource
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRemoteSource
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.data.pref.SharedPreferenceStorage
-import org.covidwatch.android.domain.AppCoroutineDispatchers
-import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
-import org.covidwatch.android.domain.TestedRepository
+import org.covidwatch.android.domain.*
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.ui.exposurenotification.ExposureNotificationViewModel
 import org.covidwatch.android.ui.exposures.ExposuresViewModel
@@ -45,8 +45,9 @@ val appModule = module {
         ExposureNotificationViewModel(
             enManager = get(),
             diagnosisRepository = get(),
-            exposureInformationRepository = get(),
             provideDiagnosisKeysUseCase = get(),
+            updateExposureInformationUseCase = get(),
+            exposureInformationRepository = get(),
             preferenceStorage = get()
         )
     }
@@ -54,6 +55,7 @@ val appModule = module {
     viewModel {
         ExposuresViewModel(
             enManager = get(),
+            updateExposureInformationUseCase = get(),
             exposureInformationRepository = get()
         )
     }
@@ -77,9 +79,32 @@ val appModule = module {
     single { ExposureInformationLocalSource(database = get()) }
     single { ExposureInformationRepository(local = get()) }
 
+    single {
+        val appDatabase: AppDatabase = get()
+        appDatabase.diagnosisKeysTokenDao()
+    }
+    single { DiagnosisKeysTokenLocalSource(keysTokenDao = get()) }
+    single { DiagnosisKeysTokenRepository(local = get()) }
+
     factory {
         ProvideDiagnosisKeysUseCase(
             workManager = get(),
+            dispatchers = get()
+        )
+    }
+
+    factory {
+        UpdateExposureStateUseCase(
+            workManager = get(),
+            dispatchers = get()
+        )
+    }
+
+    factory {
+        UpdateExposureInformationUseCase(
+            exposureNotificationManager = get(),
+            tokenRepository = get(),
+            exposureInformationRepository = get(),
             dispatchers = get()
         )
     }
