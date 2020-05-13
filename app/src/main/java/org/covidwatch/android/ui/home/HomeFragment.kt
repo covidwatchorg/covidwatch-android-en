@@ -80,6 +80,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.exposureSummary.root.setOnClickListener {
             findNavController().navigate(R.id.exposuresFragment)
         }
+        binding.notifyOthersButton.setOnClickListener {
+            findNavController().navigate(R.id.notifyOthersFragment)
+        }
     }
 
     private fun shareApp() {
