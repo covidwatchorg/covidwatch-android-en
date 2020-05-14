@@ -21,17 +21,11 @@
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_testFragment"
-            app:destination="@id/testQuestionsFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_menuFragment"
             app:destination="@id/menuFragment" />
         <action
             android:id="@+id/action_homeFragment_to_splashFragment"
             app:destination="@id/splashFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_potentialRiskFragment"
-            app:destination="@id/potentialRiskFragment" />
         <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
@@ -44,22 +38,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/testQuestionsFragment"
-        android:name="org.covidwatch.android.ui.test.TestQuestionsFragment"
-        android:label="TestFragment"
-        tools:layout="@layout/fragment_test_questions">
-        <action
-            android:id="@+id/action_testQuestionsFragment_to_testConfirmationFragment"
-            app:destination="@id/testConfirmationFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/testConfirmationFragment"
-        android:name="org.covidwatch.android.ui.test.TestConfirmationFragment"
-        android:label="TestConfirmationFragment"
-        tools:layout="@layout/fragment_test_confirmation" />
-
-    <fragment
         android:id="@+id/menuFragment"
         android:name="org.covidwatch.android.ui.menu.MenuFragment"
         android:label="MenuFragment"
@@ -67,9 +45,6 @@
         <action
             android:id="@+id/action_menuFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
-        <action
-            android:id="@+id/action_menuFragment_to_testQuestionsFragment"
-            app:destination="@id/testQuestionsFragment" />
     </fragment>
 
     <fragment
@@ -77,12 +52,6 @@
         android:name="org.covidwatch.android.ui.settings.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings" />
-
-    <fragment
-        android:id="@+id/potentialRiskFragment"
-        android:name="org.covidwatch.android.ui.test.PotentialRiskFragment"
-        android:label="PotentialRiskFragment"
-        tools:layout="@layout/fragment_potential_risk" />
 
     <fragment
         android:id="@+id/exposuresFragment"

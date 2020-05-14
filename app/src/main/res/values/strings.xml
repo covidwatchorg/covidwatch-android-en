@@ -31,7 +31,6 @@
     <string name="exposure_information_date">Date</string>
     <string name="datepicker">datePicker</string>
     <string name="textView" />
-    <string name="disclaimer"><![CDATA[By clicking Report, you acknowledge, understand and further agree to our Privacy Policy and Terms & Conditions]]></string>
     <string name="ble_location_permission">The permission to get BLE location data is required</string>
     <string name="foreground_notification_title">Covid Watch is running</string>
     <string name="foreground_notification_ble_off">Covid Watch needs Bluetooth to be turned on</string>
@@ -45,19 +44,6 @@
     <string name="self_report_text">Self Report</string>
 
     <!-- Test Flow -->
-    <string name="question_text">Have you tested positive for COVID-19?</string>
-    <string name="question_date">When did your symptoms start?</string>
-    <string name="not_yet_tested">Not yet tested</string>
-    <string name="tested_positive">Yes, Tested Positive</string>
-    <string name="tested_negative">Not Tested or Negative</string>
-    <string name="continue_button">Continue</string>
-    <string name="report">Report</string>
-    <string name="thanks_for_update">Thanks for the update. You can come back here if you test positive to help keep your community safe.</string>
-    <string name="confirm_results">Please confirm your test results</string>
-    <string name="confirm_results_disclaimer">This report is completely anonymous and the community relies on you to be truthful and responsible. Depending on anonymous interaction logs, other Covid Watch users may get notified to self-quarantine and get tested.</string>
-    <string name="covid_19_test">COVID-19 Test</string>
-    <string name="positive">POSITIVE</string>
-    <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
 
     <string name="settings">Settings</string>
@@ -83,16 +69,8 @@
     <string name="female_superhero_content_descriptor">Female superhero</string>
     <string name="welcome_back_title">Welcome Back!</string>
     <string name="detected_thank_you_text">Thank you for helping your community stay safe, anonymously.</string>
-    <string name="covid_title">COVID-19</string>
-    <string name="risk_subtitle">Potential Risk</string>
-    <string name="risk_description">of infection based on your anonymous exposure logs</string>
     <string name="close_button_content_descriptor">Close button</string>
     <string name="checkmark_image_content_descriptor">checkmark image</string>
-    <string name="monitor_symptoms">Monitor symptoms</string>
-    <string name="isolate_from_others">Isolate from others</string>
-    <string name="rest_and_take_care">Rest and take care</string>
-    <string name="get_tested_if_advised">Get tested if advised</string>
-    <string name="refer_to_local_agencies">Refer to local agencies for medical advice</string>
 
     <!-- Exposure notification-->
     <string name="upload_diagnosis">Upload diagnosis</string>
