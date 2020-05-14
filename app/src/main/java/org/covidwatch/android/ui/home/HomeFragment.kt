@@ -71,9 +71,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.shareAppButton.setOnClickListener {
             shareApp()
         }
-        binding.warningBanner.setOnClickListener {
-            findNavController().navigate(R.id.potentialRiskFragment)
-        }
         binding.infoBanner.setOnClickListener {
             findNavController().navigate(R.id.settingsFragment)
         }
