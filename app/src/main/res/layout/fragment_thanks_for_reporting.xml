@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/padding_normal">
+
+        <ImageView
+            android:id="@+id/close_button"
+            style="@style/ImageView.BtnClose"
+            android:paddingHorizontal="@dimen/padding_normal" />
+
+        <TextView
+            style="@style/TextView.ScreenTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:text="@string/thank_you_for_sharing_title" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_normal"
+            android:src="@drawable/ic_family_earth" />
+
+        <TextView
+            android:id="@+id/past_positive_diagnoses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginTop="@dimen/padding_large"
+            android:text="@string/thank_you_for_sharing_text"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/share_app_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginTop="@dimen/padding_normal"
+            android:text="@string/share_app_button" />
+
+    </LinearLayout>
+</ScrollView>

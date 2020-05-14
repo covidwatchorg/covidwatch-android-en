@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_homeFragment_to_exposuresFragment"
             app:destination="@id/exposuresFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_notifyOthersFragment"
+            app:destination="@id/notifyOthersFragment" />
     </fragment>
 
     <fragment
@@ -118,4 +121,24 @@
         android:name="org.covidwatch.android.ui.onboarding.EnableExposureNotificationsFragment"
         android:label="EnableExposureNotificationsFragment"
         tools:layout="@layout/fragment_enable_exposure_notifications" />
+    <fragment
+        android:id="@+id/notifyOthersFragment"
+        android:name="org.covidwatch.android.ui.reporting.NotifyOthersFragment"
+        android:label="NotifyOthersFragment" >
+        <action
+            android:id="@+id/action_notifyOthersFragment_to_verifyPositiveDiagnosisFragment"
+            app:destination="@id/verifyPositiveDiagnosisFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/verifyPositiveDiagnosisFragment"
+        android:name="org.covidwatch.android.ui.reporting.VerifyPositiveDiagnosisFragment"
+        android:label="VerifyPositiveDiagnosisFragment" >
+        <action
+            android:id="@+id/action_verifyPositiveDiagnosisFragment_to_thanksForReportingFragment"
+            app:destination="@id/thanksForReportingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/thanksForReportingFragment"
+        android:name="org.covidwatch.android.ui.reporting.ThanksForReportingFragment"
+        android:label="ThanksForReportingFragment" />
 </navigation>
