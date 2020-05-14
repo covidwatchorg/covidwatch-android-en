@@ -60,7 +60,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun initClickListeners() {
         binding.notifyOthersButton.setOnClickListener {
-            findNavController().navigate(R.id.testQuestionsFragment)
+            findNavController().navigate(R.id.notifyOthersFragment)
         }
         binding.toolbar.setOnMenuItemClickListener {
             if (R.id.action_menu == it.itemId) {
@@ -79,9 +79,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
         binding.exposureSummary.root.setOnClickListener {
             findNavController().navigate(R.id.exposuresFragment)
-        }
-        binding.notifyOthersButton.setOnClickListener {
-            findNavController().navigate(R.id.notifyOthersFragment)
         }
     }
 
