@@ -8,7 +8,7 @@ import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenDao
 
 @Database(
     entities = [CovidExposureInformation::class, DiagnosisKeysToken::class],
-    version = 0,
+    version = 1,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
