@@ -87,11 +87,6 @@ class ExposureNotificationViewModel(
         viewModelScope.launchUseCase(updateExposureInformationUseCase)
     }
 
-    private suspend fun <R : ENStatus, L> Either<R, L>.success(block: suspend (value: L) -> Unit = {}) {
-        right?.let { block(it) }
-        left?.let { handleError(it) }
-    }
-
     private fun <R : ENStatus, L> Either<R, L>.result(): L? {
         left?.let { handleError(it) }
         return right
@@ -99,7 +94,6 @@ class ExposureNotificationViewModel(
 
     private fun handleError(status: ENStatus?) {
         when (status) {
-            ENStatus.SUCCESS -> TODO()
             ENStatus.FailedRejectedOptIn -> TODO()
             ENStatus.FailedServiceDisabled -> TODO()
             ENStatus.FailedBluetoothScanningDisabled -> TODO()
