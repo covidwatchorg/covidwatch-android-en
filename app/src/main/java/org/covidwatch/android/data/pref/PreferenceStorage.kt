@@ -43,11 +43,11 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
         prefs,
         EXPOSURE_SUMMARY,
         CovidExposureSummary(
-            0,
-            0,
-            0,
-            intArrayOf(),
-            0
+            daySinceLastExposure = 0,
+            matchedKeyCount = 0,
+            maximumRiskScore = 0,
+            attenuationDurationsInMinutes = intArrayOf(),
+            summationRiskScore = 0
         ),
         CovidExposureSummary::class.java
     )
@@ -77,10 +77,12 @@ class ObjectPreference<T>(
     override fun getValue(thisRef: Any, property: KProperty<*>): T {
         return preferences.getString(name, null)?.let { json ->
             value ?: gson.fromJson(json, clazz).also { value = it }
-        } ?: defaultValue
+        } ?: defaultValue.also { setValue(it) }
     }
 
-    override fun setValue(thisRef: Any, property: KProperty<*>, value: T) {
+    override fun setValue(thisRef: Any, property: KProperty<*>, value: T) = setValue(value)
+
+    private fun setValue(value: T) {
         this.value = value
         preferences.edit()
             .putString(name, gson.toJson(value))

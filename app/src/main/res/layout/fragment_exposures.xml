@@ -50,6 +50,7 @@
             android:paddingVertical="@dimen/padding_content"
             android:textColor="@color/white"
             android:textStyle="bold"
+            app:last_exposure_time="@{viewModel.lastExposureTime}"
             tools:text="Exposure last checked today at 3:15pm" />
 
         <androidx.recyclerview.widget.RecyclerView

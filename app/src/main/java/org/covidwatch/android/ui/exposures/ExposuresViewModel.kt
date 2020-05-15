@@ -1,12 +1,10 @@
 package org.covidwatch.android.ui.exposures
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
+import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.domain.UpdateExposureInformationUseCase
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
@@ -16,6 +14,7 @@ import org.covidwatch.android.ui.event.Event
 class ExposuresViewModel(
     private val enManager: ExposureNotificationManager,
     private val updateExposureInformationUseCase: UpdateExposureInformationUseCase,
+    preferenceStorage: PreferenceStorage,
     exposureInformationRepository: ExposureInformationRepository
 ) : ViewModel() {
 
@@ -27,6 +26,8 @@ class ExposuresViewModel(
 
     val exposureInfo: LiveData<List<CovidExposureInformation>> =
         exposureInformationRepository.exposureInformation()
+
+    val lastExposureTime = preferenceStorage.observableExposureSummary.map { it.modifiedTime }
 
     fun start() {
         viewModelScope.launch {

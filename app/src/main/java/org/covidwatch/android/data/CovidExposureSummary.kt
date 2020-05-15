@@ -5,5 +5,6 @@ class CovidExposureSummary(
     val matchedKeyCount: Int,
     val maximumRiskScore: Int,
     val attenuationDurationsInMinutes: IntArray,
-    val summationRiskScore: Int
+    val summationRiskScore: Int,
+    val modifiedTime: Long = System.currentTimeMillis()
 )

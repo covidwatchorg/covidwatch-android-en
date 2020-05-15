@@ -23,7 +23,14 @@ fun TextView.setExposureSummary(exposureSummary: CovidExposureSummary?) {
 
 @BindingAdapter("date")
 fun TextView.setTextFromTime(time: Long?) {
+    time ?: return
     text = DateFormatter.format(time)
+}
+
+@BindingAdapter("last_exposure_time")
+fun TextView.setTextFromLastExposureTime(time: Long?) {
+    time ?: return
+    text = context.getString(R.string.last_exposure_time, DateFormatter.formatDateAndTime(time))
 }
 
 @BindingAdapter("total_risk")
