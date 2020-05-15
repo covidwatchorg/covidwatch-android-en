@@ -60,6 +60,7 @@
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
 
+    <string name="generate_random_exposure">"(Testing) Generate Random Exposure</string>
     <string name="settings">Settings</string>
     <string name="test_results">Test Results</string>
     <string name="how_does_this_work">How does this work?</string>
@@ -186,5 +187,7 @@
     <string name="contact_alert_text">You may have been in contact with COVID-19</string>
     <string name="reported_alert_text">You reported that you tested positive for COVID-19</string>
     <string name="share_intent_text">Help your community stay safe, anonymously:</string>
+
+
 
 </resources>
