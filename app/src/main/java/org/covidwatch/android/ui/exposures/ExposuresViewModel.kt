@@ -36,17 +36,14 @@ class ExposuresViewModel(
         }
     }
 
-    fun toggleExposureNotifications() {
+    fun enableExposureNotification(enable: Boolean) {
         viewModelScope.launch {
-            // Check if we need to stop the service
-            if (enManager.isEnabled().result() == true) {
-                enManager.stop()
-            } else { // Otherwise run the service
-                enManager.start().result()
-            }
+            val isEnabled = enManager.isEnabled().result() ?: false
 
-            // Handle the case of is service running or not simply by asking the manager
-            _exposureNotificationEnabled.value = enManager.isEnabled().result()
+            when {
+                enable && !isEnabled -> enManager.start().result()
+                !enable && isEnabled -> enManager.stop()
+            }
         }
     }
 
@@ -61,7 +58,6 @@ class ExposuresViewModel(
 
     private fun handleError(status: ENStatus?) {
         when (status) {
-            ENStatus.SUCCESS -> TODO()
             ENStatus.FailedRejectedOptIn -> TODO()
             ENStatus.FailedServiceDisabled -> TODO()
             ENStatus.FailedBluetoothScanningDisabled -> TODO()
