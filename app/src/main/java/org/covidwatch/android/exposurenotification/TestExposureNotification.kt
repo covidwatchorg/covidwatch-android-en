@@ -33,8 +33,5 @@ class TestExposureNotification {
 
         }
         val exposureSummary: CovidExposureSummary = sharedPreferences.exposureSummary
-        //TODO: go to exposure info page with correct info
-        //Righ now you need to stop the app and start it again to get new random values
-        var a = 1
     }
 }
