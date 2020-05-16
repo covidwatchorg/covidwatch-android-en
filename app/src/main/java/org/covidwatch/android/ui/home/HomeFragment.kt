@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.*
 import org.covidwatch.android.data.CovidExposureSummary
+import org.covidwatch.android.data.pref.SharedPreferenceStorage
 import org.covidwatch.android.databinding.FragmentHomeBinding
+import org.covidwatch.android.exposurenotification.RandomEnObjects
 import org.covidwatch.android.ui.BaseFragment
 import org.covidwatch.android.ui.event.EventObserver
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -30,7 +33,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         homeViewModel.navigateToOnboardingEvent.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.splashFragment)
         })
-        homeViewModel.exposureSummary.observe(viewLifecycleOwner, Observer(::bindExposureSummary))
+
+        //RandomEnObjects.retrieved is set to true in TestExposureNotification
+        if (RandomEnObjects.retrieved == true) {
+            var sharedPreferences: SharedPreferenceStorage =
+                SharedPreferenceStorage(requireContext())
+            var settingsExposureSummary: CovidExposureSummary = sharedPreferences.exposureSummary
+            bindExposureSummary(settingsExposureSummary)
+            RandomEnObjects.retrieved = false;
+        }
+
+        else {
+            homeViewModel.exposureSummary.observe(viewLifecycleOwner, Observer(::bindExposureSummary))
+        }
         homeViewModel.infoBannerState.observe(viewLifecycleOwner, Observer { banner ->
             when (banner) {
                 is InfoBannerState.Visible -> {

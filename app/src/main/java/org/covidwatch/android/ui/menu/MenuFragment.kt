@@ -70,6 +70,9 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
 
         val testExposureNotification: TestExposureNotification = TestExposureNotification()
         val context: Context = requireContext()
-        testExposureNotification.saveExposureSummaryInPreferences(context, covidExposureInformation)
+        GlobalScope.io {
+            testExposureNotification.saveExposureSummaryInPreferences(context,covidExposureInformation)
+            findNavController().navigate(R.id.homeFragment)
+        }
     }
 }
