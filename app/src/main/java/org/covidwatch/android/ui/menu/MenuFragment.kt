@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -60,19 +62,32 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
         //Make an exposure Notification Object
         val covidExposureInformation: CovidExposureInformation =
             RandomEnObjects.exposureInformation.toCovidExposureInformation()
-        val exposureInformationList: List<CovidExposureInformation> =
+        var exposureInformationList: List<CovidExposureInformation> =
             listOf(covidExposureInformation)
-        //Save in database
         val exposureInformationRepository: ExposureInformationRepository by inject()
-        GlobalScope.io {
-            exposureInformationRepository.saveExposureInformation(exposureInformationList)
-        }
-
-        val testExposureNotification: TestExposureNotification = TestExposureNotification()
+        var returnExposureInformationList : LiveData<List<CovidExposureInformation>>
+        val testExposureNotification = TestExposureNotification()
         val context: Context = requireContext()
+
         GlobalScope.io {
+            //This returns garbage
+            returnExposureInformationList = saveOneGetAll(exposureInformationRepository, exposureInformationList)
+            //sum up risk exposures from returnExposureInformationList and pass to TestExposureNotification
             testExposureNotification.saveExposureSummaryInPreferences(context,covidExposureInformation)
             findNavController().navigate(R.id.homeFragment)
         }
+    }
+
+    //Save the new exposureInformation object to the database
+    //Read all the exposureInformation objects from the database into a list
+    suspend private fun saveOneGetAll(
+        exposureInformationRepository: ExposureInformationRepository,
+        exposureInformationList: List<CovidExposureInformation>): LiveData<List<CovidExposureInformation>>
+    {
+        exposureInformationRepository.saveExposureInformation(exposureInformationList)
+        //This doesn't work at all -- doesn't get data
+        var newExposureInformationList: LiveData<List<CovidExposureInformation>>
+        newExposureInformationList = exposureInformationRepository.realExposureInformation()
+        return newExposureInformationList
     }
 }

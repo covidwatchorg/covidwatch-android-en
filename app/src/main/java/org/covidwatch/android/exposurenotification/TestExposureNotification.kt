@@ -6,10 +6,11 @@ import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.pref.SharedPreferenceStorage
 import com.google.android.gms.nearby.exposurenotification.*
+import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
+import org.koin.android.ext.android.inject
 
 
 class TestExposureNotification {
-
     fun saveExposureSummaryInPreferences(context: Context, covidExposureInformation: CovidExposureInformation){
         val exposureSummaryRandom: ExposureSummary = RandomEnObjects.exposureSummary
         RandomEnObjects.retrieved = true

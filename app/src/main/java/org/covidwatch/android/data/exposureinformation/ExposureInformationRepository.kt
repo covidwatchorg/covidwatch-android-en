@@ -1,5 +1,6 @@
 package org.covidwatch.android.data.exposureinformation
 
+import androidx.lifecycle.LiveData
 import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.toCovidExposureInformation
 import org.covidwatch.android.exposurenotification.RandomEnObjects
@@ -16,4 +17,9 @@ class ExposureInformationRepository(private val local: ExposureInformationLocalS
             RandomEnObjects.exposureInformation.toCovidExposureInformation()
         }
     )
+
+    fun realExposureInformation(): LiveData<List<CovidExposureInformation>> {
+        return local.exposureInformation()
+    }
+
 }
