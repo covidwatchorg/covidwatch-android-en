@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/padding_normal">
+
+        <ImageView
+            android:id="@+id/close_button"
+            style="@style/ImageView.BtnClose"
+            android:paddingHorizontal="@dimen/padding_normal" />
+
+        <TextView
+            style="@style/TextView.ScreenTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:text="@string/notify_others_title" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginTop="@dimen/padding_normal"
+            android:text="@string/notify_others_subtitle"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/share_positive_diagnosis_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginTop="@dimen/padding_large"
+            android:text="@string/share_positive_diagnosis_button" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_notify_others"
+            android:src="@drawable/ic_doctors_security" />
+
+        <TextView
+            android:id="@+id/past_positive_diagnoses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginTop="@dimen/padding_normal"
+            android:text="@string/past_positive_diagnoses"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/past_positive_diagnoses_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginTop="@dimen/padding_normal"
+            android:background="@drawable/bg_my_possible_exposures"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_positive_diagnosis" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

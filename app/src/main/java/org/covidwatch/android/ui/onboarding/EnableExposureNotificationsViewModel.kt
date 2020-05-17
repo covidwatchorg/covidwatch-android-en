@@ -7,19 +7,34 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
-import org.covidwatch.android.functional.Either
 import org.covidwatch.android.ui.event.Event
 
 class EnableExposureNotificationsViewModel(
     private val exposureNotificationManager: ExposureNotificationManager
 ) : ViewModel() {
 
-    private val _exposureNotificationResult = MutableLiveData<Event<Either<ENStatus, Void>>>()
-    val exposureNotificationResult: LiveData<Event<Either<ENStatus, Void>>> = _exposureNotificationResult
+    private val _exposureNotificationResult = MutableLiveData<Event<Unit>>()
+    val exposureNotificationResult: LiveData<Event<Unit>> = _exposureNotificationResult
 
     fun onEnableClicked() {
         viewModelScope.launch {
-            _exposureNotificationResult.value = Event(exposureNotificationManager.start())
+            exposureNotificationManager.start().apply {
+                success {
+                    _exposureNotificationResult.value = Event(Unit)
+                }
+                failure(::handleError)
+            }
+        }
+    }
+
+    private fun handleError(status: ENStatus?) {
+        when (status) {
+            ENStatus.FailedRejectedOptIn -> TODO()
+            ENStatus.FailedServiceDisabled -> TODO()
+            ENStatus.FailedBluetoothScanningDisabled -> TODO()
+            ENStatus.FailedTemporarilyDisabled -> TODO()
+            ENStatus.FailedInsufficientStorage -> TODO()
+            ENStatus.FailedInternal -> TODO()
         }
     }
 }

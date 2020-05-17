@@ -22,6 +22,16 @@ suspend fun <T> Task<T>.await(): Either<Int, T> = withContext(Dispatchers.IO) {
     }
 }
 
+suspend fun Task<Void>.awaitNoResult(): Either<ENStatus, Void?> = await().let {
+    val result = it.right
+    val status = it.left
+    return if (status != null) {
+        Either.Left(ENStatus(status))
+    } else {
+        Either.Right(result)
+    }
+}
+
 suspend fun <T> Task<T>.awaitWithStatus(): Either<ENStatus, T> = await().let {
     val result = it.right
     val status = it.left
