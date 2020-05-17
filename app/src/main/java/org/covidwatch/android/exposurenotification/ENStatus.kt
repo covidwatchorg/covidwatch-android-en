@@ -3,7 +3,6 @@ package org.covidwatch.android.exposurenotification
 import androidx.annotation.IntDef
 
 sealed class ENStatus {
-    object SUCCESS : ENStatus()
     object FailedRejectedOptIn : ENStatus()
     object FailedServiceDisabled : ENStatus()
     object FailedBluetoothScanningDisabled : ENStatus()
@@ -12,7 +11,6 @@ sealed class ENStatus {
     object FailedInternal : ENStatus()
     companion object {
         operator fun invoke(@Status status: Int?) = when (status) {
-            Status.SUCCESS -> SUCCESS
             Status.FAILED_REJECTED_OPT_IN -> FailedRejectedOptIn
             Status.FAILED_SERVICE_DISABLED -> FailedServiceDisabled
             Status.FAILED_BLUETOOTH_SCANNING_DISABLED -> FailedBluetoothScanningDisabled
@@ -28,7 +26,6 @@ sealed class ENStatus {
 @IntDef
 internal annotation class Status {
     companion object {
-        var SUCCESS = 0
         var FAILED_REJECTED_OPT_IN = 1
         var FAILED_SERVICE_DISABLED = 2
         var FAILED_BLUETOOTH_SCANNING_DISABLED = 3

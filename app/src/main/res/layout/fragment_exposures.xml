@@ -29,10 +29,12 @@
             android:paddingHorizontal="@dimen/padding_content"
             android:text="@string/title_exposures" />
 
+        <!--suppress AndroidUnknownAttribute -->
         <Switch
             android:id="@+id/enable_exposure_notification"
             style="@style/Switch.EnableExposureNotification"
             android:checked="@{viewModel.exposureNotificationEnabled}"
+            android:onCheckedChanged="@{(switch, on) -> viewModel.enableExposureNotification(on)}"
             android:paddingHorizontal="@dimen/padding_content" />
 
         <TextView
@@ -48,6 +50,7 @@
             android:paddingVertical="@dimen/padding_content"
             android:textColor="@color/white"
             android:textStyle="bold"
+            app:last_exposure_time="@{viewModel.lastExposureTime}"
             tools:text="Exposure last checked today at 3:15pm" />
 
         <androidx.recyclerview.widget.RecyclerView

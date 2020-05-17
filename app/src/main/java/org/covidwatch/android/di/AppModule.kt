@@ -56,6 +56,7 @@ val appModule = module {
         ExposuresViewModel(
             enManager = get(),
             updateExposureInformationUseCase = get(),
+            preferenceStorage = get(),
             exposureInformationRepository = get()
         )
     }

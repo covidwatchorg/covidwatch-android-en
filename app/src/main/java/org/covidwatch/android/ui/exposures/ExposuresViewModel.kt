@@ -1,12 +1,10 @@
 package org.covidwatch.android.ui.exposures
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
+import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.domain.UpdateExposureInformationUseCase
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
@@ -16,6 +14,7 @@ import org.covidwatch.android.ui.event.Event
 class ExposuresViewModel(
     private val enManager: ExposureNotificationManager,
     private val updateExposureInformationUseCase: UpdateExposureInformationUseCase,
+    preferenceStorage: PreferenceStorage,
     exposureInformationRepository: ExposureInformationRepository
 ) : ViewModel() {
 
@@ -28,6 +27,8 @@ class ExposuresViewModel(
     val exposureInfo: LiveData<List<CovidExposureInformation>> =
         exposureInformationRepository.exposureInformation()
 
+    val lastExposureTime = preferenceStorage.observableExposureSummary.map { it.modifiedTime }
+
     fun start() {
         viewModelScope.launch {
             _exposureNotificationEnabled.value = enManager.isEnabled().result()
@@ -36,17 +37,14 @@ class ExposuresViewModel(
         }
     }
 
-    fun toggleExposureNotifications() {
+    fun enableExposureNotification(enable: Boolean) {
         viewModelScope.launch {
-            // Check if we need to stop the service
-            if (enManager.isEnabled().result() == true) {
-                enManager.stop()
-            } else { // Otherwise run the service
-                enManager.start().result()
-            }
+            val isEnabled = enManager.isEnabled().result() ?: false
 
-            // Handle the case of is service running or not simply by asking the manager
-            _exposureNotificationEnabled.value = enManager.isEnabled().result()
+            when {
+                enable && !isEnabled -> enManager.start().result()
+                !enable && isEnabled -> enManager.stop()
+            }
         }
     }
 
@@ -61,7 +59,6 @@ class ExposuresViewModel(
 
     private fun handleError(status: ENStatus?) {
         when (status) {
-            ENStatus.SUCCESS -> TODO()
             ENStatus.FailedRejectedOptIn -> TODO()
             ENStatus.FailedServiceDisabled -> TODO()
             ENStatus.FailedBluetoothScanningDisabled -> TODO()
