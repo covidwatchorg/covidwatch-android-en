@@ -146,7 +146,6 @@
     <string name="not_now_button">Not now</string>
     <string name="how_it_works">HOW IT WORKS</string>
     <string name="continue_setup_button">Continue Setup</string>
-    <string name="generic_error_message">Internal error, please try again.</string>
 
     <!-- Home Screen-->
     <string name="days_text">days</string>
