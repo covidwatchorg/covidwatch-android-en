@@ -59,18 +59,16 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
     }
 
     private fun makeTestExposureNotification() {
-        //Make an exposure Notification Object
-        val covidExposureInformation: CovidExposureInformation =
-            RandomEnObjects.exposureInformation.toCovidExposureInformation()
-        var exposureInformationList: List<CovidExposureInformation> =
-            listOf(covidExposureInformation)
         val exposureInformationRepository: ExposureInformationRepository by inject()
         var returnExposureInformationList : List<CovidExposureInformation>
         val testExposureNotification = TestExposureNotification()
         val context: Context = requireContext()
+        val covidExposureInformation: CovidExposureInformation =
+            RandomEnObjects.exposureInformation.toCovidExposureInformation()
+        var exposureInformationList: List<CovidExposureInformation> =
+            listOf(covidExposureInformation)
 
         GlobalScope.io {
-            //This returns garbage
             returnExposureInformationList = saveOneGetAll(exposureInformationRepository, exposureInformationList)
             //sum up risk exposures from returnExposureInformationList and pass to TestExposureNotification
             testExposureNotification.saveExposureSummaryInPreferences(context,covidExposureInformation,returnExposureInformationList.size)
@@ -85,7 +83,6 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
         exposureInformationList: List<CovidExposureInformation>): List<CovidExposureInformation>
     {
         exposureInformationRepository.saveExposureInformation(exposureInformationList)
-        //This doesn't work at all -- doesn't get data
         var newExposureInformationList: List<CovidExposureInformation>
         newExposureInformationList = exposureInformationRepository.realExposureInformation()
         return newExposureInformationList

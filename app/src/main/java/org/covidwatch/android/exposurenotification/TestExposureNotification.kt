@@ -16,9 +16,9 @@ class TestExposureNotification {
             covidExposureInformation: CovidExposureInformation,
             matchedKeyCount: Int)
     {
+        var sharedPreferences: SharedPreferenceStorage = SharedPreferenceStorage(context)
         val exposureSummaryRandom: ExposureSummary = RandomEnObjects.exposureSummary
         RandomEnObjects.retrieved = true
-        var sharedPreferences: SharedPreferenceStorage = SharedPreferenceStorage(context)
         val daysSinceLastExposure: Int = exposureSummaryRandom.daysSinceLastExposure
         val maximumRiskScore = exposureSummaryRandom.maximumRiskScore
         val attenuationDurations: IntArray = intArrayOf(1)
@@ -33,7 +33,6 @@ class TestExposureNotification {
         with (prefs.edit()) {
             sharedPreferences.exposureSummary = covidExposureSummary
             commit()
-
         }
         val exposureSummary: CovidExposureSummary = sharedPreferences.exposureSummary
     }
