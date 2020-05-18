@@ -65,7 +65,7 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
         var exposureInformationList: List<CovidExposureInformation> =
             listOf(covidExposureInformation)
         val exposureInformationRepository: ExposureInformationRepository by inject()
-        var returnExposureInformationList : LiveData<List<CovidExposureInformation>>
+        var returnExposureInformationList : List<CovidExposureInformation>
         val testExposureNotification = TestExposureNotification()
         val context: Context = requireContext()
 
@@ -73,7 +73,7 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
             //This returns garbage
             returnExposureInformationList = saveOneGetAll(exposureInformationRepository, exposureInformationList)
             //sum up risk exposures from returnExposureInformationList and pass to TestExposureNotification
-            testExposureNotification.saveExposureSummaryInPreferences(context,covidExposureInformation)
+            testExposureNotification.saveExposureSummaryInPreferences(context,covidExposureInformation,returnExposureInformationList.size)
             findNavController().navigate(R.id.homeFragment)
         }
     }
@@ -82,11 +82,11 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
     //Read all the exposureInformation objects from the database into a list
     suspend private fun saveOneGetAll(
         exposureInformationRepository: ExposureInformationRepository,
-        exposureInformationList: List<CovidExposureInformation>): LiveData<List<CovidExposureInformation>>
+        exposureInformationList: List<CovidExposureInformation>): List<CovidExposureInformation>
     {
         exposureInformationRepository.saveExposureInformation(exposureInformationList)
         //This doesn't work at all -- doesn't get data
-        var newExposureInformationList: LiveData<List<CovidExposureInformation>>
+        var newExposureInformationList: List<CovidExposureInformation>
         newExposureInformationList = exposureInformationRepository.realExposureInformation()
         return newExposureInformationList
     }

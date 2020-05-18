@@ -11,13 +11,15 @@ import org.koin.android.ext.android.inject
 
 
 class TestExposureNotification {
-    fun saveExposureSummaryInPreferences(context: Context, covidExposureInformation: CovidExposureInformation){
+    fun saveExposureSummaryInPreferences(
+            context: Context,
+            covidExposureInformation: CovidExposureInformation,
+            matchedKeyCount: Int)
+    {
         val exposureSummaryRandom: ExposureSummary = RandomEnObjects.exposureSummary
         RandomEnObjects.retrieved = true
         var sharedPreferences: SharedPreferenceStorage = SharedPreferenceStorage(context)
         val daysSinceLastExposure: Int = exposureSummaryRandom.daysSinceLastExposure
-        //TODO: get total from database
-        val matchedKeyCount = 1
         val maximumRiskScore = exposureSummaryRandom.maximumRiskScore
         val attenuationDurations: IntArray = intArrayOf(1)
         attenuationDurations[0] = covidExposureInformation.attenuationValue

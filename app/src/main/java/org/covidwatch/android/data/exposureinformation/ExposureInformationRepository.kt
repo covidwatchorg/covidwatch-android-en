@@ -18,7 +18,7 @@ class ExposureInformationRepository(private val local: ExposureInformationLocalS
         }
     )
 
-    fun realExposureInformation(): LiveData<List<CovidExposureInformation>> {
+    fun realExposureInformation(): List<CovidExposureInformation> {
         return local.exposureInformation()
     }
 
