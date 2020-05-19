@@ -3,7 +3,7 @@ package org.covidwatch.android.data
 import java.io.File
 import java.util.Date
 
-class FirebaseService {
+class ApiService {
     suspend fun diagnosisKeys(since: Date): List<File> {
         TODO("not implemented")
     }

@@ -5,8 +5,8 @@ import androidx.room.Room
 import androidx.work.WorkManager
 import com.google.android.gms.nearby.Nearby
 import okhttp3.OkHttpClient
+import org.covidwatch.android.data.ApiService
 import org.covidwatch.android.data.AppDatabase
-import org.covidwatch.android.data.FirebaseService
 import org.covidwatch.android.data.TestedRepositoryImpl
 import org.covidwatch.android.data.UserFlowRepository
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenLocalSource
@@ -29,7 +29,6 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-@Suppress("USELESS_CAST")
 val appModule = module {
     single {
         Nearby.getExposureNotificationClient(androidApplication())
@@ -65,10 +64,10 @@ val appModule = module {
 
     single { AppCoroutineDispatchers() }
 
-    single { SharedPreferenceStorage(androidApplication()) as PreferenceStorage }
+    single<PreferenceStorage> { SharedPreferenceStorage(androidApplication()) }
 
-    single { FirebaseService() }
-    single { PositiveDiagnosisRemoteSource(firebaseService = get()) }
+    single { ApiService() }
+    single { PositiveDiagnosisRemoteSource(apiService = get()) }
     single { PositiveDiagnosisRepository(remote = get()) }
 
     single {
@@ -139,10 +138,10 @@ val appModule = module {
 
     single { OkHttpClient() }
 
-    factory {
+    single<TestedRepository> {
         TestedRepositoryImpl(
             preferences = get()
-        ) as TestedRepository
+        )
     }
 
     // Onboarding start
