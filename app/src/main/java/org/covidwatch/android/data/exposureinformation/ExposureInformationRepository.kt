@@ -65,24 +65,18 @@ class ExposureInformationRepository(private val local: ExposureInformationLocalS
         covidExposureInformation: CovidExposureInformation,
         matchedKeyCount: Int)
     {
-        var sharedPreferences: SharedPreferenceStorage = SharedPreferenceStorage(context)
-        val exposureSummaryRandom: ExposureSummary = RandomEnObjects.exposureSummary
-        RandomEnObjects.retrieved = true
-        val daysSinceLastExposure: Int = exposureSummaryRandom.daysSinceLastExposure
-        val maximumRiskScore = exposureSummaryRandom.maximumRiskScore
+        val exposureSummary: ExposureSummary = RandomEnObjects.exposureSummary
         val attenuationDurations: IntArray = intArrayOf(1)
         attenuationDurations[0] = covidExposureInformation.attenuationValue
-        val summationRiskScore = covidExposureInformation.totalRiskScore
-        var covidExposureSummary: CovidExposureSummary = CovidExposureSummary(
-            daysSinceLastExposure, matchedKeyCount, maximumRiskScore, attenuationDurations, summationRiskScore )
-        val prefs = context.applicationContext.getSharedPreferences(
-            "exposure_summary",
-            Context.MODE_PRIVATE
+        val sharedPreferences = SharedPreferenceStorage(context)
+        sharedPreferences.exposureSummary = CovidExposureSummary(
+            exposureSummary.daysSinceLastExposure,
+            matchedKeyCount,
+            exposureSummary.maximumRiskScore,
+            attenuationDurations,
+            covidExposureInformation.totalRiskScore
         )
-        with (prefs.edit()) {
-            sharedPreferences.exposureSummary = covidExposureSummary
-            commit()
-        }
+        RandomEnObjects.retrieved = true
     }
 
 }
