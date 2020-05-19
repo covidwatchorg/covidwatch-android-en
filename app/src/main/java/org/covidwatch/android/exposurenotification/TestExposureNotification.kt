@@ -34,6 +34,5 @@ class TestExposureNotification {
             sharedPreferences.exposureSummary = covidExposureSummary
             commit()
         }
-        val exposureSummary: CovidExposureSummary = sharedPreferences.exposureSummary
     }
 }
