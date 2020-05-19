@@ -34,7 +34,7 @@ class ProvideDiagnosisKeysWork(
     }
 
     override suspend fun doWork(): Result {
-        val diagnosisKeys = diagnosisRepository.diagnosisKeys(Date())
+        val diagnosisKeys = diagnosisRepository.diagnosisKeys()
         Timber.d("Adding ${diagnosisKeys.size} positive diagnoses to exposure notification framework")
 
         val token = randomToken()

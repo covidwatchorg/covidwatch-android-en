@@ -1,16 +1,10 @@
 package org.covidwatch.android.data
 
 import java.io.File
-import java.util.Date
+import java.util.*
 
-class ApiService {
-    suspend fun diagnosisKeys(since: Date): List<File> {
-        TODO("not implemented")
-    }
-
-    suspend fun uploadDiagnosisKeys(keys: PositiveDiagnosis) {
-        TODO("not implemented")
-    }
-
-    suspend fun isNumberValid(phaNumber: String) = true
+interface ApiService {
+    suspend fun diagnosisKey(url: String): File
+    suspend fun uploadDiagnosisKeys(keys: PositiveDiagnosis)
+    suspend fun isNumberValid(phaNumber: String)
 }
