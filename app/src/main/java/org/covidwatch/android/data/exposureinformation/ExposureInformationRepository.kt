@@ -12,14 +12,20 @@ class ExposureInformationRepository(private val local: ExposureInformationLocalS
     }
 
     //TODO: Replace with real implementation
+    /*
     fun exposureInformation() = mutableLiveData(
         List(10) {
             RandomEnObjects.exposureInformation.toCovidExposureInformation()
         }
     )
+     */
 
-    fun realExposureInformation(): List<CovidExposureInformation> {
+    fun exposureInformation(): LiveData<List<CovidExposureInformation>> {
         return local.exposureInformation()
+    }
+
+    fun randomExposureInformation(): List<CovidExposureInformation> {
+        return local.randomExposureInformation()
     }
 
 }

@@ -7,8 +7,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -84,7 +82,7 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
     {
         exposureInformationRepository.saveExposureInformation(exposureInformationList)
         var newExposureInformationList: List<CovidExposureInformation>
-        newExposureInformationList = exposureInformationRepository.realExposureInformation()
+        newExposureInformationList = exposureInformationRepository.randomExposureInformation()
         return newExposureInformationList
     }
 }
