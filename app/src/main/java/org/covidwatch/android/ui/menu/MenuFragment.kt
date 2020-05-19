@@ -57,32 +57,10 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
     }
 
     private fun makeTestExposureNotification() {
+        //This was necessary because otherwise a parameter to the constructor was required
         val exposureInformationRepository: ExposureInformationRepository by inject()
-        var returnExposureInformationList : List<CovidExposureInformation>
-        val testExposureNotification = TestExposureNotification()
-        val context: Context = requireContext()
-        val covidExposureInformation: CovidExposureInformation =
-            RandomEnObjects.exposureInformation.toCovidExposureInformation()
-        var exposureInformationList: List<CovidExposureInformation> =
-            listOf(covidExposureInformation)
-
-        GlobalScope.io {
-            returnExposureInformationList = saveOneGetAll(exposureInformationRepository, exposureInformationList)
-            //sum up risk exposures from returnExposureInformationList and pass to TestExposureNotification
-            testExposureNotification.saveExposureSummaryInPreferences(context,covidExposureInformation,returnExposureInformationList.size)
-            findNavController().navigate(R.id.homeFragment)
-        }
+        exposureInformationRepository.addFakeItem(requireContext())
+        findNavController().navigate(R.id.homeFragment)
     }
 
-    //Save the new exposureInformation object to the database
-    //Read all the exposureInformation objects from the database into a list
-    suspend private fun saveOneGetAll(
-        exposureInformationRepository: ExposureInformationRepository,
-        exposureInformationList: List<CovidExposureInformation>): List<CovidExposureInformation>
-    {
-        exposureInformationRepository.saveExposureInformation(exposureInformationList)
-        var newExposureInformationList: List<CovidExposureInformation>
-        newExposureInformationList = exposureInformationRepository.randomExposureInformation()
-        return newExposureInformationList
-    }
 }

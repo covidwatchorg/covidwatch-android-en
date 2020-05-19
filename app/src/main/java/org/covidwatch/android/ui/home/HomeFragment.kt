@@ -40,7 +40,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 SharedPreferenceStorage(requireContext())
             var settingsExposureSummary: CovidExposureSummary = sharedPreferences.exposureSummary
             bindExposureSummary(settingsExposureSummary)
-            RandomEnObjects.retrieved = false;
+            RandomEnObjects.retrieved = false
         }
 
         else {
