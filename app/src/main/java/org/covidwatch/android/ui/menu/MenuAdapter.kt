@@ -10,6 +10,7 @@ class MenuAdapter(
 ) : RecyclerView.Adapter<MenuItemViewHolder>() {
 
     private val items = listOf(
+        MenuItem(R.string.generate_random_exposure, 0, MakeTestExposureNotification),
         MenuItem(R.string.settings, 0, Settings),
         MenuItem(R.string.test_results, 0, TestResults),
         MenuItem(R.string.how_does_this_work, R.drawable.ic_exit_to_app, Browser("https://www.covid-watch.org/")),

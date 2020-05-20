@@ -63,9 +63,9 @@ object RandomEnObjects {
 
     val exposureSummary
         get() = ExposureSummary.ExposureSummaryBuilder()
-            .setDaysSinceLastExposure(Random.nextInt())
-            .setMatchedKeyCount(Random.nextInt())
-            .setMaximumRiskScore(Random.nextInt())
+            .setDaysSinceLastExposure(Random.nextInt(14))
+            .setMatchedKeyCount(Random.nextInt(0, 4096))
+            .setMaximumRiskScore(Random.nextInt(8))
             .build()
 
     val exposureInformation
@@ -76,4 +76,6 @@ object RandomEnObjects {
             .setTotalRiskScore(Random.nextInt(8))
             .setTransmissionRiskLevel(Random.nextInt(8))
             .build()
+
+    var retrieved = false
 }
