@@ -6,31 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.*
 import org.covidwatch.android.data.CovidExposureSummary
-import org.covidwatch.android.data.pref.SharedPreferenceStorage
 import org.covidwatch.android.databinding.FragmentHomeBinding
-import org.covidwatch.android.exposurenotification.RandomEnObjects
 import org.covidwatch.android.ui.BaseFragment
 import org.covidwatch.android.ui.event.EventObserver
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.covidwatch.android.BuildConfig
-
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val homeViewModel: HomeViewModel by viewModel()
-    private var settingsExposureSummary: CovidExposureSummary = CovidExposureSummary(
-        daySinceLastExposure = 0,
-        matchedKeyCount = 0,
-        maximumRiskScore = 0,
-        attenuationDurationsInMinutes = intArrayOf(),
-        summationRiskScore = 0
-    )
-
 
     override fun bind(inflater: LayoutInflater, container: ViewGroup?): FragmentHomeBinding =
         FragmentHomeBinding.inflate(inflater, container, false)
@@ -43,17 +30,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         homeViewModel.navigateToOnboardingEvent.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.splashFragment)
         })
-
-        if (RandomEnObjects.retrieved == true) {
-            var sharedPreferences: SharedPreferenceStorage =
-                SharedPreferenceStorage(requireContext())
-            settingsExposureSummary = sharedPreferences.exposureSummary
-            bindExposureSummary(settingsExposureSummary)
-            RandomEnObjects.retrieved = false
-        }
-
         homeViewModel.exposureSummary.observe(viewLifecycleOwner, Observer(::bindExposureSummary))
-
         homeViewModel.infoBannerState.observe(viewLifecycleOwner, Observer { banner ->
             when (banner) {
                 is InfoBannerState.Visible -> {
@@ -115,15 +92,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun bindExposureSummary(exposureSummary: CovidExposureSummary) {
-        var newExposureSummary = exposureSummary
-        //We want to use the exposureSummary that has the higher matchedKeyCount
-        //The other one is lagging
-        if (settingsExposureSummary.matchedKeyCount > newExposureSummary.matchedKeyCount) {
-            newExposureSummary = settingsExposureSummary
-        }
-        binding.exposureSummary.daysSinceLastExposure.text = newExposureSummary.daySinceLastExposure.toString()
-        binding.exposureSummary.totalExposures.text = newExposureSummary.matchedKeyCount.toString()
-        binding.exposureSummary.highRiskScore.text = newExposureSummary.maximumRiskScore.toString()
+        binding.exposureSummary.daysSinceLastExposure.text = exposureSummary.daySinceLastExposure.toString()
+        binding.exposureSummary.totalExposures.text = exposureSummary.matchedKeyCount.toString()
+        binding.exposureSummary.highRiskScore.text = exposureSummary.maximumRiskScore.toString()
     }
 
     private fun updateUiForTestedPositive(isUserTestedPositive: Boolean) {
