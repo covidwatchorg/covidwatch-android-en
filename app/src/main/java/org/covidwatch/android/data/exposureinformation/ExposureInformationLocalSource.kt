@@ -12,6 +12,6 @@ class ExposureInformationLocalSource(private val database: AppDatabase) {
     fun exposureInformation(): LiveData<List<CovidExposureInformation>> =
         database.exposureInformationDao().exposureInformation()
 
-    fun randomExposureInformation(): List<CovidExposureInformation> =
-        database.exposureInformationDao().randomExposureInformation()
+    suspend fun exposureInformationList(): List<CovidExposureInformation> =
+        database.exposureInformationDao().exposureInformationList()
 }

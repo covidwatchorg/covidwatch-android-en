@@ -16,5 +16,5 @@ interface ExposureInformationDao {
     fun exposureInformation(): LiveData<List<CovidExposureInformation>>
 
     @Query("SELECT * FROM exposure_information")
-    fun randomExposureInformation(): List<CovidExposureInformation>
+    suspend fun exposureInformationList(): List<CovidExposureInformation>
 }

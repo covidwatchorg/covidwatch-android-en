@@ -18,21 +18,12 @@ class ExposureInformationRepository(private val local: ExposureInformationLocalS
         local.saveExposureInformation(exposureInformation)
     }
 
-    //TODO: Replace with real implementation
-    /*
-    fun exposureInformation() = mutableLiveData(
-        List(10) {
-            RandomEnObjects.exposureInformation.toCovidExposureInformation()
-        }
-    )
-     */
-
     fun exposureInformation(): LiveData<List<CovidExposureInformation>> {
         return local.exposureInformation()
     }
 
-    fun randomExposureInformation(): List<CovidExposureInformation> {
-        return local.randomExposureInformation()
+    suspend fun exposureInformationList(): List<CovidExposureInformation> {
+        return local.exposureInformationList()
     }
 
     fun addFakeItem(context: Context){
@@ -56,7 +47,7 @@ class ExposureInformationRepository(private val local: ExposureInformationLocalS
     {
         saveExposureInformation(exposureInformationList)
         var newExposureInformationList: List<CovidExposureInformation>
-        newExposureInformationList = randomExposureInformation()
+        newExposureInformationList = exposureInformationList()
         return newExposureInformationList
     }
 
