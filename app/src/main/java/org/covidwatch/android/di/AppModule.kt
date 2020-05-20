@@ -5,7 +5,6 @@ import androidx.room.Room
 import androidx.work.WorkManager
 import com.google.android.gms.nearby.Nearby
 import okhttp3.OkHttpClient
-import org.covidwatch.android.data.ApiService
 import org.covidwatch.android.data.AppDatabase
 import org.covidwatch.android.data.TestedRepositoryImpl
 import org.covidwatch.android.data.UserFlowRepository
@@ -13,6 +12,7 @@ import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenLocalSou
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.exposureinformation.ExposureInformationLocalSource
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
+import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisLocalSource
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRemoteSource
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
@@ -66,9 +66,9 @@ val appModule = module {
 
     single<PreferenceStorage> { SharedPreferenceStorage(androidApplication()) }
 
-    single { ApiService() }
-    single { PositiveDiagnosisRemoteSource(apiService = get()) }
-    single { PositiveDiagnosisRepository(remote = get()) }
+    single { PositiveDiagnosisRemoteSource(httpClient = get()) }
+    single { PositiveDiagnosisLocalSource() }
+    single { PositiveDiagnosisRepository(remote = get(), local = get()) }
 
     single {
         Room.databaseBuilder(
