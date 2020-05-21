@@ -4,8 +4,11 @@ import android.content.Context
 import androidx.room.Room
 import androidx.work.WorkManager
 import com.google.android.gms.nearby.Nearby
+import com.google.android.gms.safetynet.SafetyNet
 import okhttp3.OkHttpClient
+import org.covidwatch.android.R
 import org.covidwatch.android.data.AppDatabase
+import org.covidwatch.android.data.SafetyNetManager
 import org.covidwatch.android.data.TestedRepositoryImpl
 import org.covidwatch.android.data.UserFlowRepository
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenLocalSource
@@ -37,6 +40,16 @@ val appModule = module {
     single {
         ExposureNotificationManager(
             exposureNotification = get()
+        )
+    }
+
+    single { SafetyNet.getClient(androidApplication()) }
+
+    single {
+        SafetyNetManager(
+            apiKey = androidContext().getString(R.string.safetynet_api_key),
+            packageName = androidContext().packageName,
+            safetyNet = get()
         )
     }
 

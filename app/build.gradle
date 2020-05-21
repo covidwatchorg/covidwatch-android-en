@@ -20,6 +20,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        resValue("string", "safetynet_api_key", "AIzaSyDvdHktRzkayQC3JIt0rKyAtnWuhcMjOb4")
     }
 
     buildTypes {
@@ -48,9 +50,6 @@ android {
         jvmTarget = "1.8"
     }
 
-    dataBinding {
-        enabled = true
-    }
     viewBinding {
         enabled = true
     }
@@ -78,7 +77,6 @@ android {
     lintOptions {
         abortOnError false
     }
-
 }
 
 dependencies {

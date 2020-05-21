@@ -18,7 +18,8 @@ data class PositiveDiagnosis(
 class DiagnosisKey(
     val keyData: ByteArray,
     val rollingStartIntervalNumber: Int,
-    val transmissionRiskLevel: Int
+    val transmissionRiskLevel: Int,
+    val rollingPeriod: Int
 )
 
 fun DiagnosisKey.asTemporaryExposureKey(): TemporaryExposureKey =
@@ -31,5 +32,6 @@ fun DiagnosisKey.asTemporaryExposureKey(): TemporaryExposureKey =
 fun TemporaryExposureKey.asDiagnosisKey() = DiagnosisKey(
     keyData,
     rollingStartIntervalNumber,
-    transmissionRiskLevel
+    transmissionRiskLevel,
+    rollingPeriod
 )
