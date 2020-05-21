@@ -15,10 +15,10 @@ import org.covidwatch.android.data.pref.SharedPreferenceStorage
 import org.covidwatch.android.*
 
 
-class ExposureInformationRepository(private val local: ExposureInformationLocalSource,
-                                    private val preferences: PreferenceStorage
-)
- {
+class ExposureInformationRepository(
+    private val local: ExposureInformationLocalSource,
+    private val preferences: PreferenceStorage
+) {
     suspend fun saveExposureInformation(exposureInformation: List<CovidExposureInformation>) {
         local.saveExposureInformation(exposureInformation)
     }
@@ -31,9 +31,10 @@ class ExposureInformationRepository(private val local: ExposureInformationLocalS
         return local.exposureInformationList()
     }
 
-    fun addFakeItem(){
+    fun addFakeItem() {
         GlobalScope.io {
-            val exposureInformation: CovidExposureInformation = RandomEnObjects.exposureInformation.toCovidExposureInformation()
+            val exposureInformation: CovidExposureInformation =
+                RandomEnObjects.exposureInformation.toCovidExposureInformation()
             var exposureInfoList: MutableList<CovidExposureInformation> = mutableListOf()
             exposureInfoList.add(exposureInformation)
             saveExposureInformation(exposureInfoList)
@@ -43,8 +44,8 @@ class ExposureInformationRepository(private val local: ExposureInformationLocalS
 
     fun saveExposureSummaryInPreferences(
         covidExposureInformation: CovidExposureInformation,
-        matchedKeyCount: Int)
-    {
+        matchedKeyCount: Int
+    ) {
         val exposureSummary: ExposureSummary = RandomEnObjects.exposureSummary
         val attenuationDurations: IntArray = intArrayOf(1)
         attenuationDurations[0] = covidExposureInformation.attenuationValue

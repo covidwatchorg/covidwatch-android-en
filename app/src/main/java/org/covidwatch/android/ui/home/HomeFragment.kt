@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.*
@@ -23,14 +22,6 @@ import org.covidwatch.android.BuildConfig
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val homeViewModel: HomeViewModel by viewModel()
-    private var settingsExposureSummary: CovidExposureSummary = CovidExposureSummary(
-        daySinceLastExposure = 0,
-        matchedKeyCount = 0,
-        maximumRiskScore = 0,
-        attenuationDurationsInMinutes = intArrayOf(),
-        summationRiskScore = 0
-    )
-
 
     override fun bind(inflater: LayoutInflater, container: ViewGroup?): FragmentHomeBinding =
         FragmentHomeBinding.inflate(inflater, container, false)
@@ -107,10 +98,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun bindExposureSummary(exposureSummary: CovidExposureSummary) {
-        var newExposureSummary = exposureSummary
-        binding.exposureSummary.daysSinceLastExposure.text = newExposureSummary.daySinceLastExposure.toString()
-        binding.exposureSummary.totalExposures.text = newExposureSummary.matchedKeyCount.toString()
-        binding.exposureSummary.highRiskScore.text = newExposureSummary.maximumRiskScore.toString()
+        binding.exposureSummary.daysSinceLastExposure.text = exposureSummary.daySinceLastExposure.toString()
+        binding.exposureSummary.totalExposures.text = exposureSummary.matchedKeyCount.toString()
+        binding.exposureSummary.highRiskScore.text = exposureSummary.maximumRiskScore.toString()
     }
 
     private fun updateUiForTestedPositive(isUserTestedPositive: Boolean) {
