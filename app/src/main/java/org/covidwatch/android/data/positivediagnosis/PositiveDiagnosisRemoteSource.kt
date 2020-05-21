@@ -1,8 +1,13 @@
 package org.covidwatch.android.data.positivediagnosis
 
 import androidx.annotation.WorkerThread
+import com.google.common.io.BaseEncoding
+import com.google.gson.*
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import okio.IOException
 import org.covidwatch.android.data.PositiveDiagnosis
@@ -10,8 +15,16 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
+import java.lang.reflect.Type
+
 
 class PositiveDiagnosisRemoteSource(private val httpClient: OkHttpClient) {
+
+    val jsonType = "application/json; charset=utf-8".toMediaType()
+    val gson = GsonBuilder().registerTypeHierarchyAdapter(
+        ByteArray::class.java,
+        ByteArrayToBase64TypeAdapter()
+    ).create()
 
     @WorkerThread
     fun diagnosisKey(url: String): File? {
@@ -58,12 +71,40 @@ class PositiveDiagnosisRemoteSource(private val httpClient: OkHttpClient) {
         }
     }
 
-    suspend fun uploadDiagnosisKeys(
+    @WorkerThread
+    fun uploadDiagnosisKeys(
         uploadUrl: String,
-        keys: PositiveDiagnosis
+        diagnosis: PositiveDiagnosis
     ) {
-        TODO()
+        val body: RequestBody = gson.toJson(diagnosis).toRequestBody(jsonType)
+        val request: Request = Request.Builder()
+            .url(uploadUrl)
+            .post(body)
+            .build()
+        httpClient.newCall(request).execute()
     }
 
-    suspend fun isNumberValid(phaNumber: String) = true
+    private class ByteArrayToBase64TypeAdapter :
+        JsonSerializer<ByteArray?>,
+        JsonDeserializer<ByteArray?> {
+
+        private val base64 = BaseEncoding.base64()
+
+        @Throws(JsonParseException::class)
+        override fun deserialize(
+            json: JsonElement,
+            typeOfT: Type?,
+            context: JsonDeserializationContext?
+        ): ByteArray {
+            return base64.decode(json.asString)
+        }
+
+        override fun serialize(
+            src: ByteArray?,
+            typeOfSrc: Type?,
+            context: JsonSerializationContext?
+        ): JsonElement {
+            return JsonPrimitive(base64.encode(src))
+        }
+    }
 }

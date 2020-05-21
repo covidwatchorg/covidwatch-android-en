@@ -23,8 +23,6 @@ class PositiveDiagnosisRepository(
         return localKeys + remoteKeys
     }
 
-    suspend fun isNumberValid(phaNumber: String) = remote.isNumberValid(phaNumber)
-
-    suspend fun uploadDiagnosisKeys(uploadUrl: String, positiveDiagnosis: PositiveDiagnosis) =
+    fun uploadDiagnosisKeys(uploadUrl: String, positiveDiagnosis: PositiveDiagnosis) =
         remote.uploadDiagnosisKeys(uploadUrl, positiveDiagnosis)
 }

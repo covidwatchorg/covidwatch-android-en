@@ -25,6 +25,7 @@ class UploadDiagnosisKeysUseCase(
     dispatchers: AppCoroutineDispatchers
 ) : UseCase<Unit, Unit>(dispatchers) {
 
+    //TODO: Where do we get the verification code from?
     private val defaultVerificationCode = "POSITIVE_TEST_123456"
     private val paddingSizeMin = 1024
     private val paddingSizeMax = 2048
