@@ -46,13 +46,19 @@
     <!-- Test Flow -->
     <string name="cancel">Cancel</string>
 
+    <!--  Menu -->
+    <string name="generate_random_exposure">"(Testing) Generate Random Exposure</string>
     <string name="settings">Settings</string>
-    <string name="test_results">Test Results</string>
-    <string name="how_does_this_work">How does this work?</string>
-    <string name="covid_watch_website">Covid Watch Website</string>
+    <string name="possible_exposures">Possible Exposures</string>
+    <string name="notify_others">Notify Others</string>
+    <string name="how_the_app_works">How the App Works</string>
     <string name="health_guidelines">Health Guidelines</string>
+    <string name="covid_watch_website">Covid Watch Website</string>
+    <string name="faq">FAQ</string>
     <string name="terms_of_use">Terms of Use</string>
     <string name="privacy_policy">Privacy Policy</string>
+    <string name="get_support">Get Support</string>
+
 
     <string name="issues_needs_to_be_resolved">The following issue(s) need to be resolved for the app to work properly</string>
     <string name="turn_on_bluetooth">Turn on Bluetooth</string>
