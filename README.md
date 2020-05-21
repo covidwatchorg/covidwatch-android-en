@@ -20,7 +20,7 @@ The current version of the Figma we're working towards: (https://www.figma.com/f
 
 Clone this repo from the `develop` branch:
 
-git clone git@github.com:covid19risk/covidwatch-android.git
+git clone git@github.com:covid19risk/covidwatch-android-en.git
 
 Open the project in Android Studio. Install onto a phone of yours with the `app` configuration, and you're free to explore the app! Its optimal to install on 2 phones as much of the behavior of the app depends on 2 phones interacting.
 
@@ -29,13 +29,13 @@ Open the project in Android Studio. Install onto a phone of yours with the `app`
 ## Looking to contribute?
 
 - Run on your own device to explore the UX. Look at the [Figma](https://www.figma.com/file/I4OOjT4VhsSberDIAZTkcH/Covid-Watch---App-v2-(dev)?node-id=0%3A1) for what the UX should look like. If you have any feedback/find any problems, create an issue!
-- Look at https://blog.google/documents/68/Android_Exposure_Notification_API_documentation_v1.2.pdf for existing issues. If you see something you want to work on, assign yourself to it, set it to in progress, and make a PR to the `develop` branch.
+- Look at https://github.com/orgs/covid19risk/projects/1 for existing issues. If you see something you want to work on, assign yourself to it, set it to in progress, and make a PR to the `develop` branch.
 
 ## FAQ
 
 What is the anonymous protocol for communication between phones? How does it work and who designed it?
 
-Covid Watch uses Google/Android Exposure Notification, a decentralized, privacy-first contact tracing API implemented in Google and Apple phone operation systems. You can read more about it in the Google design document at https://blog.google/documents/68/Android_Exposure_Notification_API_documentation_v1.3.1.pdf
+Covid Watch uses Google/Android Exposure Notification, a decentralized, privacy-first contact tracing API implemented in Google and Apple phone operation systems. You can read more about it in the Google design document at https://www.google.com/covid19/exposurenotifications/
 
 What's this repository vs the other repositories in the covid19risk Organization?
 
