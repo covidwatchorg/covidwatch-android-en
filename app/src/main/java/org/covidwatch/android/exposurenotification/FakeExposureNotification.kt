@@ -77,5 +77,4 @@ object RandomEnObjects {
             .setTransmissionRiskLevel(Random.nextInt(8))
             .build()
 
-    var retrieved = false
 }

@@ -44,14 +44,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             findNavController().navigate(R.id.splashFragment)
         })
 
-        if (RandomEnObjects.retrieved == true) {
-            var sharedPreferences: SharedPreferenceStorage =
-                SharedPreferenceStorage(requireContext())
-            settingsExposureSummary = sharedPreferences.exposureSummary
-            bindExposureSummary(settingsExposureSummary)
-            RandomEnObjects.retrieved = false
-        }
-
         homeViewModel.exposureSummary.observe(viewLifecycleOwner, Observer(::bindExposureSummary))
 
         homeViewModel.infoBannerState.observe(viewLifecycleOwner, Observer { banner ->
@@ -116,11 +108,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun bindExposureSummary(exposureSummary: CovidExposureSummary) {
         var newExposureSummary = exposureSummary
-        //We want to use the exposureSummary that has the higher matchedKeyCount
-        //The other one is lagging
-        if (settingsExposureSummary.matchedKeyCount > newExposureSummary.matchedKeyCount) {
-            newExposureSummary = settingsExposureSummary
-        }
         binding.exposureSummary.daysSinceLastExposure.text = newExposureSummary.daySinceLastExposure.toString()
         binding.exposureSummary.totalExposures.text = newExposureSummary.matchedKeyCount.toString()
         binding.exposureSummary.highRiskScore.text = newExposureSummary.maximumRiskScore.toString()

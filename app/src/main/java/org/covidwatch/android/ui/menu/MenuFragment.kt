@@ -59,7 +59,7 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
     private fun makeTestExposureNotification() {
         //This was necessary because otherwise a parameter to the constructor was required
         val exposureInformationRepository: ExposureInformationRepository by inject()
-        exposureInformationRepository.addFakeItem(requireContext())
+        exposureInformationRepository.addFakeItem()
         findNavController().navigate(R.id.homeFragment)
     }
 
