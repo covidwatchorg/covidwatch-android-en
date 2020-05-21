@@ -11,6 +11,7 @@ import org.covidwatch.android.data.AppDatabase
 import org.covidwatch.android.data.SafetyNetManager
 import org.covidwatch.android.data.TestedRepositoryImpl
 import org.covidwatch.android.data.UserFlowRepository
+import org.covidwatch.android.data.countrycode.CountryCodeRepository
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenLocalSource
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.exposureinformation.ExposureInformationLocalSource
@@ -98,6 +99,12 @@ val appModule = module {
     }
     single { DiagnosisKeysTokenLocalSource(keysTokenDao = get()) }
     single { DiagnosisKeysTokenRepository(local = get()) }
+
+    single {
+        val appDatabase: AppDatabase = get()
+        appDatabase.countryCodeDao()
+    }
+    single { CountryCodeRepository(local = get()) }
 
     factory {
         ProvideDiagnosisKeysUseCase(
