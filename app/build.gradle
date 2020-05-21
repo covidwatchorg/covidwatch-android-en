@@ -32,7 +32,7 @@ android {
             signingConfig signingConfigs.debug
         }
         debug {
-            testCoverageEnabled true
+            testCoverageEnabled project.hasProperty('coverage')
             buildConfigField("String", "FIREBASE_CLOUD_FUNCTIONS_ENDPOINT", '"https://us-central1-tagstwo-431e3.cloudfunctions.net"')
             buildConfigField "boolean", "FIREBASE_DEBUGGING", "true"
             applicationIdSuffix = ".debug"
