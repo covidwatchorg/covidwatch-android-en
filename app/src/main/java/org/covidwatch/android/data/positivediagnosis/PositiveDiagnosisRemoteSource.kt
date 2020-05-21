@@ -58,7 +58,10 @@ class PositiveDiagnosisRemoteSource(private val httpClient: OkHttpClient) {
         }
     }
 
-    suspend fun uploadDiagnosisKeys(keys: PositiveDiagnosis) {
+    suspend fun uploadDiagnosisKeys(
+        uploadUrl: String,
+        keys: PositiveDiagnosis
+    ) {
         TODO()
     }
 

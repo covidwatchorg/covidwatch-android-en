@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.work.WorkManager
 import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.safetynet.SafetyNet
+import com.google.common.io.BaseEncoding
 import okhttp3.OkHttpClient
 import org.covidwatch.android.R
 import org.covidwatch.android.data.*
@@ -29,6 +30,7 @@ import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import java.security.SecureRandom
 
 val appModule = module {
     single {
@@ -117,6 +119,11 @@ val appModule = module {
             enManager = get(),
             diagnosisRepository = get(),
             countryCodeRepository = get(),
+            safetyNetManager = get(),
+            uriManager = get(),
+            appPackageName = androidContext().packageName,
+            random = SecureRandom(),
+            encoding = BaseEncoding.base64(),
             dispatchers = get()
         )
     }

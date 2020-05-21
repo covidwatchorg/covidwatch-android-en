@@ -32,7 +32,7 @@ import java.security.NoSuchAlgorithmException
  *
  * All joined with the pipe ("|") character.
  */
-internal class SafetyNetManager(
+class SafetyNetManager(
     private val apiKey: String,
     private val packageName: String,
     private val safetyNet: SafetyNetClient
@@ -63,12 +63,11 @@ internal class SafetyNetManager(
     suspend fun attestFor(
         keys: List<DiagnosisKey>,
         regions: List<String>,
-        verificationCode: String,
-        transmissionRisk: Int
+        verificationCode: String
     ): String? {
         Timber.i("Getting SafetyNet attestation.")
 
-        val cleartext = cleartextFor(keys, regions, verificationCode, transmissionRisk)
+        val cleartext = cleartextFor(keys, regions, verificationCode)
         val nonce = encoding.encode(sha256(cleartext))
         val attest = safetyNet.attest(nonce.toByteArray(), apiKey).await()
 
@@ -78,26 +77,24 @@ internal class SafetyNetManager(
     private fun cleartextFor(
         keys: List<DiagnosisKey>,
         regions: List<String>,
-        verificationCode: String,
-        transmissionRisk: Int
+        verificationCode: String
     ): String {
         val parts = mutableListOf<String>()
         // Order of the parts is important here. Don't shuffle them, or the server may not be able to
         // verify the attestation.
         parts.add(packageName)
-        parts.add(keys(keys, transmissionRisk))
+        parts.add(keys(keys))
         parts.add(regions(regions))
         parts.add(verificationCode)
         return pipeJoiner.join(parts)
     }
 
     private fun keys(
-        keys: List<DiagnosisKey>,
-        transmissionRisk: Int
+        keys: List<DiagnosisKey>
     ): String {
         val keysBase64 = keys
             .map {
-                "${encoding.encode(it.keyData)}.${it.rollingStartIntervalNumber}.${it.rollingPeriod}.$transmissionRisk"
+                "${encoding.encode(it.key)}.${it.rollingStartNumber}.${it.rollingPeriod}.${it.transmissionRisk}"
             }
             .sorted()
 
