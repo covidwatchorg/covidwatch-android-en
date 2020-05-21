@@ -43,7 +43,7 @@ val appModule = module {
     viewModel {
         ExposureNotificationViewModel(
             enManager = get(),
-            diagnosisRepository = get(),
+            uploadDiagnosisKeysUseCase = get(),
             provideDiagnosisKeysUseCase = get(),
             updateExposureInformationUseCase = get(),
             exposureInformationRepository = get(),
@@ -89,6 +89,14 @@ val appModule = module {
     factory {
         ProvideDiagnosisKeysUseCase(
             workManager = get(),
+            dispatchers = get()
+        )
+    }
+
+    factory {
+        UploadDiagnosisKeysUseCase(
+            enManager = get(),
+            diagnosisRepository = get(),
             dispatchers = get()
         )
     }
