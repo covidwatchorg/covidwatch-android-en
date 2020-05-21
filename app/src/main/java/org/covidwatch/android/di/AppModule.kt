@@ -7,10 +7,7 @@ import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.safetynet.SafetyNet
 import okhttp3.OkHttpClient
 import org.covidwatch.android.R
-import org.covidwatch.android.data.AppDatabase
-import org.covidwatch.android.data.SafetyNetManager
-import org.covidwatch.android.data.TestedRepositoryImpl
-import org.covidwatch.android.data.UserFlowRepository
+import org.covidwatch.android.data.*
 import org.covidwatch.android.data.countrycode.CountryCodeRepository
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenLocalSource
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
@@ -106,6 +103,8 @@ val appModule = module {
     }
     single { CountryCodeRepository(local = get()) }
 
+    single { UriManager(serverEndpoint = androidContext().getString(R.string.server_endpoint)) }
+
     factory {
         ProvideDiagnosisKeysUseCase(
             workManager = get(),
@@ -117,6 +116,7 @@ val appModule = module {
         UploadDiagnosisKeysUseCase(
             enManager = get(),
             diagnosisRepository = get(),
+            countryCodeRepository = get(),
             dispatchers = get()
         )
     }
