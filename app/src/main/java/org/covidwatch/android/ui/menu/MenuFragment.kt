@@ -23,6 +23,8 @@ import org.covidwatch.android.exposurenotification.*
 
 class MenuFragment : Fragment(R.layout.fragment_menu) {
 
+    val exposureInformationRepository: ExposureInformationRepository by inject()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val menuList: RecyclerView = view.findViewById(R.id.menu_list)
@@ -57,8 +59,6 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
     }
 
     private fun makeTestExposureNotification() {
-        //This was necessary because otherwise a parameter to the constructor was required
-        val exposureInformationRepository: ExposureInformationRepository by inject()
         exposureInformationRepository.addFakeItem()
         findNavController().navigate(R.id.homeFragment)
     }
