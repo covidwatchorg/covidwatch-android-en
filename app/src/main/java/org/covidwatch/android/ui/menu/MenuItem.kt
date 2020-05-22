@@ -2,7 +2,7 @@ package org.covidwatch.android.ui.menu
 
 data class MenuItem(
     val title: Int,
-    val iconEnd: Int,
+    var iconEnd: Int,
     val destination: Destination
 )
 
