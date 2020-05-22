@@ -53,7 +53,10 @@ class MenuAdapter(
     //TODO get actual high risk
     private fun updateMenuItemForRisk(menuItem: MenuItem): MenuItem {
         if (isHighRisk){
-            //TODO update menu item based on risk
+            menuItem.iconEnd = R.drawable.ic_info_red
+        }
+        else {
+            menuItem.iconEnd = 0
         }
         return menuItem
     }
