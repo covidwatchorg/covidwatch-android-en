@@ -8,33 +8,19 @@ Android POC for www.covid-watch.org
 ## Who are we? What is this app?
 
 This repository is focused on the implementation of the Android version of the Covid Watch app. Our goals are to:
-- Allow users to anonymously record interactions with others using the [TCN Protocol](https://github.com/TCNCoalition/tcn-client-android)
+- Allow users to anonymously record interactions with others using the Google/Apple exposures notification api for Android
+    (https://github.com/google/exposure-notifications-android)
 - Notify users if someone they've interacted with in the past 2 weeks indicates they've tested positive for COVID-19 (again, anonymously!)
 - Offer a seamless UX to complete all of the above!
 
-The current version of the Figma we're working towards: https://www.figma.com/file/0uL6s79o21jwUFZz16Dr8b/Covid-Watch---App-v1.8?node-id=0%3A1
+The current version of the Figma we're working towards: (https://www.figma.com/file/I4OOjT4VhsSberDIAZTkcH/Covid-Watch---App-v2-(dev)?node-id=0%3A1
+
 
 ## Setup
 
 Clone this repo from the `develop` branch:
 
-```
-git clone git@github.com:covid19risk/covidwatch-android.git
-```
-
-We are using tracking TCN's project as a submodule for now tracking the develop branch, so don't forget to init and fetch.
-
-First time:
-
-```
-$ git submodule update --init --recursive --remote
-```
-
-To Update:
-
-```
-git submodule update --remote
-```
+git clone git@github.com:covid19risk/covidwatch-android-en.git
 
 Open the project in Android Studio. Install onto a phone of yours with the `app` configuration, and you're free to explore the app! Its optimal to install on 2 phones as much of the behavior of the app depends on 2 phones interacting.
 
@@ -42,20 +28,18 @@ Open the project in Android Studio. Install onto a phone of yours with the `app`
 
 ## Looking to contribute?
 
-- Run on your own device to explore the UX. Look at the [Figma](https://www.figma.com/file/0uL6s79o21jwUFZz16Dr8b/Covid-Watch---App-v1.8?node-id=0%3A1) for what the UX should look like. If you have any feedback/find any problems, create an issue!
+- Run on your own device to explore the UX. Look at the [Figma](https://www.figma.com/file/I4OOjT4VhsSberDIAZTkcH/Covid-Watch---App-v2-(dev)?node-id=0%3A1) for what the UX should look like. If you have any feedback/find any problems, create an issue!
 - Look at https://github.com/orgs/covid19risk/projects/1 for existing issues. If you see something you want to work on, assign yourself to it, set it to in progress, and make a PR to the `develop` branch.
 
 ## FAQ
 
 What is the anonymous protocol for communication between phones? How does it work and who designed it?
 
-Covid Watch uses Temporary Contact Numbers, a decentralized, privacy-first contact tracing protocol developed by the [TCN Coalition](https://tcn-coalition.org/). This protocol is built to be extensible, with the goal of providing interoperability between contact tracing applications. You can read more about it on their [Github](https://github.com/TCNCoalition/TCN).
+Covid Watch uses Google/Android Exposure Notification, a decentralized, privacy-first contact tracing API implemented in Google and Apple phone operation systems. You can read more about it in the Google design document at https://www.google.com/covid19/exposurenotifications/
 
 What's this repository vs the other repositories in the covid19risk Organization?
 
-This is the repository for development of the front-facing Android mobile app for Covid Watch, including the UX and tie-ins to the TCN Bluetooth Protocol and backend services. Related repos:
-- [Android Minimal:](https://github.com/covid19risk/covidwatch-android-minimal) Proof of concept pilot app for testing integrations with the bluetooth protocol.
-- [TCN:](https://github.com/TCNCoalition/tcn-client-android) Implementation of bluetooth protocol.
+This is the repository for development of the front-facing Android mobile app for Covid Watch, including the UX, and backend services. 
 
 ## Contributors
 
@@ -67,6 +51,7 @@ This is the repository for development of the front-facing Android mobile app fo
 - Nitin Kumar (@nkumarcc, nkumarcc@gmail.com)
 - Hayden Raddiford (@haydenridd)
 - Enrico Grillo (@redbasset)
+- Susan Crayne (@crayne)
 
 ## Join the cause!
 
