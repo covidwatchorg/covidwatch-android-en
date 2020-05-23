@@ -36,7 +36,6 @@ class UploadDiagnosisKeysUseCase(
             success {
                 val diagnosisKeys = it.map { key -> key.asDiagnosisKey() }
 
-                BuildConfig.APPLICATION_ID
                 val regions = countryCodeRepository.exposureRelevantCountryCodes()
                 val uploadEndpoints = uriManager.uploadUris(regions)
 

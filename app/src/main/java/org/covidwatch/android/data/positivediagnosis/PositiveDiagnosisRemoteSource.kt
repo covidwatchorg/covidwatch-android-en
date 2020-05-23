@@ -20,8 +20,8 @@ import java.lang.reflect.Type
 
 class PositiveDiagnosisRemoteSource(private val httpClient: OkHttpClient) {
 
-    val jsonType = "application/json; charset=utf-8".toMediaType()
-    val gson = GsonBuilder().registerTypeHierarchyAdapter(
+    private val jsonType = "application/json; charset=utf-8".toMediaType()
+    private val gson: Gson = GsonBuilder().registerTypeHierarchyAdapter(
         ByteArray::class.java,
         ByteArrayToBase64TypeAdapter()
     ).create()
