@@ -93,10 +93,10 @@ class SafetyNetManager(
         keys: List<DiagnosisKey>
     ): String {
         val keysBase64 = keys
+            .sortedBy { encoding.encode(it.key) }
             .map {
                 "${encoding.encode(it.key)}.${it.rollingStartNumber}.${it.rollingPeriod}.${it.transmissionRisk}"
             }
-            .sorted()
 
         return commaJoiner.join(keysBase64)
     }
