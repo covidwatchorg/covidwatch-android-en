@@ -54,6 +54,9 @@ android {
     viewBinding {
         enabled = true
     }
+    dataBinding {
+        enabled = true
+    }
 
     testOptions {
         animationsDisabled = true
@@ -114,6 +117,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 
     implementation "com.squareup.okhttp3:okhttp:4.5.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
 
     def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"
@@ -125,6 +129,8 @@ dependencies {
 
     implementation "com.google.firebase:firebase-firestore-ktx:21.4.3"
 
+    // TODO: Get rid of guava? Unless this is a dependency that fixes conflict between other
+    // dependencies that use guava
     implementation "com.google.guava:guava:29.0-android"
 
     implementation "pub.devrel:easypermissions:3.0.0"

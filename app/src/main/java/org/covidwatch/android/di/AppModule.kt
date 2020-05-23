@@ -3,10 +3,14 @@ package org.covidwatch.android.di
 import android.content.Context
 import androidx.room.Room
 import androidx.work.WorkManager
-import com.google.android.gms.nearby.Nearby
+import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.google.android.gms.safetynet.SafetyNet
 import com.google.common.io.BaseEncoding
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
+import okhttp3.logging.HttpLoggingInterceptor.Level.NONE
+import org.covidwatch.android.BuildConfig
 import org.covidwatch.android.R
 import org.covidwatch.android.data.*
 import org.covidwatch.android.data.countrycode.CountryCodeRepository
@@ -21,6 +25,7 @@ import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.data.pref.SharedPreferenceStorage
 import org.covidwatch.android.domain.*
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.exposurenotification.FakeExposureNotification
 import org.covidwatch.android.ui.exposurenotification.ExposureNotificationViewModel
 import org.covidwatch.android.ui.exposures.ExposuresViewModel
 import org.covidwatch.android.ui.home.HomeViewModel
@@ -171,7 +176,14 @@ val appModule = module {
         SettingsViewModel(androidApplication())
     }
 
-    single { OkHttpClient() }
+    single {
+        val logging = HttpLoggingInterceptor()
+        logging.setLevel(if (BuildConfig.DEBUG) BODY else NONE)
+
+        OkHttpClient.Builder()
+            .addInterceptor(logging)
+            .build()
+    }
 
     single<TestedRepository> {
         TestedRepositoryImpl(
