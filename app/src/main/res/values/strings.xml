@@ -66,12 +66,10 @@
     <string name="bluetooth_explanation_subtext">Apps using Bluetooth® Low Energy (BLE) are required to have location access enabled.</string>
     <string name="logo_image_content_descriptor">Logo image</string>
     <string name="menu_button_content_descriptor">Menu button</string>
-    <string name="people_bluetooth_connection_content_descriptor">People connecting over bluetooth</string>
-    <string name="female_superhero_content_descriptor">Female superhero</string>
     <string name="welcome_back_title">Welcome Back!</string>
     <string name="detected_thank_you_text">Thank you for helping your community stay safe, anonymously.</string>
     <string name="close_button_content_descriptor">Close button</string>
-    <string name="checkmark_image_content_descriptor">checkmark image</string>
+    <string name="warn_icon_content_description">Warning icon</string>
 
     <!-- Exposure notification-->
     <string name="upload_diagnosis">Upload diagnosis</string>
@@ -100,6 +98,7 @@
     <string name="notification_channel_description">Exposure notification alerts.</string>
     <string name="menu">Menu</string>
     <string name="powered_by">Powered by</string>
+    <string name="powered_by_logo_content_description">Covidwatch</string>
 
     <!-- POSSIBLE EXPOSURES-->
     <string name="title_exposures">Possible Exposures</string>
@@ -129,6 +128,7 @@
     <string name="next_steps">Next Steps</string>
 
     <!--  Onboarding  -->
+    <string name="splash_screen_header_content_description">California</string>
     <string name="splash_screen_title">The power to stop COVID-19 in the palm of your hand.</string>
     <string name="get_started_button">Get Started</string>
     <string name="onboarding_welcome_title">Welcome to the {UCSF Health Covid Watch} App</string>
@@ -183,5 +183,6 @@
     <string name="needs_verification">Needs Verification</string>
     <string name="verified">Verified</string>
     <string name="last_exposure_time">Exposure last checked at %s</string>
+    <string name="item_positive_diagnosis_action_button_content_description">Verify diagnosis</string>
 
 </resources>
