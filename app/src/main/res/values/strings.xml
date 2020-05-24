@@ -23,10 +23,6 @@
     <string name="onboarding_steps">Protect your privacy and your community with just 3 steps.</string>
     <string name="onboarding_step1">Turn on Bluetooth.</string>
     <string name="onboarding_step2">Allow us to send you Push notifications to warn you of potential contact.</string>
-    <string name="onboarding_share">Share</string>
-
-    <string name="share_subj">Secure COVID-19 contact alert app</string>
-    <string name="share_body">I found this privacy-aware COVID-19 app that doesn\'t upload any information.</string>
 
     <string name="exposure_information_date">Date</string>
     <string name="datepicker">datePicker</string>
@@ -38,7 +34,6 @@
     <string name="based_on">Based on last 14 days of activity.</string>
     <string name="we_dont_share">We don\'t share with Big Brother.</string>
     <string name="we_dont_share_2">We share with each other.</string>
-    <string name="share_text">Help by Sharing</string>
     <string name="share_sub_text">Ask family and friends to join the Covid Watch Team</string>
     <string name="self_report">Self Report</string>
     <string name="self_report_text">Self Report</string>
@@ -157,13 +152,11 @@
     <string name="high_risk_score_subtext">(1–8 scale)</string>
     <string name="my_possible_exposures_title">My Possible Exposures</string>
     <string name="empty_exposure_summary">0</string>
-    <string name="share_app_button">Share the app</string>
     <string name="notify_others_button_question">Got a positive diagnosis?</string>
     <string name="notify_others_button">Notify Others</string>
     <string name="notify_others_button_text">Share your result anonymously to help your community stay safe.</string>
     <string name="contact_alert_text">You may have been in contact with COVID-19</string>
     <string name="reported_alert_text">You reported that you tested positive for COVID-19</string>
-    <string name="share_intent_text">Help your community stay safe, anonymously:</string>
 
 
     <!-- Reporting -->
@@ -183,5 +176,10 @@
     <string name="needs_verification">Needs Verification</string>
     <string name="verified">Verified</string>
     <string name="last_exposure_time">Exposure last checked at %s</string>
+
+    <!-- Share app common action -->
+    <string name="share_app_content">Become a Covid Watcher and help your community stay safe. https://www.covid-watch.org</string>
+    <string name="share_app_title">Help by Sharing</string>
+    <string name="share_app_button">Share the app</string>
 
 </resources>
