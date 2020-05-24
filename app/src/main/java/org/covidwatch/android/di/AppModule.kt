@@ -38,8 +38,9 @@ import org.koin.dsl.module
 import java.security.SecureRandom
 
 val appModule = module {
-    single {
-        Nearby.getExposureNotificationClient(androidApplication())
+    //TODO: Replace with a real implementation
+    single<ExposureNotificationClient> {
+        FakeExposureNotification()
     }
 
     single {
@@ -84,9 +85,21 @@ val appModule = module {
 
     single<PreferenceStorage> { SharedPreferenceStorage(androidApplication()) }
 
-    single { PositiveDiagnosisRemoteSource(httpClient = get()) }
+    single {
+        PositiveDiagnosisRemoteSource(
+            httpClient = get(),
+            keysDir = androidContext().filesDir.absolutePath
+        )
+    }
     single { PositiveDiagnosisLocalSource() }
-    single { PositiveDiagnosisRepository(remote = get(), local = get()) }
+    single {
+        PositiveDiagnosisRepository(
+            remote = get(),
+            local = get(),
+            countryCodeRepository = get(),
+            uriManager = get()
+        )
+    }
 
     single {
         Room.databaseBuilder(
@@ -110,7 +123,13 @@ val appModule = module {
     }
     single { CountryCodeRepository(local = get()) }
 
-    single { UriManager(serverEndpoint = androidContext().getString(R.string.server_endpoint)) }
+    single {
+        UriManager(
+            serverUploadEndpoint = BuildConfig.SERVER_UPLOAD_ENDPOINT,
+            serverDownloadEndpoint = BuildConfig.SERVER_DOWNLOAD_ENDPOINT,
+            httpClient = get()
+        )
+    }
 
     factory {
         ProvideDiagnosisKeysUseCase(

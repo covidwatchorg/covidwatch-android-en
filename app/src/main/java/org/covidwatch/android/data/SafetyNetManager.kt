@@ -7,7 +7,6 @@ import org.covidwatch.android.extension.await
 import timber.log.Timber
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
 
 /**
  * Encapsulates getting an attestation of confidence that the device we are currently running on is
@@ -43,17 +42,10 @@ class SafetyNetManager(
     private val pipeJoiner = Joiner.on('|')
 
     private fun sha256(text: String): ByteArray {
-        return try {
-            val sha256Digest =
-                MessageDigest.getInstance("SHA-256")
-            val textBytes =
-                text.toByteArray(StandardCharsets.UTF_8)
-            sha256Digest.update(textBytes)
-            sha256Digest.digest()
-        } catch (e: NoSuchAlgorithmException) {
-            // TODO: Some better exception.
-            throw RuntimeException(e)
-        }
+        val sha256Digest = MessageDigest.getInstance("SHA-256")
+        val textBytes = text.toByteArray(StandardCharsets.UTF_8)
+        sha256Digest.update(textBytes)
+        return sha256Digest.digest()
     }
 
     /**

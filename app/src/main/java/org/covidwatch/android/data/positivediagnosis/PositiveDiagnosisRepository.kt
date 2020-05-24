@@ -1,28 +1,46 @@
 package org.covidwatch.android.data.positivediagnosis
 
+import com.google.common.io.BaseEncoding
 import org.covidwatch.android.data.PositiveDiagnosis
+import org.covidwatch.android.data.UriManager
+import org.covidwatch.android.data.countrycode.CountryCodeRepository
 import java.io.File
+import java.security.SecureRandom
 
 class PositiveDiagnosisRepository(
     private val remote: PositiveDiagnosisRemoteSource,
-    private val local: PositiveDiagnosisLocalSource
+    private val local: PositiveDiagnosisLocalSource,
+    private val countryCodeRepository: CountryCodeRepository,
+    private val uriManager: UriManager
 ) {
+    private val random = SecureRandom()
+    private val encoding = BaseEncoding.base32().lowerCase().omitPadding()
 
-    suspend fun diagnosisKeys(): List<File> {
-        //TODO: Use a proper source for urls
-        val urls = listOf<String>()
+    private fun randomDirName(): String {
+        val bytes = ByteArray(8)
+        random.nextBytes(bytes)
+        return encoding.encode(bytes)
+    }
 
-        val localKeys = local.diagnosisKeys()
-        val remoteKeys = urls.mapNotNull {
-            val diagnosisKey = remote.diagnosisKey(it)
-            diagnosisKey
+    suspend fun diagnosisKeys(): List<KeyFileBatch> {
+        val regions = countryCodeRepository.exposureRelevantCountryCodes()
+        val urls = uriManager.downloadUrls(regions)
+
+        val dir = randomDirName()
+        return urls.map { keyFileBatch ->
+            val files = keyFileBatch.urls.mapNotNull { remote.diagnosisKey(dir, it) }
+
+            keyFileBatch.copy(keys = files)
         }
-        remoteKeys.forEach {
-            local.saveKey(it)
-        }
-        return localKeys + remoteKeys
     }
 
     fun uploadDiagnosisKeys(uploadUrl: String, positiveDiagnosis: PositiveDiagnosis) =
         remote.uploadDiagnosisKeys(uploadUrl, positiveDiagnosis)
+
+    data class KeyFileBatch(
+        val region: String,
+        val batch: Int,
+        val keys: List<File> = emptyList(),
+        val urls: List<String> = emptyList()
+    )
 }

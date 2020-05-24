@@ -18,7 +18,11 @@ import java.io.OutputStream
 import java.lang.reflect.Type
 
 
-class PositiveDiagnosisRemoteSource(private val httpClient: OkHttpClient) {
+class PositiveDiagnosisRemoteSource(
+    private val httpClient: OkHttpClient,
+    private val keysDir: String
+) {
+    private val keyFilePattern = "/diag_keys/%s/keys_%s.pb"
 
     private val jsonType = "application/json; charset=utf-8".toMediaType()
     private val gson: Gson = GsonBuilder().registerTypeHierarchyAdapter(
@@ -27,21 +31,28 @@ class PositiveDiagnosisRemoteSource(private val httpClient: OkHttpClient) {
     ).create()
 
     @WorkerThread
-    fun diagnosisKey(url: String): File? {
+    fun diagnosisKey(dir: String, url: String): File? {
         val request = Request.Builder().url(url).build()
 
         return httpClient.newCall(request).execute().let { response ->
             if (!response.isSuccessful) return@let null
 
-            toFile(response.body)
+            toFile(dir, url.split("/").last(), response.body)
         }
     }
 
     @WorkerThread
-    private fun toFile(body: ResponseBody?): File? {
+    private fun toFile(dir: String, filename: String, body: ResponseBody?): File? {
         body ?: return null
         return try {
-            val file = File("")
+            val name: String = String.format(keyFilePattern, dir, filename)
+            val file = File(File(keysDir), name)
+            val parent = file.parentFile
+            if (parent != null) {
+                if (!parent.mkdirs() && !parent.isDirectory) {
+                    throw java.io.IOException("Directory '$parent' could not be created")
+                }
+            }
             var inputStream: InputStream? = null
             var outputStream: OutputStream? = null
             try {

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import org.covidwatch.android.R
 import org.covidwatch.android.databinding.FragmentNotifyOthersBinding
+import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
 import org.covidwatch.android.domain.UploadDiagnosisKeysUseCase
 import org.covidwatch.android.extension.launchUseCase
 import org.covidwatch.android.ui.BaseFragment
@@ -18,6 +19,7 @@ import org.koin.android.ext.android.inject
 class NotifyOthersFragment : BaseFragment<FragmentNotifyOthersBinding>() {
 
     private val uploadDiagnosisKeysUseCase: UploadDiagnosisKeysUseCase by inject()
+    private val provideDiagnosisKeysUseCase: ProvideDiagnosisKeysUseCase by inject()
 
     override fun bind(
         inflater: LayoutInflater,
@@ -31,7 +33,8 @@ class NotifyOthersFragment : BaseFragment<FragmentNotifyOthersBinding>() {
             findNavController().popBackStack()
         }
         binding.sharePositiveDiagnosisButton.setOnClickListener {
-            lifecycleScope.launchUseCase(uploadDiagnosisKeysUseCase)
+//            lifecycleScope.launchUseCase(uploadDiagnosisKeysUseCase)
+            lifecycleScope.launchUseCase(provideDiagnosisKeysUseCase)
         }
         setupList()
     }
