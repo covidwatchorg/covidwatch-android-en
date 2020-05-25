@@ -13,14 +13,12 @@ This repository is focused on the implementation of the Android version of the C
 - Notify users if someone they've interacted with in the past 2 weeks indicates they've tested positive for COVID-19 (again, anonymously!)
 - Offer a seamless UX to complete all of the above!
 
-The current version of the Figma we're working towards: (https://www.figma.com/file/I4OOjT4VhsSberDIAZTkcH/Covid-Watch---App-v2-(dev)?node-id=0%3A1
-
 
 ## Setup
 
 Clone this repo from the `develop` branch:
 
-git clone git@github.com:covid19risk/covidwatch-android-en.git
+`git clone git@github.com:covid19risk/covidwatch-android-en.git`
 
 Open the project in Android Studio. Install onto a phone of yours with the `app` configuration, and you're free to explore the app! Its optimal to install on 2 phones as much of the behavior of the app depends on 2 phones interacting.
 
