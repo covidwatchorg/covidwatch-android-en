@@ -110,7 +110,8 @@ val appModule = module {
         ).fallbackToDestructiveMigration().build()
     }
     single { ExposureInformationLocalSource(database = get()) }
-    single { ExposureInformationRepository(local = get()) }
+    single { ExposureInformationRepository(local = get(), preferences = get()) }
+
 
     single {
         val appDatabase: AppDatabase = get()

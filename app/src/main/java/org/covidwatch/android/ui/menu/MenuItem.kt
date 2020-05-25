@@ -10,4 +10,5 @@ sealed class Destination
 
 object Settings : Destination()
 object TestResults : Destination()
+object MakeTestExposureNotification : Destination()
 class Browser(val url: String) : Destination()

@@ -10,10 +10,14 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.*
 import org.covidwatch.android.data.CovidExposureSummary
+import org.covidwatch.android.data.pref.SharedPreferenceStorage
 import org.covidwatch.android.databinding.FragmentHomeBinding
+import org.covidwatch.android.exposurenotification.RandomEnObjects
 import org.covidwatch.android.ui.BaseFragment
 import org.covidwatch.android.ui.event.EventObserver
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.covidwatch.android.BuildConfig
+
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
@@ -30,7 +34,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         homeViewModel.navigateToOnboardingEvent.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.splashFragment)
         })
+
         homeViewModel.exposureSummary.observe(viewLifecycleOwner, Observer(::bindExposureSummary))
+
         homeViewModel.infoBannerState.observe(viewLifecycleOwner, Observer { banner ->
             when (banner) {
                 is InfoBannerState.Visible -> {
