@@ -17,7 +17,7 @@ class MenuAdapter(
         MenuItem(
             R.string.generate_random_exposure,
             R.drawable.ic_exit_to_app,
-            Browser("https://www.covid-watch.org/")
+            MakeTestExposureNotification
         ),
         MenuItem(
             R.string.settings,
