@@ -3,6 +3,7 @@ package org.covidwatch.android.di
 import android.content.Context
 import androidx.room.Room
 import androidx.work.WorkManager
+import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.google.android.gms.safetynet.SafetyNet
 import com.google.common.io.BaseEncoding
@@ -41,6 +42,7 @@ val appModule = module {
     //TODO: Replace with a real implementation
     single<ExposureNotificationClient> {
         FakeExposureNotification()
+//        Nearby.getExposureNotificationClient(androidApplication())
     }
 
     single {
