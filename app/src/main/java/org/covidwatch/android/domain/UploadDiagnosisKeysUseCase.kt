@@ -1,7 +1,6 @@
 package org.covidwatch.android.domain
 
 import com.google.common.io.BaseEncoding
-import org.covidwatch.android.BuildConfig
 import org.covidwatch.android.data.PositiveDiagnosis
 import org.covidwatch.android.data.SafetyNetManager
 import org.covidwatch.android.data.UriManager
@@ -32,6 +31,12 @@ class UploadDiagnosisKeysUseCase(
     private val platform = "android"
 
     override suspend fun run(params: Unit?): Either<ENStatus, Unit> {
+        enManager.isEnabled().apply {
+            success { enabled ->
+                if (!enabled) return Either.Right(Unit)
+            }
+            failure { return Either.Left(it) }
+        }
         enManager.temporaryExposureKeyHistory().apply {
             success {
                 val diagnosisKeys = it.map { key -> key.asDiagnosisKey() }
