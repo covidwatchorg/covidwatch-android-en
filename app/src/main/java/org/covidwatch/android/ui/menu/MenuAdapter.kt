@@ -70,7 +70,7 @@ class MenuAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuItemViewHolder {
         val root = LayoutInflater.from(parent.context).inflate(R.layout.item_menu, parent, false)
-        isHighRisk = getIsHighRisk(root.getContext())
+        isHighRisk = getIsHighRisk(root.context)
         return MenuItemViewHolder(root)
     }
 
@@ -102,7 +102,7 @@ class MenuAdapter(
     private fun getIsHighRisk(context: Context): Boolean {
         val prefs = SharedPreferenceStorage(context)
         var userMaximumRiskScore = prefs.exposureSummary.maximumRiskScore
-        var safeMaximumRiskScore = context.getResources().getInteger(R.integer.maximum_risk_score)
+        var safeMaximumRiskScore = context.resources.getInteger(R.integer.maximum_risk_score)
         return userMaximumRiskScore > safeMaximumRiskScore
     }
 
