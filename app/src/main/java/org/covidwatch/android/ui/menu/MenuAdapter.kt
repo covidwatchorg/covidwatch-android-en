@@ -12,6 +12,7 @@ class MenuAdapter(
 ) : RecyclerView.Adapter<MenuItemViewHolder>() {
 
     private var isHighRisk: Boolean = false
+    private var safeMaximumRiskScore = 6
 
     private val items = listOf(
         MenuItem(
@@ -27,15 +28,18 @@ class MenuAdapter(
         MenuItem(
             R.string.possible_exposures,
             R.drawable.ic_info_red,
-            TestResults),
+            TestResults
+        ),
         MenuItem(
             R.string.notify_others,
             0,
-            Browser("https://www.covid-watch.org/")),
+            Browser("https://www.covid-watch.org/")
+        ),
         MenuItem(
             R.string.how_the_app_works,
             0,
-            Browser("https://www.covid-watch.org/")),
+            Browser("https://www.covid-watch.org/")
+        ),
         MenuItem(
             R.string.health_guidelines,
             R.drawable.ic_exit_to_app,
@@ -102,7 +106,6 @@ class MenuAdapter(
     private fun getIsHighRisk(context: Context): Boolean {
         val prefs = SharedPreferenceStorage(context)
         var userMaximumRiskScore = prefs.exposureSummary.maximumRiskScore
-        var safeMaximumRiskScore = context.resources.getInteger(R.integer.maximum_risk_score)
         return userMaximumRiskScore > safeMaximumRiskScore
     }
 
