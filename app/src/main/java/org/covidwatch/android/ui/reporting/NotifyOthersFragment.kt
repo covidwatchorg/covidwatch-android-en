@@ -19,7 +19,6 @@ import org.koin.android.ext.android.inject
 class NotifyOthersFragment : BaseFragment<FragmentNotifyOthersBinding>() {
 
     private val uploadDiagnosisKeysUseCase: UploadDiagnosisKeysUseCase by inject()
-    private val provideDiagnosisKeysUseCase: ProvideDiagnosisKeysUseCase by inject()
 
     override fun bind(
         inflater: LayoutInflater,
@@ -33,8 +32,7 @@ class NotifyOthersFragment : BaseFragment<FragmentNotifyOthersBinding>() {
             findNavController().popBackStack()
         }
         binding.sharePositiveDiagnosisButton.setOnClickListener {
-//            lifecycleScope.launchUseCase(uploadDiagnosisKeysUseCase)
-            lifecycleScope.launchUseCase(provideDiagnosisKeysUseCase)
+            lifecycleScope.launchUseCase(uploadDiagnosisKeysUseCase)
         }
         setupList()
     }

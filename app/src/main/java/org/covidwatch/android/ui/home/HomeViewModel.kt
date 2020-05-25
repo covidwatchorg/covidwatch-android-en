@@ -3,26 +3,19 @@ package org.covidwatch.android.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.FirstTimeUser
 import org.covidwatch.android.data.UserFlowRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
-import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
 import org.covidwatch.android.domain.TestedRepository
-import org.covidwatch.android.extension.launchUseCase
 import org.covidwatch.android.ui.event.Event
-import org.koin.java.KoinJavaComponent.inject
 
 class HomeViewModel(
     private val userFlowRepository: UserFlowRepository,
     private val testedRepository: TestedRepository,
     private val preferenceStorage: PreferenceStorage
 ) : ViewModel() {
-    private val provideDiagnosisKeysUseCase: ProvideDiagnosisKeysUseCase by inject(
-        ProvideDiagnosisKeysUseCase::class.java
-    )
 
     private val _isUserTestedPositive = MutableLiveData<Boolean>()
     val isUserTestedPositive: LiveData<Boolean> get() = _isUserTestedPositive
@@ -47,8 +40,6 @@ class HomeViewModel(
         }
 
         checkIfUserTestedPositive()
-
-//        viewModelScope.launchUseCase(provideDiagnosisKeysUseCase)
     }
 
     private fun checkIfUserTestedPositive() {
