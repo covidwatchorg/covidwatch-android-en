@@ -28,7 +28,7 @@ jobs:
     - name: Lint
       run: bash ./gradlew lint
     - name: Test
-      run: bash ./gradlew app:test
+      run: bash ./gradlew -Pcoverage app:test
     - name: Update SonarQube
       env:
         LOGIN_KEY: ${{ secrets.SONARCLOUD_LOGIN_KEY }}

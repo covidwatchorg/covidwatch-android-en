@@ -12,7 +12,6 @@ import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.koin.java.KoinJavaComponent.inject
 import timber.log.Timber
 import java.security.SecureRandom
-import java.util.*
 
 class ProvideDiagnosisKeysWork(
     context: Context,
@@ -34,12 +33,20 @@ class ProvideDiagnosisKeysWork(
     }
 
     override suspend fun doWork(): Result {
-        val diagnosisKeys = diagnosisRepository.diagnosisKeys(Date())
+        val diagnosisKeys = diagnosisRepository.diagnosisKeys()
         Timber.d("Adding ${diagnosisKeys.size} positive diagnoses to exposure notification framework")
 
         val token = randomToken()
-        val result = exposureNotification.provideDiagnosisKeys(diagnosisKeys, token)
-        result.left?.let { return failure(it) }
+        diagnosisKeys.forEach {
+            val keys = it.keys
+            exposureNotification.provideDiagnosisKeys(keys, token).apply {
+                success {
+                    //TODO: Delete empty folder
+                    keys.forEach { file -> file.delete() }
+                }
+                //TODO: Handle failed files
+            }
+        }
 
         diagnosisKeysTokenRepository.insert(DiagnosisKeysToken(token))
 

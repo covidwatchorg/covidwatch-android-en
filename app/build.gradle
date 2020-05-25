@@ -20,6 +20,10 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        resValue("string", "safetynet_api_key", "AIzaSyDvdHktRzkayQC3JIt0rKyAtnWuhcMjOb4")
+        buildConfigField("String", "SERVER_UPLOAD_ENDPOINT", '"https://exposure-2sav64smma-uc.a.run.app"')
+        buildConfigField("String", "SERVER_DOWNLOAD_ENDPOINT", '"https://storage.googleapis.com/exposure-notification-export-ibznj"')
     }
 
     buildTypes {
@@ -27,13 +31,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             testCoverageEnabled false
-            buildConfigField("String", "FIREBASE_CLOUD_FUNCTIONS_ENDPOINT", '"https://us-central1-tagstwo-431e3.cloudfunctions.net"')
             buildConfigField("boolean", "FIREBASE_DEBUGGING", "false")
             signingConfig signingConfigs.debug
         }
         debug {
-            testCoverageEnabled true
-            buildConfigField("String", "FIREBASE_CLOUD_FUNCTIONS_ENDPOINT", '"https://us-central1-tagstwo-431e3.cloudfunctions.net"')
+            testCoverageEnabled project.hasProperty('coverage')
             buildConfigField "boolean", "FIREBASE_DEBUGGING", "true"
             applicationIdSuffix = ".debug"
         }
@@ -48,10 +50,10 @@ android {
         jvmTarget = "1.8"
     }
 
-    dataBinding {
+    viewBinding {
         enabled = true
     }
-    viewBinding {
+    dataBinding {
         enabled = true
     }
 
@@ -78,7 +80,6 @@ android {
     lintOptions {
         abortOnError false
     }
-
 }
 
 dependencies {
@@ -86,6 +87,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-tasks:17.0.2'
     implementation 'com.google.android.gms:play-services-base:17.2.1'
     implementation 'com.google.android.gms:play-services-basement:17.2.1'
+    implementation 'com.google.android.gms:play-services-safetynet:17.0.0'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
@@ -114,6 +116,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 
     implementation "com.squareup.okhttp3:okhttp:4.5.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
 
     def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"
@@ -125,6 +128,8 @@ dependencies {
 
     implementation "com.google.firebase:firebase-firestore-ktx:21.4.3"
 
+    // TODO: Get rid of guava? Unless this is a dependency that fixes conflict between other
+    // dependencies that use guava
     implementation "com.google.guava:guava:29.0-android"
 
     implementation "pub.devrel:easypermissions:3.0.0"

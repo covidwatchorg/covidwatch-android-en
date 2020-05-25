@@ -7,13 +7,11 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.CovidExposureSummary
-import org.covidwatch.android.data.PositiveDiagnosis
-import org.covidwatch.android.data.asDiagnosisKey
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
-import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
 import org.covidwatch.android.domain.UpdateExposureInformationUseCase
+import org.covidwatch.android.domain.UploadDiagnosisKeysUseCase
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.extension.doOnNext
@@ -22,7 +20,7 @@ import org.covidwatch.android.functional.Either
 
 class ExposureNotificationViewModel(
     private val enManager: ExposureNotificationManager,
-    private val diagnosisRepository: PositiveDiagnosisRepository,
+    private val uploadDiagnosisKeysUseCase: UploadDiagnosisKeysUseCase,
     private val provideDiagnosisKeysUseCase: ProvideDiagnosisKeysUseCase,
     private val updateExposureInformationUseCase: UpdateExposureInformationUseCase,
     exposureInformationRepository: ExposureInformationRepository,
@@ -47,18 +45,8 @@ class ExposureNotificationViewModel(
     val showLoadButton: LiveData<Boolean> = _showLoadButton
 
     fun uploadDiagnosis(phaNumber: String) {
-        viewModelScope.launch {
-            if (diagnosisRepository.isNumberValid(phaNumber)) {
-                enManager.temporaryExposureKeyHistory().success {
-                    val diagnosisKeys = it.map { key -> key.asDiagnosisKey() }
-                    val positiveDiagnosis =
-                        PositiveDiagnosis(
-                            diagnosisKeys,
-                            phaNumber
-                        )
-                    diagnosisRepository.uploadDiagnosisKeys(positiveDiagnosis)
-                }
-            }
+        viewModelScope.launchUseCase(uploadDiagnosisKeysUseCase) {
+            handleError(it.left)
         }
     }
 

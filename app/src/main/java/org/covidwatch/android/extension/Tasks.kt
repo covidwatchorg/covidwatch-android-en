@@ -14,10 +14,10 @@ suspend fun <T> Task<T>.await(): Either<Int, T> = withContext(Dispatchers.IO) {
     try {
         Either.Right(Tasks.await(this@await))
     } catch (e: ExecutionException) {
-        val apiException = e as? ApiException
+        val apiException = e.cause as? ApiException
         val status = apiException?.statusCode ?: -1
         Either.Left(status)
-    } catch (e: InterruptedException) {
+    } catch (e: Exception) {
         Either.Left(Status.FAILED_INTERNAL)
     }
 }

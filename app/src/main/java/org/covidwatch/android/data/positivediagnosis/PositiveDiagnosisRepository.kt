@@ -1,14 +1,46 @@
 package org.covidwatch.android.data.positivediagnosis
 
+import com.google.common.io.BaseEncoding
 import org.covidwatch.android.data.PositiveDiagnosis
-import java.util.Date
+import org.covidwatch.android.data.UriManager
+import org.covidwatch.android.data.countrycode.CountryCodeRepository
+import java.io.File
+import java.security.SecureRandom
 
-class PositiveDiagnosisRepository(private val remote: PositiveDiagnosisRemoteSource) {
+class PositiveDiagnosisRepository(
+    private val remote: PositiveDiagnosisRemoteSource,
+    private val local: PositiveDiagnosisLocalSource,
+    private val countryCodeRepository: CountryCodeRepository,
+    private val uriManager: UriManager
+) {
+    private val random = SecureRandom()
+    private val encoding = BaseEncoding.base32().lowerCase().omitPadding()
 
-    suspend fun diagnosisKeys(since: Date) = remote.diagnosisKeys(since)
+    private fun randomDirName(): String {
+        val bytes = ByteArray(8)
+        random.nextBytes(bytes)
+        return encoding.encode(bytes)
+    }
 
-    suspend fun isNumberValid(phaNumber: String) = remote.isNumberValid(phaNumber)
+    suspend fun diagnosisKeys(): List<KeyFileBatch> {
+        val regions = countryCodeRepository.exposureRelevantCountryCodes()
+        val urls = uriManager.downloadUrls(regions)
 
-    suspend fun uploadDiagnosisKeys(positiveDiagnosis: PositiveDiagnosis) =
-        remote.uploadDiagnosisKeys(positiveDiagnosis)
+        val dir = randomDirName()
+        return urls.map { keyFileBatch ->
+            val files = keyFileBatch.urls.mapNotNull { remote.diagnosisKey(dir, it) }
+
+            keyFileBatch.copy(keys = files)
+        }
+    }
+
+    fun uploadDiagnosisKeys(uploadUrl: String, positiveDiagnosis: PositiveDiagnosis) =
+        remote.uploadDiagnosisKeys(uploadUrl, positiveDiagnosis)
+
+    data class KeyFileBatch(
+        val region: String,
+        val batch: Int,
+        val keys: List<File> = emptyList(),
+        val urls: List<String> = emptyList()
+    )
 }
