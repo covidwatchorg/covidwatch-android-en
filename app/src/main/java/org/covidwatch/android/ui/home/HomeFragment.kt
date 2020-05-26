@@ -1,6 +1,5 @@
 package org.covidwatch.android.ui.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.*
 import org.covidwatch.android.data.CovidExposureSummary
-import org.covidwatch.android.data.pref.SharedPreferenceStorage
 import org.covidwatch.android.databinding.FragmentHomeBinding
-import org.covidwatch.android.exposurenotification.RandomEnObjects
 import org.covidwatch.android.ui.BaseFragment
 import org.covidwatch.android.ui.event.EventObserver
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.covidwatch.android.BuildConfig
+import org.covidwatch.android.extension.shareApp
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
@@ -75,7 +73,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             true
         }
         binding.shareAppButton.setOnClickListener {
-            shareApp()
+            context?.shareApp()
         }
         binding.infoBanner.setOnClickListener {
             findNavController().navigate(R.id.settingsFragment)
@@ -83,18 +81,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.exposureSummary.root.setOnClickListener {
             findNavController().navigate(R.id.exposuresFragment)
         }
-    }
-
-    private fun shareApp() {
-        val shareText = getString(R.string.share_intent_text)
-        val sendIntent = Intent()
-        sendIntent.action = Intent.ACTION_SEND
-        sendIntent.putExtra(
-            Intent.EXTRA_TEXT,
-            "$shareText https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID
-        )
-        sendIntent.type = "text/plain"
-        startActivity(Intent.createChooser(sendIntent, getString(R.string.share_text)))
     }
 
     private fun bindExposureSummary(exposureSummary: CovidExposureSummary) {
