@@ -68,7 +68,7 @@ class ExposureNotificationFragment : Fragment() {
                             .Builder(context)
                             .setView(dialogView.root)
                             .setPositiveButton(R.string.upload) { _, _ ->
-                                exposureNotificationViewModel.uploadDiagnosis(dialogView.etPhaNumber.text.toString())
+                                exposureNotificationViewModel.uploadDiagnosis()
                             }
                             .setNegativeButton(R.string.cancel, null)
                             .create()
