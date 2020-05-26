@@ -2,7 +2,7 @@ package org.covidwatch.android.data
 
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository.KeyFileBatch
+import org.covidwatch.android.data.positivediagnosis.KeyFileBatch
 import java.util.regex.Pattern
 
 //TODO: Add logic for download uris
