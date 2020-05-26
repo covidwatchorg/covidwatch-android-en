@@ -6,11 +6,13 @@ import org.covidwatch.android.data.countrycode.CountryCodeDao
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenDao
 import org.covidwatch.android.data.exposureinformation.ExposureInformationDao
+import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisReportDao
 
 @Database(
     entities = [
         CovidExposureInformation::class,
         DiagnosisKeysToken::class,
+        PositiveDiagnosisReport::class,
         CountryCode::class
     ],
     version = 1,
@@ -19,5 +21,6 @@ import org.covidwatch.android.data.exposureinformation.ExposureInformationDao
 abstract class AppDatabase : RoomDatabase() {
     abstract fun exposureInformationDao(): ExposureInformationDao
     abstract fun diagnosisKeysTokenDao(): DiagnosisKeysTokenDao
+    abstract fun positiveDiagnosisReportDao(): PositiveDiagnosisReportDao
     abstract fun countryCodeDao(): CountryCodeDao
 }
