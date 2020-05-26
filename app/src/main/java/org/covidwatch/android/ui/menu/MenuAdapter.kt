@@ -11,9 +11,6 @@ class MenuAdapter(
     private val onClick: ((destination: Destination) -> Unit)
 ) : RecyclerView.Adapter<MenuItemViewHolder>() {
 
-    private var isHighRisk: Boolean = false
-    private var safeMaximumRiskScore = 6
-
     private val items = listOf(
         MenuItem(
             R.string.generate_random_exposure,
@@ -74,7 +71,6 @@ class MenuAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuItemViewHolder {
         val root = LayoutInflater.from(parent.context).inflate(R.layout.item_menu, parent, false)
-        isHighRisk = getIsHighRisk(root.context)
         return MenuItemViewHolder(root)
     }
 
@@ -82,9 +78,6 @@ class MenuAdapter(
 
     override fun onBindViewHolder(holder: MenuItemViewHolder, position: Int) {
         var menuItem = items[position]
-        if (menuItem.title == R.string.possible_exposures) {
-            menuItem = updateMenuItemForRisk(menuItem)
-        }
 
         holder.bind(menuItem)
 
@@ -94,19 +87,8 @@ class MenuAdapter(
 
     }
 
-    private fun updateMenuItemForRisk(menuItem: MenuItem): MenuItem {
-        if (isHighRisk) {
-            menuItem.iconEnd = R.drawable.ic_info_red
-        } else {
-            menuItem.iconEnd = 0
-        }
-        return menuItem
-    }
-
-    private fun getIsHighRisk(context: Context): Boolean {
-        val prefs = SharedPreferenceStorage(context)
-        var userMaximumRiskScore = prefs.exposureSummary.maximumRiskScore
-        return userMaximumRiskScore > safeMaximumRiskScore
+    fun getMenuItem(i: Int): MenuItem{
+        return items[i]
     }
 
 }
