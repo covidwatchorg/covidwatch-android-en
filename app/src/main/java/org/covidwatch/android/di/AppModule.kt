@@ -4,21 +4,29 @@ import android.content.Context
 import androidx.room.Room
 import androidx.work.WorkManager
 import com.google.android.gms.nearby.Nearby
+import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
+import com.google.android.gms.safetynet.SafetyNet
+import com.google.common.io.BaseEncoding
 import okhttp3.OkHttpClient
-import org.covidwatch.android.data.AppDatabase
-import org.covidwatch.android.data.FirebaseService
-import org.covidwatch.android.data.TestedRepositoryImpl
-import org.covidwatch.android.data.UserFlowRepository
+import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
+import okhttp3.logging.HttpLoggingInterceptor.Level.NONE
+import org.covidwatch.android.BuildConfig
+import org.covidwatch.android.R
+import org.covidwatch.android.data.*
+import org.covidwatch.android.data.countrycode.CountryCodeRepository
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenLocalSource
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.exposureinformation.ExposureInformationLocalSource
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
+import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisLocalSource
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRemoteSource
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.data.pref.SharedPreferenceStorage
 import org.covidwatch.android.domain.*
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.exposurenotification.FakeExposureNotification
 import org.covidwatch.android.ui.exposurenotification.ExposureNotificationViewModel
 import org.covidwatch.android.ui.exposures.ExposuresViewModel
 import org.covidwatch.android.ui.home.HomeViewModel
@@ -28,11 +36,13 @@ import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import java.security.SecureRandom
 
-@Suppress("USELESS_CAST")
 val appModule = module {
-    single {
-        Nearby.getExposureNotificationClient(androidApplication())
+    //TODO: Replace with a real implementation
+    single<ExposureNotificationClient> {
+        FakeExposureNotification()
+//        Nearby.getExposureNotificationClient(androidApplication())
     }
 
     single {
@@ -41,10 +51,20 @@ val appModule = module {
         )
     }
 
+    single { SafetyNet.getClient(androidApplication()) }
+
+    single {
+        SafetyNetManager(
+            apiKey = androidContext().getString(R.string.safetynet_api_key),
+            packageName = androidContext().packageName,
+            safetyNet = get()
+        )
+    }
+
     viewModel {
         ExposureNotificationViewModel(
             enManager = get(),
-            diagnosisRepository = get(),
+            uploadDiagnosisKeysUseCase = get(),
             provideDiagnosisKeysUseCase = get(),
             updateExposureInformationUseCase = get(),
             exposureInformationRepository = get(),
@@ -65,11 +85,23 @@ val appModule = module {
 
     single { AppCoroutineDispatchers() }
 
-    single { SharedPreferenceStorage(androidApplication()) as PreferenceStorage }
+    single<PreferenceStorage> { SharedPreferenceStorage(androidApplication()) }
 
-    single { FirebaseService() }
-    single { PositiveDiagnosisRemoteSource(firebaseService = get()) }
-    single { PositiveDiagnosisRepository(remote = get()) }
+    single {
+        PositiveDiagnosisRemoteSource(
+            httpClient = get(),
+            keysDir = androidContext().filesDir.absolutePath
+        )
+    }
+    single { PositiveDiagnosisLocalSource() }
+    single {
+        PositiveDiagnosisRepository(
+            remote = get(),
+            local = get(),
+            countryCodeRepository = get(),
+            uriManager = get()
+        )
+    }
 
     single {
         Room.databaseBuilder(
@@ -88,9 +120,37 @@ val appModule = module {
     single { DiagnosisKeysTokenLocalSource(keysTokenDao = get()) }
     single { DiagnosisKeysTokenRepository(local = get()) }
 
+    single {
+        val appDatabase: AppDatabase = get()
+        appDatabase.countryCodeDao()
+    }
+    single { CountryCodeRepository(local = get()) }
+
+    single {
+        UriManager(
+            serverUploadEndpoint = BuildConfig.SERVER_UPLOAD_ENDPOINT,
+            serverDownloadEndpoint = BuildConfig.SERVER_DOWNLOAD_ENDPOINT,
+            httpClient = get()
+        )
+    }
+
     factory {
         ProvideDiagnosisKeysUseCase(
             workManager = get(),
+            dispatchers = get()
+        )
+    }
+
+    factory {
+        UploadDiagnosisKeysUseCase(
+            enManager = get(),
+            diagnosisRepository = get(),
+            countryCodeRepository = get(),
+            safetyNetManager = get(),
+            uriManager = get(),
+            appPackageName = androidContext().packageName,
+            random = SecureRandom(),
+            encoding = BaseEncoding.base64(),
             dispatchers = get()
         )
     }
@@ -138,12 +198,19 @@ val appModule = module {
         SettingsViewModel(androidApplication())
     }
 
-    single { OkHttpClient() }
+    single {
+        val logging = HttpLoggingInterceptor()
+        logging.setLevel(if (BuildConfig.DEBUG) BODY else NONE)
 
-    factory {
+        OkHttpClient.Builder()
+            .addInterceptor(logging)
+            .build()
+    }
+
+    single<TestedRepository> {
         TestedRepositoryImpl(
             preferences = get()
-        ) as TestedRepository
+        )
     }
 
     // Onboarding start
