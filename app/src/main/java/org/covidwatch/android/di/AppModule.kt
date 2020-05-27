@@ -163,6 +163,12 @@ val appModule = module {
     }
 
     factory {
+        StartUploadDiagnosisKeysWorkUseCase(
+            workManager = get()
+        )
+    }
+
+    factory {
         UpdateExposureStateUseCase(
             workManager = get(),
             dispatchers = get()
@@ -178,13 +184,13 @@ val appModule = module {
         )
     }
 
-    factory {
+    single {
         UserFlowRepository(
             prefs = get()
         )
     }
 
-    factory {
+    single {
         val context = androidContext()
 
         context.getSharedPreferences(
@@ -207,7 +213,7 @@ val appModule = module {
 
     viewModel {
         NotifyOthersViewModel(
-            uploadDiagnosisKeysUseCase = get(),
+            startUploadDiagnosisKeysWorkUseCase = get(),
             positiveDiagnosisRepository = get()
         )
     }
