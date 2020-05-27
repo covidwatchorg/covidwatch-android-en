@@ -1,5 +1,6 @@
 package org.covidwatch.android.ui
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -54,9 +55,15 @@ class Notifications(private val context: Context) {
         }
     }
 
-    fun postUploadingReportNotification() {
-        createUploadReportChannel()
 
+    fun uploadingReportNotification(): Notification {
+        createUploadReportChannel()
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            0,
+            Intent(context, MainActivity::class.java),
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
         val builder = NotificationCompat.Builder(
             context,
             UPLOAD_REPORT_CHANNEL_ID
@@ -67,14 +74,10 @@ class Notifications(private val context: Context) {
                 NotificationCompat.BigTextStyle()
             )
             .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
-
-        notificationManager.notify(UPLOADING_REPORT_NOTIFICATION_ID, builder.build())
-    }
-
-    fun hideUploadingReportNotification() {
-        notificationManager.cancel(UPLOADING_REPORT_NOTIFICATION_ID)
+        return builder.build()
     }
 
     private fun createUploadReportChannel() {

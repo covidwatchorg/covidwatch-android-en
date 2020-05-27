@@ -1,22 +1,29 @@
 package org.covidwatch.android.exposurenotification
 
 import androidx.annotation.IntDef
+import org.covidwatch.android.exposurenotification.Status.Companion.FAILED_BLUETOOTH_SCANNING_DISABLED
+import org.covidwatch.android.exposurenotification.Status.Companion.FAILED_INSUFFICENT_STORAGE
+import org.covidwatch.android.exposurenotification.Status.Companion.FAILED_INTERNAL
+import org.covidwatch.android.exposurenotification.Status.Companion.FAILED_REJECTED_OPT_IN
+import org.covidwatch.android.exposurenotification.Status.Companion.FAILED_SERVICE_DISABLED
+import org.covidwatch.android.exposurenotification.Status.Companion.FAILED_TEMPORARILY_DISABLED
+import java.io.Serializable
 
-sealed class ENStatus {
-    object FailedRejectedOptIn : ENStatus()
-    object FailedServiceDisabled : ENStatus()
-    object FailedBluetoothScanningDisabled : ENStatus()
-    object FailedTemporarilyDisabled : ENStatus()
-    object FailedInsufficientStorage : ENStatus()
-    object FailedInternal : ENStatus()
+sealed class ENStatus(val code: Int) : Serializable {
+    object FailedRejectedOptIn : ENStatus(FAILED_REJECTED_OPT_IN)
+    object FailedServiceDisabled : ENStatus(FAILED_SERVICE_DISABLED)
+    object FailedBluetoothScanningDisabled : ENStatus(FAILED_BLUETOOTH_SCANNING_DISABLED)
+    object FailedTemporarilyDisabled : ENStatus(FAILED_TEMPORARILY_DISABLED)
+    object FailedInsufficientStorage : ENStatus(FAILED_INSUFFICENT_STORAGE)
+    object FailedInternal : ENStatus(FAILED_INTERNAL)
     companion object {
         operator fun invoke(@Status status: Int?) = when (status) {
-            Status.FAILED_REJECTED_OPT_IN -> FailedRejectedOptIn
-            Status.FAILED_SERVICE_DISABLED -> FailedServiceDisabled
-            Status.FAILED_BLUETOOTH_SCANNING_DISABLED -> FailedBluetoothScanningDisabled
-            Status.FAILED_TEMPORARILY_DISABLED -> FailedTemporarilyDisabled
-            Status.FAILED_INSUFFICENT_STORAGE -> FailedInsufficientStorage
-            Status.FAILED_INTERNAL -> FailedInternal
+            FAILED_REJECTED_OPT_IN -> FailedRejectedOptIn
+            FAILED_SERVICE_DISABLED -> FailedServiceDisabled
+            FAILED_BLUETOOTH_SCANNING_DISABLED -> FailedBluetoothScanningDisabled
+            FAILED_TEMPORARILY_DISABLED -> FailedTemporarilyDisabled
+            FAILED_INSUFFICENT_STORAGE -> FailedInsufficientStorage
+            FAILED_INTERNAL -> FailedInternal
             else -> FailedInternal
         }
     }

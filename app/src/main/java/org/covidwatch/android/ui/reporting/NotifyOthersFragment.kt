@@ -8,15 +8,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import org.covidwatch.android.databinding.FragmentNotifyOthersBinding
+import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.ui.BaseFragment
-import org.covidwatch.android.ui.Notifications
 import org.koin.android.ext.android.inject
 
 class NotifyOthersFragment : BaseFragment<FragmentNotifyOthersBinding>() {
 
     private val viewModel: NotifyOthersViewModel by inject()
-    private val notifications: Notifications by inject()
 
     private val adapter = PositiveDiagnosisAdapter()
 
@@ -41,17 +40,24 @@ class NotifyOthersFragment : BaseFragment<FragmentNotifyOthersBinding>() {
         }
 
         with(viewModel) {
-            observe(uploadingReport) { uploading ->
-                if (uploading) {
-                    notifications.postUploadingReportNotification()
-                } else {
-                    notifications.hideUploadingReportNotification()
-                }
+            observe(uploadDiagnosisKeys) {
+                handleError(it.left)
             }
             observe(positiveDiagnosis) { adapter.setItems(it) }
         }
     }
 
+
+    private fun handleError(status: ENStatus?) {
+        when (status) {
+            ENStatus.FailedRejectedOptIn -> TODO()
+            ENStatus.FailedServiceDisabled -> TODO()
+            ENStatus.FailedBluetoothScanningDisabled -> TODO()
+            ENStatus.FailedTemporarilyDisabled -> TODO()
+            ENStatus.FailedInsufficientStorage -> TODO()
+            ENStatus.FailedInternal -> TODO()
+        }
+    }
 
     private fun dividerItemDecoration(): RecyclerView.ItemDecoration {
         return DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)

@@ -2,9 +2,10 @@ package org.covidwatch.android.work
 
 import android.content.Context
 import androidx.work.CoroutineWorker
-import androidx.work.Data
 import androidx.work.WorkerParameters
 import com.google.common.io.BaseEncoding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
@@ -33,31 +34,24 @@ class ProvideDiagnosisKeysWork(
     }
 
     override suspend fun doWork(): Result {
-        val diagnosisKeys = diagnosisRepository.diagnosisKeys()
-        Timber.d("Adding ${diagnosisKeys.size} positive diagnoses to exposure notification framework")
+        withContext(Dispatchers.IO) {
+            val diagnosisKeys = diagnosisRepository.diagnosisKeys()
+            Timber.d("Adding ${diagnosisKeys.size} positive diagnoses to exposure notification framework")
 
-        val token = randomToken()
-        diagnosisKeys.forEach {
-            val keys = it.keys
-            exposureNotification.provideDiagnosisKeys(keys, token).apply {
-                success {
-                    //TODO: Delete empty folder
-                    keys.forEach { file -> file.delete() }
+            val token = randomToken()
+            diagnosisKeys.forEach {
+                val keys = it.keys
+                exposureNotification.provideDiagnosisKeys(keys, token).apply {
+                    success {
+                        //TODO: Delete empty folder
+                        keys.forEach { file -> file.delete() }
+                    }
+                    //TODO: Handle failed files
                 }
-                //TODO: Handle failed files
             }
+
+            diagnosisKeysTokenRepository.insert(DiagnosisKeysToken(token))
         }
-
-        diagnosisKeysTokenRepository.insert(DiagnosisKeysToken(token))
-
         return Result.success()
-    }
-
-    private fun failure(status: Int?) =
-        Result.failure(Data.Builder().putInt(FAILURE, status ?: UNKNOWN_FAILURE).build())
-
-    companion object {
-        const val FAILURE = "status"
-        const val UNKNOWN_FAILURE = -1
     }
 }

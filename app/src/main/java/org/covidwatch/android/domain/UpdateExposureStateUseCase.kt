@@ -2,9 +2,8 @@ package org.covidwatch.android.domain
 
 import androidx.work.*
 import org.covidwatch.android.exposurenotification.ENStatus
+import org.covidwatch.android.extension.toResult
 import org.covidwatch.android.functional.Either
-import org.covidwatch.android.work.ProvideDiagnosisKeysWork
-import org.covidwatch.android.work.ProvideDiagnosisKeysWork.Companion.UNKNOWN_FAILURE
 import org.covidwatch.android.work.UpdateExposureStateWork
 
 class UpdateExposureStateUseCase(
@@ -32,17 +31,7 @@ class UpdateExposureStateUseCase(
         val workInfoLiveData = workManager.getWorkInfoById(updateWork.id)
         val workInfo = workInfoLiveData.await()
 
-        return when (workInfo.state) {
-            WorkInfo.State.SUCCEEDED -> Either.Right(Unit)
-            else -> Either.Left(
-                ENStatus(
-                    workInfo.outputData.getInt(
-                        ProvideDiagnosisKeysWork.FAILURE,
-                        UNKNOWN_FAILURE
-                    )
-                )
-            )
-        }
+        return workInfo.toResult()
     }
 
     data class Params(val token: String)
