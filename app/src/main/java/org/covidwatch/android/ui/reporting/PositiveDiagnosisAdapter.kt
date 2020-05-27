@@ -4,11 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.covidwatch.android.R
-import org.covidwatch.android.data.PositiveDiagnosis
 
-class PositiveDiagnosisAdapter(
-    private val positiveDiagnoses: List<PositiveDiagnosisItem>
-) : RecyclerView.Adapter<PositiveDiagnosisViewHolder>() {
+class PositiveDiagnosisAdapter : RecyclerView.Adapter<PositiveDiagnosisViewHolder>() {
+
+    private val positiveDiagnoses: MutableList<PositiveDiagnosisItem> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PositiveDiagnosisViewHolder {
         val root = LayoutInflater.from(parent.context)
@@ -20,5 +19,11 @@ class PositiveDiagnosisAdapter(
 
     override fun onBindViewHolder(holder: PositiveDiagnosisViewHolder, position: Int) {
         holder.bind(positiveDiagnoses[position])
+    }
+
+    fun setItems(items: List<PositiveDiagnosisItem>) {
+        positiveDiagnoses.clear()
+        positiveDiagnoses.addAll(items)
+        notifyDataSetChanged()
     }
 }

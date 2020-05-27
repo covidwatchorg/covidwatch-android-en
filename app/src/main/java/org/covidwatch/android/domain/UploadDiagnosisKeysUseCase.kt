@@ -1,10 +1,7 @@
 package org.covidwatch.android.domain
 
 import com.google.common.io.BaseEncoding
-import org.covidwatch.android.data.PositiveDiagnosis
-import org.covidwatch.android.data.SafetyNetManager
-import org.covidwatch.android.data.UriManager
-import org.covidwatch.android.data.asDiagnosisKey
+import org.covidwatch.android.data.*
 import org.covidwatch.android.data.countrycode.CountryCodeRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.exposurenotification.ENStatus
@@ -33,7 +30,7 @@ class UploadDiagnosisKeysUseCase(
     override suspend fun run(params: Unit?): Either<ENStatus, Unit> {
         enManager.isEnabled().apply {
             success { enabled ->
-                if (!enabled) return Either.Right(Unit)
+                if (!enabled) return Either.Left(ENStatus.FailedServiceDisabled)
             }
             failure { return Either.Left(it) }
         }
@@ -60,9 +57,16 @@ class UploadDiagnosisKeysUseCase(
                     randomPadding()
                 )
 
-                uploadEndpoints.forEach {
-                    diagnosisRepository.uploadDiagnosisKeys(it, positiveDiagnosis)
+                uploadEndpoints.forEach { url ->
+                    diagnosisRepository.uploadDiagnosisKeys(url, positiveDiagnosis)
                 }
+
+                diagnosisRepository.addPositiveDiagnosisReport(
+                    PositiveDiagnosisReport(
+                        verified = true,
+                        reportDate = System.currentTimeMillis()
+                    )
+                )
                 return Either.Right(Unit)
             }
 

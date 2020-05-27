@@ -44,9 +44,9 @@ class ExposureNotificationViewModel(
     private val _showLoadButton = MutableLiveData<Boolean>()
     val showLoadButton: LiveData<Boolean> = _showLoadButton
 
-    fun uploadDiagnosis(phaNumber: String) {
+    fun uploadDiagnosis() {
         viewModelScope.launchUseCase(uploadDiagnosisKeysUseCase) {
-            handleError(it.left)
+            failure { handleError(it) }
         }
     }
 
@@ -66,8 +66,9 @@ class ExposureNotificationViewModel(
 
     fun downloadDiagnosisKeys() {
         viewModelScope.launchUseCase(provideDiagnosisKeysUseCase) {
-            handleError(it.left)
             _isRefreshing.value = false
+
+            failure { handleError(it) }
         }
     }
 

@@ -1,16 +1,10 @@
 package org.covidwatch.android.domain
 
-import androidx.work.Constraints
-import androidx.work.ExistingWorkPolicy
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
-import androidx.work.await
+import androidx.work.*
 import org.covidwatch.android.exposurenotification.ENStatus
+import org.covidwatch.android.extension.toResult
 import org.covidwatch.android.functional.Either
 import org.covidwatch.android.work.ProvideDiagnosisKeysWork
-import org.covidwatch.android.work.ProvideDiagnosisKeysWork.Companion.UNKNOWN_FAILURE
 
 class ProvideDiagnosisKeysUseCase(
     private val workManager: WorkManager,
@@ -36,17 +30,7 @@ class ProvideDiagnosisKeysUseCase(
         val workInfoLiveData = workManager.getWorkInfoById(downloadRequest.id)
         val workInfo = workInfoLiveData.await()
 
-        return when (workInfo.state) {
-            WorkInfo.State.SUCCEEDED -> Either.Right(Unit)
-            else -> Either.Left(
-                ENStatus(
-                    workInfo.outputData.getInt(
-                        ProvideDiagnosisKeysWork.FAILURE,
-                        UNKNOWN_FAILURE
-                    )
-                )
-            )
-        }
+        return workInfo.toResult()
     }
 
     companion object {

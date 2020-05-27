@@ -3,7 +3,6 @@ package org.covidwatch.android.di
 import android.content.Context
 import androidx.room.Room
 import androidx.work.WorkManager
-import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.google.android.gms.safetynet.SafetyNet
 import com.google.common.io.BaseEncoding
@@ -27,10 +26,12 @@ import org.covidwatch.android.data.pref.SharedPreferenceStorage
 import org.covidwatch.android.domain.*
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.exposurenotification.FakeExposureNotification
+import org.covidwatch.android.ui.Notifications
 import org.covidwatch.android.ui.exposurenotification.ExposureNotificationViewModel
 import org.covidwatch.android.ui.exposures.ExposuresViewModel
 import org.covidwatch.android.ui.home.HomeViewModel
 import org.covidwatch.android.ui.onboarding.EnableExposureNotificationsViewModel
+import org.covidwatch.android.ui.reporting.NotifyOthersViewModel
 import org.covidwatch.android.ui.settings.SettingsViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -44,6 +45,8 @@ val appModule = module {
         FakeExposureNotification()
 //        Nearby.getExposureNotificationClient(androidApplication())
     }
+
+    single { Notifications(context = androidApplication()) }
 
     single {
         ExposureNotificationManager(
@@ -93,7 +96,11 @@ val appModule = module {
             keysDir = androidContext().filesDir.absolutePath
         )
     }
-    single { PositiveDiagnosisLocalSource() }
+    single {
+        val appDatabase: AppDatabase = get()
+        appDatabase.positiveDiagnosisReportDao()
+    }
+    single { PositiveDiagnosisLocalSource(reportDao = get()) }
     single {
         PositiveDiagnosisRepository(
             remote = get(),
@@ -156,6 +163,12 @@ val appModule = module {
     }
 
     factory {
+        StartUploadDiagnosisKeysWorkUseCase(
+            workManager = get()
+        )
+    }
+
+    factory {
         UpdateExposureStateUseCase(
             workManager = get(),
             dispatchers = get()
@@ -171,13 +184,13 @@ val appModule = module {
         )
     }
 
-    factory {
+    single {
         UserFlowRepository(
             prefs = get()
         )
     }
 
-    factory {
+    single {
         val context = androidContext()
 
         context.getSharedPreferences(
@@ -196,6 +209,13 @@ val appModule = module {
 
     viewModel {
         SettingsViewModel(androidApplication())
+    }
+
+    viewModel {
+        NotifyOthersViewModel(
+            startUploadDiagnosisKeysWorkUseCase = get(),
+            positiveDiagnosisRepository = get()
+        )
     }
 
     single {

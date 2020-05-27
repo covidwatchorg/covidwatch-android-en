@@ -6,8 +6,9 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import org.covidwatch.android.R
+import org.covidwatch.android.ui.util.DateFormatter
 
-class PositiveDiagnosisViewHolder(root: View) : RecyclerView.ViewHolder(root) {
+class PositiveDiagnosisViewHolder(private val root: View) : RecyclerView.ViewHolder(root) {
 
     private val testStatusImage: ImageView = root.findViewById(R.id.test_status_image)
     private val testStatusText: TextView = root.findViewById(R.id.test_status_text)
@@ -18,7 +19,10 @@ class PositiveDiagnosisViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
     fun bind(positiveDiagnosis: PositiveDiagnosisItem) {
         bindTestStatus(positiveDiagnosis.testStatus)
-        testDateText.text = positiveDiagnosis.testDate
+        testDateText.text = root.context.getString(
+            R.string.test_date_fmt,
+            DateFormatter.format(positiveDiagnosis.testDate)
+        )
     }
 
     private fun bindTestStatus(testStatus: TestStatus) {
