@@ -22,6 +22,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/covid_watch_logo_white" />
+            app:srcCompat="@drawable/covid_watch_logo_white"
+            android:contentDescription="@string/powered_by_logo_content_description" />
     </LinearLayout>
 </layout>

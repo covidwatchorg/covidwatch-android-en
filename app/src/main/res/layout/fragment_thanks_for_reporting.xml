@@ -12,7 +12,8 @@
         <ImageView
             android:id="@+id/close_button"
             style="@style/ImageView.BtnClose"
-            android:paddingHorizontal="@dimen/padding_normal" />
+            android:paddingHorizontal="@dimen/padding_normal"
+            android:contentDescription="@string/close_button_content_descriptor" />
 
         <TextView
             style="@style/TextView.ScreenTitle"
@@ -26,7 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_normal"
-            android:src="@drawable/ic_family_earth" />
+            android:src="@drawable/ic_family_earth"
+            android:contentDescription="@null" />
 
         <TextView
             android:id="@+id/past_positive_diagnoses"
