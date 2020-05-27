@@ -19,7 +19,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_california_bear" />
+            app:srcCompat="@drawable/ic_california_bear"
+            android:contentDescription="@string/splash_screen_header_content_description" />
 
         <TextView
             android:id="@+id/textView"
@@ -44,7 +45,8 @@
             app:layout_constraintBottom_toTopOf="@+id/start_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            android:contentDescription="@null" />
 
         <Button
             android:id="@+id/start_button"

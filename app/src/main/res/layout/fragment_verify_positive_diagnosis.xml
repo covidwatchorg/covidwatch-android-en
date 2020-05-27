@@ -13,7 +13,8 @@
         <ImageView
             android:id="@+id/close_button"
             style="@style/ImageView.BtnClose"
-            android:paddingHorizontal="@dimen/padding_normal" />
+            android:paddingHorizontal="@dimen/padding_normal"
+            android:contentDescription="@string/close_button_content_descriptor" />
 
         <TextView
             style="@style/TextView.ScreenTitle"
@@ -35,7 +36,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@null" />
 
             <TextView
                 android:id="@+id/textView11"
