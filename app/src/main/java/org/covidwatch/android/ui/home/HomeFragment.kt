@@ -3,6 +3,8 @@ package org.covidwatch.android.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem.SHOW_AS_ACTION_ALWAYS
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -64,31 +66,47 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         )
 
         initClickListeners()
+        addDebugMenuItem()
+    }
+
+    private fun addDebugMenuItem() {
+        if (BuildConfig.DEBUG) {
+            val debugMenu = binding.toolbar.menu.add(
+                Menu.NONE,
+                Menu.NONE,
+                0,
+                "Debug"
+            )
+            debugMenu.setShowAsAction(SHOW_AS_ACTION_ALWAYS)
+            debugMenu.icon = context?.getDrawable(R.drawable.ic_debug)
+            debugMenu.setOnMenuItemClickListener {
+                startActivity(Intent(context, ExposureNotificationActivity::class.java))
+                true
+            }
+        }
     }
 
     private fun initClickListeners() {
-        binding.notifyOthersButton.setOnClickListener {
-            findNavController().navigate(R.id.notifyOthersFragment)
-        }
-        binding.toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.action_menu -> {
+        with(binding) {
+            notifyOthersButton.setOnClickListener {
+                findNavController().navigate(R.id.notifyOthersFragment)
+            }
+            toolbar.setOnMenuItemClickListener {
+                if (it.itemId == R.id.action_menu) {
                     findNavController().navigate(R.id.menuFragment)
                 }
-                R.id.action_debug -> {
-                    startActivity(Intent(context, ExposureNotificationActivity::class.java))
-                }
+                true
             }
-            true
-        }
-        binding.shareAppButton.setOnClickListener {
-            context?.shareApp()
-        }
-        binding.infoBanner.setOnClickListener {
-            findNavController().navigate(R.id.settingsFragment)
-        }
-        binding.exposureSummary.root.setOnClickListener {
-            findNavController().navigate(R.id.exposuresFragment)
+
+            shareAppButton.setOnClickListener {
+                context?.shareApp()
+            }
+            infoBanner.setOnClickListener {
+                findNavController().navigate(R.id.settingsFragment)
+            }
+            exposureSummary.root.setOnClickListener {
+                findNavController().navigate(R.id.exposuresFragment)
+            }
         }
     }
 
