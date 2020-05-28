@@ -5,12 +5,13 @@ import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.extension.toResult
 import org.covidwatch.android.functional.Either
 import org.covidwatch.android.work.UpdateExposureStateWork
+import java.util.*
 
 class UpdateExposureStateUseCase(
     private val workManager: WorkManager,
     dispatchers: AppCoroutineDispatchers
-) : UseCase<Unit, UpdateExposureStateUseCase.Params>(dispatchers) {
-    override suspend fun run(params: Params?): Either<ENStatus, Unit> {
+) : UseCase<UUID, UpdateExposureStateUseCase.Params>(dispatchers) {
+    override suspend fun run(params: Params?): Either<ENStatus, UUID> {
         params ?: return Either.Left(ENStatus.FailedInternal)
         val updateWork = OneTimeWorkRequestBuilder<UpdateExposureStateWork>()
             .setConstraints(

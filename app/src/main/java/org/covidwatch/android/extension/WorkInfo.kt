@@ -13,7 +13,7 @@ const val FAILURE = "status"
 const val UNKNOWN_FAILURE = -1
 
 fun WorkInfo.toResult() = when (this.state) {
-    WorkInfo.State.SUCCEEDED -> Either.Right(Unit)
+    WorkInfo.State.SUCCEEDED -> Either.Right(id)
     else -> Either.Left(
         ENStatus(
             outputData.getInt(
@@ -24,9 +24,9 @@ fun WorkInfo.toResult() = when (this.state) {
     )
 }
 
-fun WorkManager.getFinalWorkInfoByIdLiveData(@NonNull id: UUID): LiveData<Either<ENStatus, Unit>> {
+fun WorkManager.getFinalWorkInfoByIdLiveData(@NonNull id: UUID): LiveData<Either<ENStatus, UUID>> {
     val work = getWorkInfoByIdLiveData(id)
-    val result = MediatorLiveData<Either<ENStatus, Unit>>()
+    val result = MediatorLiveData<Either<ENStatus, UUID>>()
     result.addSource(work) { workInfo ->
         @Suppress("NON_EXHAUSTIVE_WHEN")
         when (workInfo.state) {
