@@ -1,5 +1,6 @@
 package org.covidwatch.android.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +11,11 @@ import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.*
 import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.databinding.FragmentHomeBinding
+import org.covidwatch.android.extension.shareApp
 import org.covidwatch.android.ui.BaseFragment
 import org.covidwatch.android.ui.event.EventObserver
+import org.covidwatch.android.ui.exposurenotification.ExposureNotificationActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.covidwatch.android.BuildConfig
-import org.covidwatch.android.extension.shareApp
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
@@ -57,7 +58,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 }
             }
         })
-        homeViewModel.isUserTestedPositive.observe(viewLifecycleOwner, Observer(::updateUiForTestedPositive))
+        homeViewModel.isUserTestedPositive.observe(
+            viewLifecycleOwner,
+            Observer(::updateUiForTestedPositive)
+        )
 
         initClickListeners()
     }
@@ -67,8 +71,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             findNavController().navigate(R.id.notifyOthersFragment)
         }
         binding.toolbar.setOnMenuItemClickListener {
-            if (R.id.action_menu == it.itemId) {
-                findNavController().navigate(R.id.menuFragment)
+            when (it.itemId) {
+                R.id.action_menu -> {
+                    findNavController().navigate(R.id.menuFragment)
+                }
+                R.id.action_debug -> {
+                    startActivity(Intent(context, ExposureNotificationActivity::class.java))
+                }
             }
             true
         }
@@ -84,7 +93,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun bindExposureSummary(exposureSummary: CovidExposureSummary) {
-        binding.exposureSummary.daysSinceLastExposure.text = exposureSummary.daySinceLastExposure.toString()
+        binding.exposureSummary.daysSinceLastExposure.text =
+            exposureSummary.daySinceLastExposure.toString()
         binding.exposureSummary.totalExposures.text = exposureSummary.matchedKeyCount.toString()
         binding.exposureSummary.highRiskScore.text = exposureSummary.maximumRiskScore.toString()
     }

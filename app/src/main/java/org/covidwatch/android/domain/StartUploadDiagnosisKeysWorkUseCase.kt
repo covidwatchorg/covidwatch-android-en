@@ -34,9 +34,8 @@ class StartUploadDiagnosisKeysWorkUseCase(
     override suspend fun observe(params: Unit?) = liveData {
         run(params).apply {
             success { emitSource(workManager.getFinalWorkInfoByIdLiveData(it)) }
+            failure { emit(Either.Left(it)) }
         }
-
-        emit(Either.Left(ENStatus.FailedInternal))
     }
 
     companion object {

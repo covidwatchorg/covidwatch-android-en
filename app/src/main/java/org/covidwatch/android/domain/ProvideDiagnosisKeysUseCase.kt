@@ -58,9 +58,8 @@ class ProvideDiagnosisKeysUseCase(
     override suspend fun observe(params: Params?): LiveData<Either<ENStatus, UUID>> = liveData {
         run(params).apply {
             success { emitSource(workManager.getFinalWorkInfoByIdLiveData(it)) }
+            failure { emit(Either.Left(it)) }
         }
-
-        emit(Either.Left(ENStatus.FailedInternal))
     }
 
     data class Params(val recurrent: Boolean)

@@ -175,10 +175,17 @@
     <string name="needs_verification">Needs Verification</string>
     <string name="verified">Verified</string>
     <string name="last_exposure_time">Exposure last checked at %s</string>
+    <string name="item_positive_diagnosis_action_button_content_description">Verify diagnosis</string>
+
+    <!-- Notifications -->
     <string name="upload_report_notification_channel">Reporting</string>
     <string name="upload_report_notification_channel_description">Upload positive diagnosis</string>
     <string name="upload_report_notification_title">Uploading positive diagnosis</string>
-    <string name="item_positive_diagnosis_action_button_content_description">Verify diagnosis</string>
+
+    <!--TODO: Use correct wording-->
+    <string name="download_reports_notification_channel">Download reports</string>
+    <string name="download_reports_notification_channel_description">Download positive diagnosis</string>
+    <string name="download_reports_notification_title">Downloading positive diagnosis</string>
 
     <!-- Share app common action -->
     <string name="share_app_content">Become a Covid Watcher and help your community stay safe. https://www.covid-watch.org</string>

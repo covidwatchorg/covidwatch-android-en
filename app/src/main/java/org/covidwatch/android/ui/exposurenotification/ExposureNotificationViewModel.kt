@@ -66,7 +66,9 @@ class ExposureNotificationViewModel(
     }
 
     fun downloadDiagnosisKeys() {
-        observeStatus(provideDiagnosisKeysUseCase, Params(recurrent = false))
+        observeStatus(provideDiagnosisKeysUseCase, Params(recurrent = false)) {
+            _isRefreshing.value = false
+        }
     }
 
     fun loadExposureInformation() {
