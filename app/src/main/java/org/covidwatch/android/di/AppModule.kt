@@ -164,7 +164,8 @@ val appModule = module {
 
     factory {
         StartUploadDiagnosisKeysWorkUseCase(
-            workManager = get()
+            workManager = get(),
+            dispatchers = get()
         )
     }
 

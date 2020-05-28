@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.fragment_exposure_notification.*
 import org.covidwatch.android.R
 import org.covidwatch.android.databinding.DialogPhaPermissionNumberBinding
 import org.covidwatch.android.databinding.FragmentExposureNotificationBinding
+import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.extension.observe
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -45,6 +46,7 @@ class ExposureNotificationFragment : Fragment() {
             observe(isRefreshing) {
                 binding.pullToRefresh.isRefreshing = it
             }
+            observe(status) { handleError(it) }
             observe(exposureServiceRunning) { running ->
                 val title = if (running) R.string.stop else R.string.start
                 startServiceMenuItem.title = getString(title)
@@ -79,6 +81,17 @@ class ExposureNotificationFragment : Fragment() {
             }
 
             true
+        }
+    }
+
+    private fun handleError(status: ENStatus?) {
+        when (status) {
+            ENStatus.FailedRejectedOptIn -> TODO()
+            ENStatus.FailedServiceDisabled -> TODO()
+            ENStatus.FailedBluetoothScanningDisabled -> TODO()
+            ENStatus.FailedTemporarilyDisabled -> TODO()
+            ENStatus.FailedInsufficientStorage -> TODO()
+            ENStatus.FailedInternal -> TODO()
         }
     }
 
