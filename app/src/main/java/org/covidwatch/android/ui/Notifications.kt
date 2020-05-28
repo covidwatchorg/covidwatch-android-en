@@ -94,9 +94,49 @@ class Notifications(private val context: Context) {
         }
     }
 
+    fun downloadingReportsNotification(): Notification {
+        createDownloadReportChannel()
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            0,
+            Intent(context, MainActivity::class.java),
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val builder = NotificationCompat.Builder(
+            context,
+            DOWNLOAD_REPORTS_CHANNEL_ID
+        )
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(context.getString(R.string.download_reports_notification_title))
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+            )
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
+        return builder.build()
+    }
+
+    private fun createDownloadReportChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                DOWNLOAD_REPORTS_CHANNEL_ID,
+                context.getString(R.string.download_reports_notification_channel),
+                NotificationManager.IMPORTANCE_LOW
+            )
+            channel.description =
+                context.getString(R.string.download_reports_notification_channel_description)
+
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
     companion object {
         const val EXPOSURE_NOTIFICATION_CHANNEL_ID = "EXPOSURE_NOTIFICATION_CHANNEL_ID"
         const val UPLOAD_REPORT_CHANNEL_ID = "UPLOAD_REPORT_CHANNEL_ID"
+        const val DOWNLOAD_REPORTS_CHANNEL_ID = "DOWNLOAD_REPORTS_CHANNEL_ID"
         const val UPLOADING_REPORT_NOTIFICATION_ID = 66
+        const val DOWNLOAD_REPORTS_NOTIFICATION_ID = 77
     }
 }

@@ -2,7 +2,6 @@ package org.covidwatch.android.ui.exposurenotification
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.covidwatch.android.data.CovidExposureInformation
@@ -10,6 +9,7 @@ import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
+import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase.Params
 import org.covidwatch.android.domain.UpdateExposureInformationUseCase
 import org.covidwatch.android.domain.UploadDiagnosisKeysUseCase
 import org.covidwatch.android.exposurenotification.ENStatus
@@ -17,6 +17,7 @@ import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.extension.doOnNext
 import org.covidwatch.android.extension.launchUseCase
 import org.covidwatch.android.functional.Either
+import org.covidwatch.android.ui.BaseViewModel
 
 class ExposureNotificationViewModel(
     private val enManager: ExposureNotificationManager,
@@ -25,7 +26,7 @@ class ExposureNotificationViewModel(
     private val updateExposureInformationUseCase: UpdateExposureInformationUseCase,
     exposureInformationRepository: ExposureInformationRepository,
     preferenceStorage: PreferenceStorage
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _exposureServiceRunning = MutableLiveData<Boolean>()
     val exposureServiceRunning: LiveData<Boolean> = _exposureServiceRunning
@@ -65,10 +66,8 @@ class ExposureNotificationViewModel(
     }
 
     fun downloadDiagnosisKeys() {
-        viewModelScope.launchUseCase(provideDiagnosisKeysUseCase) {
+        observeStatus(provideDiagnosisKeysUseCase, Params(recurrent = false)) {
             _isRefreshing.value = false
-
-            failure { handleError(it) }
         }
     }
 

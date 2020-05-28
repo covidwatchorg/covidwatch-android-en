@@ -2,6 +2,7 @@ package org.covidwatch.android.work
 
 import android.content.Context
 import androidx.work.CoroutineWorker
+import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import com.google.common.io.BaseEncoding
 import kotlinx.coroutines.Dispatchers
@@ -10,6 +11,8 @@ import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.ui.Notifications
+import org.covidwatch.android.ui.Notifications.Companion.DOWNLOAD_REPORTS_NOTIFICATION_ID
 import org.koin.java.KoinJavaComponent.inject
 import timber.log.Timber
 import java.security.SecureRandom
@@ -22,6 +25,7 @@ class ProvideDiagnosisKeysWork(
     private val exposureNotification by inject(ExposureNotificationManager::class.java)
     private val diagnosisRepository by inject(PositiveDiagnosisRepository::class.java)
     private val diagnosisKeysTokenRepository by inject(DiagnosisKeysTokenRepository::class.java)
+    private val notifications by inject(Notifications::class.java)
 
     private val base64 = BaseEncoding.base64()
     private val randomTokenByteLength = 32
@@ -34,6 +38,12 @@ class ProvideDiagnosisKeysWork(
     }
 
     override suspend fun doWork(): Result {
+        setForeground(
+            ForegroundInfo(
+                DOWNLOAD_REPORTS_NOTIFICATION_ID,
+                notifications.downloadingReportsNotification()
+            )
+        )
         withContext(Dispatchers.IO) {
             val diagnosisKeys = diagnosisRepository.diagnosisKeys()
             Timber.d("Adding ${diagnosisKeys.size} positive diagnoses to exposure notification framework")

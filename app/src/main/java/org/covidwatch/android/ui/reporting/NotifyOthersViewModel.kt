@@ -8,14 +8,12 @@ import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.domain.StartUploadDiagnosisKeysWorkUseCase
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.functional.Either
+import org.covidwatch.android.ui.BaseViewModel
 
 class NotifyOthersViewModel(
     private val startUploadDiagnosisKeysWorkUseCase: StartUploadDiagnosisKeysWorkUseCase,
     positiveDiagnosisRepository: PositiveDiagnosisRepository
-) : ViewModel() {
-
-    private val _uploadDiagnosisKeys = MediatorLiveData<Either<ENStatus, Unit>>()
-    val uploadDiagnosisKeys: LiveData<Either<ENStatus, Unit>> = _uploadDiagnosisKeys
+) : BaseViewModel() {
 
     val positiveDiagnosis = positiveDiagnosisRepository.positiveDiagnosisReports().map {
         it.map { report ->
@@ -25,10 +23,7 @@ class NotifyOthersViewModel(
     }
 
     fun sharePositiveDiagnosis() {
-        val uploadKeys = startUploadDiagnosisKeysWorkUseCase.observe()
-        _uploadDiagnosisKeys.addSource(uploadKeys) {
-            _uploadDiagnosisKeys.value = it
-            _uploadDiagnosisKeys.removeSource(uploadKeys)
-        }
+        observeStatus(startUploadDiagnosisKeysWorkUseCase)
+
     }
 }

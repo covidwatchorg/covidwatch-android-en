@@ -15,7 +15,7 @@ import org.covidwatch.android.functional.Either
  * (kotlin coroutine) and will post the result in the UI thread.
  */
 abstract class UseCase<Type, in Params>(
-    private val dispatchers: AppCoroutineDispatchers
+    protected val dispatchers: AppCoroutineDispatchers
 ) {
 
     abstract suspend fun run(params: Params? = null): Either<ENStatus, Type>

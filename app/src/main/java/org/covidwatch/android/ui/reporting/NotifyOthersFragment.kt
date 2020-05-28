@@ -40,9 +40,7 @@ class NotifyOthersFragment : BaseFragment<FragmentNotifyOthersBinding>() {
         }
 
         with(viewModel) {
-            observe(uploadDiagnosisKeys) {
-                handleError(it.left)
-            }
+            observe(status) { handleError(it) }
             observe(positiveDiagnosis) { adapter.setItems(it) }
         }
     }
