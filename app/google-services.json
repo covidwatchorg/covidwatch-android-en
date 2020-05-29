@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:859589913358:android:b8b358199a7d8f6a25055f",
         "android_client_info": {
-          "package_name": "edu.stanford.covidwatch.android"
+          "package_name": "org.covidwatch.android"
         }
       },
       "oauth_client": [
@@ -46,7 +46,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:859589913358:android:5efcb2888de6eb1325055f",
         "android_client_info": {
-          "package_name": "edu.stanford.covidwatch.android.debug"
+          "package_name": "org.covidwatch.android.debug"
         }
       },
       "oauth_client": [

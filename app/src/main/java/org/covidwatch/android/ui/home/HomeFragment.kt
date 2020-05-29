@@ -29,8 +29,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //Add meta-data test here
-        getFirebaseIdIfTester()
         homeViewModel.onStart()
         homeViewModel.navigateToOnboardingEvent.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.splashFragment)
@@ -121,23 +119,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.notifyOthersButtonQuestion.isVisible = !isUserTestedPositive
         binding.notifyOthersButton.isVisible = !isUserTestedPositive
         binding.notifyOthersButtonText.isVisible = !isUserTestedPositive
-    }
-
-    private fun getFirebaseIdIfTester() {
-        if (BuildConfig.FIREBASE_DEBUGGING == false) {
-            binding.testerId.visibility = View.GONE
-            setTester(false)
-            return
-        } else {
-            val firebaseId: String = getFirebaseId()
-            binding.testerId.text = "Your COVID Watch Tester Id is: " + firebaseId
-            binding.testerId.visibility = View.VISIBLE
-            setTester(true)
-            val context = requireContext()
-            setAnalyticsInstanceFromContext(context)
-            //Test event
-            sendEvent("TestEvent")
-            return
-        }
     }
 }
