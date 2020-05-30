@@ -24,6 +24,5 @@ class NotifyOthersViewModel(
 
     fun sharePositiveDiagnosis() {
         observeStatus(startUploadDiagnosisKeysWorkUseCase)
-
     }
 }
