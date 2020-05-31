@@ -1,11 +1,13 @@
 package org.covidwatch.android.ui.exposures
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.launch
 import org.covidwatch.android.databinding.FragmentExposuresBinding
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseFragment
@@ -39,11 +41,23 @@ class ExposuresFragment : BaseFragment<FragmentExposuresBinding>() {
                     ExposuresFragmentDirections.actionExposuresFragmentToExposureDetailsFragment(it)
                 findNavController().navigate(action)
             }
+            observeEvent(resolvable) { resolvable ->
+                resolvable.apiException.status.startResolutionForResult(
+                    activity, resolvable.requestCode
+                )
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
         exposuresViewModel.start()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        lifecycleScope.launch {
+            exposuresViewModel.handleResolution(requestCode, resultCode)
+        }
     }
 }
