@@ -6,27 +6,24 @@ import com.google.android.gms.tasks.Tasks
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.covidwatch.android.exposurenotification.ENStatus
-import org.covidwatch.android.exposurenotification.Status
 import org.covidwatch.android.functional.Either
-import java.util.concurrent.ExecutionException
+import timber.log.Timber
 
-suspend fun <T> Task<T>.await(): Either<Int, T> = withContext(Dispatchers.IO) {
+suspend fun <T> Task<T>.await(): Either<ApiException?, T> = withContext(Dispatchers.IO) {
     try {
-        Either.Right(Tasks.await(this@await))
-    } catch (e: ExecutionException) {
-        val apiException = e.cause as? ApiException
-        val status = apiException?.statusCode ?: -1
-        Either.Left(status)
+       Either.Right(Tasks.await(this@await))
     } catch (e: Exception) {
-        Either.Left(Status.FAILED_INTERNAL)
+        val apiException = e.cause as? ApiException
+        Timber.e(apiException)
+        Either.Left(apiException)
     }
 }
 
 suspend fun Task<Void>.awaitNoResult(): Either<ENStatus, Void?> = await().let {
     val result = it.right
-    val status = it.left
-    return if (status != null) {
-        Either.Left(ENStatus(status))
+    val exception = it.left
+    return if (exception != null) {
+        Either.Left(ENStatus(exception))
     } else {
         Either.Right(result)
     }
@@ -34,10 +31,10 @@ suspend fun Task<Void>.awaitNoResult(): Either<ENStatus, Void?> = await().let {
 
 suspend fun <T> Task<T>.awaitWithStatus(): Either<ENStatus, T> = await().let {
     val result = it.right
-    val status = it.left
+    val exception = it.left
     return if (result != null) {
         Either.Right(result)
     } else {
-        Either.Left(ENStatus(status))
+        Either.Left(ENStatus(exception))
     }
 }

@@ -91,7 +91,7 @@ class ExposureNotificationFragment : Fragment() {
             ENStatus.FailedBluetoothScanningDisabled -> TODO()
             ENStatus.FailedTemporarilyDisabled -> TODO()
             ENStatus.FailedInsufficientStorage -> TODO()
-            ENStatus.FailedInternal -> TODO()
+            ENStatus.Failed -> TODO()
         }
     }
 

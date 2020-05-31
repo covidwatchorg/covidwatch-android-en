@@ -1,6 +1,8 @@
 package org.covidwatch.android.extension
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import org.covidwatch.android.ui.event.Event
 
 fun <X> LiveData<X>.doOnNext(body: (X) -> Unit): LiveData<X> {
@@ -24,4 +26,11 @@ fun <T : Any> MutableLiveData<Event<T>>.set(value: T) {
  * */
 fun MutableLiveData<Event<Unit>>.send() {
     this.value = Event(Unit)
+}
+
+/**
+ * Send an event with a value
+ * */
+fun <T> MutableLiveData<Event<T>>.send(value: T?) {
+    this.value = value?.let { Event(value) }
 }

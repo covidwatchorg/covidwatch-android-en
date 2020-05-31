@@ -45,7 +45,7 @@ class UploadDiagnosisKeysUseCase(
                     diagnosisKeys,
                     regions,
                     defaultVerificationCode
-                ) ?: return Either.Left(ENStatus.FailedInternal)
+                ) ?: return Either.Left(ENStatus.Failed)
 
                 val positiveDiagnosis = PositiveDiagnosis(
                     diagnosisKeys,

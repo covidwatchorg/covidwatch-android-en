@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.WorkerParameters
+import com.google.android.gms.nearby.exposurenotification.ExposureNotificationStatusCodes.FAILED
 import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
-import org.covidwatch.android.exposurenotification.Status
 import org.covidwatch.android.ui.Notifications
 import org.koin.java.KoinJavaComponent.inject
 
@@ -24,11 +24,11 @@ class UpdateExposureStateWork(
 
     override suspend fun doWork(): Result {
         val token =
-            workerParams.inputData.getString(PARAM_TOKEN) ?: return failure(Status.FAILED_INTERNAL)
+            workerParams.inputData.getString(PARAM_TOKEN) ?: return failure(FAILED)
 
         val exposureSummaryResult = exposureNotification.getExposureSummary(token)
         val exposureSummary =
-            exposureSummaryResult.right ?: return failure(exposureSummaryResult.left)
+            exposureSummaryResult.right ?: return failure(exposureSummaryResult.left?.statusCode)
 
         // TODO: Check if order of updates is preserved relatively to the calls of [ProvideDiagnosisKeysUseCase]
         // If not, older updates could override new exposure summary
