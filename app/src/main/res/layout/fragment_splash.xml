@@ -51,7 +51,7 @@
         <Button
             android:id="@+id/start_button"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/big_button_height"
             android:backgroundTint="@color/white"
             android:text="@string/get_started_button"
             android:textColor="@color/bluejay"
