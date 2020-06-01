@@ -38,6 +38,6 @@ class UploadDiagnosisKeysWork(
     }
 
     private fun failure(status: ENStatus) = Result.failure(
-        Data.Builder().putString(FAILURE, status.toJson()).build()
+        Data.Builder().putInt(FAILURE, status.code).build()
     )
 }
