@@ -36,17 +36,20 @@ abstract class BaseViewModel : ViewModel() {
     ) {
         if (!tasksInResolution.contains(requestCode)) {
             task().apply {
-                failure {
-                    if (it is ENStatus.NeedsResolution) {
-                        _resolvable.send(Resolvable(it.exception, requestCode))
-                        tasksInResolution.put(requestCode, task)
-                    } else {
-                        handleStatus(it)
-                    }
-                }
+                failure { handleFailure(it, requestCode, task) }
             }
         }
     }
+
+    private fun handleFailure(status: ENStatus, requestCode: Int?, task: suspend () -> Any) =
+        if (status is ENStatus.NeedsResolution && requestCode != null) {
+            status.exception?.let {
+                _resolvable.send(Resolvable(it, requestCode))
+                tasksInResolution.put(requestCode, task)
+            }
+        } else {
+            handleStatus(status)
+        }
 
     protected fun <T, P> observeStatus(
         useCase: LiveDataUseCase<T, P>,
@@ -65,9 +68,7 @@ abstract class BaseViewModel : ViewModel() {
         val task = tasksInResolution.get(requestCode)
         tasksInResolution.remove(requestCode)
         if (resultCode == Activity.RESULT_OK) {
-            val result = task() as Either<*, *>
-            val status = result.left as? ENStatus
-            status?.let { handleStatus(it) }
+            task()
         } else {
             handleStatus(ENStatus.FailedRejectedOptIn)
         }

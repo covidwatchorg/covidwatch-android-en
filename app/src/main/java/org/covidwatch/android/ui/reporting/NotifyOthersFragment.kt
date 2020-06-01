@@ -1,12 +1,15 @@
 package org.covidwatch.android.ui.reporting
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.launch
 import org.covidwatch.android.databinding.FragmentNotifyOthersBinding
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.extension.observe
@@ -42,10 +45,21 @@ class NotifyOthersFragment : BaseFragment<FragmentNotifyOthersBinding>() {
 
         with(viewModel) {
             observeEvent(status) { handleError(it) }
+            observeEvent(resolvable) { resolvable ->
+                resolvable.apiException.status.startResolutionForResult(
+                    activity, resolvable.requestCode
+                )
+            }
             observe(positiveDiagnosis) { adapter.setItems(it) }
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        lifecycleScope.launch {
+            viewModel.handleResolution(requestCode, resultCode)
+        }
+    }
 
     private fun handleError(status: ENStatus?) {
         when (status) {

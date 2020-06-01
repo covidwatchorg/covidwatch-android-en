@@ -212,6 +212,7 @@ val appModule = module {
     viewModel {
         NotifyOthersViewModel(
             startUploadDiagnosisKeysWorkUseCase = get(),
+            enManager = get(),
             positiveDiagnosisRepository = get()
         )
     }
