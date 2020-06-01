@@ -10,18 +10,15 @@ import org.covidwatch.android.functional.Either
 import java.util.*
 
 const val FAILURE = "status"
-const val UNKNOWN_FAILURE = -1
 
 fun WorkInfo.toResult() = when (this.state) {
     WorkInfo.State.SUCCEEDED -> Either.Right(id)
-    else -> Either.Left(
-        ENStatus(
-            outputData.getInt(
-                FAILURE,
-                UNKNOWN_FAILURE
-            )
-        )
-    )
+    else -> {
+        val failure =
+            outputData.getString(FAILURE)?.let { ENStatus.fromJson(it) } ?: ENStatus.Failed
+
+        Either.Left(failure)
+    }
 }
 
 fun WorkManager.getFinalWorkInfoByIdLiveData(@NonNull id: UUID): LiveData<Either<ENStatus, UUID>> {
