@@ -47,7 +47,7 @@ class ExposureNotificationViewModel(
 
     fun uploadDiagnosis() {
         viewModelScope.launchUseCase(uploadDiagnosisKeysUseCase) {
-            failure { handleError(it) }
+            failure { handleStatus(it) }
         }
     }
 
@@ -76,18 +76,7 @@ class ExposureNotificationViewModel(
     }
 
     private fun <R : ENStatus, L> Either<R, L>.result(): L? {
-        left?.let { handleError(it) }
+        left?.let { handleStatus(it) }
         return right
-    }
-
-    private fun handleError(status: ENStatus?) {
-        when (status) {
-            ENStatus.FailedRejectedOptIn -> TODO()
-            ENStatus.FailedServiceDisabled -> TODO()
-            ENStatus.FailedBluetoothScanningDisabled -> TODO()
-            ENStatus.FailedTemporarilyDisabled -> TODO()
-            ENStatus.FailedInsufficientStorage -> TODO()
-            ENStatus.Failed -> TODO()
-        }
     }
 }

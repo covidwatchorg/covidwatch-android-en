@@ -13,6 +13,7 @@ import org.covidwatch.android.databinding.DialogPhaPermissionNumberBinding
 import org.covidwatch.android.databinding.FragmentExposureNotificationBinding
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.extension.observe
+import org.covidwatch.android.extension.observeEvent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ExposureNotificationFragment : Fragment() {
@@ -46,7 +47,7 @@ class ExposureNotificationFragment : Fragment() {
             observe(isRefreshing) {
                 binding.pullToRefresh.isRefreshing = it
             }
-            observe(status) { handleError(it) }
+            observeEvent(status) { handleError(it) }
             observe(exposureServiceRunning) { running ->
                 val title = if (running) R.string.stop else R.string.start
                 startServiceMenuItem.title = getString(title)

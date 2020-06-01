@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.covidwatch.android.databinding.FragmentNotifyOthersBinding
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.extension.observe
+import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseFragment
 import org.koin.android.ext.android.inject
 
@@ -40,7 +41,7 @@ class NotifyOthersFragment : BaseFragment<FragmentNotifyOthersBinding>() {
         }
 
         with(viewModel) {
-            observe(status) { handleError(it) }
+            observeEvent(status) { handleError(it) }
             observe(positiveDiagnosis) { adapter.setItems(it) }
         }
     }

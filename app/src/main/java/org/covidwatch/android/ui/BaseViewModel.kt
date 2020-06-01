@@ -18,16 +18,16 @@ import org.covidwatch.android.ui.event.Event
  * @see ENStatus
  */
 abstract class BaseViewModel : ViewModel() {
-    private val _status = MediatorLiveData<ENStatus>()
-    val status: MutableLiveData<ENStatus> = _status
+    private val _status = MediatorLiveData<Event<ENStatus>>()
+    val status: MutableLiveData<Event<ENStatus>> = _status
 
     private val _resolvable = MutableLiveData<Event<Resolvable>>()
     val resolvable: LiveData<Event<Resolvable>> = _resolvable
 
     private val tasksInResolution = SparseArray<suspend () -> Any>()
 
-    private fun handleStatus(status: ENStatus) {
-        _status.value = status
+    protected fun handleStatus(status: ENStatus) {
+        _status.send(status)
     }
 
     protected suspend fun <V> withPermission(
@@ -40,6 +40,8 @@ abstract class BaseViewModel : ViewModel() {
                     if (it is ENStatus.NeedsResolution) {
                         _resolvable.send(Resolvable(it.exception, requestCode))
                         tasksInResolution.put(requestCode, task)
+                    } else {
+                        handleStatus(it)
                     }
                 }
             }
