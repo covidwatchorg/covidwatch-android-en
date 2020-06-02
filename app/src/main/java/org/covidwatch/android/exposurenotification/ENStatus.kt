@@ -1,6 +1,7 @@
 package org.covidwatch.android.exposurenotification
 
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationStatusCodes.*
 
 sealed class ENStatus(val code: Int) {
@@ -14,6 +15,10 @@ sealed class ENStatus(val code: Int) {
     class NeedsResolution(val exception: ApiException? = null) : ENStatus(RESOLUTION_REQUIRED)
 
     companion object {
+
+        /**
+         * Create [ENStatus] from [ApiException] when [ExposureNotificationClient] methods are called
+         * */
         operator fun invoke(apiException: ApiException?) = when (apiException?.statusCode) {
             FAILED_REJECTED_OPT_IN -> FailedRejectedOptIn
             FAILED_SERVICE_DISABLED -> FailedServiceDisabled
@@ -25,6 +30,9 @@ sealed class ENStatus(val code: Int) {
             else -> Failed
         }
 
+        /**
+         * Generate [ENStatus] from [ApiException.getStatusCode]
+         * */
         operator fun invoke(statusCode: Int?) = when (statusCode) {
             FAILED_REJECTED_OPT_IN -> FailedRejectedOptIn
             FAILED_SERVICE_DISABLED -> FailedServiceDisabled

@@ -1,11 +1,9 @@
 package org.covidwatch.android.extension
 
-import androidx.lifecycle.asFlow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.covidwatch.android.domain.LiveDataUseCase
 import org.covidwatch.android.domain.UseCase
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.functional.Either
