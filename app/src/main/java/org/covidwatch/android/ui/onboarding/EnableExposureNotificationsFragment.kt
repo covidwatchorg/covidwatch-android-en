@@ -45,7 +45,6 @@ class EnableExposureNotificationsFragment :
             }
             observeEvent(status) {
                 when (it) {
-                    ENStatus.FailedRejectedOptIn,
                     ENStatus.FailedInsufficientStorage -> {
                         val snackbar = Snackbar.make(
                             binding.root,
