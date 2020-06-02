@@ -28,12 +28,6 @@ class UploadDiagnosisKeysUseCase(
     private val platform = "android"
 
     override suspend fun run(params: Unit?): Either<ENStatus, Unit> {
-        enManager.isEnabled().apply {
-            success { enabled ->
-                if (!enabled) return Either.Left(ENStatus.FailedServiceDisabled)
-            }
-            failure { return Either.Left(it) }
-        }
         enManager.temporaryExposureKeyHistory().apply {
             success {
                 val diagnosisKeys = it.map { key -> key.asDiagnosisKey() }
