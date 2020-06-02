@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Room
 import androidx.work.WorkManager
 import com.google.android.gms.nearby.Nearby
-import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.google.android.gms.safetynet.SafetyNet
 import com.google.common.io.BaseEncoding
 import okhttp3.OkHttpClient
@@ -26,7 +25,6 @@ import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.data.pref.SharedPreferenceStorage
 import org.covidwatch.android.domain.*
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
-import org.covidwatch.android.exposurenotification.FakeExposureNotification
 import org.covidwatch.android.ui.Notifications
 import org.covidwatch.android.ui.exposurenotification.ExposureNotificationViewModel
 import org.covidwatch.android.ui.exposures.ExposuresViewModel
@@ -41,9 +39,7 @@ import org.koin.dsl.module
 import java.security.SecureRandom
 
 val appModule = module {
-    //TODO: Replace with a real implementation
-    single<ExposureNotificationClient> {
-//        FakeExposureNotification()
+    single {
         Nearby.getExposureNotificationClient(androidApplication())
     }
 
@@ -179,7 +175,7 @@ val appModule = module {
 
     factory {
         UpdateExposureInformationUseCase(
-            exposureNotificationManager = get(),
+            enManager = get(),
             tokenRepository = get(),
             exposureInformationRepository = get(),
             dispatchers = get()
@@ -216,6 +212,7 @@ val appModule = module {
     viewModel {
         NotifyOthersViewModel(
             startUploadDiagnosisKeysWorkUseCase = get(),
+            enManager = get(),
             positiveDiagnosisRepository = get()
         )
     }
@@ -238,7 +235,7 @@ val appModule = module {
     // Onboarding start
 
     viewModel {
-        EnableExposureNotificationsViewModel(exposureNotificationManager = get())
+        EnableExposureNotificationsViewModel(enManager = get())
     }
 
     // Onboarding end

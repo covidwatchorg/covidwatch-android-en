@@ -8,6 +8,7 @@ import androidx.work.WorkerParameters
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.covidwatch.android.domain.UploadDiagnosisKeysUseCase
+import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.extension.FAILURE
 import org.covidwatch.android.ui.Notifications
 import org.covidwatch.android.ui.Notifications.Companion.UPLOADING_REPORT_NOTIFICATION_ID
@@ -31,12 +32,12 @@ class UploadDiagnosisKeysWork(
         )
         uploadDiagnosisKeysWorkUseCase.run().apply {
             success { return@withContext Result.success() }
-            failure { return@withContext failure(it.code) }
+            failure { return@withContext failure(it) }
         }
         return@withContext Result.success()
     }
 
-    private fun failure(status: Int) = Result.failure(
-        Data.Builder().putInt(FAILURE, status).build()
+    private fun failure(status: ENStatus) = Result.failure(
+        Data.Builder().putInt(FAILURE, status.code).build()
     )
 }

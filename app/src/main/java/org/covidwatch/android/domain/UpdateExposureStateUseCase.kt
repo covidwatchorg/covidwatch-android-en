@@ -12,7 +12,7 @@ class UpdateExposureStateUseCase(
     dispatchers: AppCoroutineDispatchers
 ) : UseCase<UUID, UpdateExposureStateUseCase.Params>(dispatchers) {
     override suspend fun run(params: Params?): Either<ENStatus, UUID> {
-        params ?: return Either.Left(ENStatus.FailedInternal)
+        params ?: return Either.Left(ENStatus.Failed)
         val updateWork = OneTimeWorkRequestBuilder<UpdateExposureStateWork>()
             .setConstraints(
                 Constraints.Builder()

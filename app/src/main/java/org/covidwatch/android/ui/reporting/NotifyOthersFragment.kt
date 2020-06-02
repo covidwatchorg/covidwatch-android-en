@@ -8,14 +8,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import org.covidwatch.android.databinding.FragmentNotifyOthersBinding
-import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.extension.observe
-import org.covidwatch.android.ui.BaseFragment
-import org.koin.android.ext.android.inject
+import org.covidwatch.android.ui.BaseViewModelFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class NotifyOthersFragment : BaseFragment<FragmentNotifyOthersBinding>() {
+class NotifyOthersFragment :
+    BaseViewModelFragment<FragmentNotifyOthersBinding, NotifyOthersViewModel>() {
 
-    private val viewModel: NotifyOthersViewModel by inject()
+    override val viewModel: NotifyOthersViewModel by viewModel()
 
     private val adapter = PositiveDiagnosisAdapter()
 
@@ -40,20 +40,7 @@ class NotifyOthersFragment : BaseFragment<FragmentNotifyOthersBinding>() {
         }
 
         with(viewModel) {
-            observe(status) { handleError(it) }
             observe(positiveDiagnosis) { adapter.setItems(it) }
-        }
-    }
-
-
-    private fun handleError(status: ENStatus?) {
-        when (status) {
-            ENStatus.FailedRejectedOptIn -> TODO()
-            ENStatus.FailedServiceDisabled -> TODO()
-            ENStatus.FailedBluetoothScanningDisabled -> TODO()
-            ENStatus.FailedTemporarilyDisabled -> TODO()
-            ENStatus.FailedInsufficientStorage -> TODO()
-            ENStatus.FailedInternal -> TODO()
         }
     }
 

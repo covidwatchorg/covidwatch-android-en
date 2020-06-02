@@ -33,4 +33,9 @@ class ExposureNotificationManager(
 
     suspend fun getExposureSummary(token: String) =
         exposureNotification.getExposureSummary(token).await()
+
+    companion object {
+        const val PERMISSION_START_REQUEST_CODE = 100
+        const val PERMISSION_KEYS_REQUEST_CODE = 200
+    }
 }
