@@ -5,6 +5,8 @@ import android.util.SparseArray
 import androidx.core.util.contains
 import androidx.lifecycle.*
 import com.google.android.gms.common.api.ApiException
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.covidwatch.android.domain.LiveDataUseCase
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.extension.observeUseCase
@@ -19,7 +21,7 @@ import org.covidwatch.android.ui.event.Event
  */
 abstract class BaseViewModel : ViewModel() {
     private val _status = MediatorLiveData<Event<ENStatus>>()
-    val status: MutableLiveData<Event<ENStatus>> = _status
+    val status: LiveData<Event<ENStatus>> = _status
 
     private val _resolvable = MutableLiveData<Event<Resolvable>>()
     val resolvable: LiveData<Event<Resolvable>> = _resolvable
@@ -54,13 +56,14 @@ abstract class BaseViewModel : ViewModel() {
     protected fun <T, P> observeStatus(
         useCase: LiveDataUseCase<T, P>,
         params: P? = null,
-        block: (Either<ENStatus, T>) -> Unit = {}
+        block: suspend (Either<ENStatus, T>) -> Unit = {}
     ) {
-        val liveData = viewModelScope.observeUseCase(useCase, params)
-        _status.addSource(liveData) {
-            it.failure(this::handleStatus)
-            block(it)
-            _status.removeSource(liveData)
+        viewModelScope.launch {
+            val liveData = viewModelScope.observeUseCase(useCase, params)
+            liveData.asFlow().collect {
+                it.failure(this@BaseViewModel::handleStatus)
+                block(it)
+            }
         }
     }
 

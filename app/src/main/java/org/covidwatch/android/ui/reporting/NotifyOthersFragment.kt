@@ -63,12 +63,12 @@ class NotifyOthersFragment : BaseFragment<FragmentNotifyOthersBinding>() {
 
     private fun handleError(status: ENStatus?) {
         when (status) {
-            ENStatus.FailedRejectedOptIn -> TODO()
-            ENStatus.FailedServiceDisabled -> TODO()
-            ENStatus.FailedBluetoothScanningDisabled -> TODO()
-            ENStatus.FailedTemporarilyDisabled -> TODO()
-            ENStatus.FailedInsufficientStorage -> TODO()
-            ENStatus.Failed -> TODO()
+            ENStatus.FailedRejectedOptIn -> {}
+            ENStatus.FailedServiceDisabled -> {}
+            ENStatus.FailedBluetoothScanningDisabled -> {}
+            ENStatus.FailedTemporarilyDisabled -> {}
+            ENStatus.FailedInsufficientStorage -> {}
+            ENStatus.Failed -> {}
         }
     }
 
