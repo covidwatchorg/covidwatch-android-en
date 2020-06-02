@@ -1,21 +1,18 @@
 package org.covidwatch.android.ui.exposures
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import kotlinx.coroutines.launch
 import org.covidwatch.android.databinding.FragmentExposuresBinding
 import org.covidwatch.android.extension.observeEvent
-import org.covidwatch.android.ui.BaseFragment
+import org.covidwatch.android.ui.BaseViewModelFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ExposuresFragment : BaseFragment<FragmentExposuresBinding>() {
+class ExposuresFragment : BaseViewModelFragment<FragmentExposuresBinding, ExposuresViewModel>() {
 
-    private val exposuresViewModel: ExposuresViewModel by viewModel()
+    override val viewModel: ExposuresViewModel by viewModel()
 
     override fun bind(
         inflater: LayoutInflater,
@@ -28,36 +25,24 @@ class ExposuresFragment : BaseFragment<FragmentExposuresBinding>() {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             lifecycleOwner = this@ExposuresFragment
-            viewModel = exposuresViewModel
+            viewModel = this@ExposuresFragment.viewModel
             executePendingBindings()
 
             btnClose.setOnClickListener {
                 findNavController().popBackStack()
             }
         }
-        with(exposuresViewModel) {
+        with(viewModel) {
             observeEvent(showExposureDetails) {
                 val action =
                     ExposuresFragmentDirections.actionExposuresFragmentToExposureDetailsFragment(it)
                 findNavController().navigate(action)
-            }
-            observeEvent(resolvable) { resolvable ->
-                resolvable.apiException.status.startResolutionForResult(
-                    activity, resolvable.requestCode
-                )
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        exposuresViewModel.start()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        lifecycleScope.launch {
-            exposuresViewModel.handleResolution(requestCode, resultCode)
-        }
+        viewModel.start()
     }
 }

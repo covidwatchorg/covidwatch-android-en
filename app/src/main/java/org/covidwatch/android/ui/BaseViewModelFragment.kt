@@ -15,7 +15,7 @@ import org.covidwatch.android.extension.observeEvent
 
 abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : BaseFragment<T>() {
 
-    abstract val viewModel: VM
+    protected abstract val viewModel: VM
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

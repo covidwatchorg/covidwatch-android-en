@@ -8,14 +8,16 @@ import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.functional.Either
 
 class UpdateExposureInformationUseCase(
-    private val exposureNotificationManager: ExposureNotificationManager,
+    private val enManager: ExposureNotificationManager,
     private val tokenRepository: DiagnosisKeysTokenRepository,
     private val exposureInformationRepository: ExposureInformationRepository,
     dispatchers: AppCoroutineDispatchers
 ) : UseCase<Unit, Unit>(dispatchers) {
     override suspend fun run(params: Unit?): Either<ENStatus, Unit> {
+        if (enManager.isEnabled().right == false) return Either.Left(ENStatus.FailedServiceDisabled)
+
         tokenRepository.exposedTokens().forEach { keysToken ->
-            exposureNotificationManager.getExposureInformation(keysToken.token).apply {
+            enManager.getExposureInformation(keysToken.token).apply {
                 success { information ->
 
                     val exposureInformation = information.map { remoteInformation ->
