@@ -175,7 +175,7 @@ val appModule = module {
 
     factory {
         UpdateExposureInformationUseCase(
-            exposureNotificationManager = get(),
+            enManager = get(),
             tokenRepository = get(),
             exposureInformationRepository = get(),
             dispatchers = get()
