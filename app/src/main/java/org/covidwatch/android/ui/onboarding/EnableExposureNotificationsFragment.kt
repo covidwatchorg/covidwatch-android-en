@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import org.covidwatch.android.R
 import org.covidwatch.android.databinding.FragmentEnableExposureNotificationsBinding
+import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -38,6 +42,27 @@ class EnableExposureNotificationsFragment :
         with(viewModel) {
             observeEvent(exposureNotificationResult) {
                 findNavController().popBackStack(R.id.homeFragment, false)
+            }
+            observeEvent(status) {
+                when (it) {
+                    ENStatus.FailedRejectedOptIn,
+                    ENStatus.FailedInsufficientStorage -> {
+                        val snackbar = Snackbar.make(
+                            binding.root,
+                            R.string.insufficient_storage,
+                            LENGTH_INDEFINITE
+                        )
+                        snackbar.setAction(R.string.ok) { snackbar.dismiss() }
+                        snackbar.show()
+                    }
+                    ENStatus.Failed -> {
+                        Toast.makeText(
+                            context,
+                            R.string.unknown_error,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
             }
             observeEvent(resolvable) { resolvable ->
                 resolvable.apiException.status.startResolutionForResult(

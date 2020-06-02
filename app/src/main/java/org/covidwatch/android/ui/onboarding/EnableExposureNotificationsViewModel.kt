@@ -18,10 +18,9 @@ class EnableExposureNotificationsViewModel(
     fun onEnableClicked() {
         viewModelScope.launch {
             withPermission(ExposureNotificationManager.PERMISSION_START_REQUEST_CODE) {
-                enManager.start().also {
-                    it.success {
-                        _exposureNotificationResult.value = Event(Unit)
-                    }
+                enManager.start().apply {
+                    success { _exposureNotificationResult.value = Event(Unit) }
+                    failure { handleStatus(it) }
                 }
             }
         }

@@ -192,4 +192,9 @@
     <string name="share_app_title">Help by Sharing</string>
     <string name="share_app_button">Share the app</string>
 
+    <!-- ERROR MESSAGES -->
+    <string name="unknown_error">Something went wrong</string>
+    <string name="insufficient_storage">Insufficient storage to run Exposure Notification</string>
+    <string name="ok">OK</string>
+
 </resources>
