@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.covidwatch.android.domain.LiveDataUseCase
 import org.covidwatch.android.exposurenotification.ENStatus
-import org.covidwatch.android.extension.observeUseCase
 import org.covidwatch.android.extension.send
 import org.covidwatch.android.functional.Either
 import org.covidwatch.android.ui.event.Event
@@ -59,8 +58,7 @@ abstract class BaseViewModel : ViewModel() {
         block: suspend (Either<ENStatus, T>) -> Unit = {}
     ) {
         viewModelScope.launch {
-            val liveData = viewModelScope.observeUseCase(useCase, params)
-            liveData.asFlow().collect {
+            useCase(this, params).asFlow().collect {
                 it.failure(this@BaseViewModel::handleStatus)
                 block(it)
             }

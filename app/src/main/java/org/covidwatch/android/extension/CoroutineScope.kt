@@ -1,5 +1,6 @@
 package org.covidwatch.android.extension
 
+import androidx.lifecycle.asFlow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,8 +35,3 @@ fun <Type : Any, Params> CoroutineScope.launchUseCase(
 ) {
     useCase(this, params, onResult)
 }
-
-fun <Type, Params> CoroutineScope.observeUseCase(
-    useCase: LiveDataUseCase<Type, Params>,
-    params: Params? = null
-) = useCase(this, params)
