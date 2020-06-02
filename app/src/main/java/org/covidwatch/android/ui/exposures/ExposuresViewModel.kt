@@ -44,7 +44,7 @@ class ExposuresViewModel(
 
     fun enableExposureNotification(enable: Boolean) {
         viewModelScope.launch {
-            val isEnabled = _exposureNotificationEnabled.value ?: false
+            val isEnabled = enManager.isEnabled().result() ?: false
 
             when {
                 enable && !isEnabled -> withPermission(PERMISSION_START_REQUEST_CODE) { enManager.start() }
