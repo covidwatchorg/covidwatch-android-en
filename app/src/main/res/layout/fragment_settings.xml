@@ -23,8 +23,8 @@
         android:id="@+id/bluetooth_button"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginTop="24dp"
+        android:layout_height="@dimen/big_button_height"
+        android:layout_marginTop="@dimen/padding_large"
         android:text="@string/turn_on_bluetooth" />
 
     <TextView
@@ -37,8 +37,8 @@
         android:id="@+id/location_button"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="@dimen/big_button_height"
+        android:layout_marginTop="@dimen/padding_extra_large"
         android:text="@string/location_access_on" />
 
     <TextView
