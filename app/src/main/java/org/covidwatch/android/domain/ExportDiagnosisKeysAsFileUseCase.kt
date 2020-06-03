@@ -4,13 +4,13 @@ import com.google.common.io.BaseEncoding
 import org.covidwatch.android.data.*
 import org.covidwatch.android.data.countrycode.CountryCodeRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
-import org.covidwatch.android.domain.UploadDiagnosisKeysUseCase.Params
+import org.covidwatch.android.domain.ExportDiagnosisKeysAsFileUseCase.Params
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.functional.Either
 import java.security.SecureRandom
 
-class UploadDiagnosisKeysUseCase(
+class ExportDiagnosisKeysAsFileUseCase(
     private val enManager: ExposureNotificationManager,
     private val diagnosisRepository: PositiveDiagnosisRepository,
     private val countryCodeRepository: CountryCodeRepository,

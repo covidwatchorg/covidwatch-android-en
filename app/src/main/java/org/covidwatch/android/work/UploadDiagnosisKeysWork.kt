@@ -16,7 +16,7 @@ import org.koin.java.KoinJavaComponent.inject
 
 class UploadDiagnosisKeysWork(
     context: Context,
-    workerParams: WorkerParameters
+    private val workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
     private val uploadDiagnosisKeysWorkUseCase: UploadDiagnosisKeysUseCase by inject(
         UploadDiagnosisKeysUseCase::class.java
@@ -24,13 +24,17 @@ class UploadDiagnosisKeysWork(
     private val notifications: Notifications by inject(Notifications::class.java)
 
     override suspend fun doWork() = withContext(Dispatchers.IO) {
+        val riskLevels = workerParams.inputData.getIntArray(RISK_LEVELS)?.toList()
         setForeground(
             ForegroundInfo(
                 UPLOADING_REPORT_NOTIFICATION_ID,
                 notifications.uploadingReportNotification()
             )
         )
-        uploadDiagnosisKeysWorkUseCase.run().apply {
+        val params = riskLevels?.let {
+            UploadDiagnosisKeysUseCase.Params(it)
+        }
+        uploadDiagnosisKeysWorkUseCase.run(params).apply {
             success { return@withContext Result.success() }
             failure { return@withContext failure(it) }
         }
@@ -40,4 +44,8 @@ class UploadDiagnosisKeysWork(
     private fun failure(status: ENStatus) = Result.failure(
         Data.Builder().putInt(FAILURE, status.code).build()
     )
+
+    companion object {
+        const val RISK_LEVELS = "RISK_LEVELS"
+    }
 }

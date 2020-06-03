@@ -167,6 +167,20 @@ val appModule = module {
     }
 
     factory {
+        ExportDiagnosisKeysAsFileUseCase(
+            enManager = get(),
+            diagnosisRepository = get(),
+            countryCodeRepository = get(),
+            safetyNetManager = get(),
+            uriManager = get(),
+            appPackageName = androidContext().packageName,
+            random = SecureRandom(),
+            encoding = BaseEncoding.base64(),
+            dispatchers = get()
+        )
+    }
+
+    factory {
         UpdateExposureStateUseCase(
             workManager = get(),
             dispatchers = get()
@@ -212,6 +226,7 @@ val appModule = module {
     viewModel {
         NotifyOthersViewModel(
             startUploadDiagnosisKeysWorkUseCase = get(),
+            exportDiagnosisKeysAsFileUseCase = get(),
             enManager = get(),
             positiveDiagnosisRepository = get()
         )
