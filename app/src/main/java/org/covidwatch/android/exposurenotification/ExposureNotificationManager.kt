@@ -29,7 +29,7 @@ class ExposureNotificationManager(
             //TODO: Use a proper configuration source
             ExposureConfiguration.ExposureConfigurationBuilder().build(),
             token
-        ).await()
+        ).awaitNoResult()
 
     suspend fun getExposureSummary(token: String) =
         exposureNotification.getExposureSummary(token).await()

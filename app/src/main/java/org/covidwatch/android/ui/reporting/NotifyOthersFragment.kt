@@ -1,10 +1,12 @@
 package org.covidwatch.android.ui.reporting
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.FileProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +19,9 @@ import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseViewModelFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
+import java.net.URLConnection
+
 
 class NotifyOthersFragment :
     BaseViewModelFragment<FragmentNotifyOthersBinding, NotifyOthersViewModel>() {
@@ -58,7 +63,7 @@ class NotifyOthersFragment :
                         .Builder(context)
                         .setView(dialogView.root)
                         .setPositiveButton(R.string.continue_upload) { _, _ ->
-                            // TODO: 03.06.2020 Add validation that check correct format of the string 
+                            // TODO: 03.06.2020 Add validation that check correct format of the string
                             val risksLevels = dialogView.etRiskLevels.text.toString()
                             viewModel.shareReport(risksLevels)
                         }
@@ -86,6 +91,24 @@ class NotifyOthersFragment :
                     }
                 }
             }
+            observeEvent(shareDiagnosisFile) { shareFile(it) }
+        }
+    }
+
+    private fun shareFile(zipFiles: List<File>) {
+        context?.let { context ->
+            val zip = zipFiles.firstOrNull() ?: return
+            val shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            val uri = FileProvider.getUriForFile(
+                context,
+                context.packageName + ".fileprovider",
+                zip
+            )
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+            shareIntent.type = URLConnection.guessContentTypeFromName(zip.name)
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            startActivity(Intent.createChooser(shareIntent, null))
         }
     }
 

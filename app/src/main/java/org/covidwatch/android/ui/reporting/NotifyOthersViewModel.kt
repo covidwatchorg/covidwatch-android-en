@@ -15,6 +15,7 @@ import org.covidwatch.android.extension.launchUseCase
 import org.covidwatch.android.extension.send
 import org.covidwatch.android.ui.BaseViewModel
 import org.covidwatch.android.ui.event.Event
+import java.io.File
 
 class NotifyOthersViewModel(
     private val startUploadDiagnosisKeysWorkUseCase: StartUploadDiagnosisKeysWorkUseCase,
@@ -26,6 +27,9 @@ class NotifyOthersViewModel(
     private val riskLevelSeparator = " "
 
     private val riskLevels = mutableListOf<Int>()
+
+    private val _shareDiagnosisFile = MutableLiveData<Event<List<File>>>()
+    val shareDiagnosisFile: LiveData<Event<List<File>>> = _shareDiagnosisFile
 
     private val _setTransmissionLevelRisk = MutableLiveData<Event<List<Int>>>()
     val setTransmissionLevelRisk: LiveData<Event<List<Int>>> = _setTransmissionLevelRisk
@@ -71,7 +75,10 @@ class NotifyOthersViewModel(
 
     fun shareReportAs(file: Boolean) {
         if (file) {
-            viewModelScope.launchUseCase(exportDiagnosisKeysAsFileUseCase)
+            viewModelScope.launchUseCase(exportDiagnosisKeysAsFileUseCase) {
+                success { _shareDiagnosisFile.send(it) }
+                failure { handleStatus(it) }
+            }
         } else {
             observeStatus(startUploadDiagnosisKeysWorkUseCase)
         }
@@ -81,6 +88,7 @@ class NotifyOthersViewModel(
         withPermission(PERMISSION_KEYS_REQUEST_CODE) {
             enManager.temporaryExposureKeyHistory().apply {
                 success {
+                    // TODO: 03.06.2020 Replace the magic 3 with dynamic values
                     _setTransmissionLevelRisk.send(it.map { 3 })
                 }
                 failure { handleStatus(it) }

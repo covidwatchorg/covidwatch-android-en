@@ -25,6 +25,8 @@ import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.data.pref.SharedPreferenceStorage
 import org.covidwatch.android.domain.*
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.exposurenotification.KeyFileSigner
+import org.covidwatch.android.exposurenotification.KeyFileWriter
 import org.covidwatch.android.ui.Notifications
 import org.covidwatch.android.ui.exposurenotification.ExposureNotificationViewModel
 import org.covidwatch.android.ui.exposures.ExposuresViewModel
@@ -51,6 +53,8 @@ val appModule = module {
         )
     }
 
+    single { KeyFileSigner() }
+    single { KeyFileWriter(androidApplication(), get()) }
     single { SafetyNet.getClient(androidApplication()) }
 
     single {
@@ -146,6 +150,14 @@ val appModule = module {
     }
 
     factory {
+        ProvideDiagnosisKeysFromFileUseCase(
+            enManager = get(),
+            diagnosisKeysTokenRepository = get(),
+            dispatchers = get()
+        )
+    }
+
+    factory {
         UploadDiagnosisKeysUseCase(
             enManager = get(),
             diagnosisRepository = get(),
@@ -169,13 +181,7 @@ val appModule = module {
     factory {
         ExportDiagnosisKeysAsFileUseCase(
             enManager = get(),
-            diagnosisRepository = get(),
-            countryCodeRepository = get(),
-            safetyNetManager = get(),
-            uriManager = get(),
-            appPackageName = androidContext().packageName,
-            random = SecureRandom(),
-            encoding = BaseEncoding.base64(),
+            keyFileWriter = get(),
             dispatchers = get()
         )
     }
