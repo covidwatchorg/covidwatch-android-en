@@ -27,7 +27,14 @@ class ExposureNotificationManager(
         exposureNotification.provideDiagnosisKeys(
             keys,
             //TODO: Use a proper configuration source
-            ExposureConfiguration.ExposureConfigurationBuilder().build(),
+            ExposureConfiguration.ExposureConfigurationBuilder()
+                .setMinimumRiskScore(1)
+                .setDurationAtAttenuationThresholds(58, 73)
+                .setAttenuationScores(2, 5, 8, 8, 8, 8, 8, 8)
+                .setDaysSinceLastExposureScores(1, 2, 2, 4, 6, 8, 8, 8)
+                .setDurationScores(1, 1, 4, 7, 7, 8, 8, 8)
+                .setTransmissionRiskScores(0, 3, 6, 8, 8, 6, 0, 6)
+                .build(),
             token
         ).awaitNoResult()
 
