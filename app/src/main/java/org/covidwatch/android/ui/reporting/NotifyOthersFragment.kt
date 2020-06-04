@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import org.covidwatch.android.BuildConfig
 import org.covidwatch.android.R
 import org.covidwatch.android.databinding.DialogChooseExportDiagnosisTypeBinding
 import org.covidwatch.android.databinding.DialogRiskLevelsBinding
@@ -102,12 +103,11 @@ class NotifyOthersFragment :
             shareIntent.action = Intent.ACTION_SEND
             val uri = FileProvider.getUriForFile(
                 context,
-                context.packageName + ".fileprovider",
+                BuildConfig.APPLICATION_ID + ".fileprovider",
                 zip
             )
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
             shareIntent.type = URLConnection.guessContentTypeFromName(zip.name)
-            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             startActivity(Intent.createChooser(shareIntent, null))
         }
     }

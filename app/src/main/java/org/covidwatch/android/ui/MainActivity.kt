@@ -13,7 +13,7 @@ import org.covidwatch.android.domain.ProvideDiagnosisKeysFromFileUseCase
 import org.covidwatch.android.domain.ProvideDiagnosisKeysFromFileUseCase.Params
 import org.covidwatch.android.extension.launchUseCase
 import org.koin.android.ext.android.inject
-import java.io.File
+import timber.log.Timber
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,12 +23,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        handleIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent?) {
         if (intent?.action == Intent.ACTION_SEND && "application/zip" == intent.type) {
-            intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM)?.let {
-                // TODO: 03.06.2020 Get the file properly 
-                val file = (it as? Uri)?.path?.let { uri -> File(uri) } ?: return
-                val files = listOf(file)
-                lifecycleScope.launchUseCase(provideDiagnosisKeysFromFileUseCase, Params(files))
+            (intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM) as? Uri)?.let {
+                Timber.d("Received a test diagnosis file: ${it.path}")
+                lifecycleScope.launchUseCase(provideDiagnosisKeysFromFileUseCase, Params(it))
             }
         }
     }

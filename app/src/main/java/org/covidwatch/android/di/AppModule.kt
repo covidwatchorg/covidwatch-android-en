@@ -153,6 +153,7 @@ val appModule = module {
         ProvideDiagnosisKeysFromFileUseCase(
             enManager = get(),
             diagnosisKeysTokenRepository = get(),
+            contentResolver = androidApplication().contentResolver,
             dispatchers = get()
         )
     }

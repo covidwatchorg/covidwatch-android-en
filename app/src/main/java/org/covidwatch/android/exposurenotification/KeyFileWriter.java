@@ -28,7 +28,6 @@ import com.google.android.apps.exposurenotification.debug.proto.TEKSignatureList
 import com.google.android.apps.exposurenotification.debug.proto.TemporaryExposureKeyExport;
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey;
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.primitives.Bytes;
 import com.google.protobuf.ByteString;
@@ -48,7 +47,7 @@ public class KeyFileWriter {
     public static final String SIG_FILENAME = "export.sig";
     @VisibleForTesting
     public static final String EXPORT_FILENAME = "export.bin";
-    private static final String FILENAME_PATTERN = "test_reports/keyfile-%d.zip";
+    private static final String FILENAME_PATTERN = "test-keyfile-%d.zip";
     private static final String HEADER_V1 = "EK Export v1";
     private static final int HEADER_LEN = 16;
     private static final int DEFAULT_MAX_BATCH_SIZE = 10000;
@@ -95,10 +94,6 @@ public class KeyFileWriter {
             String regionIsoAlpha2,
             int maxBatchSize) throws IOException {
 
-        if (keys.isEmpty()) {
-            ImmutableList.of();
-        }
-
         List<File> outFiles = new ArrayList<>();
 
         int batchNum = 1;
@@ -106,10 +101,10 @@ public class KeyFileWriter {
             File outFile =
                     new File(context.getFilesDir(), String.format(Locale.ENGLISH, FILENAME_PATTERN, batchNum));
             File parent = outFile.getParentFile();
-            if(parent != null){
-              if (!parent.mkdirs() && !parent.isDirectory()) {
-                throw new IOException("Directory '$parent' could not be created");
-              }
+            if (parent != null) {
+                if (!parent.mkdirs() && !parent.isDirectory()) {
+                    throw new IOException("Directory '$parent' could not be created");
+                }
             }
             try (ZipOutputStream out = new ZipOutputStream(new FileOutputStream(outFile))) {
                 ZipEntry signatureEntry = new ZipEntry(SIG_FILENAME);
