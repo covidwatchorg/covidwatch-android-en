@@ -21,12 +21,12 @@
         <ImageView
             android:id="@+id/btn_close"
             style="@style/ImageView.BtnClose"
-            android:padding="@dimen/padding_content"
+            android:padding="@dimen/padding_normal"
             tools:ignore="ContentDescription" />
 
         <TextView
             style="@style/TextView.ScreenTitle"
-            android:paddingHorizontal="@dimen/padding_content"
+            android:paddingHorizontal="@dimen/padding_normal"
             android:text="@string/title_exposures" />
 
         <!--suppress AndroidUnknownAttribute -->
@@ -35,19 +35,19 @@
             style="@style/Switch.EnableExposureNotification"
             android:checked="@{viewModel.exposureNotificationEnabled}"
             android:onCheckedChanged="@{(switch, on) -> viewModel.enableExposureNotification(on)}"
-            android:paddingHorizontal="@dimen/padding_content" />
+            android:paddingHorizontal="@dimen/padding_normal" />
 
         <TextView
             style="@style/TextView.ScreenSubtitle"
-            android:paddingHorizontal="@dimen/padding_content"
+            android:paddingHorizontal="@dimen/padding_normal"
             android:text="@string/exposures_subtitle" />
 
         <TextView
             style="@style/TextView.ScreenSubtitle"
-            android:layout_marginTop="@dimen/padding_content"
+            android:layout_marginTop="@dimen/padding_normal"
             android:background="@color/darkGray"
-            android:paddingHorizontal="@dimen/padding_content"
-            android:paddingVertical="@dimen/padding_content"
+            android:paddingHorizontal="@dimen/padding_normal"
+            android:paddingVertical="@dimen/padding_normal"
             android:textColor="@color/white"
             android:textStyle="bold"
             app:last_exposure_time="@{viewModel.lastExposureTime}"
@@ -59,7 +59,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:clipToPadding="false"
-            android:paddingHorizontal="@dimen/padding_content"
+            android:paddingHorizontal="@dimen/padding_normal"
             app:itemBinding="@{ItemBindings.bind(viewModel)}"
             app:items="@{viewModel.exposureInfo}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -69,9 +69,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_content"
+            android:layout_marginTop="@dimen/padding_normal"
             android:gravity="center"
-            android:paddingHorizontal="@dimen/padding_content"
+            android:paddingHorizontal="@dimen/padding_normal"
             android:text="@string/exposure_info_explanation" />
 
         <include

@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:onClick="@{()->viewModel.showExposureDetails(item)}"
-        android:paddingVertical="@dimen/padding_content">
+        android:paddingVertical="@dimen/padding_normal">
 
         <ImageView
             android:layout_width="wrap_content"
