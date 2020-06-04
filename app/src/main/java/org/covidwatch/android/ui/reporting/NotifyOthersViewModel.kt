@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.domain.ExportDiagnosisKeysAsFileUseCase
+import org.covidwatch.android.domain.ExportDiagnosisKeysAsFileUseCase.Params
 import org.covidwatch.android.domain.StartUploadDiagnosisKeysWorkUseCase
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager.Companion.PERMISSION_KEYS_REQUEST_CODE
@@ -75,12 +76,18 @@ class NotifyOthersViewModel(
 
     fun shareReportAs(file: Boolean) {
         if (file) {
-            viewModelScope.launchUseCase(exportDiagnosisKeysAsFileUseCase) {
+            viewModelScope.launchUseCase(
+                exportDiagnosisKeysAsFileUseCase,
+                Params(riskLevels)
+            ) {
                 success { _shareDiagnosisFile.send(it) }
                 failure { handleStatus(it) }
             }
         } else {
-            observeStatus(startUploadDiagnosisKeysWorkUseCase)
+            observeStatus(
+                startUploadDiagnosisKeysWorkUseCase,
+                StartUploadDiagnosisKeysWorkUseCase.Params(riskLevels)
+            )
         }
     }
 
