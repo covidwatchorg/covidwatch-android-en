@@ -9,13 +9,19 @@ class MenuAdapter(
     private val onClick: ((destination: Destination) -> Unit)
 ) : RecyclerView.Adapter<MenuItemViewHolder>() {
 
-    private var possibleExposuresMenuItem = MenuItem(
+    private val possibleExposuresMenuItem = MenuItem(
         R.string.menu_possible_exposures,
         0,
         PossibleExposures
     )
 
-    private val items = listOf(
+    private val possibleExposuresHighRiskMenuItem = MenuItem(
+        R.string.menu_possible_exposures,
+        R.drawable.ic_info_red,
+        PossibleExposures
+    )
+
+    private val items = mutableListOf(
         possibleExposuresMenuItem,
         MenuItem(R.string.menu_notify_others, 0, NotifyOthers),
         MenuItem(R.string.menu_how_it_works, 0, HowItWorks),
@@ -45,6 +51,21 @@ class MenuAdapter(
             Browser("https://www.covid-watch.org/support")
         )
     )
+
+    fun showHighRiskPossibleExposures() {
+        replace(possibleExposuresMenuItem, possibleExposuresHighRiskMenuItem)
+    }
+
+    fun showNoRiskPossibleExposures() {
+        replace(possibleExposuresHighRiskMenuItem, possibleExposuresMenuItem)
+    }
+
+    private fun replace(from: MenuItem, to: MenuItem) {
+        items.indexOf(from).takeIf { it != -1 }?.let { index ->
+            items[index] = to
+            notifyItemChanged(index)
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuItemViewHolder {
         val root = LayoutInflater.from(parent.context).inflate(R.layout.item_menu, parent, false)

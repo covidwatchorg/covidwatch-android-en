@@ -31,6 +31,7 @@ import org.covidwatch.android.ui.Notifications
 import org.covidwatch.android.ui.exposurenotification.ExposureNotificationViewModel
 import org.covidwatch.android.ui.exposures.ExposuresViewModel
 import org.covidwatch.android.ui.home.HomeViewModel
+import org.covidwatch.android.ui.menu.MenuViewModel
 import org.covidwatch.android.ui.onboarding.EnableExposureNotificationsViewModel
 import org.covidwatch.android.ui.reporting.NotifyOthersViewModel
 import org.covidwatch.android.ui.settings.SettingsViewModel
@@ -118,7 +119,7 @@ val appModule = module {
         ).fallbackToDestructiveMigration().build()
     }
     single { ExposureInformationLocalSource(database = get()) }
-    single { ExposureInformationRepository(local = get(), preferences = get()) }
+    single { ExposureInformationRepository(local = get()) }
 
 
     single {
@@ -228,6 +229,10 @@ val appModule = module {
 
     viewModel {
         SettingsViewModel(androidApplication())
+    }
+
+    viewModel {
+        MenuViewModel(exposureInformationRepository = get())
     }
 
     viewModel {

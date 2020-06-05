@@ -27,9 +27,12 @@ data class CovidExposureInformation(
         else -> R.string.near_exposure_distance
     }
 
-    //TODO: Check what is our risk level for showing the high risk icon
     @Ignore
-    val highRisk = totalRiskScore > 6
+    val highRisk = totalRiskScore > HIGH_RISK_SCORE
+
+    companion object {
+        const val HIGH_RISK_SCORE = 6
+    }
 }
 
 fun ExposureInformation.toCovidExposureInformation() = CovidExposureInformation(
