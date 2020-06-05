@@ -21,19 +21,19 @@
         <ImageView
             android:id="@+id/btn_close"
             style="@style/ImageView.BtnClose"
-            android:paddingHorizontal="@dimen/padding_content"
+            android:paddingHorizontal="@dimen/padding_normal"
             tools:ignore="ContentDescription" />
 
         <TextView
             style="@style/TextView.ScreenTitle"
-            android:paddingHorizontal="@dimen/padding_content"
+            android:paddingHorizontal="@dimen/padding_normal"
             android:text="@string/title_exposure_details"
             android:textColor="@color/tangerine" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/padding_content"
+            android:layout_marginTop="@dimen/padding_normal"
             android:layout_weight="1"
             android:scrollbars="none">
 
@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingHorizontal="@dimen/padding_content">
+                android:paddingHorizontal="@dimen/padding_normal">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/padding_content"
+                    android:layout_marginTop="@dimen/padding_normal"
                     android:text="@string/next_steps"
                     android:textSize="@dimen/big_font_size"
                     android:textStyle="bold" />
@@ -75,24 +75,24 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/padding_content"
+                        android:layout_marginTop="@dimen/padding_normal"
                         android:drawableStart="@drawable/next_step_bullet_point"
-                        android:drawablePadding="@dimen/padding_content"
+                        android:drawablePadding="@dimen/padding_normal"
                         android:text="Varius non, quis fermentum, feugiat maecenas eu." />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/padding_content"
+                        android:layout_marginTop="@dimen/padding_normal"
                         android:drawableStart="@drawable/next_step_bullet_point"
-                        android:drawablePadding="@dimen/padding_content"
+                        android:drawablePadding="@dimen/padding_normal"
                         android:text="Varius non, quis fermentum, feugiat maecenas eu." />
                 </LinearLayout>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_share_positive_diagnosis"
                     style="@style/Button.Action"
-                    android:layout_marginTop="@dimen/padding_content"
+                    android:layout_marginTop="@dimen/padding_normal"
                     android:text="@string/btn_share_positive_diagnosis" />
 
                 <TextView

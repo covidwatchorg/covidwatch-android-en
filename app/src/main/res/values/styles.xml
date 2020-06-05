@@ -47,7 +47,7 @@
     <style name="TextView.ScreenSubtitle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/padding_content</item>
+        <item name="android:layout_marginTop">@dimen/padding_normal</item>
         <item name="android:textSize">@dimen/subtitle_font_size</item>
     </style>
 
@@ -57,7 +57,7 @@
         <item name="android:text">@string/switch_exposure_notifications</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/padding_content</item>
+        <item name="android:layout_marginTop">@dimen/padding_normal</item>
         <item name="android:textSize">@dimen/big_font_size</item>
     </style>
 

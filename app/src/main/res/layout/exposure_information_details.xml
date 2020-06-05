@@ -15,7 +15,7 @@
 
         <LinearLayout
             style="@style/ExposureInformationRow"
-            android:layout_marginTop="@dimen/padding_content">
+            android:layout_marginTop="@dimen/padding_normal">
 
             <TextView
                 style="@style/TextView.ExposureInformationRowTitle"
