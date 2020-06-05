@@ -8,7 +8,7 @@ data class MenuItem(
 
 sealed class Destination
 
-object Settings : Destination()
-object TestResults : Destination()
-object MakeTestExposureNotification : Destination()
+object PossibleExposures : Destination()
+object NotifyOthers : Destination()
+object HowItWorks : Destination()
 class Browser(val url: String) : Destination()

@@ -9,15 +9,41 @@ class MenuAdapter(
     private val onClick: ((destination: Destination) -> Unit)
 ) : RecyclerView.Adapter<MenuItemViewHolder>() {
 
+    private var possibleExposuresMenuItem = MenuItem(
+        R.string.menu_possible_exposures,
+        0,
+        PossibleExposures
+    )
+
     private val items = listOf(
-        MenuItem(R.string.generate_random_exposure, 0, MakeTestExposureNotification),
-        MenuItem(R.string.settings, 0, Settings),
-        MenuItem(R.string.test_results, 0, TestResults),
-        MenuItem(R.string.how_does_this_work, R.drawable.ic_exit_to_app, Browser("https://www.covid-watch.org/")),
-        MenuItem(R.string.covid_watch_website, R.drawable.ic_exit_to_app, Browser("https://www.covid-watch.org/")),
-        MenuItem(R.string.health_guidelines, R.drawable.ic_exit_to_app, Browser("https://www.covid-watch.org/")),
-        MenuItem(R.string.terms_of_use, R.drawable.ic_exit_to_app, Browser("https://www.covid-watch.org/")),
-        MenuItem(R.string.privacy_policy, R.drawable.ic_exit_to_app, Browser("https://www.covid-watch.org/"))
+        possibleExposuresMenuItem,
+        MenuItem(R.string.menu_notify_others, 0, NotifyOthers),
+        MenuItem(R.string.menu_how_it_works, 0, HowItWorks),
+        MenuItem(
+            R.string.menu_health_guidelines,
+            R.drawable.ic_exit_to_app,
+            Browser("https://www.cdc.gov/coronavirus/2019-ncov/index.html")
+        ),
+        MenuItem(
+            R.string.menu_covid_watch_website,
+            R.drawable.ic_exit_to_app,
+            Browser("https://www.covid-watch.org/")
+        ),
+        MenuItem(
+            R.string.menu_faq,
+            R.drawable.ic_exit_to_app,
+            Browser("https://www.covid-watch.org/faq")
+        ),
+        MenuItem(
+            R.string.menu_terms_of_use,
+            R.drawable.ic_exit_to_app,
+            Browser("https://www.covid-watch.org/privacy")
+        ),
+        MenuItem(
+            R.string.menu_support,
+            R.drawable.ic_exit_to_app,
+            Browser("https://www.covid-watch.org/support")
+        )
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuItemViewHolder {

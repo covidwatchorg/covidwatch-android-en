@@ -14,7 +14,8 @@
         <ImageView
             android:id="@+id/close_button"
             style="@style/ImageView.BtnClose"
-            android:paddingHorizontal="@dimen/padding_normal" />
+            android:paddingHorizontal="@dimen/padding_normal"
+            tools:ignore="ContentDescription" />
 
         <TextView
             style="@style/TextView.ScreenTitle"
