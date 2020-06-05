@@ -4,6 +4,7 @@ import com.google.common.io.BaseEncoding
 import org.covidwatch.android.data.*
 import org.covidwatch.android.data.countrycode.CountryCodeRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
+import org.covidwatch.android.domain.UploadDiagnosisKeysUseCase.Params
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.functional.Either
@@ -19,7 +20,7 @@ class UploadDiagnosisKeysUseCase(
     private val random: SecureRandom,
     private val encoding: BaseEncoding,
     dispatchers: AppCoroutineDispatchers
-) : UseCase<Unit, Unit>(dispatchers) {
+) : UseCase<Unit, Params>(dispatchers) {
 
     //TODO: Where do we get the verification code from?
     private val defaultVerificationCode = "POSITIVE_TEST_123456"
@@ -27,7 +28,7 @@ class UploadDiagnosisKeysUseCase(
     private val paddingSizeMax = 2048
     private val platform = "android"
 
-    override suspend fun run(params: Unit?): Either<ENStatus, Unit> {
+    override suspend fun run(params: Params?): Either<ENStatus, Unit> {
         enManager.isEnabled().apply {
             success { enabled ->
                 if (!enabled) return Either.Left(ENStatus.FailedServiceDisabled)
@@ -36,7 +37,13 @@ class UploadDiagnosisKeysUseCase(
         }
         enManager.temporaryExposureKeyHistory().apply {
             success {
-                val diagnosisKeys = it.map { key -> key.asDiagnosisKey() }
+                val diagnosisKeys = it.mapIndexed { i, key ->
+                    key.asDiagnosisKey()
+                        .copy(
+                            transmissionRisk = params?.riskLevels?.get(i)
+                                ?: key.transmissionRiskLevel
+                        )
+                }
 
                 val regions = countryCodeRepository.exposureRelevantCountryCodes()
                 val uploadEndpoints = uriManager.uploadUris(regions)
@@ -86,4 +93,6 @@ class UploadDiagnosisKeysUseCase(
 
         return encoding.encode(bytes)
     }
+
+    data class Params(val riskLevels: List<Int>)
 }

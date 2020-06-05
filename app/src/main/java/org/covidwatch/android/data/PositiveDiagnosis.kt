@@ -21,7 +21,8 @@ data class PositiveDiagnosis(
     val padding: String
 )
 
-class DiagnosisKey(
+@Suppress("ArrayInDataClass")
+data class DiagnosisKey(
     val key: ByteArray,
     val rollingStartNumber: Int,
     val transmissionRisk: Int,

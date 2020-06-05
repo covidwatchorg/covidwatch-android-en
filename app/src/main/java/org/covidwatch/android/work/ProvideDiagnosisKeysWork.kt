@@ -22,7 +22,7 @@ class ProvideDiagnosisKeysWork(
     workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
 
-    private val exposureNotification by inject(ExposureNotificationManager::class.java)
+    private val enManager by inject(ExposureNotificationManager::class.java)
     private val diagnosisRepository by inject(PositiveDiagnosisRepository::class.java)
     private val diagnosisKeysTokenRepository by inject(DiagnosisKeysTokenRepository::class.java)
     private val notifications by inject(Notifications::class.java)
@@ -51,7 +51,7 @@ class ProvideDiagnosisKeysWork(
             val token = randomToken()
             diagnosisKeys.forEach {
                 val keys = it.keys
-                exposureNotification.provideDiagnosisKeys(keys, token).apply {
+                enManager.provideDiagnosisKeys(keys, token).apply {
                     success {
                         //TODO: Delete empty folder
                         keys.forEach { file -> file.delete() }

@@ -6,6 +6,7 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: "com.vanniktech.android.junit.jacoco"
 apply plugin: "org.sonarqube"
 apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'com.google.protobuf'
 
 android {
     compileSdkVersion 29
@@ -45,12 +46,21 @@ android {
         dataBinding = true
     }
 
+    sourceSets {
+        main {
+            proto {
+                srcDir 'src/main/java/org/covidwatch/android/exposurenotification/proto'
+            }
+        }
+    }
+
     compileOptions {
         coreLibraryDesugaringEnabled true
 
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -80,6 +90,19 @@ android {
     }
 }
 
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.12.3'
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {}
+            }
+        }
+    }
+}
+
 dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.5'
 
@@ -88,6 +111,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-base:17.2.1'
     implementation 'com.google.android.gms:play-services-basement:17.2.1'
     implementation 'com.google.android.gms:play-services-safetynet:17.0.0'
+
+    implementation 'com.google.protobuf:protobuf-java:3.12.2'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
@@ -123,8 +148,6 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
 
     implementation "com.google.android.material:material:1.1.0"
-
-    implementation "com.google.firebase:firebase-firestore-ktx:21.4.3"
 
     // TODO: Get rid of guava? Unless this is a dependency that fixes conflict between other
     // dependencies that use guava
