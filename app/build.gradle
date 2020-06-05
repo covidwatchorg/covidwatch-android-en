@@ -41,6 +41,18 @@ android {
         }
     }
 
+    flavorDimensions "releaseChannel"
+
+    productFlavors {
+        calibration {
+            dimension "releaseChannel"
+            applicationIdSuffix ".calibration"
+        }
+        production {
+            dimension "releaseChannel"
+        }
+    }
+
     buildFeatures {
         viewBinding = true
         dataBinding = true
