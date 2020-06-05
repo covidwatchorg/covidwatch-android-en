@@ -14,4 +14,8 @@ class ExposureInformationRepository(
     fun exposureInformation(): LiveData<List<CovidExposureInformation>> {
         return local.exposureInformation()
     }
+
+    suspend fun reset() {
+        local.reset()
+    }
 }

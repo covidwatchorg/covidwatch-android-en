@@ -6,7 +6,9 @@ data class MenuItem(
     val destination: Destination
 )
 
-sealed class Destination
+sealed class Destination {
+    object None : Destination()
+}
 
 object PossibleExposures : Destination()
 object NotifyOthers : Destination()

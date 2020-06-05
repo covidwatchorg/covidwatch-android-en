@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.covidwatch.android.R
 
-class MenuAdapter(
-    private val onClick: ((destination: Destination) -> Unit)
+open class BaseMenuAdapter(
+    private val onClick: (menuItem: MenuItem) -> Unit
 ) : RecyclerView.Adapter<MenuItemViewHolder>() {
 
     private val possibleExposuresMenuItem = MenuItem(
@@ -21,7 +21,7 @@ class MenuAdapter(
         PossibleExposures
     )
 
-    private val items = mutableListOf(
+    protected val items = mutableListOf(
         possibleExposuresMenuItem,
         MenuItem(R.string.menu_notify_others, 0, NotifyOthers),
         MenuItem(R.string.menu_how_it_works, 0, HowItWorks),
@@ -78,8 +78,6 @@ class MenuAdapter(
         val menuItem = items[position]
         holder.bind(menuItem)
 
-        holder.itemView.setOnClickListener {
-            onClick(menuItem.destination)
-        }
+        holder.itemView.setOnClickListener { onClick(menuItem) }
     }
 }

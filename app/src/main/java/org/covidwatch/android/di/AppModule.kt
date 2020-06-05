@@ -50,7 +50,8 @@ val appModule = module {
 
     single {
         ExposureNotificationManager(
-            exposureNotification = get()
+            exposureNotification = get(),
+            preferences = get()
         )
     }
 
@@ -118,7 +119,11 @@ val appModule = module {
             AppDatabase::class.java, "database.db"
         ).fallbackToDestructiveMigration().build()
     }
-    single { ExposureInformationLocalSource(database = get()) }
+    single {
+        val appDatabase: AppDatabase = get()
+        appDatabase.exposureInformationDao()
+    }
+    single { ExposureInformationLocalSource(dao = get()) }
     single { ExposureInformationRepository(local = get()) }
 
 

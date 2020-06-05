@@ -15,7 +15,7 @@ import org.covidwatch.android.ui.BaseFragment
 import org.koin.android.ext.android.inject
 
 
-class MenuFragment : BaseFragment<FragmentMenuBinding>() {
+open class BaseMenuFragment : BaseFragment<FragmentMenuBinding>() {
 
     private val viewModel: MenuViewModel by inject()
 
@@ -47,12 +47,12 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>() {
         }
     }
 
-    private fun handleMenuItemClick(destination: Destination) {
-        when (destination) {
+    open fun handleMenuItemClick(menuItem: MenuItem) {
+        when (menuItem.destination) {
             is PossibleExposures -> findNavController().navigate(R.id.exposuresFragment)
             is NotifyOthers -> findNavController().navigate(R.id.notifyOthersFragment)
             is HowItWorks -> findNavController().navigate(R.id.onboardingFragment)
-            is Browser -> openBrowser(destination.url)
+            is Browser -> openBrowser(menuItem.destination.url)
         }
     }
 

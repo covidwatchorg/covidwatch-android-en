@@ -1,14 +1,15 @@
 package org.covidwatch.android.exposurenotification
 
-import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
+import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.extension.await
 import org.covidwatch.android.extension.awaitNoResult
 import org.covidwatch.android.extension.awaitWithStatus
 import java.io.File
 
 class ExposureNotificationManager(
-    private val exposureNotification: ExposureNotificationClient
+    private val exposureNotification: ExposureNotificationClient,
+    private val preferences: PreferenceStorage
 ) {
     /* API */
     suspend fun start() = exposureNotification.start().awaitNoResult()
@@ -26,15 +27,7 @@ class ExposureNotificationManager(
     suspend fun provideDiagnosisKeys(keys: List<File>, token: String) =
         exposureNotification.provideDiagnosisKeys(
             keys,
-            //TODO: Use a proper configuration source
-            ExposureConfiguration.ExposureConfigurationBuilder()
-                .setMinimumRiskScore(1)
-                .setDurationAtAttenuationThresholds(58, 73)
-                .setAttenuationScores(2, 5, 8, 8, 8, 8, 8, 8)
-                .setDaysSinceLastExposureScores(1, 2, 2, 4, 6, 8, 8, 8)
-                .setDurationScores(1, 1, 4, 7, 7, 8, 8, 8)
-                .setTransmissionRiskScores(0, 3, 6, 8, 8, 6, 0, 6)
-                .build(),
+            preferences.exposureConfiguration,
             token
         ).awaitNoResult()
 
