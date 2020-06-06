@@ -47,9 +47,9 @@ jobs:
           with:
             java-version: 1.8
         - name: Build debug APK
-          run: bash ./gradlew assembleCalibrationDebug --stacktrace
+          run: bash ./gradlew assembleCalibrationDebug   --stacktrace
         - name: Upload APK
           uses: actions/upload-artifact@v1
           with:
             name: app
-            path: app/build/outputs/apk/calibration/debug/app-debug.apk
+            path: app/build/outputs/apk/calibration/debug/app-calibration-debug.apk
