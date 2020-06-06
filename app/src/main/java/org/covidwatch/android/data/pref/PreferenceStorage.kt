@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.gson.Gson
 import org.covidwatch.android.data.CovidExposureSummary
 import kotlin.properties.ReadWriteProperty
@@ -18,6 +19,9 @@ interface PreferenceStorage {
     var lastFetchDate: Long
     var onboardingFinished: Boolean
     var exposureSummary: CovidExposureSummary
+
+    // TODO: 05.06.2020 Replace with our own class when the API is stable
+    var exposureConfiguration: ExposureConfiguration
     val observableExposureSummary: LiveData<CovidExposureSummary>
 }
 
@@ -52,6 +56,20 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
         CovidExposureSummary::class.java
     )
 
+    override var exposureConfiguration: ExposureConfiguration by ObjectPreference(
+        prefs,
+        EXPOSURE_CONFIGURATION,
+        ExposureConfiguration.ExposureConfigurationBuilder()
+            .setMinimumRiskScore(1)
+            .setDurationAtAttenuationThresholds(58, 73)
+            .setAttenuationScores(2, 5, 8, 8, 8, 8, 8, 8)
+            .setDaysSinceLastExposureScores(1, 2, 2, 4, 6, 8, 8, 8)
+            .setDurationScores(1, 1, 4, 7, 7, 8, 8, 8)
+            .setTransmissionRiskScores(0, 3, 6, 8, 8, 6, 0, 6)
+            .build(),
+        ExposureConfiguration::class.java
+    )
+
     override val observableExposureSummary: LiveData<CovidExposureSummary>
         get() = _exposureSummary.also { it.value = exposureSummary }
 
@@ -59,6 +77,7 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
         private const val NAME = "ag_minimal_prefs"
         private const val LAST_FETCH_DATE = "last_fetch_date"
         private const val EXPOSURE_SUMMARY = "exposure_summary"
+        private const val EXPOSURE_CONFIGURATION = "exposure_configuration"
         private const val ONBOARDING_FINISHED = "onboarding_finished"
     }
 }

@@ -3,6 +3,7 @@ package org.covidwatch.android
 import android.app.Application
 import kotlinx.coroutines.GlobalScope
 import org.covidwatch.android.di.appModule
+import org.covidwatch.android.di.flavorSpecificModule
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase.Params
 import org.covidwatch.android.extension.launchUseCase
@@ -21,7 +22,7 @@ class CovidWatchApplication : Application() {
 
         startKoin {
             androidContext(applicationContext)
-            modules(appModule)
+            modules(appModule, flavorSpecificModule)
         }
 
         GlobalScope.launchUseCase(

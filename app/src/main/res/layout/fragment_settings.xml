@@ -12,10 +12,6 @@
         tools:ignore="ContentDescription" />
 
     <TextView
-        style="@style/TextView.ScreenTitle"
-        android:text="@string/settings" />
-
-    <TextView
         style="@style/TextView.ScreenSubtitle"
         android:text="@string/issues_needs_to_be_resolved" />
 

@@ -25,14 +25,13 @@ import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.data.pref.SharedPreferenceStorage
 import org.covidwatch.android.domain.*
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
-import org.covidwatch.android.exposurenotification.KeyFileSigner
-import org.covidwatch.android.exposurenotification.KeyFileWriter
+
 import org.covidwatch.android.ui.Notifications
 import org.covidwatch.android.ui.exposurenotification.ExposureNotificationViewModel
 import org.covidwatch.android.ui.exposures.ExposuresViewModel
 import org.covidwatch.android.ui.home.HomeViewModel
+import org.covidwatch.android.ui.menu.MenuViewModel
 import org.covidwatch.android.ui.onboarding.EnableExposureNotificationsViewModel
-import org.covidwatch.android.ui.reporting.NotifyOthersViewModel
 import org.covidwatch.android.ui.settings.SettingsViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -49,13 +48,12 @@ val appModule = module {
 
     single {
         ExposureNotificationManager(
-            exposureNotification = get()
+            exposureNotification = get(),
+            preferences = get()
         )
     }
 
-    single { KeyFileSigner() }
-    single { KeyFileWriter(androidApplication(), get()) }
-    single { SafetyNet.getClient(androidApplication()) }
+        single { SafetyNet.getClient(androidApplication()) }
 
     single {
         SafetyNetManager(
@@ -117,8 +115,12 @@ val appModule = module {
             AppDatabase::class.java, "database.db"
         ).fallbackToDestructiveMigration().build()
     }
-    single { ExposureInformationLocalSource(database = get()) }
-    single { ExposureInformationRepository(local = get(), preferences = get()) }
+    single {
+        val appDatabase: AppDatabase = get()
+        appDatabase.exposureInformationDao()
+    }
+    single { ExposureInformationLocalSource(dao = get()) }
+    single { ExposureInformationRepository(local = get()) }
 
 
     single {
@@ -150,15 +152,6 @@ val appModule = module {
     }
 
     factory {
-        ProvideDiagnosisKeysFromFileUseCase(
-            enManager = get(),
-            diagnosisKeysTokenRepository = get(),
-            contentResolver = androidApplication().contentResolver,
-            dispatchers = get()
-        )
-    }
-
-    factory {
         UploadDiagnosisKeysUseCase(
             enManager = get(),
             diagnosisRepository = get(),
@@ -179,13 +172,7 @@ val appModule = module {
         )
     }
 
-    factory {
-        ExportDiagnosisKeysAsFileUseCase(
-            enManager = get(),
-            keyFileWriter = get(),
-            dispatchers = get()
-        )
-    }
+
 
     factory {
         UpdateExposureStateUseCase(
@@ -231,12 +218,7 @@ val appModule = module {
     }
 
     viewModel {
-        NotifyOthersViewModel(
-            startUploadDiagnosisKeysWorkUseCase = get(),
-            exportDiagnosisKeysAsFileUseCase = get(),
-            enManager = get(),
-            positiveDiagnosisRepository = get()
-        )
+        MenuViewModel(exposureInformationRepository = get())
     }
 
     single {
