@@ -1,30 +1,23 @@
 package org.covidwatch.android.ui.reporting
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.FileProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import org.covidwatch.android.BuildConfig
 import org.covidwatch.android.R
-import org.covidwatch.android.databinding.DialogChooseExportDiagnosisTypeBinding
 import org.covidwatch.android.databinding.DialogRiskLevelsBinding
 import org.covidwatch.android.databinding.FragmentNotifyOthersBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseViewModelFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.File
-import java.net.URLConnection
 
 
-class NotifyOthersFragment :
+open class BaseNotifyOthersFragment :
     BaseViewModelFragment<FragmentNotifyOthersBinding, NotifyOthersViewModel>() {
 
     override val viewModel: NotifyOthersViewModel by viewModel()
@@ -73,42 +66,6 @@ class NotifyOthersFragment :
                         .show()
                 }
             }
-            observeEvent(chooseShareMethod) {
-                context?.let { context ->
-                    val dialogView =
-                        DialogChooseExportDiagnosisTypeBinding.inflate(LayoutInflater.from(context))
-
-                    val dialog = BottomSheetDialog(context)
-                    dialog.setContentView(dialogView.root)
-                    dialog.show()
-
-                    dialogView.btnShareWithServer.setOnClickListener {
-                        viewModel.shareReportAs(file = false)
-                        dialog.dismiss()
-                    }
-                    dialogView.btnShareAsFile.setOnClickListener {
-                        viewModel.shareReportAs(file = true)
-                        dialog.dismiss()
-                    }
-                }
-            }
-            observeEvent(shareDiagnosisFile) { shareFile(it) }
-        }
-    }
-
-    private fun shareFile(zipFiles: List<File>) {
-        context?.let { context ->
-            val zip = zipFiles.firstOrNull() ?: return
-            val shareIntent = Intent()
-            shareIntent.action = Intent.ACTION_SEND
-            val uri = FileProvider.getUriForFile(
-                context,
-                BuildConfig.APPLICATION_ID + ".fileprovider",
-                zip
-            )
-            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-            shareIntent.type = URLConnection.guessContentTypeFromName(zip.name)
-            startActivity(Intent.createChooser(shareIntent, null))
         }
     }
 
