@@ -1,22 +1,18 @@
 package org.covidwatch.android.ui.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem.SHOW_AS_ACTION_ALWAYS
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import org.covidwatch.android.*
+import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.databinding.FragmentHomeBinding
 import org.covidwatch.android.extension.shareApp
 import org.covidwatch.android.ui.BaseFragment
 import org.covidwatch.android.ui.event.EventObserver
-import org.covidwatch.android.ui.exposurenotification.ExposureNotificationActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -64,24 +60,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         )
 
         initClickListeners()
-        addDebugMenuItem()
-    }
-
-    private fun addDebugMenuItem() {
-        if (BuildConfig.DEBUG) {
-            val debugMenu = binding.toolbar.menu.add(
-                Menu.NONE,
-                Menu.NONE,
-                0,
-                "Debug"
-            )
-            debugMenu.setShowAsAction(SHOW_AS_ACTION_ALWAYS)
-            debugMenu.icon = context?.getDrawable(R.drawable.ic_debug)
-            debugMenu.setOnMenuItemClickListener {
-                startActivity(Intent(context, ExposureNotificationActivity::class.java))
-                true
-            }
-        }
     }
 
     private fun initClickListeners() {
