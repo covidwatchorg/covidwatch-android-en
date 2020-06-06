@@ -61,7 +61,7 @@ android {
     sourceSets {
         main {
             proto {
-                srcDir 'src/main/java/org/covidwatch/android/exposurenotification/proto'
+                srcDir 'src/calibration/java/org/covidwatch/android/exposurenotification/proto'
             }
         }
     }
@@ -119,12 +119,12 @@ dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.5'
 
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-    implementation 'com.google.android.gms:play-services-tasks:17.0.2'
-    implementation 'com.google.android.gms:play-services-base:17.2.1'
-    implementation 'com.google.android.gms:play-services-basement:17.2.1'
+    implementation 'com.google.android.gms:play-services-tasks:17.1.0'
+    implementation 'com.google.android.gms:play-services-base:17.3.0'
+    implementation 'com.google.android.gms:play-services-basement:17.3.0'
     implementation 'com.google.android.gms:play-services-safetynet:17.0.0'
 
-    implementation 'com.google.protobuf:protobuf-java:3.12.2'
+    calibrationImplementation 'com.google.protobuf:protobuf-java:3.12.2'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
@@ -136,7 +136,7 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:1.2.4"
     implementation "androidx.work:work-runtime-ktx:2.3.4"
     // Google Analytics dependency.
-    debugImplementation 'com.google.firebase:firebase-analytics:17.4.2'
+    debugImplementation 'com.google.firebase:firebase-analytics:17.4.3'
     // Firebase Crashlytics dependency.
 
     def nav_version = "2.2.2"

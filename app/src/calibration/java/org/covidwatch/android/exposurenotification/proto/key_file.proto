@@ -1,8 +1,8 @@
 syntax = "proto2";
 
-package com.google.android.apps.exposurenotification.debug;
+package org.covidwatch.android.exposurenotification;
 
-option java_package = "com.google.android.apps.exposurenotification.debug.proto";
+option java_package = "org.covidwatch.android.exposurenotification.proto";
 option java_multiple_files = true;
 
 // Protobuf definition for exports of confirmed temporary exposure keys.

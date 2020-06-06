@@ -19,8 +19,9 @@ package org.covidwatch.android.exposurenotification;
 
 import android.security.keystore.KeyProperties;
 
-import com.google.android.apps.exposurenotification.debug.proto.SignatureInfo;
 import com.google.common.io.BaseEncoding;
+
+import org.covidwatch.android.exposurenotification.proto.SignatureInfo;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;

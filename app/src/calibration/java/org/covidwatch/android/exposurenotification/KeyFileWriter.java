@@ -22,15 +22,16 @@ import android.content.Context;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
-import com.google.android.apps.exposurenotification.debug.proto.SignatureInfo;
-import com.google.android.apps.exposurenotification.debug.proto.TEKSignature;
-import com.google.android.apps.exposurenotification.debug.proto.TEKSignatureList;
-import com.google.android.apps.exposurenotification.debug.proto.TemporaryExposureKeyExport;
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey;
 import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 import com.google.common.primitives.Bytes;
 import com.google.protobuf.ByteString;
+
+import org.covidwatch.android.exposurenotification.proto.SignatureInfo;
+import org.covidwatch.android.exposurenotification.proto.TEKSignature;
+import org.covidwatch.android.exposurenotification.proto.TEKSignatureList;
+import org.covidwatch.android.exposurenotification.proto.TemporaryExposureKeyExport;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -66,13 +67,13 @@ public class KeyFileWriter {
         this.signer = signer;
     }
 
-    private static List<com.google.android.apps.exposurenotification.debug.proto.TemporaryExposureKey>
+    private static List<org.covidwatch.android.exposurenotification.proto.TemporaryExposureKey>
     toProto(List<TemporaryExposureKey> keys) {
-        List<com.google.android.apps.exposurenotification.debug.proto.TemporaryExposureKey> protos =
+        List<org.covidwatch.android.exposurenotification.proto.TemporaryExposureKey> protos =
                 new ArrayList<>();
         for (TemporaryExposureKey k : keys) {
             protos.add(
-                    com.google.android.apps.exposurenotification.debug.proto.TemporaryExposureKey.newBuilder()
+                    org.covidwatch.android.exposurenotification.proto.TemporaryExposureKey.newBuilder()
                             .setKeyData(ByteString.copyFrom(k.getKeyData()))
                             .setRollingStartIntervalNumber(k.getRollingStartIntervalNumber())
                             .setRollingPeriod(k.getRollingPeriod())
@@ -85,6 +86,24 @@ public class KeyFileWriter {
     public List<File> writeForKeys(
             List<TemporaryExposureKey> keys, Instant start, Instant end, String regionIsoAlpha2) throws IOException {
         return writeForKeys(keys, start, end, regionIsoAlpha2, DEFAULT_MAX_BATCH_SIZE);
+    }
+
+    private TemporaryExposureKeyExport export(
+            List<TemporaryExposureKey> keys,
+            Instant start,
+            Instant end,
+            String regionIsoAlpha2,
+            int batchNum) {
+
+        return TemporaryExposureKeyExport.newBuilder()
+                .addAllKeys(toProto(keys))
+                .addSignatureInfos(signatureInfo())
+                .setStartTimestamp(start.toEpochMilli())
+                .setEndTimestamp(end.toEpochMilli())
+                .setRegion(regionIsoAlpha2)
+                .setBatchSize(keys.size())
+                .setBatchNum(batchNum)
+                .build();
     }
 
     public List<File> writeForKeys(
@@ -130,24 +149,6 @@ public class KeyFileWriter {
         }
 
         return outFiles;
-    }
-
-    private TemporaryExposureKeyExport export(
-            List<TemporaryExposureKey> keys,
-            Instant start,
-            Instant end,
-            String regionIsoAlpha2,
-            int batchNum) {
-
-        return TemporaryExposureKeyExport.newBuilder()
-                .addAllKeys(toProto(keys))
-                .addSignatureInfos(signatureInfo())
-                .setStartTimestamp(start.toEpochMilli())
-                .setEndTimestamp(end.toEpochMilli())
-                .setRegion(regionIsoAlpha2)
-                .setBatchSize(keys.size())
-                .setBatchNum(batchNum)
-                .build();
     }
 
     private TEKSignatureList sign(byte[] exportBytes, int batchSize, int batchNum) {

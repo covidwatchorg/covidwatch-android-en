@@ -1,7 +1,6 @@
 package org.covidwatch.android.ui.reporting
 
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
-import org.covidwatch.android.domain.ExportDiagnosisKeysAsFileUseCase
 import org.covidwatch.android.domain.StartUploadDiagnosisKeysWorkUseCase
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 
