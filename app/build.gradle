@@ -59,7 +59,7 @@ android {
     }
 
     sourceSets {
-        main {
+        calibration {
             proto {
                 srcDir 'src/calibration/java/org/covidwatch/android/exposurenotification/proto'
             }
