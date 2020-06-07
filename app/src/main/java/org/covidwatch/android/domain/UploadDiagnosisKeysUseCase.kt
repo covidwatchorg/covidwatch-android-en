@@ -37,44 +37,48 @@ class UploadDiagnosisKeysUseCase(
         }
         enManager.temporaryExposureKeyHistory().apply {
             success {
-                val diagnosisKeys = it.mapIndexed { i, key ->
-                    key.asDiagnosisKey()
-                        .copy(
-                            transmissionRisk = params?.riskLevels?.get(i)
-                                ?: key.transmissionRiskLevel
-                        )
-                }
+                try {
+                    val diagnosisKeys = it.mapIndexed { i, key ->
+                        key.asDiagnosisKey()
+                            .copy(
+                                transmissionRisk = params?.riskLevels?.get(i)
+                                    ?: key.transmissionRiskLevel
+                            )
+                    }
 
-                val regions = countryCodeRepository.exposureRelevantCountryCodes()
-                val uploadEndpoints = uriManager.uploadUris(regions)
+                    val regions = countryCodeRepository.exposureRelevantCountryCodes()
+                    val uploadEndpoints = uriManager.uploadUris(regions)
 
-                val attestation = safetyNetManager.attestFor(
-                    diagnosisKeys,
-                    regions,
-                    defaultVerificationCode
-                ) ?: return Either.Left(ENStatus.Failed)
+                    val attestation = safetyNetManager.attestFor(
+                        diagnosisKeys,
+                        regions,
+                        defaultVerificationCode
+                    ) ?: return Either.Left(ENStatus.FailedDeviceAttestation)
 
-                val positiveDiagnosis = PositiveDiagnosis(
-                    diagnosisKeys,
-                    regions,
-                    appPackageName,
-                    platform,
-                    defaultVerificationCode,
-                    attestation,
-                    randomPadding()
-                )
-
-                uploadEndpoints.forEach { url ->
-                    diagnosisRepository.uploadDiagnosisKeys(url, positiveDiagnosis)
-                }
-
-                diagnosisRepository.addPositiveDiagnosisReport(
-                    PositiveDiagnosisReport(
-                        verified = true,
-                        reportDate = System.currentTimeMillis()
+                    val positiveDiagnosis = PositiveDiagnosis(
+                        diagnosisKeys,
+                        regions,
+                        appPackageName,
+                        platform,
+                        defaultVerificationCode,
+                        attestation,
+                        randomPadding()
                     )
-                )
-                return Either.Right(Unit)
+
+                    uploadEndpoints.forEach { url ->
+                        diagnosisRepository.uploadDiagnosisKeys(url, positiveDiagnosis)
+                    }
+
+                    diagnosisRepository.addPositiveDiagnosisReport(
+                        PositiveDiagnosisReport(
+                            verified = true,
+                            reportDate = System.currentTimeMillis()
+                        )
+                    )
+                    return Either.Right(Unit)
+                } catch (e: Exception) {
+                    return Either.Left(ENStatus(e))
+                }
             }
 
             failure { return Either.Left(it) }

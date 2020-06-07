@@ -93,7 +93,9 @@ class PositiveDiagnosisRemoteSource(
             .url(uploadUrl)
             .post(body)
             .build()
-        httpClient.newCall(request).execute()
+        httpClient.newCall(request).execute().also { response ->
+            if (response.code != 200) throw ServerException()
+        }
     }
 
     private class ByteArrayToBase64TypeAdapter :

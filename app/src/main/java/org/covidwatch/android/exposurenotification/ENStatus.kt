@@ -16,15 +16,16 @@ sealed class ENStatus(val code: Int) {
     // TODO: 07.06.2020 Rework this status because it's not about storage but IO errors
     // Like no file or can't read a file
     object FailedInsufficientStorage : ENStatus(FAILED_DISK_IO)
+    object FailedDeviceAttestation : ENStatus(FAILED_DEVICE_ATTESTATION)
     object NetworkError : ENStatus(NETWORK_ERROR)
-    object ServerError : ENStatus(666)
+    object ServerError : ENStatus(REMOTE_EXCEPTION)
 
     object Failed : ENStatus(FAILED)
 
     class NeedsResolution(val exception: ApiException? = null) : ENStatus(RESOLUTION_REQUIRED)
 
     companion object {
-
+        const val FAILED_DEVICE_ATTESTATION = 444
         /**
          * Create [ENStatus] from [ApiException] when [ExposureNotificationClient] methods are called
          * */
@@ -38,7 +39,7 @@ sealed class ENStatus(val code: Int) {
                     FAILED_DISK_IO -> FailedInsufficientStorage
                     RESOLUTION_REQUIRED -> NeedsResolution(exception)
                     NETWORK_ERROR -> NetworkError
-                    666 -> ServerError
+                    REMOTE_EXCEPTION -> ServerError
                     FAILED -> Failed
                     else -> Failed
                 }
@@ -58,8 +59,9 @@ sealed class ENStatus(val code: Int) {
             FAILED_TEMPORARILY_DISABLED -> FailedTemporarilyDisabled
             FAILED_DISK_IO -> FailedInsufficientStorage
             RESOLUTION_REQUIRED -> NeedsResolution()
+            FAILED_DEVICE_ATTESTATION -> FailedDeviceAttestation
             NETWORK_ERROR -> NetworkError
-            666 -> ServerError
+            REMOTE_EXCEPTION -> ServerError
             FAILED -> Failed
             else -> Failed
         }

@@ -70,6 +70,13 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
                     Toast.LENGTH_SHORT
                 ).show()
             }
+            ENStatus.FailedDeviceAttestation -> {
+                Toast.makeText(
+                    context,
+                    R.string.device_attestation_error,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 }
