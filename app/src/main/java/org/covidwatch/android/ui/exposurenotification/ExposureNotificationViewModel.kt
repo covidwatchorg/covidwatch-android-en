@@ -74,9 +74,4 @@ class ExposureNotificationViewModel(
     fun loadExposureInformation() {
         viewModelScope.launchUseCase(updateExposureInformationUseCase)
     }
-
-    private fun <R : ENStatus, L> Either<R, L>.result(): L? {
-        left?.let { handleStatus(it) }
-        return right
-    }
 }
