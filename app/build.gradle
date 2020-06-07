@@ -13,6 +13,7 @@ android {
 
     defaultConfig {
         applicationId "org.covidwatch.android"
+        // TODO: Check if we really need 23 because of Exposure Notification
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
