@@ -227,6 +227,7 @@ val appModule = module {
 
         OkHttpClient.Builder()
             .addInterceptor(logging)
+            .addInterceptor(ConnectivityInterceptor(androidApplication()))
             .build()
     }
 

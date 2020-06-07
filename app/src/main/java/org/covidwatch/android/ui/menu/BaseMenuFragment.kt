@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import org.covidwatch.android.R
 import org.covidwatch.android.databinding.FragmentMenuBinding
 import org.covidwatch.android.extension.observe
-import org.covidwatch.android.ui.BaseFragment
+import org.covidwatch.android.ui.BaseViewModelFragment
 import org.koin.android.ext.android.inject
 
 
-open class BaseMenuFragment : BaseFragment<FragmentMenuBinding>() {
+open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuViewModel>() {
 
-    private val viewModel: MenuViewModel by inject()
+    override val viewModel: MenuViewModel by inject()
 
     override fun bind(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentMenuBinding.inflate(inflater, container, false)

@@ -3,9 +3,9 @@ package org.covidwatch.android.data
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.covidwatch.android.data.positivediagnosis.KeyFileBatch
+import org.covidwatch.android.exposurenotification.ServerException
 import java.util.regex.Pattern
 
-//TODO: Add logic for download uris
 class UriManager(
     private val serverUploadEndpoint: String,
     private val serverDownloadEndpoint: String,
@@ -23,7 +23,9 @@ class UriManager(
         val request = Request.Builder()
             .url(indexUrl(region))
             .build()
-        val indexFile = httpClient.newCall(request).execute().body?.string()
+        val response = httpClient.newCall(request).execute()
+        if (response.code != 200) throw ServerException()
+        val indexFile = response.body?.string()
 
         val regionFiles = indexFile
             ?.split("\n")
