@@ -209,7 +209,6 @@ val appModule = module {
         HomeViewModel(
             enManager = get(),
             userFlowRepository = get(),
-            testedRepository = get(),
             preferenceStorage = get()
         )
     }
