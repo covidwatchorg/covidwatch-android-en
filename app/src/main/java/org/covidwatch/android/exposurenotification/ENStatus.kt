@@ -17,6 +17,7 @@ sealed class ENStatus(val code: Int) {
     // Like no file or can't read a file
     object FailedInsufficientStorage : ENStatus(FAILED_DISK_IO)
     object NetworkError : ENStatus(NETWORK_ERROR)
+    object ServerError : ENStatus(666)
 
     object Failed : ENStatus(FAILED)
 
@@ -27,15 +28,23 @@ sealed class ENStatus(val code: Int) {
         /**
          * Create [ENStatus] from [ApiException] when [ExposureNotificationClient] methods are called
          * */
-        operator fun invoke(apiException: ApiException?) = when (apiException?.statusCode) {
-            FAILED_REJECTED_OPT_IN -> FailedRejectedOptIn
-            FAILED_SERVICE_DISABLED -> FailedServiceDisabled
-            FAILED_BLUETOOTH_DISABLED -> FailedBluetoothScanningDisabled
-            FAILED_TEMPORARILY_DISABLED -> FailedTemporarilyDisabled
-            FAILED_DISK_IO -> FailedInsufficientStorage
-            RESOLUTION_REQUIRED -> NeedsResolution(apiException)
-            NETWORK_ERROR -> NetworkError
-            FAILED -> Failed
+        operator fun invoke(exception: Exception?) = when (exception) {
+            is ApiException -> {
+                when (exception.statusCode) {
+                    FAILED_REJECTED_OPT_IN -> FailedRejectedOptIn
+                    FAILED_SERVICE_DISABLED -> FailedServiceDisabled
+                    FAILED_BLUETOOTH_DISABLED -> FailedBluetoothScanningDisabled
+                    FAILED_TEMPORARILY_DISABLED -> FailedTemporarilyDisabled
+                    FAILED_DISK_IO -> FailedInsufficientStorage
+                    RESOLUTION_REQUIRED -> NeedsResolution(exception)
+                    NETWORK_ERROR -> NetworkError
+                    666 -> ServerError
+                    FAILED -> Failed
+                    else -> Failed
+                }
+            }
+            is NoConnectionException -> NetworkError
+            is ServerException -> ServerError
             else -> Failed
         }
 
@@ -50,6 +59,7 @@ sealed class ENStatus(val code: Int) {
             FAILED_DISK_IO -> FailedInsufficientStorage
             RESOLUTION_REQUIRED -> NeedsResolution()
             NETWORK_ERROR -> NetworkError
+            666 -> ServerError
             FAILED -> Failed
             else -> Failed
         }
@@ -60,3 +70,5 @@ class NoConnectionException : IOException() {
     override val message: String
         get() = "No internet available, please check your WIFi or Data connections"
 }
+
+class ServerException : IOException()

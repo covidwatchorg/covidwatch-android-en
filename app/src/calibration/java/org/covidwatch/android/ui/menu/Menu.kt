@@ -2,18 +2,21 @@ package org.covidwatch.android.ui.menu
 
 import android.view.LayoutInflater
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.covidwatch.android.R
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.databinding.DialogExposureConfigurationBinding
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
-import org.covidwatch.android.extension.launchUseCase
+import org.covidwatch.android.extension.observeUseCase
 import org.koin.android.ext.android.inject
 
 class MenuFragment : BaseMenuFragment() {
@@ -26,9 +29,23 @@ class MenuFragment : BaseMenuFragment() {
         when (menuItem.title) {
             R.string.menu_reset_possible_exposures -> {
                 lifecycleScope.launch { exposureInformationRepository.reset() }
+                Toast.makeText(context, "Possible exposures were deleted", Toast.LENGTH_SHORT)
+                    .show()
+                findNavController().popBackStack()
             }
             R.string.menu_detect_exposures_from_server -> {
-                lifecycleScope.launchUseCase(provideDiagnosisKeysUseCase)
+                lifecycleScope.observeUseCase(provideDiagnosisKeysUseCase) {
+                    success {
+                        Toast.makeText(
+                            context,
+                            "Positive diagnosis downloaded",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+                    failure { handleStatus(it) }
+                    findNavController().popBackStack()
+                }
             }
             R.string.menu_set_exposure_configuration -> {
                 context?.let { context ->

@@ -3,6 +3,8 @@ package org.covidwatch.android.extension
 import androidx.annotation.NonNull
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.work.Data
+import androidx.work.ListenableWorker
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import org.covidwatch.android.exposurenotification.ENStatus
@@ -36,3 +38,7 @@ fun WorkManager.getFinalWorkInfoByIdLiveData(@NonNull id: UUID): LiveData<Either
     }
     return result
 }
+
+fun failure(status: ENStatus) = ListenableWorker.Result.failure(
+    Data.Builder().putInt(FAILURE, status.code).build()
+)

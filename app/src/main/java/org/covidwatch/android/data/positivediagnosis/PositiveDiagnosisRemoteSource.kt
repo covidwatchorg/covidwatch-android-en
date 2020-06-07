@@ -11,6 +11,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import okio.IOException
 import org.covidwatch.android.data.PositiveDiagnosis
+import org.covidwatch.android.exposurenotification.ServerException
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -35,7 +36,7 @@ class PositiveDiagnosisRemoteSource(
         val request = Request.Builder().url(url).build()
 
         return httpClient.newCall(request).execute().let { response ->
-            if (!response.isSuccessful) return@let null
+            if (response.code != 200) throw ServerException()
 
             toFile(dir, url.split("/").last(), response.body)
         }

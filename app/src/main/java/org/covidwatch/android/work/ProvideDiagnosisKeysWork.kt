@@ -10,7 +10,9 @@ import kotlinx.coroutines.withContext
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
+import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.extension.failure
 import org.covidwatch.android.ui.Notifications
 import org.covidwatch.android.ui.Notifications.Companion.DOWNLOAD_REPORTS_NOTIFICATION_ID
 import org.koin.java.KoinJavaComponent.inject
@@ -44,24 +46,28 @@ class ProvideDiagnosisKeysWork(
                 notifications.downloadingReportsNotification()
             )
         )
-        withContext(Dispatchers.IO) {
-            val diagnosisKeys = diagnosisRepository.diagnosisKeys()
-            Timber.d("Adding ${diagnosisKeys.size} positive diagnoses to exposure notification framework")
+        return withContext(Dispatchers.IO) {
+            try {
+                val diagnosisKeys = diagnosisRepository.diagnosisKeys()
+                Timber.d("Adding ${diagnosisKeys.size} positive diagnoses to exposure notification framework")
 
-            val token = randomToken()
-            diagnosisKeys.forEach {
-                val keys = it.keys
-                enManager.provideDiagnosisKeys(keys, token).apply {
-                    success {
-                        //TODO: Delete empty folder
-                        keys.forEach { file -> file.delete() }
+                val token = randomToken()
+                diagnosisKeys.forEach {
+                    val keys = it.keys
+                    enManager.provideDiagnosisKeys(keys, token).apply {
+                        success {
+                            //TODO: Delete empty folder
+                            keys.forEach { file -> file.delete() }
+                        }
+                        //TODO: Handle failed files
                     }
-                    //TODO: Handle failed files
                 }
-            }
 
-            diagnosisKeysTokenRepository.insert(DiagnosisKeysToken(token))
+                diagnosisKeysTokenRepository.insert(DiagnosisKeysToken(token))
+                Result.success()
+            } catch (e: Exception) {
+                failure(ENStatus(e))
+            }
         }
-        return Result.success()
     }
 }

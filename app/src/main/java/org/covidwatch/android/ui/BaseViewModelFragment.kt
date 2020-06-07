@@ -21,24 +21,7 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
         super.onViewCreated(view, savedInstanceState)
         with(viewModel) {
             observeEvent(status) {
-                when (it) {
-                    ENStatus.FailedInsufficientStorage -> {
-                        val snackbar = Snackbar.make(
-                            binding.root,
-                            R.string.insufficient_storage,
-                            BaseTransientBottomBar.LENGTH_INDEFINITE
-                        )
-                        snackbar.setAction(R.string.ok) { snackbar.dismiss() }
-                        snackbar.show()
-                    }
-                    ENStatus.Failed -> {
-                        Toast.makeText(
-                            context,
-                            R.string.unknown_error,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
+                handleStatus(it)
             }
             observeEvent(resolvable) { resolvable ->
                 resolvable.apiException.status.startResolutionForResult(
@@ -52,6 +35,41 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
         super.onActivityResult(requestCode, resultCode, data)
         lifecycleScope.launch {
             viewModel.handleResolution(requestCode, resultCode)
+        }
+    }
+
+    protected fun handleStatus(it: ENStatus) {
+        when (it) {
+            ENStatus.FailedInsufficientStorage -> {
+                val snackbar = Snackbar.make(
+                    binding.root,
+                    R.string.insufficient_storage,
+                    BaseTransientBottomBar.LENGTH_INDEFINITE
+                )
+                snackbar.setAction(R.string.ok) { snackbar.dismiss() }
+                snackbar.show()
+            }
+            ENStatus.Failed -> {
+                Toast.makeText(
+                    context,
+                    R.string.unknown_error,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            ENStatus.NetworkError -> {
+                Toast.makeText(
+                    context,
+                    R.string.no_connection_error,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            ENStatus.ServerError -> {
+                Toast.makeText(
+                    context,
+                    R.string.server_error,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 }
