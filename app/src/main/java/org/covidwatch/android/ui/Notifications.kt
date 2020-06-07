@@ -10,17 +10,19 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import org.covidwatch.android.R
-import org.covidwatch.android.ui.exposurenotification.ExposureNotificationActivity
+import org.covidwatch.android.ui.BaseMainActivity.Companion.POTENTIAL_EXPOSURE_NOTIFICATION
 
 class Notifications(private val context: Context) {
     private val notificationManager = NotificationManagerCompat.from(context)
 
     fun postExposureNotification() {
         createExposureNotificationChannel()
+        val intent = Intent(context, MainActivity::class.java)
+        intent.putExtra(POTENTIAL_EXPOSURE_NOTIFICATION, true)
         val pendingIntent = PendingIntent.getActivity(
             context,
             0,
-            Intent(context, ExposureNotificationActivity::class.java),
+            intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
 
