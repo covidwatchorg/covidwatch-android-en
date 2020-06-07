@@ -207,8 +207,8 @@ val appModule = module {
 
     viewModel {
         HomeViewModel(
+            enManager = get(),
             userFlowRepository = get(),
-            testedRepository = get(),
             preferenceStorage = get()
         )
     }

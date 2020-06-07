@@ -58,9 +58,4 @@ class ExposuresViewModel(
     }
 
     private suspend fun isExposureNotificationEnabled() = enManager.isEnabled().result() ?: false
-
-    private fun <R : ENStatus, L> Either<R, L>.result(): L? {
-        left?.let { handleStatus(it) }
-        return right
-    }
 }

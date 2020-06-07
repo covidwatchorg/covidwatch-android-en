@@ -2,20 +2,24 @@ package org.covidwatch.android.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.FirstTimeUser
 import org.covidwatch.android.data.UserFlowRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
-import org.covidwatch.android.domain.TestedRepository
+import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.extension.doOnNext
+import org.covidwatch.android.ui.BaseViewModel
 import org.covidwatch.android.ui.event.Event
+import timber.log.Timber
 
 class HomeViewModel(
+    private val enManager: ExposureNotificationManager,
     private val userFlowRepository: UserFlowRepository,
-    private val testedRepository: TestedRepository,
     private val preferenceStorage: PreferenceStorage
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _isUserTestedPositive = MutableLiveData<Boolean>()
     val isUserTestedPositive: LiveData<Boolean> get() = _isUserTestedPositive
@@ -30,7 +34,15 @@ class HomeViewModel(
     val navigateToOnboardingEvent: LiveData<Event<Unit>> get() = _navigateToOnboardingEvent
 
     val exposureSummary: LiveData<CovidExposureSummary>
-        get() = preferenceStorage.observableExposureSummary
+        get() = preferenceStorage.observableExposureSummary.doOnNext {
+            Timber.d("Check potential exposure")
+            val potentialExposure = it.matchedKeyCount > 0
+            _warningBannerState.value = if (potentialExposure) {
+                WarningBannerState.Visible(R.string.contact_alert_text)
+            } else {
+                WarningBannerState.Hidden
+            }
+        }
 
     fun onStart() {
         val userFlow = userFlowRepository.getUserFlow()
@@ -39,14 +51,13 @@ class HomeViewModel(
             return
         }
 
-        checkIfUserTestedPositive()
-    }
-
-    private fun checkIfUserTestedPositive() {
-        val isUserTestedPositive = testedRepository.isUserTestedPositive()
-        _isUserTestedPositive.value = isUserTestedPositive
-        if (isUserTestedPositive) {
-            _warningBannerState.value = WarningBannerState.Visible(R.string.reported_alert_text)
+        viewModelScope.launch {
+            val enabled = enManager.isEnabled().result() ?: false
+            _infoBannerState.value = if (enabled) {
+                InfoBannerState.Hidden
+            } else {
+                InfoBannerState.Visible(R.string.turn_on_exposure_notification_text)
+            }
         }
     }
 }

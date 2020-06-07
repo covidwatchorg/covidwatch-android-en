@@ -52,6 +52,11 @@ abstract class BaseViewModel : ViewModel() {
             handleStatus(status)
         }
 
+    protected fun <R : ENStatus, L> Either<R, L>.result(): L? {
+        left?.let { handleStatus(it) }
+        return right
+    }
+
     protected fun <T, P> observeStatus(
         useCase: LiveDataUseCase<T, P>,
         params: P? = null,

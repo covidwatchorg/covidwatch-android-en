@@ -78,8 +78,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 context?.shareApp()
             }
             infoBanner.setOnClickListener {
-                findNavController().navigate(R.id.settingsFragment)
+                findNavController().navigate(R.id.enableExposureNotificationsFragment)
             }
+
+            warningBanner.setOnClickListener { findNavController().navigate(R.id.exposuresFragment) }
+
             exposureSummary.root.setOnClickListener {
                 findNavController().navigate(R.id.exposuresFragment)
             }

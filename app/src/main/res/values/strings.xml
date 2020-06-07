@@ -156,8 +156,9 @@
     <string name="notify_others_button_question">Got a positive diagnosis?</string>
     <string name="notify_others_button">Notify Others</string>
     <string name="notify_others_button_text">Share your result anonymously to help your community stay safe.</string>
-    <string name="contact_alert_text">You may have been in contact with COVID-19</string>
+    <string name="contact_alert_text">Possible COVID-19 exposure.\nTap for more information.</string>
     <string name="reported_alert_text">You reported that you tested positive for COVID-19</string>
+    <string name="turn_on_exposure_notification_text">Exposure notifications must be enabled for the app to work. Tap to review your app settings.</string>
 
 
     <!-- Reporting -->
