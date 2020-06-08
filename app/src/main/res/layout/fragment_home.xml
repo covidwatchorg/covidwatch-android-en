@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:scrollbars="none">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -18,96 +15,121 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:logo="@drawable/ic_california_logo"
-            app:menu="@menu/menu_home" />
+            app:menu="@menu/menu_home">
 
-        <TextView
-            android:id="@+id/warning_banner"
-            style="@style/AlertBanner"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/screen_title"
+                android:textSize="14sp" />
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/tangerine"
-            android:visibility="gone"
-            tools:text="You may have been in contact with COVID-19"
-            tools:visibility="visible" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/info_banner"
-            style="@style/AlertBanner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/aqua"
-            android:visibility="gone"
-            tools:text="Turn Bluetooth on for  this device"
-            tools:visibility="visible" />
+            <TextView
+                android:id="@+id/warning_banner"
+                style="@style/AlertBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/tangerine"
+                android:visibility="gone"
+                tools:text="You may have been in contact with COVID-19" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_onboarding_start"
-            app:srcCompat="@drawable/ic_family" />
+            <TextView
+                android:id="@+id/info_banner"
+                style="@style/AlertBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/aqua"
+                android:visibility="gone"
+                tools:text="Turn Bluetooth on for  this device" />
 
-        <TextView
-            style="@style/TextView.ScreenTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/padding_normal"
-            android:layout_marginTop="@dimen/padding_normal"
-            android:text="@string/my_possible_exposures_title" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"
+                android:background="@drawable/bg_onboarding_start"
+                app:srcCompat="@drawable/ic_family" />
 
-        <include
-            android:id="@+id/exposure_summary"
-            layout="@layout/exposure_summary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/padding_normal"
-            android:layout_marginVertical="@dimen/padding_small" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lightGray" />
 
-        <TextView
-            android:id="@+id/notify_others_button_question"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/padding_normal"
-            android:text="@string/notify_others_button_question"
-            android:textAlignment="center" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/lightGray"
+                android:gravity="center"
+                android:padding="@dimen/padding_normal"
+                android:text="@string/exposure_dashboard"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/notify_others_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/padding_normal"
-            android:text="@string/notify_others_button"
-            android:textSize="16sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lightGray" />
 
-        <TextView
-            android:id="@+id/notify_others_button_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/padding_normal"
-            android:text="@string/notify_others_button_text"
-            android:textAlignment="center" />
+            <include
+                android:id="@+id/exposure_dashboard"
+                layout="@layout/exposure_dashboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/share_app_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/padding_normal"
-            android:layout_marginTop="@dimen/padding_normal"
-            android:text="@string/share_app_button" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lightGray" />
 
-        <TextView
-            android:id="@+id/tester_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:paddingHorizontal="32dp"
-            android:textAlignment="center"
-            android:visibility="gone" />
+            <TextView
+                android:id="@+id/notify_others_button_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/padding_normal"
+                android:layout_marginVertical="@dimen/padding_normal"
+                android:text="@string/notify_others_button_question"
+                android:textAlignment="center" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            <Button
+                android:id="@+id/notify_others_button"
+                style="@style/Button.Action"
+                android:layout_marginHorizontal="@dimen/padding_normal"
+                android:text="@string/notify_others_button" />
 
-        <include layout="@layout/powered_by" />
-    </LinearLayout>
-</ScrollView>
+            <Button
+                android:id="@+id/share_app_button"
+                style="@style/Button.Action"
+                android:layout_marginHorizontal="@dimen/padding_normal"
+                android:text="@string/share_app_button" />
+
+            <TextView
+                android:id="@+id/tester_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingHorizontal="32dp"
+                android:textAlignment="center"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <include layout="@layout/powered_by" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -21,9 +21,6 @@ class HomeViewModel(
     private val preferenceStorage: PreferenceStorage
 ) : BaseViewModel() {
 
-    private val _isUserTestedPositive = MutableLiveData<Boolean>()
-    val isUserTestedPositive: LiveData<Boolean> get() = _isUserTestedPositive
-
     private val _infoBannerState = MutableLiveData<InfoBannerState>()
     val infoBannerState: LiveData<InfoBannerState> get() = _infoBannerState
 

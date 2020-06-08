@@ -54,10 +54,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 }
             }
         })
-        homeViewModel.isUserTestedPositive.observe(
-            viewLifecycleOwner,
-            Observer(::updateUiForTestedPositive)
-        )
 
         initClickListeners()
     }
@@ -83,22 +79,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
             warningBanner.setOnClickListener { findNavController().navigate(R.id.exposuresFragment) }
 
-            exposureSummary.root.setOnClickListener {
+            exposureDashboard.root.setOnClickListener {
                 findNavController().navigate(R.id.exposuresFragment)
             }
         }
     }
 
     private fun bindExposureSummary(exposureSummary: CovidExposureSummary) {
-        binding.exposureSummary.daysSinceLastExposure.text =
-            exposureSummary.daySinceLastExposure.toString()
-        binding.exposureSummary.totalExposures.text = exposureSummary.matchedKeyCount.toString()
-        binding.exposureSummary.highRiskScore.text = exposureSummary.maximumRiskScore.toString()
-    }
-
-    private fun updateUiForTestedPositive(isUserTestedPositive: Boolean) {
-        binding.notifyOthersButtonQuestion.isVisible = !isUserTestedPositive
-        binding.notifyOthersButton.isVisible = !isUserTestedPositive
-        binding.notifyOthersButtonText.isVisible = !isUserTestedPositive
+        with(binding.exposureDashboard) {
+            val days = exposureSummary.daySinceLastExposure.takeIf { it > 0 }?.toString()
+            val total = exposureSummary.matchedKeyCount.takeIf { it > 0 }?.toString()
+            val risk = exposureSummary.maximumRiskScore.takeIf { it > 0 }?.toString()
+            daysSinceLastExposure.text = days ?: "-"
+            totalExposures.text = total ?: "-"
+            highRiskScore.text = risk ?: "-"
+        }
     }
 }
