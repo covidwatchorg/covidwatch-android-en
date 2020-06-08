@@ -10,6 +10,10 @@
         <item name="android:textColor">@color/primaryText</item>
     </style>
 
+    <style name="AppTheme.LauncherTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/background_launcher</item>
+    </style>
+
     <style name="AlertBanner" parent="@style/AppTheme">
         <item name="android:foreground">?selectableItemBackground</item>
         <item name="android:drawableStart">@drawable/ic_info</item>
