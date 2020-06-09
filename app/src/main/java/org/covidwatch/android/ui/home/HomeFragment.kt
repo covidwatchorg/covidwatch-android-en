@@ -65,13 +65,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             notifyOthersButton.setOnClickListener {
                 findNavController().navigate(R.id.notifyOthersFragment)
             }
-            toolbar.setOnMenuItemClickListener {
-                if (it.itemId == R.id.action_menu) {
-                    findNavController().navigate(R.id.menuFragment)
-                }
-                true
+            menu.setOnClickListener {
+                findNavController().navigate(R.id.menuFragment)
             }
-
             shareAppButton.setOnClickListener {
                 context?.shareApp()
             }
@@ -81,14 +77,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
             warningBanner.setOnClickListener { findNavController().navigate(R.id.exposuresFragment) }
 
-            exposureDashboard.root.setOnClickListener {
+            exposureSummary.root.setOnClickListener {
                 findNavController().navigate(R.id.exposuresFragment)
             }
         }
     }
 
     private fun bindExposureSummary(exposureSummary: CovidExposureSummary) {
-        with(binding.exposureDashboard) {
+        with(binding.exposureSummary) {
             val days = exposureSummary.daySinceLastExposure.takeIf { it > 0 }?.toString()
             val total = exposureSummary.matchedKeyCount.takeIf { it > 0 }?.toString()
             val risk = exposureSummary.maximumRiskScore.takeIf { it > 0 }?.toString()

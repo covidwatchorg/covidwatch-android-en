@@ -93,7 +93,7 @@
     <fragment
         android:id="@+id/notifyOthersFragment"
         android:name="org.covidwatch.android.ui.reporting.NotifyOthersFragment"
-        android:label="NotifyOthersFragment" >
+        android:label="NotifyOthersFragment">
         <action
             android:id="@+id/action_notifyOthersFragment_to_verifyPositiveDiagnosisFragment"
             app:destination="@id/verifyPositiveDiagnosisFragment" />
@@ -101,7 +101,7 @@
     <fragment
         android:id="@+id/verifyPositiveDiagnosisFragment"
         android:name="org.covidwatch.android.ui.reporting.VerifyPositiveDiagnosisFragment"
-        android:label="VerifyPositiveDiagnosisFragment" >
+        android:label="VerifyPositiveDiagnosisFragment">
         <action
             android:id="@+id/action_verifyPositiveDiagnosisFragment_to_thanksForReportingFragment"
             app:destination="@id/thanksForReportingFragment" />

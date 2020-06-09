@@ -149,7 +149,7 @@
     <string name="home_days_since_last_exposure"><b>days</b>\nsince last exposure</string>
     <string name="home_possible_exposures"><b>possible exposures</b>\nin the last 14 days</string>
     <string name="home_total_risk_score"><b>total risk score</b> (1–8) scale</string>
-    <string name="exposure_dashboard">Exposure Dashboard</string>
+    <string name="possible_exposure_summary">Possible Exposure Summary</string>
     <string name="notify_others_button_question"><b>Have a positive diagnosis?</b> Anonymously notify others to help your community stay safe.</string>
     <string name="notify_others_button">Notify Others</string>
     <string name="notify_others_button_text">Share your result anonymously to help your community stay safe.</string>
