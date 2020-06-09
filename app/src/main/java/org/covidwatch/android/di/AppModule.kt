@@ -53,7 +53,7 @@ val appModule = module {
         )
     }
 
-        single { SafetyNet.getClient(androidApplication()) }
+    single { SafetyNet.getClient(androidApplication()) }
 
     single {
         SafetyNetManager(

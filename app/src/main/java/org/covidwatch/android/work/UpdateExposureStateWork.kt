@@ -5,7 +5,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.WorkerParameters
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationStatusCodes.FAILED
-import org.covidwatch.android.data.CovidExposureSummary
+import org.covidwatch.android.data.asCovidExposureSummary
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
@@ -32,13 +32,7 @@ class UpdateExposureStateWork(
 
         // TODO: Check if order of updates is preserved relatively to the calls of [ProvideDiagnosisKeysUseCase]
         // If not, older updates could override new exposure summary
-        preferenceStorage.exposureSummary = CovidExposureSummary(
-            exposureSummary.daysSinceLastExposure,
-            exposureSummary.matchedKeyCount,
-            exposureSummary.maximumRiskScore,
-            exposureSummary.attenuationDurationsInMinutes,
-            exposureSummary.summationRiskScore
-        )
+        preferenceStorage.exposureSummary = exposureSummary.asCovidExposureSummary()
 
         if (exposureSummary.matchedKeyCount > 0) {
             diagnosisKeysTokenRepository.setExposed(token)
