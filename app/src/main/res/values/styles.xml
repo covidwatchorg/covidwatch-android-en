@@ -16,6 +16,10 @@
         <item name="android:windowBackground">@drawable/background_launcher</item>
     </style>
 
+    <style name="AppTheme.LauncherTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/background_launcher</item>
+    </style>
+
     <style name="AlertBanner" parent="@style/AppTheme">
         <item name="android:minHeight">80dp</item>
         <item name="android:foreground">?selectableItemBackground</item>
