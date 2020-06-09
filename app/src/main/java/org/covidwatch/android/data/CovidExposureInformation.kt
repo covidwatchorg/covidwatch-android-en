@@ -14,7 +14,7 @@ data class CovidExposureInformation(
     val durationMinutes: Int,
     val attenuationValue: Int,
     val transmissionRiskLevel: Int,
-    val totalRiskScore: Int,
+    val totalRiskScore: RiskScore,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
 ) : Serializable {

@@ -10,7 +10,7 @@
         style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:logo="@drawable/ic_california_logo" />
+        app:logo="@drawable/ic_health_department_logo" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"

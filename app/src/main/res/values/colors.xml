@@ -32,6 +32,11 @@
     <color name="maroon_shadow">#A0A0A0</color>
     <color name="colorPrimaryLight">#DFDFDF</color>
 
+    <!-- RISK LEVEL-->
+    <color name="high_risk">@color/tangerine</color>
+    <color name="med_risk">#F2994A</color>
+    <color name="low_risk">#F2C94C</color>
+
     <!-- FROM DESIGN LIBRARY AT https://www.figma.com/file/0qkRp3TrKBRnpEnmQeA5m4/-->
     <color name="bluejay">#2C58B1</color>
     <color name="aqua">#43C4D9</color>

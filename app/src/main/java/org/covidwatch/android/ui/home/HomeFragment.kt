@@ -9,6 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureSummary
+import org.covidwatch.android.data.RiskScoreLevel.*
+import org.covidwatch.android.data.level
 import org.covidwatch.android.databinding.FragmentHomeBinding
 import org.covidwatch.android.extension.shareApp
 import org.covidwatch.android.ui.BaseFragment
@@ -54,10 +56,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 }
             }
         })
-        homeViewModel.isUserTestedPositive.observe(
-            viewLifecycleOwner,
-            Observer(::updateUiForTestedPositive)
-        )
 
         initClickListeners()
     }
@@ -67,13 +65,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             notifyOthersButton.setOnClickListener {
                 findNavController().navigate(R.id.notifyOthersFragment)
             }
-            toolbar.setOnMenuItemClickListener {
-                if (it.itemId == R.id.action_menu) {
-                    findNavController().navigate(R.id.menuFragment)
-                }
-                true
+            menu.setOnClickListener {
+                findNavController().navigate(R.id.menuFragment)
             }
-
             shareAppButton.setOnClickListener {
                 context?.shareApp()
             }
@@ -90,15 +84,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun bindExposureSummary(exposureSummary: CovidExposureSummary) {
-        binding.exposureSummary.daysSinceLastExposure.text =
-            exposureSummary.daySinceLastExposure.toString()
-        binding.exposureSummary.totalExposures.text = exposureSummary.matchedKeyCount.toString()
-        binding.exposureSummary.highRiskScore.text = exposureSummary.maximumRiskScore.toString()
-    }
-
-    private fun updateUiForTestedPositive(isUserTestedPositive: Boolean) {
-        binding.notifyOthersButtonQuestion.isVisible = !isUserTestedPositive
-        binding.notifyOthersButton.isVisible = !isUserTestedPositive
-        binding.notifyOthersButtonText.isVisible = !isUserTestedPositive
+        with(binding.exposureSummary) {
+            val days = exposureSummary.daySinceLastExposure.takeIf { it > 0 }?.toString()
+            val total = exposureSummary.matchedKeyCount.takeIf { it > 0 }?.toString()
+            val risk = exposureSummary.maximumRiskScore.takeIf { it > 0 }?.toString()
+            when (exposureSummary.maximumRiskScore.level) {
+                HIGH -> highRiskScore.background =
+                    context?.getDrawable(R.drawable.bg_exposure_dashboard_high_risk)
+                MEDIUM -> highRiskScore.background =
+                    context?.getDrawable(R.drawable.bg_exposure_dashboard_med_risk)
+                LOW -> highRiskScore.background =
+                    context?.getDrawable(R.drawable.bg_exposure_dashboard_low_risk)
+                NONE -> highRiskScore.background =
+                    context?.getDrawable(R.drawable.bg_exposure_dashboard_number)
+            }
+            daysSinceLastExposure.text = days ?: "-"
+            totalExposures.text = total ?: "-"
+            highRiskScore.text = risk ?: "-"
+        }
     }
 }

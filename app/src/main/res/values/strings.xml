@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Covid Watch</string>
     <string name="title_contact_events">Seen Tags</string>
@@ -145,15 +146,11 @@
     <string name="continue_setup_button">Continue Setup</string>
 
     <!-- Home Screen-->
-    <string name="days_text">days</string>
-    <string name="days_subtext">since last exposure</string>
-    <string name="total_exposures_text">total exposures</string>
-    <string name="total_exposures_subtext">in the last 14 days</string>
-    <string name="high_risk_score_text">high risk score</string>
-    <string name="high_risk_score_subtext">(1–8 scale)</string>
-    <string name="my_possible_exposures_title">My Possible Exposures</string>
-    <string name="empty_exposure_summary">0</string>
-    <string name="notify_others_button_question">Got a positive diagnosis?</string>
+    <string name="home_days_since_last_exposure"><b>days</b>\nsince last exposure</string>
+    <string name="home_possible_exposures"><b>possible exposures</b>\nin the last 14 days</string>
+    <string name="home_total_risk_score"><b>total risk score</b> (1–8) scale</string>
+    <string name="possible_exposure_summary">Possible Exposure Summary</string>
+    <string name="notify_others_button_question"><b>Have a positive diagnosis?</b> Anonymously notify others to help your community stay safe.</string>
     <string name="notify_others_button">Notify Others</string>
     <string name="notify_others_button_text">Share your result anonymously to help your community stay safe.</string>
     <string name="contact_alert_text">Possible COVID-19 exposure.\nTap for more information.</string>
@@ -209,7 +206,7 @@
     <!-- Share app common action -->
     <string name="share_app_content">Become a Covid Watcher and help your community stay safe. https://www.covid-watch.org</string>
     <string name="share_app_title">Help by Sharing</string>
-    <string name="share_app_button">Share the app</string>
+    <string name="share_app_button">Share the App</string>
 
     <!-- ERROR MESSAGES -->
     <string name="unknown_error">Something went wrong</string>
@@ -218,5 +215,6 @@
     <string name="no_connection_error">No internet available, please check your WIFi or Data connections</string>
     <string name="insufficient_storage">Insufficient storage to run Exposure Notification</string>
     <string name="ok">OK</string>
+    <string name="screen_title">PUBLIC HEALTH DEPARTMENT</string>
 
 </resources>
