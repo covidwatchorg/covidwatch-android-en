@@ -7,6 +7,10 @@
 
         <import type="org.covidwatch.android.ui.ItemBindings" />
 
+        <import type="androidx.recyclerview.widget.DividerItemDecoration" />
+
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="org.covidwatch.android.ui.exposures.ExposuresViewModel" />
@@ -21,12 +25,12 @@
         <ImageView
             android:id="@+id/btn_close"
             style="@style/ImageView.BtnClose"
-            android:padding="@dimen/padding_normal"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/close_button_content_descriptor"
+            android:paddingHorizontal="@dimen/padding_large" />
 
         <TextView
             style="@style/TextView.ScreenTitle"
-            android:paddingHorizontal="@dimen/padding_normal"
+            android:paddingHorizontal="@dimen/padding_large"
             android:text="@string/title_exposures" />
 
         <!--suppress AndroidUnknownAttribute -->
@@ -35,23 +39,38 @@
             style="@style/Switch.EnableExposureNotification"
             android:checked="@{viewModel.exposureNotificationEnabled}"
             android:onCheckedChanged="@{(switch, on) -> viewModel.enableExposureNotification(on)}"
-            android:paddingHorizontal="@dimen/padding_normal" />
+            android:paddingHorizontal="@dimen/padding_large" />
 
         <TextView
             style="@style/TextView.ScreenSubtitle"
-            android:paddingHorizontal="@dimen/padding_normal"
-            android:text="@string/exposures_subtitle" />
+            android:paddingHorizontal="@dimen/padding_large"
+            android:text="@string/exposures_subtitle"
+            android:textSize="13sp" />
 
         <TextView
             style="@style/TextView.ScreenSubtitle"
             android:layout_marginTop="@dimen/padding_normal"
             android:background="@color/darkGray"
-            android:paddingHorizontal="@dimen/padding_normal"
+            android:paddingHorizontal="@dimen/padding_large"
             android:paddingVertical="@dimen/padding_normal"
             android:textColor="@color/white"
-            android:textStyle="bold"
+            android:textSize="14sp"
             app:last_exposure_time="@{viewModel.lastExposureTime}"
             tools:text="Exposure last checked today at 3:15pm" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient_bottom_top_top"
+            android:drawableEnd="@drawable/doctor_with_heart"
+            android:drawablePadding="@dimen/padding_normal"
+            android:lineSpacingExtra="4dp"
+            android:paddingHorizontal="@dimen/padding_large"
+            android:paddingTop="@dimen/padding_normal"
+            android:text="@string/empty_exposures_list"
+            android:textSize="13sp"
+            android:visibility="@{viewModel.exposureInfo.empty ? View.VISIBLE : View.GONE }"
+            tools:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/exposure_info_list"
@@ -59,7 +78,6 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:clipToPadding="false"
-            android:paddingHorizontal="@dimen/padding_normal"
             app:itemBinding="@{ItemBindings.bind(viewModel)}"
             app:items="@{viewModel.exposureInfo}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -69,16 +87,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_normal"
             android:gravity="center"
-            android:paddingHorizontal="@dimen/padding_normal"
+            android:paddingHorizontal="@dimen/padding_large"
+            android:paddingBottom="@dimen/padding_normal"
             android:text="@string/exposure_info_explanation" />
-
-        <include
-            android:id="@+id/powered_by"
-            layout="@layout/powered_by"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 </layout>

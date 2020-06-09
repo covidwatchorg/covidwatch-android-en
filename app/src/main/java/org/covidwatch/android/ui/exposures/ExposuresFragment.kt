@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import org.covidwatch.android.databinding.FragmentExposuresBinding
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseViewModelFragment
@@ -28,6 +29,12 @@ class ExposuresFragment : BaseViewModelFragment<FragmentExposuresBinding, Exposu
             viewModel = this@ExposuresFragment.viewModel
             executePendingBindings()
 
+            exposureInfoList.addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
             btnClose.setOnClickListener {
                 findNavController().popBackStack()
             }

@@ -5,10 +5,6 @@
 
     <data>
 
-        <import type="java.util.Date" />
-
-        <import type="android.view.View" />
-
         <variable
             name="viewModel"
             type="org.covidwatch.android.ui.exposures.ExposuresViewModel" />
@@ -18,27 +14,17 @@
             type="org.covidwatch.android.data.CovidExposureInformation" />
     </data>
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
+        android:background="?selectableItemBackground"
+        android:clickable="true"
+        android:drawableStart="@drawable/ic_info_red"
+        android:drawablePadding="@dimen/padding_normal"
+        android:focusable="true"
         android:onClick="@{()->viewModel.showExposureDetails(item)}"
-        android:paddingVertical="@dimen/padding_normal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="18sp"
-            android:contentDescription="@string/exposure_risk_icon_description"
-            android:src="@drawable/ic_info_red"
-            android:visibility="@{item.highRisk ? View.VISIBLE : View.INVISIBLE}" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            app:date="@{item.dateMillisSinceEpoch}"
-            tools:text="May 20, 2020" />
-    </LinearLayout>
+        android:paddingHorizontal="@dimen/padding_large"
+        android:paddingVertical="@dimen/padding_normal"
+        app:exposure="@{item}"
+        tools:text="May 20, 2020" />
 </layout>
