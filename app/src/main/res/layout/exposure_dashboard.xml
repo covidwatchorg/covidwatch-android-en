@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/padding_normal"
-            android:text="@string/home_days_since_last_exposure" />
+            android:text="@string/home_total_risk_score" />
     </LinearLayout>
 
 </LinearLayout>
