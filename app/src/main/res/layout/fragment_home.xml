@@ -36,11 +36,10 @@
                     android:id="@+id/menu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:contentDescription="@string/menu"
                     android:focusable="true"
-
-                    android:background="?selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_menu" />
             </LinearLayout>
 
@@ -65,7 +64,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/tangerine"
                 android:visibility="gone"
-                tools:text="You may have been in contact with COVID-19" />
+                tools:text="Possible COVID-19 exposure.\nTap for more information."
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/info_banner"
@@ -73,8 +73,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/aqua"
+                android:textSize="14sp"
                 android:visibility="gone"
-                tools:text="Turn Bluetooth on for  this device" />
+                tools:text="Exposure notifications must be enabled for the app to work. Tap to review your app settings."
+                tools:visibility="visible" />
 
             <ImageView
                 android:layout_width="match_parent"
