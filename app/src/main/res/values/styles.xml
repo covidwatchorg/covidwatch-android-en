@@ -12,7 +12,7 @@
         <item name="actionBarSize">90dp</item>
     </style>
 
-    <style name="AppTheme.LauncherTheme" parent="AppTheme">
+    <style name="AppTheme.LauncherTheme">
         <item name="android:windowBackground">@drawable/background_launcher</item>
     </style>
 
