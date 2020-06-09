@@ -5,7 +5,7 @@ import java.util.*
 
 object DateFormatter {
     private const val DATE_PATTERN = "MMM dd, yyyy"
-    private const val DATE_TIME_PATTERN = "hh:mm aaa MMM dd, yyyy"
+    private const val DATE_TIME_PATTERN = "MMM dd, yyyy, hh:mm aaa"
 
     private var locale = Locale.getDefault()
     private var date = SimpleDateFormat(DATE_PATTERN, locale)
