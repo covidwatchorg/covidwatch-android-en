@@ -28,17 +28,16 @@ class ExportDiagnosisKeysAsFileUseCase(
         enManager.temporaryExposureKeyHistory().apply {
             success {
                 val keys = it.mapIndexed { i, key ->
-                    key.asDiagnosisKey()
-                        .copy(
-                            transmissionRisk = params?.riskLevels?.get(i)
-                                ?: key.transmissionRiskLevel
-                        ).asTemporaryExposureKey()
+                    key.asDiagnosisKey().copy(
+                        transmissionRisk = params?.riskLevels?.get(i) ?: key.transmissionRiskLevel,
+                        rollingPeriod = 144
+                    ).asTemporaryExposureKey()
                 }
 
                 // TODO: 03.06.2020 Think of dynamic region
                 val files = keyFileWriter.writeForKeys(
                     keys,
-                    Instant.now().minus(Duration.ofDays(14)),
+                    Instant.now().minus(Duration.ofDays(keys.size.toLong())),
                     Instant.now(),
                     "US"
                 )
