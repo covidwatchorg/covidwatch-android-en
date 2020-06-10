@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import org.covidwatch.android.R
 import org.covidwatch.android.databinding.FragmentExposureDetailsBinding
 import org.covidwatch.android.ui.BaseFragment
 
@@ -30,14 +30,9 @@ class ExposureDetailsFragment : BaseFragment<FragmentExposureDetailsBinding>() {
         with(binding) {
             btnClose.setOnClickListener { findNavController().popBackStack() }
 
-            //TODO:
             btnSharePositiveDiagnosis.setOnClickListener {
-                Toast.makeText(context, "Not implemented", Toast.LENGTH_SHORT).show()
-            }
-            btnFindTestSite.setOnClickListener {
-                Toast.makeText(context, "Not implemented", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.notifyOthersFragment)
             }
         }
-
     }
 }

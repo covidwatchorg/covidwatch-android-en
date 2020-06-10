@@ -6,13 +6,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
         android:paddingVertical="@dimen/padding_normal">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginEnd="@dimen/padding_micro"
             android:gravity="center"
             android:text="@string/powered_by"
