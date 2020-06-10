@@ -15,7 +15,7 @@ class CovidExposureSummary(
 fun ExposureSummary.asCovidExposureSummary() = CovidExposureSummary(
     daysSinceLastExposure,
     matchedKeyCount,
-    maximumRiskScore,
+    (maximumRiskScore * 8.0 / 4096).toInt(),
     attenuationDurationsInMinutes,
-    summationRiskScore
+    (summationRiskScore * 8.0 / 4096).toInt()
 )

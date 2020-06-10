@@ -40,5 +40,5 @@ fun ExposureInformation.toCovidExposureInformation() = CovidExposureInformation(
     durationMinutes = durationMinutes,
     attenuationValue = attenuationValue,
     transmissionRiskLevel = transmissionRiskLevel,
-    totalRiskScore = totalRiskScore
+    totalRiskScore = (totalRiskScore * 8.0 / 4096).toInt()
 )
