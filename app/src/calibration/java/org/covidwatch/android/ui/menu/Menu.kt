@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.covidwatch.android.R
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
@@ -28,7 +27,10 @@ class MenuFragment : BaseMenuFragment() {
         super.handleMenuItemClick(menuItem)
         when (menuItem.title) {
             R.string.menu_reset_possible_exposures -> {
-                lifecycleScope.launch { exposureInformationRepository.reset() }
+                lifecycleScope.launch {
+                    exposureInformationRepository.reset()
+                    preferences.resetExposureSummary()
+                }
                 Toast.makeText(context, "Possible exposures were deleted", Toast.LENGTH_SHORT)
                     .show()
                 findNavController().popBackStack()

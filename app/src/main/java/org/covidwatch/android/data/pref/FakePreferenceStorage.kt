@@ -17,6 +17,9 @@ class FakePreferenceStorage : PreferenceStorage {
     override var exposureSummary: CovidExposureSummary
         get() = RandomEnObjects.exposureSummary.asCovidExposureSummary()
         set(value) {}
+
+    override fun resetExposureSummary() {}
+
     override var exposureConfiguration: ExposureConfiguration
         get() = ExposureConfiguration.ExposureConfigurationBuilder()
             .setMinimumRiskScore(1)

@@ -20,6 +20,8 @@ interface PreferenceStorage {
     var onboardingFinished: Boolean
     var exposureSummary: CovidExposureSummary
 
+    fun resetExposureSummary()
+
     // TODO: 05.06.2020 Replace with our own class when the API is stable
     var exposureConfiguration: ExposureConfiguration
     val observableExposureSummary: LiveData<CovidExposureSummary>
@@ -28,6 +30,13 @@ interface PreferenceStorage {
 class SharedPreferenceStorage(context: Context) : PreferenceStorage {
     private val prefs = context.applicationContext.getSharedPreferences(NAME, MODE_PRIVATE)
     private val _exposureSummary = MutableLiveData<CovidExposureSummary>()
+    private val defaultExposureSummary = CovidExposureSummary(
+        daySinceLastExposure = 0,
+        matchedKeyCount = 0,
+        maximumRiskScore = 0,
+        attenuationDurationsInMinutes = intArrayOf(),
+        summationRiskScore = 0
+    )
 
     private val changeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         when (key) {
@@ -43,25 +52,24 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
 
     override var onboardingFinished by Preference(prefs, ONBOARDING_FINISHED, false)
 
+
     override var exposureSummary: CovidExposureSummary by ObjectPreference(
         prefs,
         EXPOSURE_SUMMARY,
-        CovidExposureSummary(
-            daySinceLastExposure = 0,
-            matchedKeyCount = 0,
-            maximumRiskScore = 0,
-            attenuationDurationsInMinutes = intArrayOf(),
-            summationRiskScore = 0
-        ),
+        defaultExposureSummary,
         CovidExposureSummary::class.java
     )
+
+    override fun resetExposureSummary() {
+        exposureSummary = defaultExposureSummary
+    }
 
     override var exposureConfiguration: ExposureConfiguration by ObjectPreference(
         prefs,
         EXPOSURE_CONFIGURATION,
         ExposureConfiguration.ExposureConfigurationBuilder()
             .setMinimumRiskScore(1)
-            .setDurationAtAttenuationThresholds(58, 73)
+            .setDurationAtAttenuationThresholds(50, 58)
             .setAttenuationScores(2, 5, 8, 8, 8, 8, 8, 8)
             .setDaysSinceLastExposureScores(1, 2, 2, 4, 6, 8, 8, 8)
             .setDurationScores(1, 1, 4, 7, 7, 8, 8, 8)
