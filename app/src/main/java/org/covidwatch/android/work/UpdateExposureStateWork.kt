@@ -11,6 +11,7 @@ import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.ui.Notifications
 import org.koin.java.KoinJavaComponent.inject
+import timber.log.Timber
 
 class UpdateExposureStateWork(
     context: Context,
@@ -25,6 +26,7 @@ class UpdateExposureStateWork(
     override suspend fun doWork(): Result {
         val token =
             workerParams.inputData.getString(PARAM_TOKEN) ?: return failure(FAILED)
+        Timber.d("Start UpdateExposureStateWork for token: $token")
 
         val exposureSummaryResult = exposureNotification.getExposureSummary(token)
         val exposureSummary =
