@@ -32,6 +32,7 @@ data class DiagnosisKey(
 fun DiagnosisKey.asTemporaryExposureKey(): TemporaryExposureKey =
     TemporaryExposureKey.TemporaryExposureKeyBuilder()
         .setKeyData(key)
+        .setRollingPeriod(rollingPeriod)
         .setRollingStartIntervalNumber(rollingStartNumber)
         .setTransmissionRiskLevel(transmissionRisk)
         .build()
