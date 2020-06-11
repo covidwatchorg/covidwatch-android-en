@@ -10,7 +10,7 @@ internal class DateConverterTest {
     private val dateConv = DateConverter()
 
     @Nested
-    inner class ToDate() {
+    inner class ToDate {
         @Test
         fun `Convert Long to Date`() {
             assertThat(dateConv.toDate(205465402)).isEqualTo(Date(205465402))
@@ -23,7 +23,7 @@ internal class DateConverterTest {
     }
 
     @Nested
-    inner class FromDate() {
+    inner class FromDate {
         @Test
         fun `Convert Date to Long`() {
             assertThat(dateConv.fromDate(Date(205465402))).isEqualTo(205465402)

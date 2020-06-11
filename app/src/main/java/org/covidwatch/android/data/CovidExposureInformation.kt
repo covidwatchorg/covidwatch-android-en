@@ -4,7 +4,6 @@ import androidx.annotation.StringRes
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import org.covidwatch.android.R
 import java.io.Serializable
 
@@ -28,17 +27,5 @@ data class CovidExposureInformation(
     }
 
     @Ignore
-    val highRisk = totalRiskScore > HIGH_RISK_SCORE
-
-    companion object {
-        const val HIGH_RISK_SCORE = 6
-    }
+    val highRisk = totalRiskScore.level == RiskScoreLevel.HIGH
 }
-
-fun ExposureInformation.toCovidExposureInformation() = CovidExposureInformation(
-    dateMillisSinceEpoch = dateMillisSinceEpoch,
-    durationMinutes = durationMinutes,
-    attenuationValue = attenuationValue,
-    transmissionRiskLevel = transmissionRiskLevel,
-    totalRiskScore = (totalRiskScore * 8.0 / 4096).toInt()
-)
