@@ -53,23 +53,21 @@
                     layout="@layout/exposure_information_details"
                     app:exposureInformation="@{exposureInformation}" />
 
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingBottom="@dimen/padding_small"
+                    android:layout_marginVertical="@dimen/padding_normal"
                     android:text="@string/share_positive_diagnosis_btn_explanation" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_share_positive_diagnosis"
                     style="@style/Button.Action"
-                    android:layout_marginTop="@dimen/padding_normal"
                     android:text="@string/btn_share_positive_diagnosis" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
 
                 <include
                     android:id="@+id/powered_by"

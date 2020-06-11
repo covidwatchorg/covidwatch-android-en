@@ -126,7 +126,7 @@
     <string name="high_total_exposure_risk">High: %d of 100</string>
     <string name="exposure_information_transmission_risk_title">Transmission Risk</string>
     <string name="exposure_information_transmission_risk_text">%d of 8</string>
-    <string name="share_positive_diagnosis_btn_explanation">Share your result anonymously to help your community stay safe.</string>
+    <string name="share_positive_diagnosis_btn_explanation"><b>Have a positive diagnosis?</b>\nHelp stop the spread by anonymously notifying others of a possible exposure to COVID-19.</string>
     <string name="next_steps">Next Steps</string>
 
     <!--  Onboarding  -->
