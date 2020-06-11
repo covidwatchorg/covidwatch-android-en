@@ -3,10 +3,11 @@ package org.covidwatch.android.data.pref
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
+import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import org.covidwatch.android.data.CovidExposureSummary
-import org.covidwatch.android.data.asCovidExposureSummary
 import org.covidwatch.android.exposurenotification.RandomEnObjects
 
+@Suppress("UNUSED_PARAMETER", "unused")
 class FakePreferenceStorage : PreferenceStorage {
     override var lastFetchDate: Long
         get() = 0
@@ -17,6 +18,17 @@ class FakePreferenceStorage : PreferenceStorage {
     override var exposureSummary: CovidExposureSummary
         get() = RandomEnObjects.exposureSummary.asCovidExposureSummary()
         set(value) {}
+
+    private fun ExposureSummary.asCovidExposureSummary() = CovidExposureSummary(
+        daysSinceLastExposure,
+        matchedKeyCount,
+        (maximumRiskScore * 8.0 / 4096).toInt(),
+        attenuationDurationsInMinutes,
+        (summationRiskScore * 8.0 / 4096).toInt()
+    )
+
+    override fun resetExposureSummary() {}
+
     override var exposureConfiguration: ExposureConfiguration
         get() = ExposureConfiguration.ExposureConfigurationBuilder()
             .setMinimumRiskScore(1)

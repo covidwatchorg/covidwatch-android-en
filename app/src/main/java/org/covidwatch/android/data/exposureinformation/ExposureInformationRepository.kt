@@ -15,6 +15,8 @@ class ExposureInformationRepository(
         return local.exposureInformation()
     }
 
+    suspend fun exposures() = local.exposures()
+
     suspend fun reset() {
         local.reset()
     }

@@ -1,6 +1,5 @@
 package org.covidwatch.android.data.exposureinformation
 
-import androidx.lifecycle.LiveData
 import org.covidwatch.android.data.CovidExposureInformation
 
 class ExposureInformationLocalSource(private val dao: ExposureInformationDao) {
@@ -8,8 +7,9 @@ class ExposureInformationLocalSource(private val dao: ExposureInformationDao) {
         dao.saveExposureInformation(exposureInformation)
     }
 
-    fun exposureInformation(): LiveData<List<CovidExposureInformation>> =
-        dao.exposureInformation()
+    fun exposureInformation() = dao.exposureInformation()
+
+    suspend fun exposures() = dao.exposures()
 
     suspend fun reset() {
         dao.reset()

@@ -12,100 +12,62 @@
             type="org.covidwatch.android.data.CovidExposureInformation" />
     </data>
 
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="org.covidwatch.android.ui.exposurenotification.ExposureNotificationFragment">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/btn_close"
-            style="@style/ImageView.BtnClose"
-            android:paddingHorizontal="@dimen/padding_normal"
-            tools:ignore="ContentDescription" />
-
-        <TextView
-            style="@style/TextView.ScreenTitle"
-            android:paddingHorizontal="@dimen/padding_normal"
-            android:text="@string/title_exposure_details"
-            android:textColor="@color/tangerine" />
-
-        <ScrollView
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/padding_normal"
-            android:layout_weight="1"
-            android:scrollbars="none">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:liftOnScroll="true">
+
+            <ImageView
+                android:id="@+id/btn_close"
+                style="@style/ImageView.BtnClose"
+                android:paddingHorizontal="@dimen/padding_large"
+                app:layout_scrollFlags="scroll|enterAlways"
+                tools:ignore="ContentDescription" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingHorizontal="@dimen/padding_normal">
+                android:paddingHorizontal="@dimen/padding_large"
+                android:paddingTop="@dimen/padding_normal">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/details"
-                    android:textSize="@dimen/big_font_size"
-                    android:textStyle="bold" />
-
-                <TextView
-                    style="@style/TextView.ScreenSubtitle"
-                    android:text="@string/exposure_details_subtitle" />
+                    style="@style/TextView.ScreenTitle"
+                    android:text="@string/title_exposure_details" />
 
                 <include
                     layout="@layout/exposure_information_details"
                     app:exposureInformation="@{exposureInformation}" />
 
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/padding_normal"
-                    android:text="@string/next_steps"
-                    android:textSize="@dimen/big_font_size"
-                    android:textStyle="bold" />
-
-                <!--TODO: Change to dynamic inserting of data or use real static data-->
-                <LinearLayout
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/padding_normal"
-                        android:drawableStart="@drawable/next_step_bullet_point"
-                        android:drawablePadding="@dimen/padding_normal"
-                        android:text="Varius non, quis fermentum, feugiat maecenas eu." />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/padding_normal"
-                        android:drawableStart="@drawable/next_step_bullet_point"
-                        android:drawablePadding="@dimen/padding_normal"
-                        android:text="Varius non, quis fermentum, feugiat maecenas eu." />
-                </LinearLayout>
+                    android:layout_marginVertical="@dimen/padding_normal"
+                    android:text="@string/share_positive_diagnosis_btn_explanation" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_share_positive_diagnosis"
                     style="@style/Button.Action"
-                    android:layout_marginTop="@dimen/padding_normal"
                     android:text="@string/btn_share_positive_diagnosis" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingBottom="@dimen/padding_small"
-                    android:text="@string/share_positive_diagnosis_btn_explanation" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_find_test_site"
-                    style="@style/Button.Action"
-                    android:text="@string/btn_find_covid_test_site" />
 
                 <include
                     android:id="@+id/powered_by"
@@ -114,6 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal" />
             </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

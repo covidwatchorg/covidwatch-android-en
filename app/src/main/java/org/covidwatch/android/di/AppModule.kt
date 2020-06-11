@@ -44,6 +44,8 @@ val appModule = module {
         Nearby.getExposureNotificationClient(androidApplication())
     }
 
+    single<EnConverter> { ArizonaEnConverter() }
+
     single { Notifications(context = androidApplication()) }
 
     single {
@@ -186,6 +188,7 @@ val appModule = module {
             enManager = get(),
             tokenRepository = get(),
             exposureInformationRepository = get(),
+            enConverter = get(),
             dispatchers = get()
         )
     }

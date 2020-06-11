@@ -5,6 +5,7 @@ import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.extension.toResult
 import org.covidwatch.android.functional.Either
 import org.covidwatch.android.work.UpdateExposureStateWork
+import timber.log.Timber
 import java.util.*
 
 class UpdateExposureStateUseCase(
@@ -13,12 +14,9 @@ class UpdateExposureStateUseCase(
 ) : UseCase<UUID, UpdateExposureStateUseCase.Params>(dispatchers) {
     override suspend fun run(params: Params?): Either<ENStatus, UUID> {
         params ?: return Either.Left(ENStatus.Failed)
+        Timber.d("Start UpdateExposureStateUseCase")
         val updateWork = OneTimeWorkRequestBuilder<UpdateExposureStateWork>()
-            .setConstraints(
-                Constraints.Builder()
-                    .setRequiredNetworkType(NetworkType.CONNECTED)
-                    .build()
-            )
+            .setConstraints(Constraints.Builder().build())
             .setInputData(
                 Data.Builder().putString(UpdateExposureStateWork.PARAM_TOKEN, params.token).build()
             )
@@ -31,7 +29,6 @@ class UpdateExposureStateUseCase(
         )
         val workInfoLiveData = workManager.getWorkInfoById(updateWork.id)
         val workInfo = workInfoLiveData.await()
-
         return workInfo.toResult()
     }
 
