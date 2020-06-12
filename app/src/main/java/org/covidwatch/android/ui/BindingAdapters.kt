@@ -82,6 +82,18 @@ fun TextView.setTextFromExposure(exposure: CovidExposureInformation?) {
     }
 }
 
+@BindingAdapter("attenuation_durations")
+fun TextView.setTextFromAttenuationDurations(attenuationDurations: List<Int>?) {
+    text = attenuationDurations?.joinToString { "${it}m" }
+}
+
+@BindingAdapter("total_risk")
+fun TextView.setTextFromTotalRisk(totalRiskScore: Int?) {
+    totalRiskScore?.let {
+        text = context.getString(R.string.exposure_information_transmission_risk_text, it)
+    }
+}
+
 @BindingAdapter("date")
 fun TextView.setTextFromTime(time: Long?) {
     time ?: return
@@ -106,18 +118,6 @@ fun TextView.setTextFromLastExposureTime(time: Long?) {
         context.getString(R.string.last_exposure_time, DateFormatter.formatDateAndTime(time)),
         FROM_HTML_MODE_COMPACT
     )
-}
-
-@BindingAdapter("total_risk")
-fun TextView.setTextFromTotalRisk(totalRiskScore: Int?) {
-    totalRiskScore?.let {
-        //TODO: Use proper logic for mapping values
-        text = when (it) {
-            in 0..3 -> context.getString(R.string.low_total_exposure_risk, it)
-            in 4..5 -> context.getString(R.string.middle_total_exposure_risk, it)
-            else -> context.getString(R.string.high_total_exposure_risk, it)
-        }
-    }
 }
 
 @BindingAdapter("risk_level")

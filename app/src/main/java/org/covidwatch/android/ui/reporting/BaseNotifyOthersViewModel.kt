@@ -12,7 +12,7 @@ import org.covidwatch.android.exposurenotification.ExposureNotificationManager.C
 import org.covidwatch.android.ui.BaseViewModel
 
 open class BaseNotifyOthersViewModel(
-    protected val startUploadDiagnosisKeysWorkUseCase: StartUploadDiagnosisKeysWorkUseCase,
+    private val startUploadDiagnosisKeysWorkUseCase: StartUploadDiagnosisKeysWorkUseCase,
     private val enManager: ExposureNotificationManager,
     positiveDiagnosisRepository: PositiveDiagnosisRepository
 ) : BaseViewModel() {

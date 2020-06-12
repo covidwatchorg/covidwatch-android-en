@@ -95,7 +95,8 @@ class ArizonaEnConverter : EnConverter {
                 totalRiskScore = computeRiskScore(
                     attenuationDurationsInMinutes,
                     transmissionRiskLevel
-                )
+                ),
+                attenuationDurations = attenuationDurationsInMinutes.toList()
             )
         }
 }

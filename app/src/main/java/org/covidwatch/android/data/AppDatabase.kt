@@ -2,6 +2,8 @@ package org.covidwatch.android.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import org.covidwatch.android.data.converter.AttenuationDurationsConverter
 import org.covidwatch.android.data.countrycode.CountryCodeDao
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenDao

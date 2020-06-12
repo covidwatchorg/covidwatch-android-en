@@ -28,7 +28,8 @@ class DefaultEnConverter : EnConverter {
                 durationMinutes = durationMinutes,
                 attenuationValue = attenuationValue,
                 transmissionRiskLevel = transmissionRiskLevel,
-                totalRiskScore = (totalRiskScore * 8.0 / 4096).toInt()
+                totalRiskScore = (totalRiskScore * 8.0 / 4096).toInt(),
+                attenuationDurations = attenuationDurationsInMinutes.toList()
             )
         }
 }

@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="exposureInformation"
+            name="exposure"
             type="org.covidwatch.android.data.CovidExposureInformation" />
     </data>
 
@@ -26,7 +26,7 @@
 
             <TextView
                 style="@style/TextView.ExposureInformationRowText"
-                app:date="@{exposureInformation.dateMillisSinceEpoch}"
+                app:date="@{exposure.dateMillisSinceEpoch}"
                 tools:text="May 20, 2020" />
         </LinearLayout>
 
@@ -40,22 +40,23 @@
 
             <TextView
                 style="@style/TextView.ExposureInformationRowText"
-                android:text="@{@string/exposure_information_duration_text(exposureInformation.durationMinutes)}"
-                tools:text="20 min" />
+                android:gravity="center_vertical"
+                app:attenuation_durations="@{exposure.attenuationDurations}"
+                tools:text="20m, 15m, 50m" />
         </LinearLayout>
 
         <LinearLayout style="@style/ExposureInformationRow">
 
             <TextView
                 style="@style/TextView.ExposureInformationRowTitle"
-                android:text="@string/exposure_information_attenuation_title" />
+                android:text="@string/exposure_information_transmission_risk_level_title" />
 
             <View style="@style/Divider.Vertical" />
 
             <TextView
                 style="@style/TextView.ExposureInformationRowText"
-                android:text="@{@string/exposure_information_attenuation_text(exposureInformation.attenuationValue)}"
-                tools:text="225 db" />
+                android:text="@{String.valueOf(exposure.transmissionRiskLevel)}"
+                tools:text="6" />
         </LinearLayout>
 
         <LinearLayout style="@style/ExposureInformationRow">
@@ -68,22 +69,9 @@
 
             <TextView
                 style="@style/TextView.ExposureInformationRowText"
-                app:total_risk="@{exposureInformation.totalRiskScore}"
-                tools:text="High: 91 of 100" />
+                app:total_risk="@{exposure.totalRiskScore}"
+                tools:text="8 of 8" />
         </LinearLayout>
 
-        <LinearLayout style="@style/ExposureInformationRow">
-
-            <TextView
-                style="@style/TextView.ExposureInformationRowTitle"
-                android:text="@string/exposure_information_transmission_risk_title" />
-
-            <View style="@style/Divider.Vertical" />
-
-            <TextView
-                style="@style/TextView.ExposureInformationRowText"
-                android:text="@{@string/exposure_information_transmission_risk_text(exposureInformation.attenuationValue)}"
-                tools:text="Level 5 of 8" />
-        </LinearLayout>
     </LinearLayout>
 </layout>

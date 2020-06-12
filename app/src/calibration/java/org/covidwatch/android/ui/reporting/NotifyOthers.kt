@@ -66,7 +66,7 @@ class NotifyOthersFragment : BaseNotifyOthersFragment() {
                 context?.let { context ->
                     val dialogView =
                         org.covidwatch.android.databinding.DialogChooseExportDiagnosisTypeBinding.inflate(
-                            android.view.LayoutInflater.from(context)
+                            LayoutInflater.from(context)
                         )
 
                     val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(context)
@@ -106,7 +106,7 @@ class NotifyOthersFragment : BaseNotifyOthersFragment() {
 
 class NotifyOthersViewModel(
     private val exportDiagnosisKeysAsFileUseCase: ExportDiagnosisKeysAsFileUseCase,
-    startUploadDiagnosisKeysWorkUseCase: StartUploadDiagnosisKeysWorkUseCase,
+    private val startUploadDiagnosisKeysWorkUseCase: StartUploadDiagnosisKeysWorkUseCase,
     enManager: ExposureNotificationManager,
     positiveDiagnosisRepository: PositiveDiagnosisRepository
 ) : BaseNotifyOthersViewModel(

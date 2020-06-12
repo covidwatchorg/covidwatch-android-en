@@ -116,15 +116,14 @@
     <string name="btn_share_positive_diagnosis">Share a Positive Diagnosis</string>
     <string name="btn_find_covid_test_site">Find COVID-19 Test Site</string>
     <string name="exposure_information_date_title">Date</string>
-    <string name="exposure_information_duration_title">Duration</string>
+    <string name="exposure_information_duration_title">Attenuation Duration</string>
     <string name="exposure_information_duration_text">%d min</string>
     <string name="exposure_information_attenuation_title">Attenuation</string>
-    <string name="exposure_information_attenuation_text">%d db</string>
     <string name="exposure_information_total_risk_title">Total Risk Score</string>
     <string name="low_total_exposure_risk">Low: %d of 100</string>
     <string name="middle_total_exposure_risk">Middle: %d of 100</string>
     <string name="high_total_exposure_risk">High: %d of 100</string>
-    <string name="exposure_information_transmission_risk_title">Transmission Risk</string>
+    <string name="exposure_information_transmission_risk_level_title">Transmission Risk Level</string>
     <string name="exposure_information_transmission_risk_text">%d of 8</string>
     <string name="share_positive_diagnosis_btn_explanation"><b>Have a positive diagnosis?</b>\nHelp stop the spread by anonymously notifying others of a possible exposure to COVID-19.</string>
     <string name="call_pha">Call the Public Health Department to get tested and receive help with shelter and food at 1–800-COVID19</string>
