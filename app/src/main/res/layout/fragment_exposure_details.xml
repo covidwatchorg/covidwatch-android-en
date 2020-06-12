@@ -8,7 +8,7 @@
         <import type="org.covidwatch.android.ui.ItemBindings" />
 
         <variable
-            name="exposureInformation"
+            name="exposure"
             type="org.covidwatch.android.data.CovidExposureInformation" />
     </data>
 
@@ -26,7 +26,6 @@
                 android:id="@+id/btn_close"
                 style="@style/ImageView.BtnClose"
                 android:paddingHorizontal="@dimen/padding_large"
-                app:layout_scrollFlags="scroll|enterAlways"
                 tools:ignore="ContentDescription" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -35,12 +34,12 @@
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
+                android:id="@+id/exposure_details_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingHorizontal="@dimen/padding_large"
                 android:paddingTop="@dimen/padding_normal">
@@ -50,13 +49,64 @@
                     android:text="@string/title_exposure_details" />
 
                 <include
-                    layout="@layout/exposure_information_details"
-                    app:exposureInformation="@{exposureInformation}" />
+                    android:id="@+id/exposure_details"
+                    layout="@layout/exposure_details"
+                    app:exposure="@{exposure}" />
 
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_normal"
+                    android:text="@string/next_steps"
+                    android:textSize="@dimen/big_font_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/call_pha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/padding_normal"
+                    android:autoLink="phone"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/call_pha_art"
+                    android:focusable="true"
+                    android:gravity="bottom"
+                    android:lineSpacingExtra="2sp"
+                    android:linksClickable="true"
+                    android:text="@string/call_pha"
+                    android:textSize="16sp" />
+
+                <View style="@style/Divider.Horizontal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/padding_normal"
+                    android:drawableStart="@drawable/monitor_symptoms_art"
+                    android:drawablePadding="@dimen/padding_large"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="4sp"
+                    android:text="@string/monitor_symptoms"
+                    android:textSize="16sp" />
+
+                <View style="@style/Divider.Horizontal" />
+
+                <TextView
+                    android:id="@+id/follow_guidance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/padding_normal"
+                    android:autoLink="web"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/follow_guidance_art"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="2sp"
+                    android:linksClickable="true"
+                    android:text="@string/follow_guidance"
+                    android:textSize="16sp" />
+
+                <View style="@style/Divider.Horizontal" />
 
                 <TextView
                     android:layout_width="match_parent"
