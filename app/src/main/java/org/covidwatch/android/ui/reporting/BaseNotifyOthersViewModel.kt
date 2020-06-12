@@ -20,6 +20,7 @@ open class BaseNotifyOthersViewModel(
     positiveDiagnosisRepository: PositiveDiagnosisRepository
 ) : BaseViewModel() {
 
+    private val defaultRiskLevel = 6
     private val riskLevelSeparator = " "
 
     private val _setTransmissionLevelRisk = MutableLiveData<Event<List<Int>>>()
@@ -53,7 +54,7 @@ open class BaseNotifyOthersViewModel(
         riskLevels.joinToString(separator = riskLevelSeparator)
 
     protected fun stringToRiskLevels(riskLevels: String) =
-        riskLevels.split(riskLevelSeparator).map { it.toInt() }
+        riskLevels.trim().split(riskLevelSeparator).map { it.toInt() }
 
     open fun shareReport(riskLevels: String) {
         observeStatus(
@@ -66,8 +67,7 @@ open class BaseNotifyOthersViewModel(
         withPermission(PERMISSION_KEYS_REQUEST_CODE) {
             enManager.temporaryExposureKeyHistory().apply {
                 success {
-                    // TODO: 03.06.2020 Replace the magic 3 with dynamic values
-                    _setTransmissionLevelRisk.send(it.map { 3 })
+                    _setTransmissionLevelRisk.send(it.map { defaultRiskLevel })
                 }
                 failure { handleStatus(it) }
             }
