@@ -48,38 +48,6 @@ open class BaseNotifyOthersFragment :
 
         with(viewModel) {
             observe(positiveDiagnosis) { adapter.setItems(it) }
-            observeEvent(setTransmissionLevelRisk) { riskLevels ->
-                context?.let { context ->
-                    val dialogView = DialogRiskLevelsBinding.inflate(
-                        LayoutInflater.from(context)
-                    )
-                    val keysNumber = riskLevels.size
-
-                    dialogView.title.text =
-                        getString(R.string.transmission_risk_dialog_title, keysNumber)
-
-                    dialogView.description.text =
-                        HtmlCompat.fromHtml(
-                            getString(R.string.transmission_risk_dialog_message, keysNumber),
-                            HtmlCompat.FROM_HTML_MODE_COMPACT
-                        )
-
-                    dialogView.etRiskLevels.filters =
-                        arrayOf(InputFilter.LengthFilter(keysNumber * 2))
-                    dialogView.etRiskLevels.setText(riskLevelsAsString(riskLevels))
-
-                    AlertDialog
-                        .Builder(context)
-                        .setView(dialogView.root)
-                        .setPositiveButton(R.string.continue_upload) { _, _ ->
-                            val risksLevels = dialogView.etRiskLevels.text.toString()
-                            viewModel.shareReport(risksLevels)
-                        }
-                        .setNegativeButton(R.string.cancel, null)
-                        .create()
-                        .show()
-                }
-            }
         }
     }
 
