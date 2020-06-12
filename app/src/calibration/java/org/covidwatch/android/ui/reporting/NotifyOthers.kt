@@ -84,6 +84,7 @@ class NotifyOthersViewModel(
     val chooseShareMethod: LiveData<Event<Unit>> = _chooseShareMethod
 
     override fun shareReport(riskLevels: String) {
+        // TODO: 03.06.2020 Add validation that check correct format of the string
         this.riskLevels.clear()
         this.riskLevels.addAll(stringToRiskLevels(riskLevels))
         _chooseShareMethod.send()

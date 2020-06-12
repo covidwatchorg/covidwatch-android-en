@@ -1,10 +1,12 @@
 package org.covidwatch.android.ui.reporting
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.text.HtmlCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -51,13 +53,25 @@ open class BaseNotifyOthersFragment :
                     val dialogView = DialogRiskLevelsBinding.inflate(
                         LayoutInflater.from(context)
                     )
+                    val keysNumber = riskLevels.size
+
+                    dialogView.title.text =
+                        getString(R.string.transmission_risk_dialog_title, keysNumber)
+
+                    dialogView.description.text =
+                        HtmlCompat.fromHtml(
+                            getString(R.string.transmission_risk_dialog_message, keysNumber),
+                            HtmlCompat.FROM_HTML_MODE_COMPACT
+                        )
+
+                    dialogView.etRiskLevels.filters =
+                        arrayOf(InputFilter.LengthFilter(keysNumber * 2))
                     dialogView.etRiskLevels.setText(riskLevelsAsString(riskLevels))
 
                     AlertDialog
                         .Builder(context)
                         .setView(dialogView.root)
                         .setPositiveButton(R.string.continue_upload) { _, _ ->
-                            // TODO: 03.06.2020 Add validation that check correct format of the string
                             val risksLevels = dialogView.etRiskLevels.text.toString()
                             viewModel.shareReport(risksLevels)
                         }
