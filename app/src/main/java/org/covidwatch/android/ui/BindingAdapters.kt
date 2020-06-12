@@ -88,6 +88,17 @@ fun TextView.setTextFromTime(time: Long?) {
     text = DateFormatter.format(time)
 }
 
+@BindingAdapter("exposure_details_date")
+fun TextView.setExposureInfoDate(time: Long?) {
+    time ?: return
+    text = HtmlCompat.fromHtml(
+        context.getString(
+            R.string.exposure_date_and_info,
+            DateFormatter.format(time)
+        ), FROM_HTML_MODE_COMPACT
+    )
+}
+
 @BindingAdapter("last_exposure_time")
 fun TextView.setTextFromLastExposureTime(time: Long?) {
     time ?: return
