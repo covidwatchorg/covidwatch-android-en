@@ -26,7 +26,9 @@ object DateFormatter {
             return SimpleDateFormat(DATE_TIME_PATTERN, locale).also { field = it }
         }
 
+    @JvmStatic
     fun format(time: Long?): String = date.format(time)
 
+    @JvmStatic
     fun formatDateAndTime(time: Long?): String = dateAndTime.format(time)
 }

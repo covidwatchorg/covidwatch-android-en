@@ -127,7 +127,15 @@
     <string name="exposure_information_transmission_risk_title">Transmission Risk</string>
     <string name="exposure_information_transmission_risk_text">%d of 8</string>
     <string name="share_positive_diagnosis_btn_explanation"><b>Have a positive diagnosis?</b>\nHelp stop the spread by anonymously notifying others of a possible exposure to COVID-19.</string>
-    <string name="next_steps">Next Steps</string>
+    <string name="call_pha">Call the Public Health Department to get tested and receive help with shelter and food at 1–800-COVID19</string>
+    <string name="monitor_symptoms">Monitor symptoms\nIsolate from others \nRest and take care</string>
+    <string name="follow_guidance">Follow guidance from the\n<a href="https://www.covid-watch.org/">Center for Disease Control</a></string>
+    <string name="next_steps">What to do next</string>
+    <string name="icon_exposure_risk_info">Exposure risk information</string>
+    <string name="low_risk_title">Low Risk</string>
+    <string name="med_risk_title">Medium Risk</string>
+    <string name="high_risk_title">High Risk</string>
+    <string name="exposure_date_and_info">On <b>%s</b> you were near someone who shared a <b>positive</b> and <b>verified</b> diagnosis of COVID-19.</string>
 
     <!--  Onboarding  -->
     <string name="splash_screen_header_content_description">State of California</string>

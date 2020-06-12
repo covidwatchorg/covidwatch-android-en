@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_exposure_details">
+
+    <data>
+
+        <import type="org.covidwatch.android.ui.util.DateFormatter" />
+
+        <variable
+            name="exposure"
+            type="org.covidwatch.android.data.CovidExposureInformation" />
+
+    </data>
+
+    <LinearLayout
+        style="@style/ExposureInformationRow"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/padding_normal"
+            android:paddingVertical="@dimen/padding_small"
+            app:background_risk_level="@{exposure.riskScoreLevel}"
+            tools:background="@color/low_risk">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/padding_extra_large"
+                android:lineSpacingExtra="3sp"
+                android:text="@string/exposure_information_date_title"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:risk_level="@{exposure.riskScoreLevel}"
+                tools:text="Low Risk" />
+
+            <ImageView
+                android:id="@+id/exposure_risk_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:contentDescription="@string/icon_exposure_risk_info"
+                android:focusable="true"
+                android:src="@drawable/ic_outline_info" />
+        </FrameLayout>
+
+        <View style="@style/Divider.Horizontal" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_normal"
+            android:text="@{@string/exposure_date_and_info(DateFormatter.format(exposure.dateMillisSinceEpoch))}"
+            tools:text="On May 23, 2020 you were near someone who shared a positive and verified diagnosis of COVID-19. " />
+    </LinearLayout>
+</layout>

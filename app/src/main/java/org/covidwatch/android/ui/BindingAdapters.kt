@@ -1,5 +1,6 @@
 package org.covidwatch.android.ui
 
+import android.view.View
 import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
@@ -8,6 +9,7 @@ import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.RiskScoreLevel
+import org.covidwatch.android.data.RiskScoreLevel.*
 import org.covidwatch.android.data.level
 import org.covidwatch.android.ui.util.DateFormatter
 
@@ -30,7 +32,7 @@ fun TextView.setExposureSummary(exposureSummary: CovidExposureSummary?) {
 fun TextView.setTextFromExposure(exposure: CovidExposureInformation?) {
     exposure?.let {
         when (it.totalRiskScore.level) {
-            RiskScoreLevel.HIGH -> {
+            HIGH -> {
                 setCompoundDrawablesRelativeWithIntrinsicBounds(
                     R.drawable.ic_risk_high,
                     0,
@@ -45,7 +47,7 @@ fun TextView.setTextFromExposure(exposure: CovidExposureInformation?) {
                     FROM_HTML_MODE_COMPACT
                 )
             }
-            RiskScoreLevel.MEDIUM -> {
+            MEDIUM -> {
                 setCompoundDrawablesRelativeWithIntrinsicBounds(
                     R.drawable.ic_risk_med,
                     0,
@@ -60,8 +62,8 @@ fun TextView.setTextFromExposure(exposure: CovidExposureInformation?) {
                     FROM_HTML_MODE_COMPACT
                 )
             }
-            RiskScoreLevel.NONE,
-            RiskScoreLevel.LOW -> {
+            NONE,
+            LOW -> {
                 setCompoundDrawablesRelativeWithIntrinsicBounds(
                     R.drawable.ic_risk_low,
                     0,
@@ -106,3 +108,28 @@ fun TextView.setTextFromTotalRisk(totalRiskScore: Int?) {
         }
     }
 }
+
+@BindingAdapter("risk_level")
+fun TextView.setRiskLevelText(riskScoreLevel: RiskScoreLevel) {
+    setText(
+        when (riskScoreLevel) {
+            HIGH -> R.string.high_risk_title
+            MEDIUM -> R.string.med_risk_title
+            NONE,
+            LOW -> R.string.low_risk_title
+        }
+    )
+}
+
+@BindingAdapter("background_risk_level")
+fun View.setBackgroundFromRiskLevel(riskScoreLevel: RiskScoreLevel) {
+    background = context.getDrawable(
+        when (riskScoreLevel) {
+            HIGH -> R.color.high_risk
+            MEDIUM -> R.color.med_risk
+            NONE,
+            LOW -> R.color.low_risk
+        }
+    )
+}
+
