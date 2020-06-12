@@ -13,9 +13,9 @@ import org.covidwatch.android.R
 import org.covidwatch.android.databinding.FragmentExposureDetailsBinding
 import org.covidwatch.android.ui.BaseFragment
 
-class ExposureDetailsFragment : BaseFragment<FragmentExposureDetailsBinding>() {
+open class BaseExposureDetailsFragment : BaseFragment<FragmentExposureDetailsBinding>() {
 
-    private val args: ExposureDetailsFragmentArgs by navArgs()
+    protected val args: ExposureDetailsFragmentArgs by navArgs()
 
     override fun bind(
         inflater: LayoutInflater,

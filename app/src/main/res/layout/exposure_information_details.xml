@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="@layout/fragment_exposure_details">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -11,17 +10,19 @@
             type="org.covidwatch.android.data.CovidExposureInformation" />
     </data>
 
-    <merge>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingVertical="@dimen/padding_normal">
 
-        <LinearLayout
-            style="@style/ExposureInformationRow"
-            android:layout_marginTop="@dimen/padding_normal">
+        <LinearLayout style="@style/ExposureInformationRow">
 
             <TextView
                 style="@style/TextView.ExposureInformationRowTitle"
                 android:text="@string/exposure_information_date_title" />
 
-            <View style="@style/Divider" />
+            <View style="@style/Divider.Vertical" />
 
             <TextView
                 style="@style/TextView.ExposureInformationRowText"
@@ -35,7 +36,7 @@
                 style="@style/TextView.ExposureInformationRowTitle"
                 android:text="@string/exposure_information_duration_title" />
 
-            <View style="@style/Divider" />
+            <View style="@style/Divider.Vertical" />
 
             <TextView
                 style="@style/TextView.ExposureInformationRowText"
@@ -49,7 +50,7 @@
                 style="@style/TextView.ExposureInformationRowTitle"
                 android:text="@string/exposure_information_attenuation_title" />
 
-            <View style="@style/Divider" />
+            <View style="@style/Divider.Vertical" />
 
             <TextView
                 style="@style/TextView.ExposureInformationRowText"
@@ -63,7 +64,7 @@
                 style="@style/TextView.ExposureInformationRowTitle"
                 android:text="@string/exposure_information_total_risk_title" />
 
-            <View style="@style/Divider" />
+            <View style="@style/Divider.Vertical" />
 
             <TextView
                 style="@style/TextView.ExposureInformationRowText"
@@ -77,13 +78,12 @@
                 style="@style/TextView.ExposureInformationRowTitle"
                 android:text="@string/exposure_information_transmission_risk_title" />
 
-            <View style="@style/Divider" />
+            <View style="@style/Divider.Vertical" />
 
             <TextView
                 style="@style/TextView.ExposureInformationRowText"
                 android:text="@{@string/exposure_information_transmission_risk_text(exposureInformation.attenuationValue)}"
                 tools:text="Level 5 of 8" />
         </LinearLayout>
-
-    </merge>
+    </LinearLayout>
 </layout>

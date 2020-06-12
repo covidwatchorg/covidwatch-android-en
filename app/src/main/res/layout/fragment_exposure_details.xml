@@ -37,6 +37,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
+                android:id="@+id/exposure_details_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -46,9 +47,6 @@
                 <TextView
                     style="@style/TextView.ScreenTitle"
                     android:text="@string/title_exposure_details" />
-                <!--                <include-->
-                <!--                    layout="@layout/exposure_information_details"-->
-                <!--                    app:exposureInformation="@{exposureInformation}" />-->
 
                 <include
                     android:id="@+id/exposure_details"
@@ -100,8 +98,8 @@
                     android:layout_marginVertical="@dimen/padding_normal"
                     android:autoLink="web"
                     android:clickable="true"
-                    android:focusable="true"
                     android:drawableEnd="@drawable/follow_guidance_art"
+                    android:focusable="true"
                     android:gravity="center_vertical"
                     android:lineSpacingExtra="2sp"
                     android:linksClickable="true"
