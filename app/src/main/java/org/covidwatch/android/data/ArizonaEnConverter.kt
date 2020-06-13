@@ -2,6 +2,7 @@ package org.covidwatch.android.data
 
 import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
+import java.util.*
 import kotlin.math.log10
 
 class ArizonaEnConverter : EnConverter {
@@ -49,9 +50,9 @@ class ArizonaEnConverter : EnConverter {
     private fun computeAttenuationDurationRiskScore(attenuationDurations: IntArray): Double {
         if (attenuationDurations.size != attenuationDurationWeights.size) return 0.0
 
-        return attenuationDurations[0].toDouble() / 60 * attenuationDurationWeights[0] +
-                attenuationDurations[1].toDouble() / 60 * attenuationDurationWeights[1] +
-                attenuationDurations[2].toDouble() / 60 * attenuationDurationWeights[2]
+        return attenuationDurations[0].toDouble() * attenuationDurationWeights[0] +
+                attenuationDurations[1].toDouble() * attenuationDurationWeights[1] +
+                attenuationDurations[2].toDouble() * attenuationDurationWeights[2]
     }
 
     private fun computeRiskScore(
@@ -88,14 +89,15 @@ class ArizonaEnConverter : EnConverter {
     override fun covidExposureInformation(exposureInformation: ExposureInformation) =
         with(exposureInformation) {
             CovidExposureInformation(
-                dateMillisSinceEpoch = dateMillisSinceEpoch,
-                durationMinutes = durationMinutes,
+                date = Date(dateMillisSinceEpoch),
+                duration = durationMinutes,
                 attenuationValue = attenuationValue,
                 transmissionRiskLevel = transmissionRiskLevel,
                 totalRiskScore = computeRiskScore(
                     attenuationDurationsInMinutes,
                     transmissionRiskLevel
-                )
+                ),
+                attenuationDurations = attenuationDurationsInMinutes.toList()
             )
         }
 }

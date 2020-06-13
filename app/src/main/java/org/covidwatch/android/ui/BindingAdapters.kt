@@ -12,6 +12,7 @@ import org.covidwatch.android.data.RiskScoreLevel
 import org.covidwatch.android.data.RiskScoreLevel.*
 import org.covidwatch.android.data.level
 import org.covidwatch.android.ui.util.DateFormatter
+import java.util.*
 
 @BindingAdapter("exposureSummary")
 fun TextView.setExposureSummary(exposureSummary: CovidExposureSummary?) {
@@ -42,7 +43,7 @@ fun TextView.setTextFromExposure(exposure: CovidExposureInformation?) {
                 text = HtmlCompat.fromHtml(
                     context.getString(
                         R.string.high_risk_exposure,
-                        DateFormatter.format(it.dateMillisSinceEpoch)
+                        DateFormatter.format(it.date)
                     ),
                     FROM_HTML_MODE_COMPACT
                 )
@@ -57,7 +58,7 @@ fun TextView.setTextFromExposure(exposure: CovidExposureInformation?) {
                 text = HtmlCompat.fromHtml(
                     context.getString(
                         R.string.med_risk_exposure,
-                        DateFormatter.format(it.dateMillisSinceEpoch)
+                        DateFormatter.format(it.date)
                     ),
                     FROM_HTML_MODE_COMPACT
                 )
@@ -73,7 +74,7 @@ fun TextView.setTextFromExposure(exposure: CovidExposureInformation?) {
                 text = HtmlCompat.fromHtml(
                     context.getString(
                         R.string.low_risk_exposure,
-                        DateFormatter.format(it.dateMillisSinceEpoch)
+                        DateFormatter.format(it.date)
                     ),
                     FROM_HTML_MODE_COMPACT
                 )
@@ -82,31 +83,42 @@ fun TextView.setTextFromExposure(exposure: CovidExposureInformation?) {
     }
 }
 
-@BindingAdapter("date")
-fun TextView.setTextFromTime(time: Long?) {
-    time ?: return
-    text = DateFormatter.format(time)
-}
-
-@BindingAdapter("last_exposure_time")
-fun TextView.setTextFromLastExposureTime(time: Long?) {
-    time ?: return
-    text = HtmlCompat.fromHtml(
-        context.getString(R.string.last_exposure_time, DateFormatter.formatDateAndTime(time)),
-        FROM_HTML_MODE_COMPACT
-    )
+@BindingAdapter("attenuation_durations")
+fun TextView.setTextFromAttenuationDurations(attenuationDurations: List<Int>?) {
+    text = attenuationDurations?.joinToString { if (it >= 30) "≥30m" else "${it}m" }
 }
 
 @BindingAdapter("total_risk")
 fun TextView.setTextFromTotalRisk(totalRiskScore: Int?) {
     totalRiskScore?.let {
-        //TODO: Use proper logic for mapping values
-        text = when (it) {
-            in 0..3 -> context.getString(R.string.low_total_exposure_risk, it)
-            in 4..5 -> context.getString(R.string.middle_total_exposure_risk, it)
-            else -> context.getString(R.string.high_total_exposure_risk, it)
-        }
+        text = context.getString(R.string.exposure_information_transmission_risk_text, it)
     }
+}
+
+@BindingAdapter("date")
+fun TextView.setTextFromTime(time: Date?) {
+    time ?: return
+    text = DateFormatter.format(time)
+}
+
+@BindingAdapter("exposure_details_date")
+fun TextView.setExposureInfoDate(time: Date?) {
+    time ?: return
+    text = HtmlCompat.fromHtml(
+        context.getString(
+            R.string.exposure_date_and_info,
+            DateFormatter.format(time)
+        ), FROM_HTML_MODE_COMPACT
+    )
+}
+
+@BindingAdapter("last_exposure_time")
+fun TextView.setTextFromLastExposureTime(time: Date?) {
+    time ?: return
+    text = HtmlCompat.fromHtml(
+        context.getString(R.string.last_exposure_time, DateFormatter.formatDateAndTime(time)),
+        FROM_HTML_MODE_COMPACT
+    )
 }
 
 @BindingAdapter("risk_level")

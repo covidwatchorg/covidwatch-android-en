@@ -116,15 +116,14 @@
     <string name="btn_share_positive_diagnosis">Share a Positive Diagnosis</string>
     <string name="btn_find_covid_test_site">Find COVID-19 Test Site</string>
     <string name="exposure_information_date_title">Date</string>
-    <string name="exposure_information_duration_title">Duration</string>
+    <string name="exposure_information_duration_title">Attenuation Duration</string>
     <string name="exposure_information_duration_text">%d min</string>
     <string name="exposure_information_attenuation_title">Attenuation</string>
-    <string name="exposure_information_attenuation_text">%d db</string>
     <string name="exposure_information_total_risk_title">Total Risk Score</string>
     <string name="low_total_exposure_risk">Low: %d of 100</string>
     <string name="middle_total_exposure_risk">Middle: %d of 100</string>
     <string name="high_total_exposure_risk">High: %d of 100</string>
-    <string name="exposure_information_transmission_risk_title">Transmission Risk</string>
+    <string name="exposure_information_transmission_risk_level_title">Transmission Risk Level</string>
     <string name="exposure_information_transmission_risk_text">%d of 8</string>
     <string name="share_positive_diagnosis_btn_explanation"><b>Have a positive diagnosis?</b>\nHelp stop the spread by anonymously notifying others of a possible exposure to COVID-19.</string>
     <string name="call_pha">Call the Public Health Department to get tested and receive help with shelter and food at 1–800-COVID19</string>
@@ -135,7 +134,7 @@
     <string name="low_risk_title">Low Risk</string>
     <string name="med_risk_title">Medium Risk</string>
     <string name="high_risk_title">High Risk</string>
-    <string name="exposure_date_and_info">On <b>%s</b> you were near someone who shared a <b>positive</b> and <b>verified</b> diagnosis of COVID-19.</string>
+    <string name="exposure_date_and_info">On &lt;b>%s&lt;/b> you were near someone who shared a &lt;b>positive&lt;/b> and &lt;b>verified&lt;/b> diagnosis of COVID-19.</string>
 
     <!--  Onboarding  -->
     <string name="splash_screen_header_content_description">State of California</string>
@@ -189,17 +188,8 @@
     <string name="verified">Verified</string>
     <string name="item_positive_diagnosis_action_button_content_description">Verify diagnosis</string>
     <string name="continue_upload">Continue</string>
-    <string name="transmission_risk_dialog_title">Set transmission risk level for your TEK(s)</string>
-    <string name="transmission_risk_dialog_message">
-        0: Unused\n
-        1: Confirmed test - Low\n
-        2: Confirmed test - Standard\n
-        3: Confirmed test - High\n
-        4: Confirmed clinical diagnosis\n
-        5: Self report\n
-        6: Negative case\n
-        7: Recursive case\n
-    </string>
+    <string name="transmission_risk_dialog_title">Set transmission risk level for your %d TEK(s)</string>
+    <string name="transmission_risk_dialog_message">%d space-separated values between 0 and 7 inclusive.&lt;b>Note:&lt;/b> the values can be different</string>
     <string name="choose_sharing_method_dialog_title">Share your TEK(s) with</string>
     <string name="choose_sharing_method_dialog_message">Note: The TEK for the current day won\'t be shared with the server. When sharing with the server, you can set the transmission risk level only at the first upload.</string>
     <string name="choose_sharing_method_dialog_btn_server">Covid Watch server</string>

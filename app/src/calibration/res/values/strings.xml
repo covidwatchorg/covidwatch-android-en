@@ -2,6 +2,7 @@
     <!-- MENU -->
     <string name="menu_reset_possible_exposures">[DEMO] Reset Possible Exposures</string>
     <string name="menu_detect_exposures_from_server">[DEMO] Detect Exposures from Server</string>
-    <string name="menu_set_exposure_configuration">[DEMO] Set Exposure Configuration JSON</string>
+    <string name="menu_set_exposure_configuration">[DEMO] Set Exposure Configuration</string>
+    <string name="menu_export_possible_exposures">[DEMO] Export Possible Exposures</string>
     <string name="screen_title"><b>DEMO</b>\nPUBLIC HEALTH DEPARTMENT</string>
 </resources>

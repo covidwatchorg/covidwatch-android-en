@@ -16,7 +16,7 @@ class ExposureDetailsFragment : BaseExposureDetailsFragment() {
                     exposureDetailsList,
                     false
                 )
-                demoExposureDetails.exposureInformation = it
+                demoExposureDetails.exposure = it
                 exposureDetailsList.addView(demoExposureDetails.root, 1)
             }
         }

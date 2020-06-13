@@ -6,15 +6,18 @@
     android:padding="@dimen/padding_normal">
 
     <TextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/transmission_risk_dialog_title"
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:lineSpacingMultiplier="2"
+        android:lineSpacingExtra="4sp"
+        android:paddingTop="@dimen/padding_normal"
         android:text="@string/transmission_risk_dialog_message" />
 
     <EditText

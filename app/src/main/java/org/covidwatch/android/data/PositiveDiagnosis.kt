@@ -3,12 +3,13 @@ package org.covidwatch.android.data
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
+import java.util.*
 
 @Entity(tableName = "positive_diagnosis_report")
 data class PositiveDiagnosisReport(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val verified: Boolean,
-    val reportDate: Long
+    val reportDate: Date
 )
 
 data class PositiveDiagnosis(

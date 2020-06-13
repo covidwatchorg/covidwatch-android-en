@@ -1,5 +1,6 @@
 package org.covidwatch.android.ui.menu
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.Toast
@@ -9,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.GsonBuilder
 import kotlinx.coroutines.launch
 import org.covidwatch.android.R
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
@@ -93,6 +95,22 @@ class MenuFragment : BaseMenuFragment() {
                     }
                 }
             }
+            R.string.menu_export_possible_exposures -> {
+                lifecycleScope.launch {
+                    val exposures = exposureInformationRepository.exposures()
+                    val json = GsonBuilder()
+                        .setPrettyPrinting()
+                        .excludeFieldsWithoutExposeAnnotation()
+                        .create()
+                        .toJson(exposures)
+
+                    val shareIntent = Intent()
+                    shareIntent.action = Intent.ACTION_SEND
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, json)
+                    shareIntent.type = "text/plain"
+                    startActivity(Intent.createChooser(shareIntent, null))
+                }
+            }
         }
     }
 
@@ -151,6 +169,11 @@ class MenuAdapter(onClick: (menuItem: MenuItem) -> Unit) : BaseMenuAdapter(onCli
             ),
             MenuItem(
                 R.string.menu_set_exposure_configuration,
+                0,
+                Destination.None
+            ),
+            MenuItem(
+                R.string.menu_export_possible_exposures,
                 0,
                 Destination.None
             )

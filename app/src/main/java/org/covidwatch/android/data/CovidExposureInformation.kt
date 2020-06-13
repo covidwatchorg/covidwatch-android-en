@@ -4,16 +4,28 @@ import androidx.annotation.StringRes
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.google.gson.annotations.Expose
 import org.covidwatch.android.R
+import org.covidwatch.android.data.converter.AttenuationDurationsConverter
 import java.io.Serializable
+import java.util.*
 
 @Entity(tableName = "exposure_information")
+@TypeConverters(AttenuationDurationsConverter::class)
 data class CovidExposureInformation(
-    val dateMillisSinceEpoch: Long,
-    val durationMinutes: Int,
+    @Expose
+    val date: Date,
+    @Expose
+    val duration: Int,
+    @Expose
     val attenuationValue: Int,
+    @Expose
     val transmissionRiskLevel: Int,
+    @Expose
     val totalRiskScore: RiskScore,
+    @Expose
+    val attenuationDurations: List<Int>,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
 ) : Serializable {
