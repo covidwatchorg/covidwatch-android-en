@@ -9,10 +9,8 @@ import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.domain.UpdateExposureInformationUseCase
-import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager.Companion.PERMISSION_START_REQUEST_CODE
-import org.covidwatch.android.functional.Either
 import org.covidwatch.android.ui.BaseViewModel
 import org.covidwatch.android.ui.event.Event
 
@@ -29,8 +27,12 @@ class ExposuresViewModel(
     private val _showExposureDetails = MutableLiveData<Event<CovidExposureInformation>>()
     val showExposureDetails: LiveData<Event<CovidExposureInformation>> = _showExposureDetails
 
-    val exposureInfo: LiveData<List<CovidExposureInformation>> =
-        exposureInformationRepository.exposureInformation()
+    val exposureInfo: LiveData<List<Any>> =
+        exposureInformationRepository.exposureInformation().map {
+            it + Footer
+        }
+
+    object Footer
 
     val lastExposureTime = preferenceStorage.observableExposureSummary.map { it.modifiedTime }
 
