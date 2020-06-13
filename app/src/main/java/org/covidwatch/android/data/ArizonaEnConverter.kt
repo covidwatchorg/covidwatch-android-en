@@ -2,6 +2,7 @@ package org.covidwatch.android.data
 
 import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
+import java.util.*
 import kotlin.math.log10
 
 class ArizonaEnConverter : EnConverter {
@@ -88,7 +89,7 @@ class ArizonaEnConverter : EnConverter {
     override fun covidExposureInformation(exposureInformation: ExposureInformation) =
         with(exposureInformation) {
             CovidExposureInformation(
-                dateMillisSinceEpoch = dateMillisSinceEpoch,
+                date = Date(dateMillisSinceEpoch),
                 durationMinutes = durationMinutes,
                 attenuationValue = attenuationValue,
                 transmissionRiskLevel = transmissionRiskLevel,

@@ -9,12 +9,13 @@ import com.google.gson.annotations.Expose
 import org.covidwatch.android.R
 import org.covidwatch.android.data.converter.AttenuationDurationsConverter
 import java.io.Serializable
+import java.util.*
 
 @Entity(tableName = "exposure_information")
-@TypeConverters(value = [AttenuationDurationsConverter::class])
+@TypeConverters(AttenuationDurationsConverter::class)
 data class CovidExposureInformation(
     @Expose
-    val dateMillisSinceEpoch: Long,
+    val date: Date,
     @Expose
     val durationMinutes: Int,
     @Expose

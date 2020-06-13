@@ -27,8 +27,8 @@ object DateFormatter {
         }
 
     @JvmStatic
-    fun format(time: Long?): String = date.format(time)
+    fun format(time: Date?): String = time?.let { date.format(it) } ?: ""
 
     @JvmStatic
-    fun formatDateAndTime(time: Long?): String = dateAndTime.format(time)
+    fun formatDateAndTime(time: Date?): String = time?.let { dateAndTime.format(it) } ?: ""
 }

@@ -9,6 +9,7 @@ import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.functional.Either
 import java.security.SecureRandom
+import java.util.*
 
 class UploadDiagnosisKeysUseCase(
     private val enManager: ExposureNotificationManager,
@@ -72,7 +73,7 @@ class UploadDiagnosisKeysUseCase(
                     diagnosisRepository.addPositiveDiagnosisReport(
                         PositiveDiagnosisReport(
                             verified = true,
-                            reportDate = System.currentTimeMillis()
+                            reportDate = Date()
                         )
                     )
                     return Either.Right(Unit)

@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/padding_normal"
-            app:exposure_details_date="@{exposure.dateMillisSinceEpoch}"
+            app:exposure_details_date="@{exposure.date}"
             tools:text="On May 23, 2020 you were near someone who shared a positive and verified diagnosis of COVID-19. " />
     </LinearLayout>
 </layout>

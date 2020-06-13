@@ -2,6 +2,7 @@ package org.covidwatch.android.data
 
 import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
+import java.util.*
 
 interface EnConverter {
     fun covidExposureSummary(exposureSummary: ExposureSummary): CovidExposureSummary
@@ -24,7 +25,7 @@ class DefaultEnConverter : EnConverter {
     override fun covidExposureInformation(exposureInformation: ExposureInformation) =
         with(exposureInformation) {
             CovidExposureInformation(
-                dateMillisSinceEpoch = dateMillisSinceEpoch,
+                date = Date(dateMillisSinceEpoch),
                 durationMinutes = durationMinutes,
                 attenuationValue = attenuationValue,
                 transmissionRiskLevel = transmissionRiskLevel,

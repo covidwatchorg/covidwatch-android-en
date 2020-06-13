@@ -1,8 +1,10 @@
 package org.covidwatch.android.ui.reporting
 
+import java.util.*
+
 data class PositiveDiagnosisItem(
     val testStatus: TestStatus,
-    val testDate: Long
+    val testDate: Date
 )
 
 enum class TestStatus {
