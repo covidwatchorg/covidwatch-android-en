@@ -85,7 +85,7 @@ fun TextView.setTextFromExposure(exposure: CovidExposureInformation?) {
 
 @BindingAdapter("attenuation_durations")
 fun TextView.setTextFromAttenuationDurations(attenuationDurations: List<Int>?) {
-    text = attenuationDurations?.joinToString { "${it}m" }
+    text = attenuationDurations?.joinToString { if (it >= 30) "≥30m" else "${it}m" }
 }
 
 @BindingAdapter("total_risk")
