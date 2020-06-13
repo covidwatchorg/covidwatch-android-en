@@ -90,7 +90,7 @@ class ArizonaEnConverter : EnConverter {
         with(exposureInformation) {
             CovidExposureInformation(
                 date = Date(dateMillisSinceEpoch),
-                durationMinutes = durationMinutes,
+                duration = durationMinutes,
                 attenuationValue = attenuationValue,
                 transmissionRiskLevel = transmissionRiskLevel,
                 totalRiskScore = computeRiskScore(

@@ -26,7 +26,7 @@ class DefaultEnConverter : EnConverter {
         with(exposureInformation) {
             CovidExposureInformation(
                 date = Date(dateMillisSinceEpoch),
-                durationMinutes = durationMinutes,
+                duration = durationMinutes,
                 attenuationValue = attenuationValue,
                 transmissionRiskLevel = transmissionRiskLevel,
                 totalRiskScore = (totalRiskScore * 8.0 / 4096).toInt(),

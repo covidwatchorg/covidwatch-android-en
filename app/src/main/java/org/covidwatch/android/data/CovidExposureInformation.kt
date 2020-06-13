@@ -17,7 +17,7 @@ data class CovidExposureInformation(
     @Expose
     val date: Date,
     @Expose
-    val durationMinutes: Int,
+    val duration: Int,
     @Expose
     val attenuationValue: Int,
     @Expose

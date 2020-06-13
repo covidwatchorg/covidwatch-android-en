@@ -29,7 +29,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{@plurals/exposure_details(item.durationMinutes, context.getString(item.howClose))}"
+            android:text="@{@plurals/exposure_details(item.duration, context.getString(item.howClose))}"
             app:layout_constraintTop_toBottomOf="@id/date"
             tools:text="For 5 minutes, close distance" />
     </androidx.constraintlayout.widget.ConstraintLayout>
