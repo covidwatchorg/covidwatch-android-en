@@ -15,13 +15,13 @@ class ArizonaEnConverterTest {
             .setAttenuationValue(Random.nextInt(8))
             .setTransmissionRiskLevel(Random.nextInt(4))
             .setTotalRiskScore(Random.nextInt(8))
-            .setAttenuationDurations(intArrayOf(0, 30 * 60, 0))
+            .setAttenuationDurations(intArrayOf(0, 30, 0))
 
     @Test
     fun `Sufficiently risky individual, 30 minutes at 6 ft`() {
         //given
         val testExposure = randomExposure
-            .setAttenuationDurations(intArrayOf(0, 30 * 60, 0))
+            .setAttenuationDurations(intArrayOf(0, 30, 0))
             .setTransmissionRiskLevel(4)
             .build()
 
@@ -36,7 +36,7 @@ class ArizonaEnConverterTest {
     fun `Sufficiently risky individual, 5 minutes close contact`() {
         //given
         val testExposure = randomExposure
-            .setAttenuationDurations(intArrayOf(15 * 60, 0, 0))
+            .setAttenuationDurations(intArrayOf(15, 0, 0))
             .setTransmissionRiskLevel(4)
             .build()
 
@@ -51,7 +51,7 @@ class ArizonaEnConverterTest {
     fun `Highest risk individual, 30 minutes at 6 ft`() {
         //given
         val testExposure = randomExposure
-            .setAttenuationDurations(intArrayOf(0, 30 * 60, 0))
+            .setAttenuationDurations(intArrayOf(0, 30, 0))
             .setTransmissionRiskLevel(6)
             .build()
 
@@ -66,7 +66,7 @@ class ArizonaEnConverterTest {
     fun `Highest risk individual, 5 minutes close contact`() {
         //given
         val testExposure = randomExposure
-            .setAttenuationDurations(intArrayOf(5 * 60, 0, 0))
+            .setAttenuationDurations(intArrayOf(5, 0, 0))
             .setTransmissionRiskLevel(6)
             .build()
 
@@ -81,7 +81,7 @@ class ArizonaEnConverterTest {
     fun `Highest risk individual, 5 minutes at 6 ft`() {
         //given
         val testExposure = randomExposure
-            .setAttenuationDurations(intArrayOf(0, 5 * 60, 0))
+            .setAttenuationDurations(intArrayOf(0, 5, 0))
             .setTransmissionRiskLevel(6)
             .build()
 
@@ -96,7 +96,7 @@ class ArizonaEnConverterTest {
     fun `Highest risk individual, 30 minutes at long distance`() {
         //given
         val testExposure = randomExposure
-            .setAttenuationDurations(intArrayOf(0, 0, 30 * 60))
+            .setAttenuationDurations(intArrayOf(0, 0, 30))
             .setTransmissionRiskLevel(6)
             .build()
 
@@ -111,7 +111,7 @@ class ArizonaEnConverterTest {
     fun `Asymptomatic shedder at peak risk, 30 min at 6 ft`() {
         //given
         val testExposure = randomExposure
-            .setAttenuationDurations(intArrayOf(0, 30 * 60, 0))
+            .setAttenuationDurations(intArrayOf(0, 30, 0))
             .setTransmissionRiskLevel(3)
             .build()
 
@@ -126,7 +126,7 @@ class ArizonaEnConverterTest {
     fun `Low shedder, 30 min at 6 ft`() {
         //given
         val testExposure = randomExposure
-            .setAttenuationDurations(intArrayOf(0, 30 * 60, 0))
+            .setAttenuationDurations(intArrayOf(0, 30, 0))
             .setTransmissionRiskLevel(2)
             .build()
 
@@ -141,7 +141,7 @@ class ArizonaEnConverterTest {
     fun `Low shedder, 5 min at 6 ft`() {
         //given
         val testExposure = randomExposure
-            .setAttenuationDurations(intArrayOf(0, 5 * 60, 0))
+            .setAttenuationDurations(intArrayOf(0, 5, 0))
             .setTransmissionRiskLevel(2)
             .build()
 

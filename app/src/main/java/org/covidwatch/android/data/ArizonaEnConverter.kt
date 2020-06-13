@@ -50,9 +50,9 @@ class ArizonaEnConverter : EnConverter {
     private fun computeAttenuationDurationRiskScore(attenuationDurations: IntArray): Double {
         if (attenuationDurations.size != attenuationDurationWeights.size) return 0.0
 
-        return attenuationDurations[0].toDouble() / 60 * attenuationDurationWeights[0] +
-                attenuationDurations[1].toDouble() / 60 * attenuationDurationWeights[1] +
-                attenuationDurations[2].toDouble() / 60 * attenuationDurationWeights[2]
+        return attenuationDurations[0].toDouble() * attenuationDurationWeights[0] +
+                attenuationDurations[1].toDouble() * attenuationDurationWeights[1] +
+                attenuationDurations[2].toDouble() * attenuationDurationWeights[2]
     }
 
     private fun computeRiskScore(
