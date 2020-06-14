@@ -25,6 +25,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:autofillHints=""
-        android:inputType="number"
+        android:inputType="number|text"
         android:labelFor="@id/et_risk_levels" />
 </LinearLayout>

@@ -189,7 +189,7 @@
     <string name="item_positive_diagnosis_action_button_content_description">Verify diagnosis</string>
     <string name="continue_upload">Continue</string>
     <string name="transmission_risk_dialog_title">Set transmission risk level for your %d TEK(s)</string>
-    <string name="transmission_risk_dialog_message">%d space-separated values between 0 and 7 inclusive.&lt;b>Note:&lt;/b> the values can be different</string>
+    <string name="transmission_risk_dialog_message">%d space-separated values between 0 and 7 inclusive. \n&lt;b>Note:&lt;/b> the values can be different</string>
     <string name="choose_sharing_method_dialog_title">Share your TEK(s) with</string>
     <string name="choose_sharing_method_dialog_message">Note: The TEK for the current day won\'t be shared with the server. When sharing with the server, you can set the transmission risk level only at the first upload.</string>
     <string name="choose_sharing_method_dialog_btn_server">Covid Watch server</string>
