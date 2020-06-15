@@ -10,6 +10,7 @@ import kotlinx.coroutines.withContext
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
+import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.extension.failure
@@ -28,6 +29,7 @@ class ProvideDiagnosisKeysWork(
     private val diagnosisRepository by inject(PositiveDiagnosisRepository::class.java)
     private val diagnosisKeysTokenRepository by inject(DiagnosisKeysTokenRepository::class.java)
     private val notifications by inject(Notifications::class.java)
+    private val preferences by inject(PreferenceStorage::class.java)
 
     private val base64 = BaseEncoding.base64()
     private val randomTokenByteLength = 32
@@ -54,7 +56,11 @@ class ProvideDiagnosisKeysWork(
                 val token = randomToken()
                 diagnosisKeys.forEach {
                     val keys = it.keys
-                    enManager.provideDiagnosisKeys(keys, token).apply {
+                    enManager.provideDiagnosisKeys(
+                        keys,
+                        token,
+                        preferences.exposureConfiguration
+                    ).apply {
                         success {
                             //TODO: Delete empty folder
                             keys.forEach { file -> file.delete() }
