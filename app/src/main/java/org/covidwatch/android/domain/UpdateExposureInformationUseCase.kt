@@ -21,7 +21,11 @@ class UpdateExposureInformationUseCase(
             enManager.getExposureInformation(keysToken.token).apply {
                 success { information ->
 
-                    val exposureInformation = information.map(enConverter::covidExposureInformation)
+                    val exposureInformation = information.map {
+                        enConverter.covidExposureInformation(it).also { exposure ->
+                            exposure.exposureConfiguration = keysToken.exposureConfiguration
+                        }
+                    }
 
                     exposureInformationRepository.saveExposureInformation(exposureInformation)
                     tokenRepository.delete(keysToken)

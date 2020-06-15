@@ -7,6 +7,7 @@ import androidx.work.WorkerParameters
 import com.google.common.io.BaseEncoding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.covidwatch.android.data.asCovidExposureConfiguration
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
@@ -54,12 +55,13 @@ class ProvideDiagnosisKeysWork(
                 Timber.d("Adding ${diagnosisKeys.size} positive diagnoses to exposure notification framework")
 
                 val token = randomToken()
+                val exposureConfiguration = preferences.exposureConfiguration
                 diagnosisKeys.forEach {
                     val keys = it.keys
                     enManager.provideDiagnosisKeys(
                         keys,
                         token,
-                        preferences.exposureConfiguration
+                        exposureConfiguration
                     ).apply {
                         success {
                             //TODO: Delete empty folder
@@ -69,7 +71,12 @@ class ProvideDiagnosisKeysWork(
                     }
                 }
 
-                diagnosisKeysTokenRepository.insert(DiagnosisKeysToken(token))
+                diagnosisKeysTokenRepository.insert(
+                    DiagnosisKeysToken(
+                        token,
+                        exposureConfiguration = exposureConfiguration.asCovidExposureConfiguration()
+                    )
+                )
                 Result.success()
             } catch (e: Exception) {
                 failure(ENStatus(e))

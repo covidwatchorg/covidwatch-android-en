@@ -1,5 +1,6 @@
 package org.covidwatch.android.ui.menu
 
+import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.widget.EditText
@@ -11,14 +12,26 @@ import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
+import com.google.gson.annotations.Expose
 import kotlinx.coroutines.launch
 import org.covidwatch.android.R
+import org.covidwatch.android.data.CovidExposureConfiguration
+import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.databinding.DialogExposureConfigurationBinding
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
 import org.covidwatch.android.extension.observeUseCase
 import org.koin.android.ext.android.inject
+
+const val CREATE_FILE_REQUEST_CODE = 1
+
+data class PossibleExposuresJson(
+    @Expose
+    val covidExposureConfiguration: CovidExposureConfiguration,
+    @Expose
+    val exposures: List<CovidExposureInformation>
+)
 
 class MenuFragment : BaseMenuFragment() {
     private val exposureInformationRepository: ExposureInformationRepository by inject()
@@ -96,19 +109,34 @@ class MenuFragment : BaseMenuFragment() {
                 }
             }
             R.string.menu_export_possible_exposures -> {
+                val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                    addCategory(Intent.CATEGORY_OPENABLE)
+                    type = "text/json"
+                    // TODO: 15.06.2020 name
+                    putExtra(Intent.EXTRA_TITLE, "todo.json")
+                }
+                startActivityForResult(intent, CREATE_FILE_REQUEST_CODE)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == CREATE_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            data?.data?.also { uri ->
                 lifecycleScope.launch {
+
                     val exposures = exposureInformationRepository.exposures()
+
                     val json = GsonBuilder()
                         .setPrettyPrinting()
                         .excludeFieldsWithoutExposeAnnotation()
                         .create()
                         .toJson(exposures)
 
-                    val shareIntent = Intent()
-                    shareIntent.action = Intent.ACTION_SEND
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, json)
-                    shareIntent.type = "text/plain"
-                    startActivity(Intent.createChooser(shareIntent, null))
+                    val outputStream =
+                        activity?.contentResolver?.openOutputStream(uri) ?: return@launch
+
+                    json.byteInputStream().copyTo(outputStream)
                 }
             }
         }

@@ -8,11 +8,12 @@ import androidx.room.TypeConverters
 import com.google.gson.annotations.Expose
 import org.covidwatch.android.R
 import org.covidwatch.android.data.converter.AttenuationDurationsConverter
+import org.covidwatch.android.data.converter.ExposureConfigurationConverter
 import java.io.Serializable
 import java.util.*
 
 @Entity(tableName = "exposure_information")
-@TypeConverters(AttenuationDurationsConverter::class)
+@TypeConverters(value = [AttenuationDurationsConverter::class, ExposureConfigurationConverter::class])
 data class CovidExposureInformation(
     @Expose
     val date: Date,
@@ -29,6 +30,9 @@ data class CovidExposureInformation(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
 ) : Serializable {
+
+    @Expose
+    var exposureConfiguration: CovidExposureConfiguration? = null
 
     @Ignore
     @StringRes

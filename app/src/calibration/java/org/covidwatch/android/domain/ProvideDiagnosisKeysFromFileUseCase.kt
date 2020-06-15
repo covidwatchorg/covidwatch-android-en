@@ -4,6 +4,7 @@ import android.content.ContentResolver
 import android.net.Uri
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.common.io.BaseEncoding
+import org.covidwatch.android.data.asCovidExposureConfiguration
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
@@ -75,7 +76,12 @@ class ProvideDiagnosisKeysFromFileUseCase(
                 }
             }
 
-            diagnosisKeysTokenRepository.insert(DiagnosisKeysToken(token))
+            diagnosisKeysTokenRepository.insert(
+                DiagnosisKeysToken(
+                    token,
+                    exposureConfiguration = exposureConfiguration.asCovidExposureConfiguration()
+                )
+            )
         }
 
         file.delete()
