@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.lifecycle.lifecycleScope
+import com.jaredrummler.android.device.DeviceName
 import org.covidwatch.android.domain.ProvideDiagnosisKeysFromFileUseCase
 import org.covidwatch.android.domain.ProvideDiagnosisKeysFromFileUseCase.Params
 import org.covidwatch.android.extension.launchUseCase
@@ -17,6 +18,7 @@ class MainActivity : BaseMainActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DeviceName.init(this)
         handleIntent(intent)
     }
 
