@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -9,8 +10,21 @@
         android:id="@+id/toolbar"
         style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:logo="@drawable/ic_health_department_logo" />
+        android:layout_height="?actionBarSize"
+        app:logo="@drawable/ic_uoa_logo">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/padding_normal"
+            android:text="DEMO"
+            android:textColor="@color/transparentGray"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:ignore="RtlSymmetry,UseCompoundDrawables" />
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"

@@ -154,8 +154,9 @@
     <string name="enable_exposure_notifications_subtitle">These notifications are designed to notify you if you’ve been exposed to a user who later reports themselves as testing positive for COVID-19. You can choose to turn off these notifications at any time. Exposure notifications rely on the sharing and collection of random IDs. These IDs are a random string of numbers that won’t identify you to other users and change many times a day to protect your privacy.</string>
     <string name="enable_button">Enable</string>
     <string name="not_now_button">Not now</string>
-    <string name="how_it_works">HOW IT WORKS</string>
+    <string name="how_it_works">How it Works</string>
     <string name="continue_setup_button">Continue Setup</string>
+    <string name="how_it_works_explanation">Support the path back to campus and help prevent the spread of COVID-19 with <b>safe</b>, <b>secure</b>, and <b>anonymous</b> exposure notifications.</string>
 
     <!-- Home Screen-->
     <string name="home_days_since_last_exposure"><b>days</b>\nsince last exposure</string>

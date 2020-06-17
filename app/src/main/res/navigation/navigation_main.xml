@@ -11,7 +11,17 @@
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
         <action
-            android:id="@+id/action_splashFragment_to_onboardingFragment"
+            android:id="@+id/action_splashFragment_to_howItWorksFragment"
+            app:destination="@id/howItWorksFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/howItWorksFragment"
+        android:name="org.covidwatch.android.ui.onboarding.HowItWorksFragment"
+        android:label="HowItWorksFragment"
+        tools:layout="@layout/fragment_how_it_works">
+        <action
+            android:id="@+id/action_howItWorksFragment_to_onboardingFragment"
             app:destination="@id/onboardingFragment" />
     </fragment>
 
