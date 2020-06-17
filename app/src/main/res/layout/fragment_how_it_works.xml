@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -23,6 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                tools:ignore="ContentDescription"
                 android:layout_marginStart="@dimen/padding_normal"
                 android:src="@drawable/ic_uoa_logo" />
 
@@ -31,12 +33,11 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:text="DEMO"
+                android:text="@string/onboarding_title"
                 android:textColor="@color/transparentGray"
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </FrameLayout>
-
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -58,7 +59,7 @@
         android:layout_height="wrap_content"
         android:lineSpacingExtra="13sp"
         android:paddingHorizontal="@dimen/padding_normal"
-        android:text="Welcome to the"
+        android:text="@string/welcome_to_the"
         android:textAllCaps="true"
         app:layout_constraintBottom_toTopOf="@id/app_title"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +73,7 @@
         android:paddingHorizontal="@dimen/padding_normal"
         android:paddingTop="@dimen/padding_small"
         android:paddingBottom="@dimen/padding_normal"
-        android:text="University of Arizona COVID-19 Exposure Notification App"
+        android:text="@string/full_app_name"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/explanation"
