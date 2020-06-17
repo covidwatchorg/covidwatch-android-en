@@ -7,9 +7,11 @@ import androidx.work.WorkerParameters
 import com.google.common.io.BaseEncoding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.covidwatch.android.data.asCovidExposureConfiguration
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
+import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.extension.failure
@@ -28,6 +30,7 @@ class ProvideDiagnosisKeysWork(
     private val diagnosisRepository by inject(PositiveDiagnosisRepository::class.java)
     private val diagnosisKeysTokenRepository by inject(DiagnosisKeysTokenRepository::class.java)
     private val notifications by inject(Notifications::class.java)
+    private val preferences by inject(PreferenceStorage::class.java)
 
     private val base64 = BaseEncoding.base64()
     private val randomTokenByteLength = 32
@@ -52,9 +55,14 @@ class ProvideDiagnosisKeysWork(
                 Timber.d("Adding ${diagnosisKeys.size} positive diagnoses to exposure notification framework")
 
                 val token = randomToken()
+                val exposureConfiguration = preferences.exposureConfiguration
                 diagnosisKeys.forEach {
                     val keys = it.keys
-                    enManager.provideDiagnosisKeys(keys, token).apply {
+                    enManager.provideDiagnosisKeys(
+                        keys,
+                        token,
+                        exposureConfiguration
+                    ).apply {
                         success {
                             //TODO: Delete empty folder
                             keys.forEach { file -> file.delete() }
@@ -63,7 +71,12 @@ class ProvideDiagnosisKeysWork(
                     }
                 }
 
-                diagnosisKeysTokenRepository.insert(DiagnosisKeysToken(token))
+                diagnosisKeysTokenRepository.insert(
+                    DiagnosisKeysToken(
+                        token,
+                        exposureConfiguration = exposureConfiguration.asCovidExposureConfiguration()
+                    )
+                )
                 Result.success()
             } catch (e: Exception) {
                 failure(ENStatus(e))

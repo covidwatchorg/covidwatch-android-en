@@ -1,15 +1,14 @@
 package org.covidwatch.android.exposurenotification
 
+import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
-import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.extension.await
 import org.covidwatch.android.extension.awaitNoResult
 import org.covidwatch.android.extension.awaitWithStatus
 import java.io.File
 
 class ExposureNotificationManager(
-    private val exposureNotification: ExposureNotificationClient,
-    private val preferences: PreferenceStorage
+    private val exposureNotification: ExposureNotificationClient
 ) {
     /* API */
     suspend fun start() = exposureNotification.start().awaitNoResult()
@@ -24,10 +23,14 @@ class ExposureNotificationManager(
 
     suspend fun isEnabled() = exposureNotification.isEnabled.awaitWithStatus()
 
-    suspend fun provideDiagnosisKeys(keys: List<File>, token: String) =
+    suspend fun provideDiagnosisKeys(
+        keys: List<File>,
+        token: String,
+        exposureConfiguration: ExposureConfiguration
+    ) =
         exposureNotification.provideDiagnosisKeys(
             keys,
-            preferences.exposureConfiguration,
+            exposureConfiguration,
             token
         ).awaitNoResult()
 

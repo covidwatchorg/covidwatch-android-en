@@ -27,6 +27,7 @@ val flavorSpecificModule = module {
             enManager = get(),
             diagnosisKeysTokenRepository = get(),
             contentResolver = androidApplication().contentResolver,
+            preferences = get(),
             dispatchers = get()
         )
     }

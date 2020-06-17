@@ -8,11 +8,12 @@ import androidx.room.TypeConverters
 import com.google.gson.annotations.Expose
 import org.covidwatch.android.R
 import org.covidwatch.android.data.converter.AttenuationDurationsConverter
+import org.covidwatch.android.data.converter.ExposureConfigurationConverter
 import java.io.Serializable
 import java.util.*
 
 @Entity(tableName = "exposure_information")
-@TypeConverters(AttenuationDurationsConverter::class)
+@TypeConverters(value = [AttenuationDurationsConverter::class, ExposureConfigurationConverter::class])
 data class CovidExposureInformation(
     @Expose
     val date: Date,
@@ -29,6 +30,18 @@ data class CovidExposureInformation(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
 ) : Serializable {
+
+    // TODO: 17.06.2020 Remove this hacks after calibration is done or move to calibration specific
+    // source folders
+    var exposureConfiguration: CovidExposureConfiguration? = null
+        set(value) {
+            field = value
+            attenuationDurationThresholds = exposureConfiguration?.durationAtAttenuationThresholds
+        }
+
+    @Expose
+    @Ignore
+    var attenuationDurationThresholds: IntArray? = null
 
     @Ignore
     @StringRes

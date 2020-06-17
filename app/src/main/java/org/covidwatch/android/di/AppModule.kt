@@ -50,8 +50,7 @@ val appModule = module {
 
     single {
         ExposureNotificationManager(
-            exposureNotification = get(),
-            preferences = get()
+            exposureNotification = get()
         )
     }
 

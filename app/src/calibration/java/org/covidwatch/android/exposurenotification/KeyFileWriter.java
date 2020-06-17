@@ -27,7 +27,9 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 import com.google.common.primitives.Bytes;
 import com.google.protobuf.ByteString;
+import com.jaredrummler.android.device.DeviceName;
 
+import org.covidwatch.android.DateFormatter;
 import org.covidwatch.android.exposurenotification.proto.SignatureInfo;
 import org.covidwatch.android.exposurenotification.proto.TEKSignature;
 import org.covidwatch.android.exposurenotification.proto.TEKSignatureList;
@@ -38,6 +40,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.zip.ZipEntry;
@@ -48,11 +51,10 @@ public class KeyFileWriter {
     public static final String SIG_FILENAME = "export.sig";
     @VisibleForTesting
     public static final String EXPORT_FILENAME = "export.bin";
-    private static final String FILENAME_PATTERN = "test-keyfile-%d.zip";
+    private static final String FILENAME_PATTERN = "%s_%s.zip";
     private static final String HEADER_V1 = "EK Export v1";
     private static final int HEADER_LEN = 16;
     private static final int DEFAULT_MAX_BATCH_SIZE = 10000;
-
     private final Context context;
     @Nullable
     private final KeyFileSigner signer;
@@ -117,8 +119,11 @@ public class KeyFileWriter {
 
         int batchNum = 1;
         for (List<TemporaryExposureKey> batch : Iterables.partition(keys, maxBatchSize)) {
-            File outFile =
-                    new File(context.getFilesDir(), String.format(Locale.ENGLISH, FILENAME_PATTERN, batchNum));
+            File outFile = new File(context.getFilesDir(),
+                    String.format(Locale.ENGLISH,
+                            FILENAME_PATTERN,
+                            DeviceName.getDeviceName(),
+                            DateFormatter.format(new Date())));
             File parent = outFile.getParentFile();
             if (parent != null) {
                 if (!parent.mkdirs() && !parent.isDirectory()) {

@@ -86,7 +86,9 @@ class ArizonaEnConverter : EnConverter {
             )
         }
 
-    override fun covidExposureInformation(exposureInformation: ExposureInformation) =
+    override fun covidExposureInformation(
+        exposureInformation: ExposureInformation
+    ) =
         with(exposureInformation) {
             CovidExposureInformation(
                 date = Date(dateMillisSinceEpoch),

@@ -2,9 +2,13 @@ package org.covidwatch.android.domain
 
 import android.content.ContentResolver
 import android.net.Uri
+import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.common.io.BaseEncoding
+import org.covidwatch.android.attenuationDurationThresholds
+import org.covidwatch.android.data.asCovidExposureConfiguration
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
+import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.domain.ProvideDiagnosisKeysFromFileUseCase.Params
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
@@ -19,6 +23,7 @@ class ProvideDiagnosisKeysFromFileUseCase(
     private val enManager: ExposureNotificationManager,
     private val diagnosisKeysTokenRepository: DiagnosisKeysTokenRepository,
     private val contentResolver: ContentResolver,
+    private val preferences: PreferenceStorage,
     dispatchers: AppCoroutineDispatchers
 ) : UseCase<Unit, Params>(dispatchers) {
     private val base64 = BaseEncoding.base64()
@@ -34,20 +39,50 @@ class ProvideDiagnosisKeysFromFileUseCase(
         contentResolver.openInputStream(uri)?.copyTo(output)
 
         val files = listOf(file)
-        val token = randomToken()
 
-        enManager.provideDiagnosisKeys(files, token).apply {
-            file.delete()
-            success {
-                Timber.d("Successfully provided a test diagnosis key: ${uri.path} with token: $token")
+        val configuration = preferences.exposureConfiguration
+        val configurationBuilder = ExposureConfiguration.ExposureConfigurationBuilder()
+            .setMinimumRiskScore(configuration.minimumRiskScore)
+            .setAttenuationScores(*configuration.attenuationScores)
+            .setDaysSinceLastExposureScores(*configuration.daysSinceLastExposureScores)
+            .setDurationScores(*configuration.durationScores)
+            .setTransmissionRiskScores(*configuration.transmissionRiskScores)
+            .setAttenuationWeight(configuration.attenuationWeight)
+            .setAttenuationWeight(configuration.attenuationWeight)
+            .setDaysSinceLastExposureWeight(configuration.daysSinceLastExposureWeight)
+            .setDurationWeight(configuration.durationWeight)
+            .setTransmissionRiskWeight(configuration.transmissionRiskWeight)
+
+        for (thresholds in attenuationDurationThresholds) {
+            val exposureConfiguration = configurationBuilder
+                .setDurationAtAttenuationThresholds(*thresholds)
+                .build()
+
+            val token = randomToken()
+            enManager.provideDiagnosisKeys(
+                files,
+                token,
+                exposureConfiguration
+            ).apply {
+                success {
+                    Timber.d("Successfully provided a test diagnosis key: ${uri.path} with token: $token")
+                }
+                failure {
+                    Timber.d("Failed to provide a test diagnosis key: ${uri.path}")
+                    return Either.Left(it)
+                }
             }
-            failure {
-                Timber.d("Failed to provide a test diagnosis key: ${uri.path}")
-                return Either.Left(it)
-            }
+
+            diagnosisKeysTokenRepository.insert(
+                DiagnosisKeysToken(
+                    token,
+                    exposureConfiguration = exposureConfiguration.asCovidExposureConfiguration()
+                )
+            )
         }
 
-        diagnosisKeysTokenRepository.insert(DiagnosisKeysToken(token))
+        file.delete()
+
         return Either.Right(Unit)
     }
 

@@ -48,6 +48,7 @@ class UpdateExposureStateWork(
             val covidExposureSummary = enConverter.covidExposureSummary(exposureSummary)
 
             preferenceStorage.exposureSummary = covidExposureSummary.copy(
+                matchedKeyCount = exposures.size,
                 maximumRiskScore = maxRiskScore ?: covidExposureSummary.maximumRiskScore,
                 summationRiskScore = summationRiskScore
             )
