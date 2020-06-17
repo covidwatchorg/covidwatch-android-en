@@ -151,7 +151,7 @@
     <string name="safe_communities_title">Help Communities</string>
     <string name="safe_communities_subtitle">By opting in to <b>enable exposure notifications</b>, Jane and Sam help their communities stay safe. They share the app with others so that they can also help stop the spread.</string>
     <string name="enable_exposure_notifications_title">Enable Exposure Notifications</string>
-    <string name="enable_exposure_notifications_subtitle">These notifications are designed to notify you if you’ve been exposed to a user who later reports themselves as testing positive for COVID-19. You can choose to turn off these notifications at any time. Exposure notifications rely on the sharing and collection of random IDs. These IDs are a random string of numbers that won’t identify you to other users and change many times a day to protect your privacy.</string>
+    <string name="enable_exposure_notifications_subtitle">These notifications are designed to let you know if you’ve been exposed to a person who later reports themselves as testing positive for COVID-19. You can choose to turn this off at any time.</string>
     <string name="enable_button">Enable</string>
     <string name="not_now_button">Not now</string>
     <string name="how_it_works">How it Works</string>
@@ -160,6 +160,9 @@
     <string name="onboarding_title" />
     <string name="welcome_to_the">Welcome to the</string>
     <string name="full_app_name">University of Arizona COVID-19 Exposure Notification App</string>
+    <string name="finished_onboarding_title">You\'re all set!</string>
+    <string name="finished_onboarding_subtitle">The app is active. <b>You will be notified</b> of possible exposures to COVID-19 from people who share their anonymous and verified test results in the app.\n\n<b>Share the app</b> with others to improve the accuracy of your notifications.</string>
+    <string name="see_exposure_summary">See Exposure Summary</string>
 
     <!-- Home Screen-->
     <string name="home_days_since_last_exposure"><b>days</b>\nsince last exposure</string>
@@ -220,5 +223,5 @@
     <string name="no_connection_error">No internet available, please check your WIFi or Data connections</string>
     <string name="insufficient_storage">Insufficient storage to run Exposure Notification</string>
     <string name="ok">OK</string>
-    <string name="screen_title">PUBLIC HEALTH DEPARTMENT</string>
+    <string name="screen_title" />
 </resources>

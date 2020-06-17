@@ -100,6 +100,17 @@
         android:name="org.covidwatch.android.ui.onboarding.EnableExposureNotificationsFragment"
         android:label="EnableExposureNotificationsFragment"
         tools:layout="@layout/fragment_enable_exposure_notifications" />
+
+    <fragment
+        android:id="@+id/finishedOnboardingFragment"
+        android:name="org.covidwatch.android.ui.onboarding.FinishedOnboardingFragment"
+        android:label="FinishedOnboardingFragment"
+        tools:layout="@layout/fragment_finished_onboarding">
+        <action
+            android:id="@+id/action_finishedOnboardingFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/notifyOthersFragment"
         android:name="org.covidwatch.android.ui.reporting.NotifyOthersFragment"

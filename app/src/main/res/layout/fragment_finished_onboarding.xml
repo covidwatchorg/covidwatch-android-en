@@ -53,18 +53,18 @@
 
             </com.google.android.material.appbar.MaterialToolbar>
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_normal"
+                android:src="@drawable/finished_onboarding_art" />
+
             <TextView
                 style="@style/TextView.ScreenTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/padding_normal"
-                android:text="@string/enable_exposure_notifications_title" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_normal"
-                android:src="@drawable/enable_en" />
+                android:text="@string/finished_onboarding_title" />
 
             <TextView
                 style="@style/TextView.ScreenSubtitle"
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/padding_normal"
                 android:paddingBottom="@dimen/padding_normal"
-                android:text="@string/enable_exposure_notifications_subtitle" />
+                android:text="@string/finished_onboarding_subtitle" />
 
         </LinearLayout>
     </ScrollView>
@@ -87,16 +87,14 @@
         android:paddingTop="@dimen/padding_normal">
 
         <Button
-            android:id="@+id/enable_button"
+            android:id="@+id/share_app_button"
             style="@style/Button.Action"
-            android:text="@string/enable_button" />
+            android:text="@string/share_app_button" />
 
         <Button
-            android:id="@+id/not_now_button"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/not_now_button" />
+            android:id="@+id/see_exposure_summary"
+            style="@style/Button.Action"
+            android:text="@string/see_exposure_summary" />
 
         <Space
             android:layout_width="0dp"

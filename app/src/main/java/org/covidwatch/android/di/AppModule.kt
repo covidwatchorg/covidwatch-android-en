@@ -242,7 +242,7 @@ val appModule = module {
     // Onboarding start
 
     viewModel {
-        EnableExposureNotificationsViewModel(enManager = get())
+        EnableExposureNotificationsViewModel(enManager = get(), userFlowRepository = get())
     }
 
     // Onboarding end

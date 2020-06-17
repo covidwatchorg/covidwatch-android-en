@@ -4,7 +4,7 @@
     <string name="menu_detect_exposures_from_server">[DEMO] Detect Exposures from Server</string>
     <string name="menu_set_exposure_configuration">[DEMO] Set Exposure Configuration</string>
     <string name="menu_export_possible_exposures">[DEMO] Export Possible Exposures</string>
-    <string name="screen_title"><b>DEMO</b>\nPUBLIC HEALTH DEPARTMENT</string>
+    <string name="screen_title"><b>DEMO</b></string>
     <string name="export_possible_exposure_for_test_case">Export Possible Exposure for Test Case</string>
     <string name="test_case_name">Test Case</string>
     <string name="btn_continue">Continue</string>
