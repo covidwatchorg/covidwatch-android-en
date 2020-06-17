@@ -41,9 +41,11 @@
     <color name="bluejay">#2C58B1</color>
     <color name="aqua">#43C4D9</color>
     <color name="plum">#4B0A70</color>
+    <color name="green">#C4C4C4</color>
     <color name="elderberry">#2C007B</color>
     <color name="lavender">#A680B7</color>
     <color name="tangerine">#F05452</color>
+    <color name="transparentGray">#E0E0E0</color>
     <color name="lightGray">#EFEFEF</color>
     <color name="gray">#BDBDBD</color>
     <color name="darkGray">#828282</color>

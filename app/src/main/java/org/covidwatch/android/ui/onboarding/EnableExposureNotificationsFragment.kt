@@ -29,12 +29,15 @@ class EnableExposureNotificationsFragment :
         }
 
         binding.notNowButton.setOnClickListener {
-            findNavController().popBackStack(R.id.homeFragment, false)
+            viewModel.notNowClicked()
         }
 
         with(viewModel) {
-            observeEvent(exposureNotificationResult) {
+            observeEvent(showHome) {
                 findNavController().popBackStack(R.id.homeFragment, false)
+            }
+            observeEvent(showOnboardingFinish) {
+                findNavController().navigate(R.id.finishedOnboardingFragment)
             }
         }
     }

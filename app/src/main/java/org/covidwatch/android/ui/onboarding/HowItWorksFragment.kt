@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.R
-import org.covidwatch.android.databinding.FragmentSplashBinding
+import org.covidwatch.android.databinding.FragmentHowItWorksBinding
 import org.covidwatch.android.ui.BaseFragment
 
-class SplashFragment : BaseFragment<FragmentSplashBinding>() {
+class HowItWorksFragment : BaseFragment<FragmentHowItWorksBinding>() {
 
-    override fun bind(inflater: LayoutInflater, container: ViewGroup?): FragmentSplashBinding =
-        FragmentSplashBinding.inflate(inflater, container, false)
+    override fun bind(inflater: LayoutInflater, container: ViewGroup?): FragmentHowItWorksBinding =
+        FragmentHowItWorksBinding.inflate(inflater, container, false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +30,8 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.startButton.setOnClickListener {
-            findNavController().navigate(R.id.howItWorksFragment)
+        binding.btnHowItWorks.setOnClickListener {
+            findNavController().navigate(R.id.onboardingFragment)
         }
     }
 }

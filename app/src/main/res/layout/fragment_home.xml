@@ -14,7 +14,7 @@
             style="@style/Widget.MaterialComponents.Toolbar.Surface"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            app:logo="@drawable/ic_health_department_logo">
+            app:logo="@drawable/ic_uoa_logo">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -30,6 +30,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/screen_title"
+                    android:textColor="@color/transparentGray"
                     android:textSize="14sp" />
 
                 <ImageView

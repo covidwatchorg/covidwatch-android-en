@@ -9,14 +9,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import org.covidwatch.android.R
-import org.covidwatch.android.data.UserFlowRepository
 import org.covidwatch.android.databinding.FragmentOnboardingBinding
 import org.covidwatch.android.ui.BaseFragment
-import org.koin.android.ext.android.inject
 
 class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
 
-    private val userFlowRepository: UserFlowRepository by inject()
     private lateinit var pagerAdapter: OnboardingPagerAdapter
 
     private val onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
@@ -41,7 +38,6 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { _, _ -> }.attach()
 
         binding.continueSetupButton.setOnClickListener {
-            userFlowRepository.finishOnboarding()
             // Remove previous onboarding fragments from the stack so we can't go back.
             findNavController().popBackStack(R.id.homeFragment, false)
             findNavController().navigate(R.id.enableExposureNotificationsFragment)

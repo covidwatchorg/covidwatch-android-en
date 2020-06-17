@@ -7,43 +7,40 @@ import org.covidwatch.android.R
 
 class OnboardingPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
-    override fun getItemCount(): Int = 5
+    override fun getItemCount(): Int = 4
 
     override fun createFragment(position: Int): Fragment {
-        return when (position) {
-            0 -> Fragment(R.layout.fragment_onboarding_start)
-            else -> OnboardingPageFragment().apply {
-                arguments = bundleOf(ONBOARDING_PAGE_PARAMETERS_KEY to howItWorksParameters(position))
-            }
+        return OnboardingPageFragment().apply {
+            arguments = bundleOf(ONBOARDING_PAGE_PARAMETERS_KEY to howItWorksParameters(position))
         }
     }
 
     private fun howItWorksParameters(position: Int): OnboardingPageParameters {
         return when (position) {
-            1 -> OnboardingPageParameters(
-                R.string.always_anonymous_title,
-                R.drawable.ic_how_it_works_01,
-                R.string.always_anonymous_subtitle
+            0 -> OnboardingPageParameters(
+                R.string.stay_anonymous_title,
+                R.drawable.how_it_works_1,
+                R.string.stay_anonymous_subtitle
             )
-            2 -> OnboardingPageParameters(
+            1 -> OnboardingPageParameters(
                 R.string.diagnosis_reports_title,
-                R.drawable.ic_how_it_works_02,
+                R.drawable.how_it_works_2,
                 R.string.diagnosis_reports_subtitle
             )
-            3 -> OnboardingPageParameters(
+            2 -> OnboardingPageParameters(
                 R.string.exposure_alerts_title,
-                R.drawable.ic_how_it_works_03,
+                R.drawable.how_it_works_3,
                 R.string.exposure_alerts_subtitle
             )
-            4 -> OnboardingPageParameters(
+            3 -> OnboardingPageParameters(
                 R.string.safe_communities_title,
-                R.drawable.ic_how_it_works_04,
+                R.drawable.how_it_works_4,
                 R.string.safe_communities_subtitle
             )
             else -> OnboardingPageParameters(
-                R.string.always_anonymous_title,
-                R.drawable.ic_how_it_works_01,
-                R.string.always_anonymous_subtitle
+                R.string.stay_anonymous_title,
+                R.drawable.how_it_works_1,
+                R.string.stay_anonymous_subtitle
             )
         }
     }

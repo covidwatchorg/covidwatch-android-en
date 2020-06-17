@@ -142,20 +142,27 @@
     <string name="get_started_button">Get Started</string>
     <string name="onboarding_welcome_title">Welcome to the {UCSF Health Covid Watch} App</string>
     <string name="onboarding_welcome_subtitle">Welcome Text. Aliquet urna feugiat donec dictum. Massa dignissim commodo ut et.  Massa dignissim commodo ut et.</string>
-    <string name="always_anonymous_title">Always Anonymous</string>
-    <string name="always_anonymous_subtitle">While Sam and Jane chat, their phones note each others’ anonymous signals and store them securely.</string>
-    <string name="diagnosis_reports_title">Diagnosis Reports</string>
-    <string name="diagnosis_reports_subtitle">A few days later, Sam tests positive for COVID-19. He enters the verified results into the Covid Watch app.</string>
-    <string name="exposure_alerts_title">Exposure Alerts</string>
-    <string name="exposure_alerts_subtitle">Jane’s phone gets an alert that someone she’s seen has now tested positive. The app tells her how to take action.</string>
-    <string name="safe_communities_title">Safe Communities</string>
-    <string name="safe_communities_subtitle">Jane and Sam help keep their communities safe. They share the app so that others can, too.</string>
+    <string name="stay_anonymous_title">Stay Anonymous</string>
+    <string name="stay_anonymous_subtitle">While Sam and Jane chat, their phones note each others’ Bluetooth signals and the app lists them securely as random numbers. Their personal information and location are <b>never recorded</b>.</string>
+    <string name="diagnosis_reports_title">Volunteer Diagnosis</string>
+    <string name="diagnosis_reports_subtitle">A few days later, Sam tests positive for COVID-19. He helps stop the spread by opting in to <b>anonymously</b> share his <b>positive results</b> in the app.</string>
+    <string name="exposure_alerts_title">Get Notifications</string>
+    <string name="exposure_alerts_subtitle">Jane’s gets a notification saying she was near a person who tested positive. The app explains <b>what to do next</b> and how to find public health resources.</string>
+    <string name="safe_communities_title">Help Communities</string>
+    <string name="safe_communities_subtitle">By opting in to <b>enable exposure notifications</b>, Jane and Sam help their communities stay safe. They share the app with others so that they can also help stop the spread.</string>
     <string name="enable_exposure_notifications_title">Enable Exposure Notifications</string>
-    <string name="enable_exposure_notifications_subtitle">These notifications are designed to notify you if you’ve been exposed to a user who later reports themselves as testing positive for COVID-19. You can choose to turn off these notifications at any time. Exposure notifications rely on the sharing and collection of random IDs. These IDs are a random string of numbers that won’t identify you to other users and change many times a day to protect your privacy.</string>
+    <string name="enable_exposure_notifications_subtitle">These notifications are designed to let you know if you’ve been exposed to a person who later reports themselves as testing positive for COVID-19. You can choose to turn this off at any time.</string>
     <string name="enable_button">Enable</string>
     <string name="not_now_button">Not now</string>
-    <string name="how_it_works">HOW IT WORKS</string>
+    <string name="how_it_works">How it Works</string>
     <string name="continue_setup_button">Continue Setup</string>
+    <string name="how_it_works_explanation">Support the path back to campus and help prevent the spread of COVID-19 with <b>safe</b>, <b>secure</b>, and <b>anonymous</b> exposure notifications.</string>
+    <string name="onboarding_title" />
+    <string name="welcome_to_the">Welcome to the</string>
+    <string name="full_app_name">University of Arizona COVID-19 Exposure Notification App</string>
+    <string name="finished_onboarding_title">You\'re all set!</string>
+    <string name="finished_onboarding_subtitle">The app is active. <b>You will be notified</b> of possible exposures to COVID-19 from people who share their anonymous and verified test results in the app.\n\n<b>Share the app</b> with others to improve the accuracy of your notifications.</string>
+    <string name="see_exposure_summary">See Exposure Summary</string>
 
     <!-- Home Screen-->
     <string name="home_days_since_last_exposure"><b>days</b>\nsince last exposure</string>
@@ -216,6 +223,5 @@
     <string name="no_connection_error">No internet available, please check your WIFi or Data connections</string>
     <string name="insufficient_storage">Insufficient storage to run Exposure Notification</string>
     <string name="ok">OK</string>
-    <string name="screen_title">PUBLIC HEALTH DEPARTMENT</string>
-
+    <string name="screen_title" />
 </resources>
