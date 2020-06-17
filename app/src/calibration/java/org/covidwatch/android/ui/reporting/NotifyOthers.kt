@@ -1,11 +1,11 @@
 package org.covidwatch.android.ui.reporting
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.LiveData
@@ -53,7 +53,7 @@ class NotifyOthersFragment : BaseNotifyOthersFragment() {
                     AlertDialog
                         .Builder(context)
                         .setView(dialogView.root)
-                        .setPositiveButton(R.string.continue_upload) { _, _ ->
+                        .setPositiveButton(R.string.btn_continue) { _, _ ->
                             val risksLevels = dialogView.etRiskLevels.text.toString()
                             viewModel.shareReport(risksLevels)
                         }
@@ -90,16 +90,15 @@ class NotifyOthersFragment : BaseNotifyOthersFragment() {
     private fun shareFile(zipFiles: List<File>) {
         context?.let { context ->
             val zip = zipFiles.firstOrNull() ?: return
-            val shareIntent = Intent()
-            shareIntent.action = Intent.ACTION_SEND
             val uri = FileProvider.getUriForFile(
                 context,
                 BuildConfig.APPLICATION_ID + ".fileprovider",
                 zip
             )
-            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-            shareIntent.type = URLConnection.guessContentTypeFromName(zip.name)
-            startActivity(Intent.createChooser(shareIntent, null))
+            ShareCompat.IntentBuilder.from(requireActivity())
+                .setStream(uri)
+                .setType(URLConnection.guessContentTypeFromName(zip.name))
+                .startChooser()
         }
     }
 }

@@ -29,6 +29,7 @@ import com.google.common.primitives.Bytes;
 import com.google.protobuf.ByteString;
 import com.jaredrummler.android.device.DeviceName;
 
+import org.covidwatch.android.DateFormatter;
 import org.covidwatch.android.exposurenotification.proto.SignatureInfo;
 import org.covidwatch.android.exposurenotification.proto.TEKSignature;
 import org.covidwatch.android.exposurenotification.proto.TEKSignatureList;
@@ -37,7 +38,6 @@ import org.covidwatch.android.exposurenotification.proto.TemporaryExposureKeyExp
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,7 +55,6 @@ public class KeyFileWriter {
     private static final String HEADER_V1 = "EK Export v1";
     private static final int HEADER_LEN = 16;
     private static final int DEFAULT_MAX_BATCH_SIZE = 10000;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
     private final Context context;
     @Nullable
     private final KeyFileSigner signer;
@@ -124,7 +123,7 @@ public class KeyFileWriter {
                     String.format(Locale.ENGLISH,
                             FILENAME_PATTERN,
                             DeviceName.getDeviceName(),
-                            dateFormat.format(new Date())));
+                            DateFormatter.format(new Date())));
             File parent = outFile.getParentFile();
             if (parent != null) {
                 if (!parent.mkdirs() && !parent.isDirectory()) {

@@ -1,11 +1,12 @@
 package org.covidwatch.android.ui.menu
 
-import android.app.Activity
-import android.content.Intent
+import android.content.Context
 import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ShareCompat
+import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
@@ -13,18 +14,23 @@ import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
+import com.jaredrummler.android.device.DeviceName
 import kotlinx.coroutines.launch
+import org.covidwatch.android.BuildConfig
+import org.covidwatch.android.DateFormatter
 import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureConfiguration
 import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.databinding.DialogExposureConfigurationBinding
+import org.covidwatch.android.databinding.DialogPossibleExposuresTestCaseBinding
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
 import org.covidwatch.android.extension.observeUseCase
 import org.koin.android.ext.android.inject
+import java.io.File
+import java.util.*
 
-const val CREATE_FILE_REQUEST_CODE = 1
 
 data class PossibleExposuresJson(
     @Expose
@@ -109,36 +115,49 @@ class MenuFragment : BaseMenuFragment() {
                 }
             }
             R.string.menu_export_possible_exposures -> {
-                val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                    addCategory(Intent.CATEGORY_OPENABLE)
-                    type = "text/json"
-                    // TODO: 15.06.2020 name
-                    putExtra(Intent.EXTRA_TITLE, "todo.json")
+                context?.let { context ->
+                    val dialogView =
+                        DialogPossibleExposuresTestCaseBinding.inflate(LayoutInflater.from(context))
+                    val dialog = AlertDialog
+                        .Builder(context)
+                        .setView(dialogView.root)
+                        .setPositiveButton(R.string.btn_continue) { _, _ ->
+                            sharePossibleExposures(context, dialogView.testCaseName.text.toString())
+                        }
+                        .setNegativeButton(R.string.cancel, null)
+                        .create()
+                    dialog.show()
+
                 }
-                startActivityForResult(intent, CREATE_FILE_REQUEST_CODE)
             }
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == CREATE_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            data?.data?.also { uri ->
-                lifecycleScope.launch {
+    private fun sharePossibleExposures(context: Context, testCaseName: String) {
+        lifecycleScope.launch {
+            val testName =
+                "${DeviceName.getDeviceName()}_${DateFormatter.format(Date())}_$testCaseName"
+            val file = File(context.filesDir, "$testName.json")
+            val exposures = exposureInformationRepository.exposures()
 
-                    val exposures = exposureInformationRepository.exposures()
+            val json = GsonBuilder()
+                .setPrettyPrinting()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create()
+                .toJson(exposures)
 
-                    val json = GsonBuilder()
-                        .setPrettyPrinting()
-                        .excludeFieldsWithoutExposeAnnotation()
-                        .create()
-                        .toJson(exposures)
-
-                    val outputStream =
-                        activity?.contentResolver?.openOutputStream(uri) ?: return@launch
-
-                    json.byteInputStream().copyTo(outputStream)
-                }
-            }
+            json.byteInputStream().copyTo(file.outputStream())
+            val uri = FileProvider.getUriForFile(
+                context,
+                BuildConfig.APPLICATION_ID + ".fileprovider",
+                file
+            )
+            ShareCompat.IntentBuilder.from(requireActivity())
+                .setEmailTo(arrayOf("calibration-test@covidwatch.org"))
+                .setSubject(testName)
+                .setStream(uri)
+                .setType("text/json")
+                .startChooser()
         }
     }
 
