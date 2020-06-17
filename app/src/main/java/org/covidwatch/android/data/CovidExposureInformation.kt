@@ -31,8 +31,17 @@ data class CovidExposureInformation(
     val id: Int = 0
 ) : Serializable {
 
-    @Expose
+    // TODO: 17.06.2020 Remove this hacks after calibration is done or move to calibration specific
+    // source folders
     var exposureConfiguration: CovidExposureConfiguration? = null
+        set(value) {
+            field = value
+            attenuationDurationThresholds = exposureConfiguration?.durationAtAttenuationThresholds
+        }
+
+    @Expose
+    @Ignore
+    var attenuationDurationThresholds: IntArray? = null
 
     @Ignore
     @StringRes

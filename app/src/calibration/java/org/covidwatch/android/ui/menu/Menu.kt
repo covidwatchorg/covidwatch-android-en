@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import org.covidwatch.android.BuildConfig
 import org.covidwatch.android.DateFormatter
 import org.covidwatch.android.R
-import org.covidwatch.android.data.CovidExposureConfiguration
+import org.covidwatch.android.attenuationDurationThresholds
 import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
@@ -38,6 +38,43 @@ data class PossibleExposuresJson(
     @Expose
     val exposures: List<CovidExposureInformation>
 )
+
+@Suppress("ArrayInDataClass")
+data class CovidExposureConfiguration(
+    @Expose
+    val minimumRiskScore: Int,
+    @Expose
+    val attenuationScores: IntArray,
+    @Expose
+    val attenuationWeight: Int,
+    @Expose
+    val daysSinceLastExposureScores: IntArray,
+    @Expose
+    val daysSinceLastExposureWeight: Int,
+    @Expose
+    val durationScores: IntArray,
+    @Expose
+    val durationWeight: Int,
+    @Expose
+    val transmissionRiskScores: IntArray,
+    @Expose
+    val transmissionRiskWeight: Int,
+    @Expose
+    val attenuationDurationThresholdList: List<IntArray>? = null
+)
+
+fun ExposureConfiguration.asCovidExposureConfiguration() =
+    CovidExposureConfiguration(
+        minimumRiskScore,
+        attenuationScores,
+        attenuationWeight,
+        daysSinceLastExposureScores,
+        daysSinceLastExposureWeight,
+        durationScores,
+        durationWeight,
+        transmissionRiskScores,
+        transmissionRiskWeight
+    )
 
 class MenuFragment : BaseMenuFragment() {
     private val exposureInformationRepository: ExposureInformationRepository by inject()
@@ -135,16 +172,25 @@ class MenuFragment : BaseMenuFragment() {
 
     private fun sharePossibleExposures(context: Context, testCaseName: String) {
         lifecycleScope.launch {
-            val testName =
-                "${DeviceName.getDeviceName()}_${DateFormatter.format(Date())}_$testCaseName"
-            val file = File(context.filesDir, "$testName.json")
+            // Create JSON of possible exposures
             val exposures = exposureInformationRepository.exposures()
+            val configuration = preferences.exposureConfiguration.asCovidExposureConfiguration()
+
+            val possibleExposuresJson = PossibleExposuresJson(
+                configuration.copy(attenuationDurationThresholdList = attenuationDurationThresholds),
+                exposures
+            )
 
             val json = GsonBuilder()
                 .setPrettyPrinting()
                 .excludeFieldsWithoutExposeAnnotation()
                 .create()
-                .toJson(exposures)
+                .toJson(possibleExposuresJson)
+
+            // Write Json to a file
+            val testName =
+                "${DeviceName.getDeviceName()}_${DateFormatter.format(Date())}_$testCaseName"
+            val file = File(context.filesDir, "$testName.json")
 
             json.byteInputStream().copyTo(file.outputStream())
             val uri = FileProvider.getUriForFile(
@@ -152,6 +198,8 @@ class MenuFragment : BaseMenuFragment() {
                 BuildConfig.APPLICATION_ID + ".fileprovider",
                 file
             )
+
+            // Share the file
             ShareCompat.IntentBuilder.from(requireActivity())
                 .setEmailTo(arrayOf("calibration-test@covidwatch.org"))
                 .setSubject(testName)

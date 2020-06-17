@@ -4,6 +4,7 @@ import android.content.ContentResolver
 import android.net.Uri
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.common.io.BaseEncoding
+import org.covidwatch.android.attenuationDurationThresholds
 import org.covidwatch.android.data.asCovidExposureConfiguration
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
@@ -52,11 +53,7 @@ class ProvideDiagnosisKeysFromFileUseCase(
             .setDurationWeight(configuration.durationWeight)
             .setTransmissionRiskWeight(configuration.transmissionRiskWeight)
 
-        var thresholds = intArrayOf(30, 33)
-        for (i in 0..66 step 3) {
-            thresholds = thresholds.map { it + 3 }.toIntArray()
-            Timber.d("THRESHOLDS: ${thresholds.joinToString()}}")
-
+        for (thresholds in attenuationDurationThresholds) {
             val exposureConfiguration = configurationBuilder
                 .setDurationAtAttenuationThresholds(*thresholds)
                 .build()
