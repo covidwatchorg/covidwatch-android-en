@@ -122,7 +122,7 @@
                 android:id="@+id/notify_others_button_question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/padding_extra_large"
+                android:layout_marginHorizontal="@dimen/padding_normal"
                 android:layout_marginVertical="@dimen/padding_normal"
                 android:text="@string/notify_others_button_question"
                 android:textAlignment="center" />
@@ -130,13 +130,13 @@
             <Button
                 android:id="@+id/notify_others_button"
                 style="@style/Button.Action"
-                android:layout_marginHorizontal="@dimen/padding_extra_large"
+                android:layout_marginHorizontal="@dimen/padding_normal"
                 android:text="@string/notify_others_button" />
 
             <Button
                 android:id="@+id/share_app_button"
                 style="@style/Button.Action"
-                android:layout_marginHorizontal="@dimen/padding_extra_large"
+                android:layout_marginHorizontal="@dimen/padding_normal"
                 android:text="@string/share_app_button" />
 
             <TextView

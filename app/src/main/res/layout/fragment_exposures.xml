@@ -37,11 +37,11 @@
                     android:id="@+id/btn_close"
                     style="@style/ImageView.BtnClose"
                     android:contentDescription="@string/close_button_content_descriptor"
-                    android:paddingHorizontal="@dimen/padding_large" />
+                    android:paddingHorizontal="@dimen/padding_normal" />
 
                 <TextView
                     style="@style/TextView.ScreenTitle"
-                    android:paddingHorizontal="@dimen/padding_large"
+                    android:paddingHorizontal="@dimen/padding_normal"
                     android:text="@string/title_exposures" />
 
                 <!--suppress AndroidUnknownAttribute -->
@@ -50,11 +50,11 @@
                     style="@style/Switch.EnableExposureNotification"
                     android:checked="@{viewModel.exposureNotificationEnabled}"
                     android:onCheckedChanged="@{(switch, on) -> viewModel.enableExposureNotification(on)}"
-                    android:paddingHorizontal="@dimen/padding_large" />
+                    android:paddingHorizontal="@dimen/padding_normal" />
 
                 <TextView
                     style="@style/TextView.ScreenSubtitle"
-                    android:paddingHorizontal="@dimen/padding_large"
+                    android:paddingHorizontal="@dimen/padding_normal"
                     android:text="@string/exposures_subtitle"
                     android:textSize="13sp" />
 
@@ -62,7 +62,7 @@
                     style="@style/TextView.ScreenSubtitle"
                     android:layout_marginTop="@dimen/padding_normal"
                     android:background="@color/darkGray"
-                    android:paddingHorizontal="@dimen/padding_large"
+                    android:paddingHorizontal="@dimen/padding_normal"
                     android:paddingVertical="@dimen/padding_normal"
                     android:textColor="@color/white"
                     android:textSize="14sp"
@@ -76,7 +76,7 @@
                     android:drawableEnd="@drawable/doctor_with_heart"
                     android:drawablePadding="@dimen/padding_normal"
                     android:lineSpacingExtra="4dp"
-                    android:paddingHorizontal="@dimen/padding_large"
+                    android:paddingHorizontal="@dimen/padding_normal"
                     android:paddingTop="@dimen/padding_normal"
                     android:text="@string/empty_exposures_list"
                     android:textSize="13sp"

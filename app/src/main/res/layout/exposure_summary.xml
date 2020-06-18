@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:foreground="?selectableItemBackground"
     android:orientation="vertical"
-    android:paddingHorizontal="@dimen/padding_extra_large"
+    android:paddingHorizontal="@dimen/padding_normal"
     android:paddingBottom="@dimen/padding_normal">
 
     <LinearLayout
