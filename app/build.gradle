@@ -7,6 +7,9 @@ apply plugin: "org.sonarqube"
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'com.google.protobuf'
 
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -127,6 +130,7 @@ dependencies {
 
     calibrationImplementation 'com.google.protobuf:protobuf-java:3.12.2'
     calibrationImplementation 'com.jaredrummler:android-device-names:2.0.0'
+    calibrationImplementation 'com.google.firebase:firebase-crashlytics:17.0.1'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
