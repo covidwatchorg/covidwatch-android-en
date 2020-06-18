@@ -60,7 +60,7 @@ android {
         }
         arizona {
             dimension "client"
-            applicationIdSuffix ".theuoa"
+            applicationIdSuffix ".arizona"
         }
     }
 
