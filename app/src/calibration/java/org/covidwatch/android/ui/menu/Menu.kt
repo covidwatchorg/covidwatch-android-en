@@ -34,7 +34,7 @@ import java.util.*
 
 data class PossibleExposuresJson(
     @Expose
-    val covidExposureConfiguration: CovidExposureConfiguration,
+    val exposureConfiguration: CovidExposureConfiguration,
     @Expose
     val exposures: List<CovidExposureInformation>
 )
@@ -188,9 +188,9 @@ class MenuFragment : BaseMenuFragment() {
                 .toJson(possibleExposuresJson)
 
             // Write Json to a file
-            val testName =
-                "${DeviceName.getDeviceName()}_${DateFormatter.format(Date())}_$testCaseName"
-            val file = File(context.filesDir, "$testName.json")
+            val fileName =
+                "${DeviceName.getDeviceName()}_${DateFormatter.format(Date())}_$testCaseName.json"
+            val file = File(context.filesDir, fileName)
 
             json.byteInputStream().copyTo(file.outputStream())
             val uri = FileProvider.getUriForFile(
@@ -202,7 +202,7 @@ class MenuFragment : BaseMenuFragment() {
             // Share the file
             ShareCompat.IntentBuilder.from(requireActivity())
                 .setEmailTo(arrayOf("calibration-test@covidwatch.org"))
-                .setSubject(testName)
+                .setSubject(fileName)
                 .setStream(uri)
                 .setType("text/json")
                 .startChooser()
