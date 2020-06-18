@@ -25,7 +25,7 @@
             <ImageView
                 android:id="@+id/btn_close"
                 style="@style/ImageView.BtnClose"
-                android:paddingHorizontal="@dimen/padding_large"
+                android:paddingHorizontal="@dimen/padding_normal"
                 tools:ignore="ContentDescription" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingHorizontal="@dimen/padding_large"
+                android:paddingHorizontal="@dimen/padding_normal"
                 android:paddingTop="@dimen/padding_normal">
 
                 <TextView

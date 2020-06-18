@@ -117,6 +117,7 @@
     <string name="btn_find_covid_test_site">Find COVID-19 Test Site</string>
     <string name="exposure_information_date_title">Date</string>
     <string name="exposure_information_duration_title">Attenuation Duration</string>
+    <string name="exposure_information_duration_thresholds_title">Attenuation Thresholds</string>
     <string name="exposure_information_duration_text">%d min</string>
     <string name="exposure_information_attenuation_title">Attenuation</string>
     <string name="exposure_information_total_risk_title">Total Risk Score</string>
@@ -127,7 +128,7 @@
     <string name="exposure_information_transmission_risk_text">%d of 8</string>
     <string name="share_positive_diagnosis_btn_explanation"><b>Have a positive diagnosis?</b>\nHelp stop the spread by anonymously notifying others of a possible exposure to COVID-19.</string>
     <string name="call_pha">Call the Public Health Department to get tested and receive help with shelter and food at 1–800-COVID19</string>
-    <string name="monitor_symptoms">Monitor symptoms\nIsolate from others \nRest and take care</string>
+    <string name="monitor_symptoms">Monitor symptoms\nIsolate from others\nRest and take care</string>
     <string name="follow_guidance">Follow guidance from the\n<a href="https://www.covid-watch.org/">Center for Disease Control</a></string>
     <string name="next_steps">What to do next</string>
     <string name="icon_exposure_risk_info">Exposure risk information</string>

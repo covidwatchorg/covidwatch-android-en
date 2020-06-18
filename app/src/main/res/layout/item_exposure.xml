@@ -23,7 +23,7 @@
         android:drawablePadding="@dimen/padding_normal"
         android:focusable="true"
         android:onClick="@{()->viewModel.showExposureDetails(item)}"
-        android:paddingHorizontal="@dimen/padding_large"
+        android:paddingHorizontal="@dimen/padding_normal"
         android:paddingVertical="@dimen/padding_normal"
         app:exposure="@{item}"
         tools:text="May 20, 2020" />

@@ -32,24 +32,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             testCoverageEnabled false
             buildConfigField("boolean", "FIREBASE_DEBUGGING", "false")
-            signingConfig signingConfigs.debug
         }
         debug {
-            applicationIdSuffix = ".debug"
             testCoverageEnabled project.hasProperty('coverage')
             buildConfigField "boolean", "FIREBASE_DEBUGGING", "true"
         }
     }
 
-    flavorDimensions "releaseChannel"
+    flavorDimensions "releaseChannel", "client"
 
     productFlavors {
         calibration {
             dimension "releaseChannel"
-            applicationIdSuffix ".calibration"
         }
         production {
             dimension "releaseChannel"
+        }
+        arizona {
+            dimension "client"
+            applicationIdSuffix ".arizona"
         }
     }
 
