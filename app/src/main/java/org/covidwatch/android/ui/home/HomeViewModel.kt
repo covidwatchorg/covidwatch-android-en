@@ -10,15 +10,13 @@ import org.covidwatch.android.data.FirstTimeUser
 import org.covidwatch.android.data.UserFlowRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
-import org.covidwatch.android.extension.doOnNext
 import org.covidwatch.android.ui.BaseViewModel
 import org.covidwatch.android.ui.event.Event
-import timber.log.Timber
 
 class HomeViewModel(
     private val enManager: ExposureNotificationManager,
     private val userFlowRepository: UserFlowRepository,
-    private val preferenceStorage: PreferenceStorage
+    preferenceStorage: PreferenceStorage
 ) : BaseViewModel() {
 
     private val _infoBannerState = MutableLiveData<InfoBannerState>()
@@ -30,16 +28,8 @@ class HomeViewModel(
     private val _navigateToOnboardingEvent = MutableLiveData<Event<Unit>>()
     val navigateToOnboardingEvent: LiveData<Event<Unit>> get() = _navigateToOnboardingEvent
 
-    val exposureSummary: LiveData<CovidExposureSummary>
-        get() = preferenceStorage.observableExposureSummary.doOnNext {
-            Timber.d("Check potential exposure")
-            val potentialExposure = it.matchedKeyCount > 0
-            _warningBannerState.value = if (potentialExposure) {
-                WarningBannerState.Visible(R.string.contact_alert_text)
-            } else {
-                WarningBannerState.Hidden
-            }
-        }
+    val exposureSummary: LiveData<CovidExposureSummary> =
+        preferenceStorage.observableExposureSummary
 
     fun onStart() {
         val userFlow = userFlowRepository.getUserFlow()
