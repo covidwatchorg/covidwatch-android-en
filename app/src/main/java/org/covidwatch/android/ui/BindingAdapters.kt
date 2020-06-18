@@ -88,6 +88,11 @@ fun TextView.setTextFromAttenuationDurations(attenuationDurations: List<Int>?) {
     text = attenuationDurations?.joinToString { if (it >= 30) "≥30m" else "${it}m" }
 }
 
+@BindingAdapter("attenuation_thresholds")
+fun TextView.setTextFromAttenuationThresholds(thresholds: IntArray?) {
+    text = thresholds?.joinToString()
+}
+
 @BindingAdapter("total_risk")
 fun TextView.setTextFromTotalRisk(totalRiskScore: Int?) {
     totalRiskScore?.let {

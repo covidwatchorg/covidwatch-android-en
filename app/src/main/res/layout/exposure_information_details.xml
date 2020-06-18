@@ -49,6 +49,21 @@
 
             <TextView
                 style="@style/TextView.ExposureInformationRowTitle"
+                android:text="@string/exposure_information_duration_thresholds_title" />
+
+            <View style="@style/Divider.Vertical" />
+
+            <TextView
+                style="@style/TextView.ExposureInformationRowText"
+                android:gravity="center_vertical"
+                app:attenuation_thresholds="@{exposure.attenuationDurationThresholds}"
+                tools:text="30, 33" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/ExposureInformationRow">
+
+            <TextView
+                style="@style/TextView.ExposureInformationRowTitle"
                 android:text="@string/exposure_information_transmission_risk_level_title" />
 
             <View style="@style/Divider.Vertical" />

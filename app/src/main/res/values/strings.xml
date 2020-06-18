@@ -117,6 +117,7 @@
     <string name="btn_find_covid_test_site">Find COVID-19 Test Site</string>
     <string name="exposure_information_date_title">Date</string>
     <string name="exposure_information_duration_title">Attenuation Duration</string>
+    <string name="exposure_information_duration_thresholds_title">Attenuation Thresholds</string>
     <string name="exposure_information_duration_text">%d min</string>
     <string name="exposure_information_attenuation_title">Attenuation</string>
     <string name="exposure_information_total_risk_title">Total Risk Score</string>
