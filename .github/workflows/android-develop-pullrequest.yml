@@ -36,7 +36,7 @@ jobs:
     - name: Decode google-services.json
       env:
         FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
-      run: echo $FIREBASE_SECRET > covidwatch-android-en/app/google-services.json
+      run: echo $FIREBASE_SECRET > app/google-services.json
     - name: Clean, Build
       run: bash ./gradlew clean assemble --stacktrace
     - name: Lint
@@ -64,7 +64,7 @@ jobs:
         - name: Decode google-services.json
           env:
             FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
-          run: echo $FIREBASE_SECRET > covidwatch-android-en/app/google-services.json
+          run: echo $FIREBASE_SECRET > app/google-services.json
         - name: Build debug APK
           run: bash ./gradlew assembleCalibrationArizonaDebug --stacktrace
         - name: Upload APK
