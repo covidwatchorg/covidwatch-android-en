@@ -84,7 +84,7 @@
         android:elevation="@dimen/onboarding_footer_elevation"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/padding_normal"
-        android:paddingTop="@dimen/padding_normal">
+        android:paddingVertical="@dimen/padding_normal">
 
         <Button
             android:id="@+id/share_app_button"
@@ -95,13 +95,6 @@
             android:id="@+id/see_exposure_summary"
             style="@style/Button.Action"
             android:text="@string/see_exposure_summary" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <include layout="@layout/powered_by" />
 
     </LinearLayout>
 </LinearLayout>

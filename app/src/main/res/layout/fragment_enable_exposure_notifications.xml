@@ -84,7 +84,7 @@
         android:elevation="@dimen/onboarding_footer_elevation"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/padding_normal"
-        android:paddingTop="@dimen/padding_normal">
+        android:paddingVertical="@dimen/padding_normal">
 
         <Button
             android:id="@+id/enable_button"
@@ -97,13 +97,5 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/not_now_button" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <include layout="@layout/powered_by" />
-
     </LinearLayout>
 </LinearLayout>

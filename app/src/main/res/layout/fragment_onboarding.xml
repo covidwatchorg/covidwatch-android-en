@@ -70,8 +70,6 @@
             android:layout_marginHorizontal="@dimen/padding_normal"
             android:text="@string/continue_setup_button"
             android:visibility="gone" />
-
-        <include layout="@layout/powered_by" />
     </LinearLayout>
 
 </LinearLayout>
