@@ -8,6 +8,7 @@ import org.covidwatch.android.domain.UploadDiagnosisKeysUseCase.Params
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.functional.Either
+import timber.log.Timber
 import java.security.SecureRandom
 import java.util.*
 
@@ -32,10 +33,17 @@ class UploadDiagnosisKeysUseCase(
     override suspend fun run(params: Params?): Either<ENStatus, Unit> {
         enManager.isEnabled().apply {
             success { enabled ->
-                if (!enabled) return Either.Left(ENStatus.FailedServiceDisabled)
+                if (!enabled) {
+                    Timber.d("Can't start ${javaClass.simpleName}. EN is not enabled")
+                    return Either.Left(ENStatus.FailedServiceDisabled)
+                }
             }
-            failure { return Either.Left(it) }
+            failure {
+                Timber.d("Can't start ${javaClass.simpleName}. EN is not enabled")
+                return Either.Left(it)
+            }
         }
+        Timber.d("Start ${javaClass.simpleName}")
         enManager.temporaryExposureKeyHistory().apply {
             success {
                 try {
@@ -46,10 +54,12 @@ class UploadDiagnosisKeysUseCase(
                                     ?: key.transmissionRiskLevel
                             )
                     }
+                    Timber.d("Diagnosis Keys ${diagnosisKeys.joinToString()}")
 
                     val regions = countryCodeRepository.exposureRelevantCountryCodes()
                     val uploadEndpoints = uriManager.uploadUris(regions)
 
+                    Timber.d("Start Device Attestation")
                     val attestation = safetyNetManager.attestFor(
                         diagnosisKeys,
                         regions,
@@ -66,6 +76,7 @@ class UploadDiagnosisKeysUseCase(
                         randomPadding()
                     )
 
+                    Timber.d("Upload positive diagnosis: $positiveDiagnosis")
                     uploadEndpoints.forEach { url ->
                         diagnosisRepository.uploadDiagnosisKeys(url, positiveDiagnosis)
                     }
@@ -76,13 +87,18 @@ class UploadDiagnosisKeysUseCase(
                             reportDate = Date()
                         )
                     )
+                    Timber.d("Uploaded positive diagnosis")
                     return Either.Right(Unit)
                 } catch (e: Exception) {
+                    Timber.d("Failed to upload positive diagnosis")
                     return Either.Left(ENStatus(e))
                 }
             }
 
-            failure { return Either.Left(it) }
+            failure {
+                Timber.d("Failed to retrieve TEKs")
+                return Either.Left(it)
+            }
         }
         return Either.Right(Unit)
     }

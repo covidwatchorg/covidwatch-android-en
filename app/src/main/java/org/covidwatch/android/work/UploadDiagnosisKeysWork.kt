@@ -11,6 +11,7 @@ import org.covidwatch.android.extension.failure
 import org.covidwatch.android.ui.Notifications
 import org.covidwatch.android.ui.Notifications.Companion.UPLOADING_REPORT_NOTIFICATION_ID
 import org.koin.java.KoinJavaComponent.inject
+import timber.log.Timber
 
 class UploadDiagnosisKeysWork(
     context: Context,
@@ -23,6 +24,8 @@ class UploadDiagnosisKeysWork(
 
     override suspend fun doWork() = withContext(Dispatchers.IO) {
         val riskLevels = workerParams.inputData.getIntArray(RISK_LEVELS)?.toList()
+        Timber.d("Start ${javaClass.simpleName}. Risk Levels: ${riskLevels?.joinToString()}")
+
         setForeground(
             ForegroundInfo(
                 UPLOADING_REPORT_NOTIFICATION_ID,

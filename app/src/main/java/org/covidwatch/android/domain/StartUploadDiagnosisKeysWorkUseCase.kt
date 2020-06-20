@@ -8,6 +8,7 @@ import org.covidwatch.android.extension.getFinalWorkInfoByIdLiveData
 import org.covidwatch.android.functional.Either
 import org.covidwatch.android.work.UploadDiagnosisKeysWork
 import org.covidwatch.android.work.UploadDiagnosisKeysWork.Companion.RISK_LEVELS
+import timber.log.Timber
 import java.util.*
 
 
@@ -17,9 +18,10 @@ class StartUploadDiagnosisKeysWorkUseCase(
 ) : LiveDataUseCase<UUID, Params>(dispatchers) {
 
     override suspend fun run(params: Params?): Either<ENStatus, UUID> {
-
         val riskLevels = params?.riskLevels?.toIntArray()
         val data = riskLevels?.let { Data.Builder().putIntArray(RISK_LEVELS, it).build() }
+
+        Timber.d("Start ${javaClass.simpleName}. Risk Levels: ${riskLevels?.joinToString()}")
 
         val uploadRequest = OneTimeWorkRequestBuilder<UploadDiagnosisKeysWork>()
             .apply {

@@ -32,6 +32,8 @@ import java.security.Signature;
 import java.security.SignatureException;
 import java.security.spec.ECGenParameterSpec;
 
+import timber.log.Timber;
+
 /**
  * Signs diagnosis key files.
  *
@@ -65,6 +67,7 @@ public class KeyFileSigner {
       keyPair = keyGen.generateKeyPair();
     } catch (InvalidAlgorithmParameterException | NoSuchAlgorithmException e) {
       // TODO: Better exception.
+      Timber.e(e);
       throw new RuntimeException(e);
     }
   }
@@ -78,6 +81,7 @@ public class KeyFileSigner {
       return sig.sign();
     } catch (NoSuchAlgorithmException | InvalidKeyException | SignatureException e) {
       // TODO: Better exception.
+      Timber.e(e);
       throw new RuntimeException(e);
     }
   }

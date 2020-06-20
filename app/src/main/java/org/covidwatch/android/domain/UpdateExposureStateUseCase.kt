@@ -14,7 +14,8 @@ class UpdateExposureStateUseCase(
 ) : UseCase<UUID, UpdateExposureStateUseCase.Params>(dispatchers) {
     override suspend fun run(params: Params?): Either<ENStatus, UUID> {
         params ?: return Either.Left(ENStatus.Failed)
-        Timber.d("Start UpdateExposureStateUseCase")
+        Timber.d("Start ${javaClass.simpleName} for token: ${params.token}")
+
         val updateWork = OneTimeWorkRequestBuilder<UpdateExposureStateWork>()
             .setConstraints(Constraints.Builder().build())
             .setInputData(

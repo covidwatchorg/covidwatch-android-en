@@ -8,6 +8,7 @@ import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.extension.getFinalWorkInfoByIdLiveData
 import org.covidwatch.android.functional.Either
 import org.covidwatch.android.work.ProvideDiagnosisKeysWork
+import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -17,6 +18,8 @@ class ProvideDiagnosisKeysUseCase(
 ) : LiveDataUseCase<UUID, Params>(dispatchers) {
     override suspend fun run(params: Params?): Either<ENStatus, UUID> {
         val recurrent = params?.recurrent ?: false
+        Timber.d("Start ${javaClass.simpleName}. Recurrent: $recurrent")
+
         val downloadRequest: WorkRequest
         if (recurrent) {
             downloadRequest = PeriodicWorkRequestBuilder<ProvideDiagnosisKeysWork>(
@@ -51,7 +54,6 @@ class ProvideDiagnosisKeysUseCase(
                 downloadRequest
             )
         }
-
         return Either.Right(downloadRequest.id)
     }
 

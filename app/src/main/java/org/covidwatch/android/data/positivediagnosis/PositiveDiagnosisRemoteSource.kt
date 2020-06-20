@@ -12,6 +12,7 @@ import okhttp3.ResponseBody
 import okio.IOException
 import org.covidwatch.android.data.PositiveDiagnosis
 import org.covidwatch.android.exposurenotification.ServerException
+import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -73,12 +74,14 @@ class PositiveDiagnosisRemoteSource(
                 outputStream.flush()
                 file
             } catch (e: IOException) {
+                Timber.e(e)
                 null
             } finally {
                 inputStream?.close()
                 outputStream?.close()
             }
         } catch (e: IOException) {
+            Timber.e(e)
             null
         }
     }
