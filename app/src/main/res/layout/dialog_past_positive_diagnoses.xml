@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/gradient_bottom_top_top"
-            android:src="@drawable/ic_doctors_security"
+            android:src="@drawable/notify_others_art_2"
             tools:ignore="ContentDescription" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
