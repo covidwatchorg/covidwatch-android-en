@@ -33,9 +33,8 @@
             android:textSize="16sp" />
 
         <Button
+            style="@style/Button.Action"
             android:id="@+id/share_positive_diagnosis_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
             android:layout_marginTop="@dimen/padding_large"
             android:text="@string/share_positive_diagnosis_button" />
