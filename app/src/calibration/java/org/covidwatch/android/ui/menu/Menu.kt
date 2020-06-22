@@ -28,6 +28,7 @@ import org.covidwatch.android.databinding.DialogPossibleExposuresTestCaseBinding
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
 import org.covidwatch.android.extension.observeUseCase
 import org.koin.android.ext.android.inject
+import timber.log.Timber
 import java.io.File
 import java.util.*
 
@@ -228,6 +229,7 @@ class MenuFragment : BaseMenuFragment() {
                 preferences.exposureConfiguration = configuration
                 return true
             } catch (e: Exception) {
+                Timber.e(e)
                 Snackbar.make(dialog.root, e.message.toString(), LENGTH_LONG).show()
             }
         }

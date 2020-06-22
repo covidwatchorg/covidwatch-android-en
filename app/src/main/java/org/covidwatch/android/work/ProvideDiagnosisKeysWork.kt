@@ -58,14 +58,14 @@ class ProvideDiagnosisKeysWork(
                 val exposureConfiguration = preferences.exposureConfiguration
                 diagnosisKeys.forEach {
                     val keys = it.keys
-                    enManager.provideDiagnosisKeys(
-                        keys,
-                        token,
-                        exposureConfiguration
-                    ).apply {
+                    enManager.provideDiagnosisKeys(keys, token, exposureConfiguration).apply {
                         success {
+                            Timber.d("Added keys to EN with token: $token")
                             //TODO: Delete empty folder
                             keys.forEach { file -> file.delete() }
+                        }
+                        failure {
+                            Timber.d("Failed to added keys to EN")
                         }
                         //TODO: Handle failed files
                     }
@@ -79,6 +79,7 @@ class ProvideDiagnosisKeysWork(
                 )
                 Result.success()
             } catch (e: Exception) {
+                Timber.e(e)
                 failure(ENStatus(e))
             }
         }

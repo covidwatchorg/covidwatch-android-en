@@ -46,13 +46,16 @@ class UpdateExposureStateWork(
             val summationRiskScore = exposures.sumBy { it.totalRiskScore }
 
             val covidExposureSummary = enConverter.covidExposureSummary(exposureSummary)
+            Timber.d("Exposure summary from EN: $covidExposureSummary")
 
             preferenceStorage.exposureSummary = covidExposureSummary.copy(
                 matchedKeyCount = exposures.size,
                 maximumRiskScore = maxRiskScore ?: covidExposureSummary.maximumRiskScore,
                 summationRiskScore = summationRiskScore
             )
+            Timber.d("Exposure summary to display: ${preferenceStorage.exposureSummary}")
         } else {
+            Timber.d("No exposure for token: $token")
             diagnosisKeysTokenRepository.delete(token)
         }
         return Result.success()

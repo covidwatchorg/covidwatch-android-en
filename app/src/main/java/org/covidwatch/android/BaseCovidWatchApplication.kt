@@ -12,7 +12,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
-class CovidWatchApplication : Application() {
+open class BaseCovidWatchApplication : Application() {
 
     private val provideDiagnosisKeysUseCase: ProvideDiagnosisKeysUseCase by inject()
 
