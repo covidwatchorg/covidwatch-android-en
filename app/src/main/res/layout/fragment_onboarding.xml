@@ -11,6 +11,7 @@
         style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
+        android:elevation="@dimen/onboarding_footer_elevation"
         app:contentInsetStart="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +53,8 @@
         android:layout_height="wrap_content"
         android:background="?android:attr/colorBackground"
         android:elevation="@dimen/onboarding_footer_elevation"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingVertical="@dimen/padding_normal">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
