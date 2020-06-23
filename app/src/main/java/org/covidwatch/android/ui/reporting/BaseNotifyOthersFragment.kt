@@ -13,6 +13,7 @@ import org.covidwatch.android.R
 import org.covidwatch.android.databinding.DialogPastPositiveDiagnosesBinding
 import org.covidwatch.android.databinding.FragmentNotifyOthersBinding
 import org.covidwatch.android.extension.observe
+import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseViewModelFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -64,6 +65,7 @@ open class BaseNotifyOthersFragment :
 
         with(viewModel) {
             observe(positiveDiagnosis) { adapter.setItems(it) }
+            observeEvent(openVerificationScreen) { findNavController().navigate(R.id.verifyPositiveDiagnosisFragment) }
         }
     }
 

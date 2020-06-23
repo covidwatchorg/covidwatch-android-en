@@ -109,7 +109,6 @@ class NotifyOthersViewModel(
     enManager: ExposureNotificationManager,
     positiveDiagnosisRepository: PositiveDiagnosisRepository
 ) : BaseNotifyOthersViewModel(
-    startUploadDiagnosisKeysWorkUseCase,
     enManager,
     positiveDiagnosisRepository
 ) {
