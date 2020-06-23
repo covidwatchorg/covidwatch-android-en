@@ -202,6 +202,13 @@
     <string name="choose_sharing_method_dialog_message">Note: The TEK for the current day won\'t be shared with the server. When sharing with the server, you can set the transmission risk level only at the first upload.</string>
     <string name="choose_sharing_method_dialog_btn_server">Covid Watch server</string>
     <string name="choose_sharing_method_dialog_btn_other">Others…</string>
+    <string name="test_verification_code_info">Test verification codes information</string>
+    <string name="test_verification_code_label">Test Verification Code</string>
+    <string name="test_verification_code_hint">000–000–0</string>
+    <string name="symptoms_date_label">When did your symptoms start?</string>
+    <string name="no_symptoms">I have no symptoms</string>
+    <string name="tested_date_label">When did get tested?</string>
+    <string name="select_date_hint">Select Date</string>
 
     <!-- Notifications -->
     <string name="upload_report_notification_channel">Reporting</string>
