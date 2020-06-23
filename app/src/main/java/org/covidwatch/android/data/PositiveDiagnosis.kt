@@ -1,5 +1,6 @@
 package org.covidwatch.android.data
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
@@ -9,7 +10,9 @@ import java.util.*
 data class PositiveDiagnosisReport(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val verified: Boolean,
-    val reportDate: Date
+    val reportDate: Date,
+    @Embedded
+    val verificationData: PositiveDiagnosisVerification? = null
 )
 
 data class PositiveDiagnosis(
@@ -44,3 +47,15 @@ fun TemporaryExposureKey.asDiagnosisKey() = DiagnosisKey(
     transmissionRiskLevel,
     rollingPeriod
 )
+
+data class PositiveDiagnosisVerification(
+    val verificationTestCode: String? = null,
+    val symptomsStartDate: Long? = null,
+    val noSymptoms: Boolean = false,
+    val testedDate: Long? = null
+) {
+    val readyToSubmit: Boolean
+        get() = verificationTestCode != null &&
+                testedDate != null &&
+                (symptomsStartDate != null || noSymptoms)
+}

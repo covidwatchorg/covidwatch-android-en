@@ -32,6 +32,7 @@ import org.covidwatch.android.ui.exposures.ExposuresViewModel
 import org.covidwatch.android.ui.home.HomeViewModel
 import org.covidwatch.android.ui.menu.MenuViewModel
 import org.covidwatch.android.ui.onboarding.EnableExposureNotificationsViewModel
+import org.covidwatch.android.ui.reporting.VerifyPositiveDiagnosisViewModel
 import org.covidwatch.android.ui.settings.SettingsViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -221,6 +222,10 @@ val appModule = module {
 
     viewModel {
         MenuViewModel(exposureInformationRepository = get())
+    }
+
+    viewModel {
+        VerifyPositiveDiagnosisViewModel()
     }
 
     single {
