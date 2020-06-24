@@ -8,7 +8,7 @@ import java.util.*
 
 @Entity(tableName = "positive_diagnosis_report")
 data class PositiveDiagnosisReport(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
     val verified: Boolean,
     val reportDate: Date,
     @Embedded

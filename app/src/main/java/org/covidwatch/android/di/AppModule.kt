@@ -170,7 +170,8 @@ val appModule = module {
     factory {
         StartUploadDiagnosisKeysWorkUseCase(
             workManager = get(),
-            dispatchers = get()
+            dispatchers = get(),
+            positiveDiagnosisRepository = get()
         )
     }
 
@@ -225,7 +226,10 @@ val appModule = module {
     }
 
     viewModel {
-        VerifyPositiveDiagnosisViewModel()
+        VerifyPositiveDiagnosisViewModel(
+            startUploadDiagnosisKeysWorkUseCase = get(),
+            enManager = get()
+        )
     }
 
     single {

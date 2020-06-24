@@ -39,7 +39,8 @@ class PositiveDiagnosisRepository(
         return encoding.encode(bytes)
     }
 
-    suspend fun addPositiveDiagnosisReport(positiveDiagnosisItem: PositiveDiagnosisReport) {
+    suspend fun addPositiveDiagnosisReport(positiveDiagnosisItem: PositiveDiagnosisReport) =
         local.addPositiveDiagnosisReport(positiveDiagnosisItem)
-    }
+
+    suspend fun positiveDiagnosisReport(id: String) = local.report(id)
 }
