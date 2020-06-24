@@ -59,6 +59,7 @@ open class BaseNotifyOthersFragment :
                     .Builder(requireContext())
                     .setView(dialogView.root)
                     .create()
+                dialogView.closeButton.setOnClickListener { dialog.dismiss() }
                 dialog.show()
             }
         }
