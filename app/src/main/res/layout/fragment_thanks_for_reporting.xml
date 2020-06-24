@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/padding_normal">
+        android:background="@drawable/gradient_thank_you"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/close_button"
             style="@style/ImageView.BtnClose"
-            android:paddingHorizontal="@dimen/padding_normal"
-            android:contentDescription="@string/close_button_content_descriptor" />
+            android:contentDescription="@string/close_button_content_descriptor"
+            android:paddingHorizontal="@dimen/padding_normal" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:text="@string/step_3_notify_others"
+            android:textAllCaps="true" />
 
         <TextView
             style="@style/TextView.ScreenTitle"
@@ -22,30 +30,36 @@
             android:layout_marginHorizontal="@dimen/padding_normal"
             android:text="@string/thank_you_for_sharing_title" />
 
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_normal"
-            android:src="@drawable/ic_family_earth"
-            android:contentDescription="@null" />
-
         <TextView
             android:id="@+id/past_positive_diagnoses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
             android:layout_marginTop="@dimen/padding_large"
+            android:layout_weight="1"
             android:text="@string/thank_you_for_sharing_text"
             android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/share_app_button"
+        <ImageView
+            android:id="@+id/imageView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_normal"
+            android:contentDescription="@null"
+            android:src="@drawable/reporting_art_3" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/share_app_button"
+            style="@style/Button.Action"
             android:layout_marginHorizontal="@dimen/padding_normal"
             android:layout_marginTop="@dimen/padding_normal"
             android:text="@string/share_app_button" />
 
+        <include layout="@layout/powered_by" />
     </LinearLayout>
 </ScrollView>

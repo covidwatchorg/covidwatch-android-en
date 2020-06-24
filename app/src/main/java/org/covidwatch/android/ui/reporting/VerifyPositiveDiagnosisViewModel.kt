@@ -15,7 +15,7 @@ import org.covidwatch.android.ui.BaseViewModel
 import org.covidwatch.android.ui.event.Event
 import java.util.*
 
-open class VerifyPositiveDiagnosisViewModel(
+class VerifyPositiveDiagnosisViewModel(
     private val startUploadDiagnosisKeysWorkUseCase: StartUploadDiagnosisKeysWorkUseCase,
     private val enManager: ExposureNotificationManager
 ) : BaseViewModel() {
