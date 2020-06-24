@@ -13,6 +13,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import org.covidwatch.android.R
 import org.covidwatch.android.databinding.FragmentVerifyPositiveDiagnosisBinding
 import org.covidwatch.android.extension.observe
+import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseFragment
 import org.covidwatch.android.ui.util.DateFormatter
 import org.koin.android.ext.android.inject
@@ -35,10 +36,6 @@ class VerifyPositiveDiagnosisFragment : BaseFragment<FragmentVerifyPositiveDiagn
         with(binding) {
             closeButton.setOnClickListener { findNavController().popBackStack() }
 
-            btnFinishVerification.setOnClickListener {
-                findNavController().navigate(R.id.thanksForReportingFragment)
-            }
-
             cbNoSymptoms.setOnCheckedChangeListener { _, noSymptoms ->
                 viewModel.noSymptoms(noSymptoms)
             }
@@ -55,8 +52,14 @@ class VerifyPositiveDiagnosisFragment : BaseFragment<FragmentVerifyPositiveDiagn
             }
         }
 
-        observe(viewModel.readyToSubmit) {
-            binding.btnFinishVerification.isEnabled = it
+        with(viewModel) {
+            observe(readyToSubmit) {
+                binding.btnFinishVerification.isEnabled = it
+            }
+
+            observeEvent(showThankYou) {
+                findNavController().navigate(R.id.thanksForReportingFragment)
+            }
         }
     }
 

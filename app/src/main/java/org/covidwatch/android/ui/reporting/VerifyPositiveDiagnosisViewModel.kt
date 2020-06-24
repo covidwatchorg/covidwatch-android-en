@@ -1,6 +1,7 @@
 package org.covidwatch.android.ui.reporting
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
@@ -9,7 +10,9 @@ import org.covidwatch.android.data.PositiveDiagnosisVerification
 import org.covidwatch.android.domain.StartUploadDiagnosisKeysWorkUseCase
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.extension.mutableLiveData
+import org.covidwatch.android.extension.send
 import org.covidwatch.android.ui.BaseViewModel
+import org.covidwatch.android.ui.event.Event
 import java.util.*
 
 open class VerifyPositiveDiagnosisViewModel(
@@ -18,6 +21,9 @@ open class VerifyPositiveDiagnosisViewModel(
 ) : BaseViewModel() {
 
     private val diagnosisVerification = mutableLiveData(PositiveDiagnosisVerification())
+
+    private val _showThankYou = MutableLiveData<Event<Unit>>()
+    val showThankYou: LiveData<Event<Unit>> = _showThankYou
 
     val readyToSubmit: LiveData<Boolean> = diagnosisVerification.map { it?.readyToSubmit ?: false }
 
@@ -58,6 +64,7 @@ open class VerifyPositiveDiagnosisViewModel(
         withPermission(ExposureNotificationManager.PERMISSION_KEYS_REQUEST_CODE) {
             enManager.temporaryExposureKeyHistory().apply {
                 success {
+                    _showThankYou.send()
                     // TODO: 23.06.2020 Use proper logic for assigning transmission risk levels
                     observeStatus(
                         startUploadDiagnosisKeysWorkUseCase,
