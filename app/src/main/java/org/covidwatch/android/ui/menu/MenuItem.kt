@@ -1,5 +1,7 @@
 package org.covidwatch.android.ui.menu
 
+import androidx.annotation.StringRes
+
 data class MenuItem(
     val title: Int,
     val iconEnd: Int,
@@ -13,4 +15,4 @@ sealed class Destination {
 object PossibleExposures : Destination()
 object NotifyOthers : Destination()
 object HowItWorks : Destination()
-class Browser(val url: String) : Destination()
+class Browser(@StringRes val url: Int) : Destination()

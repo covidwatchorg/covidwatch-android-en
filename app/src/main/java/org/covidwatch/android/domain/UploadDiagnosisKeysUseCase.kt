@@ -10,7 +10,6 @@ import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.functional.Either
 import timber.log.Timber
 import java.security.SecureRandom
-import java.util.*
 
 class UploadDiagnosisKeysUseCase(
     private val enManager: ExposureNotificationManager,
@@ -31,6 +30,10 @@ class UploadDiagnosisKeysUseCase(
     private val platform = "android"
 
     override suspend fun run(params: Params?): Either<ENStatus, Unit> {
+        params ?: return Either.Left(ENStatus.Failed)
+
+        /** TODO: 24.06.2020 Do something with [Params.report] */
+
         enManager.isEnabled().apply {
             success { enabled ->
                 if (!enabled) {
@@ -48,11 +51,7 @@ class UploadDiagnosisKeysUseCase(
             success {
                 try {
                     val diagnosisKeys = it.mapIndexed { i, key ->
-                        key.asDiagnosisKey()
-                            .copy(
-                                transmissionRisk = params?.riskLevels?.get(i)
-                                    ?: key.transmissionRiskLevel
-                            )
+                        key.asDiagnosisKey().copy(transmissionRisk = params.riskLevels[i])
                     }
                     Timber.d("Diagnosis Keys ${diagnosisKeys.joinToString()}")
 
@@ -81,12 +80,7 @@ class UploadDiagnosisKeysUseCase(
                         diagnosisRepository.uploadDiagnosisKeys(url, positiveDiagnosis)
                     }
 
-                    diagnosisRepository.addPositiveDiagnosisReport(
-                        PositiveDiagnosisReport(
-                            verified = true,
-                            reportDate = Date()
-                        )
-                    )
+                    diagnosisRepository.addPositiveDiagnosisReport(params.report.copy(verified = true))
                     Timber.d("Uploaded positive diagnosis")
                     return Either.Right(Unit)
                 } catch (e: Exception) {
@@ -115,5 +109,8 @@ class UploadDiagnosisKeysUseCase(
         return encoding.encode(bytes)
     }
 
-    data class Params(val riskLevels: List<Int>)
+    data class Params(
+        val riskLevels: List<Int>,
+        val report: PositiveDiagnosisReport
+    )
 }

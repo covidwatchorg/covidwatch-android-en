@@ -26,4 +26,6 @@ class PositiveDiagnosisAdapter : RecyclerView.Adapter<PositiveDiagnosisViewHolde
         positiveDiagnoses.addAll(items)
         notifyDataSetChanged()
     }
+
+    fun isEmpty() = positiveDiagnoses.isEmpty()
 }

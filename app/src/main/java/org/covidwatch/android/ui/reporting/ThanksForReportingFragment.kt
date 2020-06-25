@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.R
 import org.covidwatch.android.databinding.FragmentThanksForReportingBinding
-import org.covidwatch.android.ui.BaseFragment
 import org.covidwatch.android.extension.shareApp
+import org.covidwatch.android.ui.BaseFragment
 
 class ThanksForReportingFragment : BaseFragment<FragmentThanksForReportingBinding>() {
 
@@ -21,7 +21,7 @@ class ThanksForReportingFragment : BaseFragment<FragmentThanksForReportingBindin
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.closeButton.setOnClickListener {
-            findNavController().popBackStack(R.id.notifyOthersFragment, false)
+            findNavController().popBackStack(R.id.homeFragment, false)
         }
         binding.shareAppButton.setOnClickListener {
             context?.shareApp()

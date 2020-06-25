@@ -2,6 +2,7 @@ package org.covidwatch.android.data
 
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.gson.annotations.Expose
+import java.io.Serializable
 
 @Suppress("ArrayInDataClass")
 data class CovidExposureConfiguration(
@@ -25,7 +26,7 @@ data class CovidExposureConfiguration(
     val transmissionRiskWeight: Int,
     @Expose
     val durationAtAttenuationThresholds: IntArray
-)
+) : Serializable
 
 fun ExposureConfiguration.asCovidExposureConfiguration() = CovidExposureConfiguration(
     minimumRiskScore,
