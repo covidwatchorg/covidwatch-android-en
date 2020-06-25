@@ -181,7 +181,7 @@
     <!-- Reporting -->
     <string name="notify_others_title">Notify Others</string>
     <string name="notify_others_subtitle">If you tested positive for COVID-19 by the Public Health Department, you can <b>help</b> stop the spread in your communities by <b>anonymously notifying others.</b></string>
-    <string name="test_verification_code_warning">Have your <b>Test Verification Code</b> ready before you begin.</string>
+    <string name="test_verification_code_warning">Have your <b>Test Verification Code</b>\nready before you begin.</string>
     <string name="covid_19_positive">COVID-19 Positive</string>
     <string name="test_date_fmt">Test Date: %s</string>
     <string name="verify_positive_diagnosis_title">Anonymously Share a Positive Diagnosis</string>
@@ -237,4 +237,15 @@
     <string name="no_past_positive_diagnoses">No past positive diagnoses</string>
     <string name="step_2_notify_others">Step 2 of 3</string>
     <string name="step_3_notify_others">Diagnosis shared</string>
+
+    <!-- DIALOG TEST VERIFICATION CODE -->
+    <string name="dialog_test_verification_code_title">Test Verification Codes</string>
+    <string name="dialog_test_verification_code_info_title">Where can I fine one?</string>
+    <string name="dialog_test_verification_code_info_email">It may have been provided with your <b>test result</b></string>
+    <string name="dialog_test_verification_code_info_kit">It may have been provided with your <b>test kit</b></string>
+    <string name="dialog_test_verification_code_info_support">Or you can call 1-800-COVID19  now to obtain one</string>
+
+    <string name="dialog_test_verification_code_expl_title">What are they?</string>
+    <string name="dialog_test_verification_code_expl_text">They are strings of numbers and letters that are provided by The Public Health Department to accurately identify valid positive COVID-19 diagnoses. They help protect users of the app by preventing the entry of inacurrate or fraudulent test results.</string>
+
 </resources>

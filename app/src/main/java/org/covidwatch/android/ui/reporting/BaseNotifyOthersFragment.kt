@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import org.covidwatch.android.R
 import org.covidwatch.android.databinding.DialogPastPositiveDiagnosesBinding
+import org.covidwatch.android.databinding.DialogTestVerificationCodeInfoBinding
 import org.covidwatch.android.databinding.FragmentNotifyOthersBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
@@ -37,6 +38,19 @@ open class BaseNotifyOthersFragment :
             closeButton.setOnClickListener {
                 findNavController().popBackStack()
             }
+
+            ivTestVerificationCodeInfo.setOnClickListener {
+                val context = requireContext()
+                val dialogView =
+                    DialogTestVerificationCodeInfoBinding.inflate(LayoutInflater.from(context))
+
+                val dialog = android.app.AlertDialog.Builder(context)
+                    .setView(dialogView.root)
+                    .create()
+                dialogView.closeButton.setOnClickListener { dialog.dismiss() }
+                dialog.show()
+            }
+
             sharePositiveDiagnosisButton.setOnClickListener {
                 viewModel.sharePositiveDiagnosis()
             }
