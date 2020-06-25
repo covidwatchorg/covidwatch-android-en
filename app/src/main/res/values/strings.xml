@@ -204,7 +204,7 @@
     <string name="choose_sharing_method_dialog_btn_other">Others…</string>
     <string name="test_verification_code_info">Test verification codes information</string>
     <string name="test_verification_code_label">Test Verification Code</string>
-    <string name="test_verification_code_hint">000–000–0</string>
+    <string name="test_verification_code_hint">12345678</string>
     <string name="symptoms_date_label">When did your symptoms start?</string>
     <string name="no_symptoms">I have no symptoms</string>
     <string name="tested_date_label">When did get tested?</string>

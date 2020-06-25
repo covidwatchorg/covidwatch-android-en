@@ -40,6 +40,7 @@ class VerifyPositiveDiagnosisFragment :
             closeButton.setOnClickListener { findNavController().popBackStack() }
 
             cbNoSymptoms.setOnCheckedChangeListener { _, noSymptoms ->
+                etSymptomsDate.isEnabled = !noSymptoms
                 viewModel.noSymptoms(noSymptoms)
             }
 
@@ -104,8 +105,9 @@ class VerifyPositiveDiagnosisFragment :
         val twoWeeksAgo = Calendar.getInstance()
         twoWeeksAgo.add(DAY_OF_MONTH, -14)
 
+        val now = Date().time
         constraints.setValidator(
-            BaseDateValidator { it > twoWeeksAgo.timeInMillis && it < Date().time }
+            BaseDateValidator { it > twoWeeksAgo.timeInMillis && it < now }
         )
 
         val datePicker = builder
