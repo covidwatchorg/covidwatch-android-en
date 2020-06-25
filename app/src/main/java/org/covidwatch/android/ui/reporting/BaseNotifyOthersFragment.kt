@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import org.covidwatch.android.R
 import org.covidwatch.android.databinding.DialogPastPositiveDiagnosesBinding
-import org.covidwatch.android.databinding.DialogTestVerificationCodeInfoBinding
 import org.covidwatch.android.databinding.FragmentNotifyOthersBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseViewModelFragment
+import org.covidwatch.android.ui.Dialogs
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -40,15 +40,7 @@ open class BaseNotifyOthersFragment :
             }
 
             ivTestVerificationCodeInfo.setOnClickListener {
-                val context = requireContext()
-                val dialogView =
-                    DialogTestVerificationCodeInfoBinding.inflate(LayoutInflater.from(context))
-
-                val dialog = android.app.AlertDialog.Builder(context)
-                    .setView(dialogView.root)
-                    .create()
-                dialogView.closeButton.setOnClickListener { dialog.dismiss() }
-                dialog.show()
+                Dialogs.testVerificationCodeInfo(requireContext())
             }
 
             sharePositiveDiagnosisButton.setOnClickListener {

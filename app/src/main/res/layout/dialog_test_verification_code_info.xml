@@ -85,6 +85,7 @@
                 android:textSize="13sp" />
 
             <TextView
+                android:id="@+id/btn_learn_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_normal"
@@ -95,7 +96,7 @@
                 android:drawableTint="@color/colorPrimary"
                 android:focusable="true"
                 android:gravity="center_vertical"
-                android:text="Learn more"
+                android:text="@string/dialog_test_verification_code_expl_more"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
         </LinearLayout>

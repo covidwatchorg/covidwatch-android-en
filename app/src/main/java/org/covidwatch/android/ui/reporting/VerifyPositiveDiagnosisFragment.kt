@@ -1,7 +1,6 @@
 package org.covidwatch.android.ui.reporting
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Parcel
 import android.view.LayoutInflater
@@ -12,11 +11,11 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import org.covidwatch.android.R
-import org.covidwatch.android.databinding.DialogTestVerificationCodeInfoBinding
 import org.covidwatch.android.databinding.FragmentVerifyPositiveDiagnosisBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseViewModelFragment
+import org.covidwatch.android.ui.Dialogs
 import org.covidwatch.android.ui.util.DateFormatter
 import org.koin.android.ext.android.inject
 import java.util.*
@@ -45,15 +44,7 @@ class VerifyPositiveDiagnosisFragment :
             }
 
             ivTestVerificationCodeInfo.setOnClickListener {
-                val context = requireContext()
-                val dialogView =
-                    DialogTestVerificationCodeInfoBinding.inflate(LayoutInflater.from(context))
-
-                val dialog = AlertDialog.Builder(context)
-                    .setView(dialogView.root)
-                    .create()
-                dialogView.closeButton.setOnClickListener { dialog.dismiss() }
-                dialog.show()
+                Dialogs.testVerificationCodeInfo(requireContext())
             }
             etVerificationCode.addTextChangedListener(afterTextChanged = {
                 viewModel.verificationCode(it.toString())
