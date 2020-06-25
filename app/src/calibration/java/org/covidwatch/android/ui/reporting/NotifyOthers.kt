@@ -14,6 +14,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import org.covidwatch.android.BuildConfig
 import org.covidwatch.android.R
+import org.covidwatch.android.data.PositiveDiagnosisReport
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.databinding.DialogRiskLevelsBinding
 import org.covidwatch.android.domain.ExportDiagnosisKeysAsFileUseCase
@@ -25,6 +26,7 @@ import org.covidwatch.android.extension.send
 import org.covidwatch.android.ui.event.Event
 import java.io.File
 import java.net.URLConnection
+import java.util.*
 
 class NotifyOthersFragment : BaseNotifyOthersFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -154,7 +156,10 @@ class NotifyOthersViewModel(
         } else {
             observeStatus(
                 startUploadDiagnosisKeysWorkUseCase,
-                StartUploadDiagnosisKeysWorkUseCase.Params(riskLevels)
+                StartUploadDiagnosisKeysWorkUseCase.Params(
+                    riskLevels,
+                    PositiveDiagnosisReport(verified = true, reportDate = Date())
+                )
             )
         }
     }
