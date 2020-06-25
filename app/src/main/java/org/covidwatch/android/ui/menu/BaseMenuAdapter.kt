@@ -28,27 +28,27 @@ open class BaseMenuAdapter(
         MenuItem(
             R.string.menu_health_guidelines,
             R.drawable.ic_exit_to_app,
-            Browser("https://www.cdc.gov/coronavirus/2019-ncov/index.html")
+            Browser(R.string.health_guidelines)
         ),
         MenuItem(
             R.string.menu_covid_watch_website,
             R.drawable.ic_exit_to_app,
-            Browser("https://www.covid-watch.org/")
+            Browser(R.string.covidwatch_website)
         ),
         MenuItem(
             R.string.menu_faq,
             R.drawable.ic_exit_to_app,
-            Browser("https://www.covid-watch.org/faq")
+            Browser(R.string.faq)
         ),
         MenuItem(
             R.string.menu_terms_of_use,
             R.drawable.ic_exit_to_app,
-            Browser("https://www.covid-watch.org/privacy")
+            Browser(R.string.terms)
         ),
         MenuItem(
             R.string.menu_support,
             R.drawable.ic_exit_to_app,
-            Browser("https://www.covid-watch.org/support")
+            Browser(R.string.support)
         )
     )
 

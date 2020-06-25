@@ -52,7 +52,7 @@ open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuVie
             is PossibleExposures -> findNavController().navigate(R.id.exposuresFragment)
             is NotifyOthers -> findNavController().navigate(R.id.notifyOthersFragment)
             is HowItWorks -> findNavController().navigate(R.id.onboardingFragment)
-            is Browser -> openBrowser(menuItem.destination.url)
+            is Browser -> openBrowser(getString(menuItem.destination.url))
         }
     }
 
