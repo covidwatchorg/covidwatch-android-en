@@ -107,7 +107,8 @@ val appModule = module {
             remote = get(),
             local = get(),
             countryCodeRepository = get(),
-            uriManager = get()
+            uriManager = get(),
+            dispatchers = get()
         )
     }
 
@@ -122,7 +123,12 @@ val appModule = module {
         appDatabase.exposureInformationDao()
     }
     single { ExposureInformationLocalSource(dao = get()) }
-    single { ExposureInformationRepository(local = get()) }
+    single {
+        ExposureInformationRepository(
+            local = get(),
+            dispatchers = get()
+        )
+    }
 
 
     single {
@@ -130,13 +136,23 @@ val appModule = module {
         appDatabase.diagnosisKeysTokenDao()
     }
     single { DiagnosisKeysTokenLocalSource(keysTokenDao = get()) }
-    single { DiagnosisKeysTokenRepository(local = get()) }
+    single {
+        DiagnosisKeysTokenRepository(
+            local = get(),
+            dispatchers = get()
+        )
+    }
 
     single {
         val appDatabase: AppDatabase = get()
         appDatabase.countryCodeDao()
     }
-    single { CountryCodeRepository(local = get()) }
+    single {
+        CountryCodeRepository(
+            local = get(),
+            dispatchers = get()
+        )
+    }
 
     single {
         UriManager(

@@ -1,31 +1,33 @@
 package org.covidwatch.android.data.positivediagnosis
 
 import com.google.common.io.BaseEncoding
+import kotlinx.coroutines.withContext
 import org.covidwatch.android.data.PositiveDiagnosis
 import org.covidwatch.android.data.PositiveDiagnosisReport
 import org.covidwatch.android.data.UriManager
 import org.covidwatch.android.data.countrycode.CountryCodeRepository
+import org.covidwatch.android.domain.AppCoroutineDispatchers
 import java.security.SecureRandom
 
 class PositiveDiagnosisRepository(
     private val remote: PositiveDiagnosisRemoteSource,
     private val local: PositiveDiagnosisLocalSource,
     private val countryCodeRepository: CountryCodeRepository,
-    private val uriManager: UriManager
+    private val uriManager: UriManager,
+    private val dispatchers: AppCoroutineDispatchers
 ) {
     private val random = SecureRandom()
     private val encoding = BaseEncoding.base32().lowerCase().omitPadding()
 
     fun positiveDiagnosisReports() = local.reports()
 
-    suspend fun diagnosisKeys(): List<KeyFileBatch> {
+    suspend fun diagnosisKeys() = withContext(dispatchers.io) {
         val regions = countryCodeRepository.exposureRelevantCountryCodes()
         val urls = uriManager.downloadUrls(regions)
-
         val dir = randomDirName()
-        return urls.map { keyFileBatch ->
-            val files = keyFileBatch.urls.mapNotNull { remote.diagnosisKey(dir, it) }
 
+        urls.map { keyFileBatch ->
+            val files = keyFileBatch.urls.mapNotNull { remote.diagnosisKey(dir, it) }
             keyFileBatch.copy(keys = files)
         }
     }
@@ -40,7 +42,11 @@ class PositiveDiagnosisRepository(
     }
 
     suspend fun addPositiveDiagnosisReport(positiveDiagnosisItem: PositiveDiagnosisReport) =
-        local.addPositiveDiagnosisReport(positiveDiagnosisItem)
+        withContext(dispatchers.io) {
+            local.addPositiveDiagnosisReport(positiveDiagnosisItem)
+        }
 
-    suspend fun positiveDiagnosisReport(id: String) = local.report(id)
+    suspend fun positiveDiagnosisReport(id: String) = withContext(dispatchers.io) {
+        local.report(id)
+    }
 }
