@@ -25,7 +25,7 @@ abstract class BaseViewModel : ViewModel() {
     private val _resolvable = MutableLiveData<Event<Resolvable>>()
     val resolvable: LiveData<Event<Resolvable>> = _resolvable
 
-    private val tasksInResolution = SparseArray<suspend () -> Any>()
+    private val tasksInResolution = SparseArray<(suspend () -> Any)?>()
 
     protected fun handleStatus(status: ENStatus) {
         _status.send(status)
@@ -72,12 +72,12 @@ abstract class BaseViewModel : ViewModel() {
 
     suspend fun handleResolution(requestCode: Int, resultCode: Int) {
         val task = tasksInResolution.get(requestCode)
-        tasksInResolution.remove(requestCode)
         if (resultCode == Activity.RESULT_OK) {
-            task()
+            task?.invoke()
         } else {
             handleStatus(ENStatus.FailedRejectedOptIn)
         }
+        tasksInResolution.remove(requestCode)
     }
 
     data class Resolvable(
