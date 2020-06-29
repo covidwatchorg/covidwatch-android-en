@@ -49,13 +49,13 @@ fun TemporaryExposureKey.asDiagnosisKey() = DiagnosisKey(
 )
 
 data class PositiveDiagnosisVerification(
-    val verificationTestCode: String? = null,
+    val verificationTestCode: String = "",
     val symptomsStartDate: Long? = null,
     val noSymptoms: Boolean = false,
     val testedDate: Long? = null
 ) {
     val readyToSubmit: Boolean
-        get() = verificationTestCode != null &&
+        get() = verificationTestCode.trim().isNotEmpty() &&
                 testedDate != null &&
                 (symptomsStartDate != null || noSymptoms)
 }

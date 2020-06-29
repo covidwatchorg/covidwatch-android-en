@@ -6,6 +6,7 @@ import androidx.work.WorkManager
 import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.safetynet.SafetyNet
 import com.google.common.io.BaseEncoding
+import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
@@ -16,6 +17,8 @@ import org.covidwatch.android.data.*
 import org.covidwatch.android.data.countrycode.CountryCodeRepository
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenLocalSource
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
+import org.covidwatch.android.data.diagnosisverification.DiagnosisVerificationRemoteSource
+import org.covidwatch.android.data.diagnosisverification.DiagnosisVerificationRepository
 import org.covidwatch.android.data.exposureinformation.ExposureInformationLocalSource
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisLocalSource
@@ -65,6 +68,12 @@ val appModule = module {
         )
     }
 
+    single {
+        DiagnosisVerificationManager(
+            verificationRepository = get()
+        )
+    }
+
     viewModel {
         ExposureNotificationViewModel(
             enManager = get(),
@@ -108,6 +117,21 @@ val appModule = module {
             local = get(),
             countryCodeRepository = get(),
             uriManager = get(),
+            dispatchers = get()
+        )
+    }
+
+    single {
+        DiagnosisVerificationRemoteSource(
+            apiKey = androidContext().getString(R.string.verification_api_key),
+            verificationServerEndpoint = BuildConfig.SERVER_VERIFICATION_ENDPOINT,
+            gson = Gson(),
+            httpClient = get()
+        )
+    }
+    single {
+        DiagnosisVerificationRepository(
+            remote = get(),
             dispatchers = get()
         )
     }
@@ -174,7 +198,7 @@ val appModule = module {
             enManager = get(),
             diagnosisRepository = get(),
             countryCodeRepository = get(),
-            safetyNetManager = get(),
+            verificationManager = get(),
             uriManager = get(),
             appPackageName = androidContext().packageName,
             random = SecureRandom(),

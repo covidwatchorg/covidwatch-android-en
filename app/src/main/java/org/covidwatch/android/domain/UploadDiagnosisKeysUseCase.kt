@@ -15,7 +15,7 @@ class UploadDiagnosisKeysUseCase(
     private val enManager: ExposureNotificationManager,
     private val diagnosisRepository: PositiveDiagnosisRepository,
     private val countryCodeRepository: CountryCodeRepository,
-    private val safetyNetManager: SafetyNetManager,
+    private val verificationManager: DiagnosisVerificationManager,
     private val uriManager: UriManager,
     private val appPackageName: String,
     private val random: SecureRandom,
@@ -31,7 +31,7 @@ class UploadDiagnosisKeysUseCase(
 
     override suspend fun run(params: Params?): Either<ENStatus, Unit> {
         params ?: return Either.Left(ENStatus.Failed)
-
+        val verificationData = params.report.verificationData ?: return Either.Left(ENStatus.Failed)
         /** TODO: 24.06.2020 Do something with [Params.report] */
 
         enManager.isEnabled().apply {
@@ -59,10 +59,9 @@ class UploadDiagnosisKeysUseCase(
                     val uploadEndpoints = uriManager.uploadUris(regions)
 
                     Timber.d("Start Device Attestation")
-                    val attestation = safetyNetManager.attestFor(
+                    val attestation = verificationManager.verify(
                         diagnosisKeys,
-                        regions,
-                        defaultVerificationCode
+                        verificationData.verificationTestCode
                     ) ?: return Either.Left(ENStatus.FailedDeviceAttestation)
 
                     val positiveDiagnosis = PositiveDiagnosis(
