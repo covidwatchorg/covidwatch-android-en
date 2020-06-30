@@ -3,7 +3,8 @@ package org.covidwatch.android.data
 import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import java.util.*
-import kotlin.math.log10
+import kotlin.math.exp
+import kotlin.math.pow
 
 class ArizonaEnConverter : EnConverter {
 
@@ -15,10 +16,12 @@ class ArizonaEnConverter : EnConverter {
      * -AW 6/7/2020
      */
     private val attenuationDurationWeights = doubleArrayOf(
-        7.0, // High attenuation: D < 0.5m
-        1.0, // Medium attenuation: 0.5m < D < 2m
-        0.0002 // Low attenuation: 2m < D
+        2.0182978, // High attenuation: D < 0.5m
+        1.1507629, // Medium attenuation: 0.5m < D < 2m
+        0.6651614 // Low attenuation: 2m < D
     )
+
+    private val doseResponseLambda = 1.71E-05
 
     /**
      * High range shedding ~1010 copies/m3
@@ -38,13 +41,13 @@ class ArizonaEnConverter : EnConverter {
      */
     private val transmissionRiskValuesForLevels = doubleArrayOf(
         0.00E+00, // Level 0
-        1.00E+03, // Level 1
-        1.00E+04, // Level 2
-        1.00E+06, // Level 3
-        1.00E+07, // Level 4
-        1.00E+09, // Level 5
-        1.00E+10, // Level 6
-        1.00E+10  // Level 7 (unused)
+        1.00E+01, // Level 1
+        10.0.pow(1 + 2 / 6.0), // Level 2
+        10.0.pow(1 + 3 / 6.0), // Level 3
+        10.0.pow(1 + 4 / 6.0), // Level 4
+        10.0.pow(1 + 5 / 6.0), // Level 5
+        10.0.pow(1 + 6 / 6.0), // Level 6
+        10.0.pow(1 + 7 / 6.0)  // Level 7 (unused)
     )
 
     private fun computeAttenuationDurationRiskScore(attenuationDurations: IntArray): Double {
@@ -61,19 +64,22 @@ class ArizonaEnConverter : EnConverter {
     ): RiskScore {
         val transmissionRiskValue = transmissionRiskValuesForLevels[transmissionRiskLevel]
         val attenuationDurationRiskScore = computeAttenuationDurationRiskScore(attenuationDurations)
-
-        return when (log10(transmissionRiskValue * attenuationDurationRiskScore).toInt()) {
-            in Int.MIN_VALUE until 3 -> 0
-            in 3 until 5 -> 1
-            in 5 until 6 -> 2
-            in 6 until 7 -> 3
-            in 7 until 8 -> 4
-            in 8 until 9 -> 5
-            in 9 until 10 -> 6
-            in 10 until 11 -> 7
+        val score =
+            (1 - exp(-doseResponseLambda * transmissionRiskValue * attenuationDurationRiskScore)) * 100
+        return when {
+            score.within(Double.MIN_VALUE, 1.0) -> 0
+            score.within(1.0, 1.5) -> 1
+            score.within(1.5, 2.0) -> 2
+            score.within(2.0, 2.5) -> 3
+            score.within(2.5, 3.0) -> 4
+            score.within(3.0, 3.5) -> 5
+            score.within(3.5, 4.0) -> 6
+            score.within(4.0, 4.5) -> 7
             else -> 8
         }
     }
+
+    private fun Double.within(min: Double, max: Double) = this >= min && this < max
 
     override fun covidExposureSummary(exposureSummary: ExposureSummary) =
         with(exposureSummary) {
