@@ -17,7 +17,6 @@ class UpdateExposureStateUseCase(
         Timber.d("Start ${javaClass.simpleName} for token: ${params.token}")
 
         val updateWork = OneTimeWorkRequestBuilder<UpdateExposureStateWork>()
-            .setConstraints(Constraints.Builder().build())
             .setInputData(
                 Data.Builder().putString(UpdateExposureStateWork.PARAM_TOKEN, params.token).build()
             )
@@ -25,7 +24,7 @@ class UpdateExposureStateUseCase(
 
         workManager.enqueueUniqueWork(
             WORK_NAME,
-            ExistingWorkPolicy.REPLACE,
+            ExistingWorkPolicy.APPEND,
             updateWork
         )
         val workInfoLiveData = workManager.getWorkInfoById(updateWork.id)
