@@ -57,7 +57,7 @@ jobs:
         - name: Decode debug.keystore
           env:
             DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE }}
-          run: echo DEBUG_KEYSTORE > keystore/debug.keystore
+          run: echo DEBUG_KEYSTORE > debug.keystore
         - name: Build debug APK
           run: bash ./gradlew assembleCalibrationArizonaDebug --stacktrace
         - name: Upload APK
