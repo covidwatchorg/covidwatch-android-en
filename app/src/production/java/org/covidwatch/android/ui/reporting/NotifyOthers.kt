@@ -6,9 +6,7 @@ import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 class NotifyOthersFragment : BaseNotifyOthersFragment()
 
 class NotifyOthersViewModel(
-    enManager: ExposureNotificationManager,
     positiveDiagnosisRepository: PositiveDiagnosisRepository
 ) : BaseNotifyOthersViewModel(
-    enManager,
     positiveDiagnosisRepository
 )

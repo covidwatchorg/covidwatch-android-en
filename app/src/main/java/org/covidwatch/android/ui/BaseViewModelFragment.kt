@@ -38,7 +38,7 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
         }
     }
 
-    protected fun handleStatus(it: ENStatus) {
+    private fun handleStatus(it: ENStatus) {
         when (it) {
             ENStatus.FailedInsufficientStorage -> {
                 val snackbar = Snackbar.make(

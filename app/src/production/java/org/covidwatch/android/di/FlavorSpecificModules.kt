@@ -7,7 +7,6 @@ import org.koin.dsl.module
 val flavorSpecificModule = module {
     viewModel {
         NotifyOthersViewModel(
-            enManager = get(),
             positiveDiagnosisRepository = get()
         )
     }
