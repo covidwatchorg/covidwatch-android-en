@@ -31,6 +31,7 @@ android {
 
     buildTypes {
         release {
+            //TODO: Use proguard
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             testCoverageEnabled false
@@ -53,7 +54,7 @@ android {
         }
         arizona {
             dimension "client"
-            applicationIdSuffix ".arizona"
+            applicationId "gov.azdhs.covidwatch.android"
         }
     }
 
