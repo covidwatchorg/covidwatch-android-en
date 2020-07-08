@@ -32,7 +32,7 @@ class VerifyPositiveDiagnosisViewModel(
     }
 
     fun testedDate(date: Long) {
-        diagnosisVerification.value = diagnosisVerification.value?.copy(testedDate = date)
+        diagnosisVerification.value = diagnosisVerification.value?.copy(testDate = Date(date))
     }
 
     fun verificationCode(code: String) {
@@ -69,10 +69,8 @@ class VerifyPositiveDiagnosisViewModel(
                     observeStatus(
                         startUploadDiagnosisKeysWorkUseCase,
                         StartUploadDiagnosisKeysWorkUseCase.Params(
-                            it.map { 6 },
+                            it,
                             PositiveDiagnosisReport(
-                                verified = false,
-                                reportDate = Date(),
                                 verificationData = diagnosisVerification.value
                             )
                         )

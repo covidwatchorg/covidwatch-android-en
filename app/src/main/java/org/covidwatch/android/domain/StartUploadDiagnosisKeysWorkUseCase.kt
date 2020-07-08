@@ -2,6 +2,8 @@ package org.covidwatch.android.domain
 
 import androidx.lifecycle.liveData
 import androidx.work.*
+import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
+import com.google.gson.Gson
 import org.covidwatch.android.data.PositiveDiagnosisReport
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.domain.StartUploadDiagnosisKeysWorkUseCase.Params
@@ -9,8 +11,7 @@ import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.extension.getFinalWorkInfoByIdLiveData
 import org.covidwatch.android.functional.Either
 import org.covidwatch.android.work.UploadDiagnosisKeysWork
-import org.covidwatch.android.work.UploadDiagnosisKeysWork.Companion.DIAGNOSIS_REPORT
-import org.covidwatch.android.work.UploadDiagnosisKeysWork.Companion.RISK_LEVELS
+import org.covidwatch.android.work.UploadDiagnosisKeysWork.Companion.PARAMS
 import timber.log.Timber
 import java.util.*
 
@@ -27,14 +28,18 @@ class StartUploadDiagnosisKeysWorkUseCase(
         val positiveDiagnosisReport = params.positiveDiagnosisReport
         positiveDiagnosisRepository.addPositiveDiagnosisReport(positiveDiagnosisReport)
 
-        val riskLevels = params.riskLevels.toIntArray()
-
         val data = Data.Builder()
-            .putIntArray(RISK_LEVELS, riskLevels)
-            .putString(DIAGNOSIS_REPORT, positiveDiagnosisReport.id)
+            .putString(
+                PARAMS, Gson().toJson(
+                    UploadDiagnosisKeysUseCase.Params(
+                        params.keys,
+                        params.positiveDiagnosisReport
+                    )
+                )
+            )
             .build()
 
-        Timber.d("Start ${javaClass.simpleName}. Risk Levels: ${riskLevels.joinToString()}")
+        Timber.d("Start ${javaClass.simpleName}.")
 
         val uploadRequest = OneTimeWorkRequestBuilder<UploadDiagnosisKeysWork>()
             .apply {
@@ -65,7 +70,7 @@ class StartUploadDiagnosisKeysWorkUseCase(
     }
 
     data class Params(
-        val riskLevels: List<Int>,
+        val keys: List<TemporaryExposureKey>,
         val positiveDiagnosisReport: PositiveDiagnosisReport
     )
 }

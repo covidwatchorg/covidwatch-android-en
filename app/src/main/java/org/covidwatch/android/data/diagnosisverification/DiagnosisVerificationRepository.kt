@@ -8,7 +8,7 @@ class DiagnosisVerificationRepository(
     private val dispatchers: AppCoroutineDispatchers
 ) {
 
-    suspend fun verify(testCode: String): String = withContext(dispatchers.io) {
+    suspend fun verify(testCode: String) = withContext(dispatchers.io) {
         remote.verify(testCode)
     }
 

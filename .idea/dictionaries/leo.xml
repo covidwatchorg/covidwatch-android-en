@@ -5,6 +5,7 @@
       <w>exposuredetails</w>
       <w>exposurenotification</w>
       <w>gson</w>
+      <w>hmac</w>
     </words>
   </dictionary>
 </component>

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
@@ -19,19 +20,15 @@ class UploadDiagnosisKeysWork(
     private val workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
     private val uploadDiagnosisKeysWorkUseCase by inject(UploadDiagnosisKeysUseCase::class.java)
-    private val positiveDiagnosisRepository by inject(PositiveDiagnosisRepository::class.java)
-
     private val notifications: Notifications by inject(Notifications::class.java)
 
     override suspend fun doWork() = withContext(Dispatchers.IO) {
-        val riskLevels = workerParams.inputData.getIntArray(RISK_LEVELS)?.toList()
-            ?: return@withContext Result.failure()
-        val positiveReportId = workerParams.inputData.getString(DIAGNOSIS_REPORT)
-            ?: return@withContext Result.failure()
+        Timber.d("Start ${javaClass.simpleName}")
 
-        val report = positiveDiagnosisRepository.positiveDiagnosisReport(positiveReportId)
-
-        Timber.d("Start ${javaClass.simpleName}. Risk Levels: ${riskLevels.joinToString()}")
+        val params = Gson().fromJson(
+            workerParams.inputData.getString(PARAMS),
+            UploadDiagnosisKeysUseCase.Params::class.java
+        ) ?: return@withContext Result.failure()
 
         setForeground(
             ForegroundInfo(
@@ -40,7 +37,6 @@ class UploadDiagnosisKeysWork(
             )
         )
 
-        val params = UploadDiagnosisKeysUseCase.Params(riskLevels, report)
         uploadDiagnosisKeysWorkUseCase.run(params).apply {
             success { return@withContext Result.success() }
             failure { return@withContext failure(it) }
@@ -49,7 +45,6 @@ class UploadDiagnosisKeysWork(
     }
 
     companion object {
-        const val RISK_LEVELS = "RISK_LEVELS"
-        const val DIAGNOSIS_REPORT = "DIAGNOSIS_REPORT"
+        const val PARAMS = "params"
     }
 }

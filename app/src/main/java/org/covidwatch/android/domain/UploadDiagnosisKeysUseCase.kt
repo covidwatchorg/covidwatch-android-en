@@ -1,5 +1,6 @@
 package org.covidwatch.android.domain
 
+import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import com.google.common.io.BaseEncoding
 import org.covidwatch.android.data.*
 import org.covidwatch.android.data.countrycode.CountryCodeRepository
@@ -8,6 +9,7 @@ import org.covidwatch.android.domain.UploadDiagnosisKeysUseCase.Params
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.functional.Either
+import org.covidwatch.android.ui.util.DateFormatter
 import timber.log.Timber
 import java.security.SecureRandom
 
@@ -23,16 +25,12 @@ class UploadDiagnosisKeysUseCase(
     dispatchers: AppCoroutineDispatchers
 ) : UseCase<Unit, Params>(dispatchers) {
 
-    //TODO: Where do we get the verification code from?
-    private val defaultVerificationCode = "POSITIVE_TEST_123456"
     private val paddingSizeMin = 1024
     private val paddingSizeMax = 2048
-    private val platform = "android"
 
     override suspend fun run(params: Params?): Either<ENStatus, Unit> {
         params ?: return Either.Left(ENStatus.Failed)
         val verificationData = params.report.verificationData ?: return Either.Left(ENStatus.Failed)
-        /** TODO: 24.06.2020 Do something with [Params.report] */
 
         enManager.isEnabled().apply {
             success { enabled ->
@@ -47,53 +45,56 @@ class UploadDiagnosisKeysUseCase(
             }
         }
         Timber.d("Start ${javaClass.simpleName}")
-        enManager.temporaryExposureKeyHistory().apply {
-            success {
-                try {
-                    val diagnosisKeys = it.mapIndexed { i, key ->
-                        key.asDiagnosisKey().copy(transmissionRisk = params.riskLevels[i])
-                    }
-                    Timber.d("Diagnosis Keys ${diagnosisKeys.joinToString()}")
+        try {
+            val diagnosisKeys = params.keys.map { key ->
+                // TODO: 08.07.2020 Add calculation of transmission risk
+                key.asDiagnosisKey().copy(transmissionRisk = 6)
+            }
+            Timber.d("Diagnosis Keys ${diagnosisKeys.joinToString()}")
 
-                    val regions = countryCodeRepository.exposureRelevantCountryCodes()
-                    val uploadEndpoints = uriManager.uploadUris(regions)
+            val regions = countryCodeRepository.exposureRelevantCountryCodes()
+            val uploadEndpoints = uriManager.uploadUris(regions)
 
-                    Timber.d("Start Device Attestation")
-                    val attestation = verificationManager.verify(
-                        diagnosisKeys,
-                        verificationData.verificationTestCode
-                    ) ?: return Either.Left(ENStatus.FailedDeviceAttestation)
+            val codeVerification = verificationManager.verify(
+                diagnosisKeys,
+                verificationData.verificationTestCode
+            )
 
-                    val positiveDiagnosis = PositiveDiagnosis(
-                        diagnosisKeys,
-                        regions,
-                        appPackageName,
-                        platform,
-                        defaultVerificationCode,
-                        attestation,
-                        randomPadding()
-                    )
+            val verifiedDiagnosis = params.report.copy(
+                verified = true,
+                verificationData = verificationData.copy(
+                    testDate = DateFormatter.testDate(codeVerification.testDate),
+                    testType = codeVerification.testType,
+                    token = codeVerification.token,
+                    hmacKey = codeVerification.hmacKey,
+                    verificationCertificate = codeVerification.certificate
+                )
+            )
 
-                    Timber.d("Upload positive diagnosis: $positiveDiagnosis")
-                    uploadEndpoints.forEach { url ->
-                        diagnosisRepository.uploadDiagnosisKeys(url, positiveDiagnosis)
-                    }
+            diagnosisRepository.updatePositiveDiagnosisReport(verifiedDiagnosis)
 
-                    diagnosisRepository.addPositiveDiagnosisReport(params.report.copy(verified = true))
-                    Timber.d("Uploaded positive diagnosis")
-                    return Either.Right(Unit)
-                } catch (e: Exception) {
-                    Timber.d("Failed to upload positive diagnosis")
-                    return Either.Left(ENStatus(e))
-                }
+            val positiveDiagnosis = PositiveDiagnosis(
+                temporaryExposureKeys = diagnosisKeys,
+                regions = regions,
+                appPackageName = appPackageName,
+                verificationPayload = codeVerification.certificate,
+                hmacKey = encoding.encode(codeVerification.hmacKey),
+                padding = randomPadding()
+            )
+
+            Timber.d("Upload positive diagnosis: $positiveDiagnosis")
+            uploadEndpoints.forEach { url ->
+                diagnosisRepository.uploadDiagnosisKeys(url, positiveDiagnosis)
             }
 
-            failure {
-                Timber.d("Failed to retrieve TEKs")
-                return Either.Left(it)
-            }
+            diagnosisRepository.updatePositiveDiagnosisReport(verifiedDiagnosis.copy(uploaded = true))
+            Timber.d("Uploaded positive diagnosis")
+            return Either.Right(Unit)
+        } catch (e: Exception) {
+            Timber.d("Failed to upload positive diagnosis")
+            Timber.e(e)
+            return Either.Left(ENStatus(e))
         }
-        return Either.Right(Unit)
     }
 
     private fun randomPadding(): String {
@@ -109,7 +110,7 @@ class UploadDiagnosisKeysUseCase(
     }
 
     data class Params(
-        val riskLevels: List<Int>,
+        val keys: List<TemporaryExposureKey>,
         val report: PositiveDiagnosisReport
     )
 }

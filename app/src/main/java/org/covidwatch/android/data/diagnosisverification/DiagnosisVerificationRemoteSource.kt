@@ -18,7 +18,7 @@ class DiagnosisVerificationRemoteSource(
     private val jsonType = "application/json; charset=utf-8".toMediaType()
 
     @WorkerThread
-    fun verify(testCode: String): String {
+    fun verify(testCode: String): VerifyCodeResponse {
         val body: RequestBody = gson.toJson(VerifyCodeRequest(testCode)).toRequestBody(jsonType)
 
         val request = Request.Builder()
@@ -29,7 +29,12 @@ class DiagnosisVerificationRemoteSource(
         return httpClient.newCall(request).execute().let { response ->
             if (response.code != 200) throw ServerException()
 
-            gson.fromJson(response.body?.charStream(), VerifyCodeResponse::class.java).token!!
+            val tokenResponse =
+                gson.fromJson(response.body?.charStream(), VerifyCodeResponse::class.java)
+
+            if (tokenResponse.token == null) throw ServerException(tokenResponse.error)
+
+            tokenResponse
         }
     }
 
@@ -45,10 +50,11 @@ class DiagnosisVerificationRemoteSource(
         return httpClient.newCall(request).execute().let { response ->
             if (response.code != 200) throw ServerException()
 
-            gson.fromJson(
+            val certificateResponse = gson.fromJson(
                 response.body?.charStream(),
                 VerificationCertificateResponse::class.java
-            ).certificate!!
+            )
+            certificateResponse.certificate ?: throw ServerException(certificateResponse.error)
         }
     }
 }

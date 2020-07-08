@@ -16,7 +16,6 @@ class UriManager(
     //TODO: Check if we going to use separate urls for different regions
     fun uploadUris(regions: List<String>) = listOf(serverUploadEndpoint)
 
-
     fun downloadUrls(regions: List<String>) = regions.map { regionFiles(it) }.flatten()
 
     private fun regionFiles(region: String): List<KeyFileBatch> {
