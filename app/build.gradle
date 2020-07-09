@@ -13,7 +13,10 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 def localPropertiesFile = rootProject.file("local.properties")
 def localProperties = new Properties()
-localProperties.load(new FileInputStream(localPropertiesFile))
+
+if (localPropertiesFile.canRead()) {
+    localProperties.load(new FileInputStream(localPropertiesFile))
+}
 
 ext.verification_api_key = project.hasProperty('VERIFICATION_API_KEY') ? project.getProperty('VERIFICATION_API_KEY') : localProperties["VERIFICATION_API_KEY"]
 ext.server_verification_endpoint = project.hasProperty('SERVER_VERIFICATION_ENDPOINT') ? project.getProperty('SERVER_VERIFICATION_ENDPOINT') : localProperties["SERVER_VERIFICATION_ENDPOINT"]
@@ -35,9 +38,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue("string",  "verification_api_key", verification_api_key)
-        resValue("String", "server_verification_endpoint", server_verification_endpoint)
-        resValue("String", "server_upload_endpoint", server_upload_endpoint)
-        resValue("String", "server_download_endpoint", server_download_endpoint)
+        resValue("string", "server_verification_endpoint", server_verification_endpoint)
+        resValue("string", "server_upload_endpoint", server_upload_endpoint)
+        resValue("string", "server_download_endpoint", server_download_endpoint)
     }
 
     signingConfigs {

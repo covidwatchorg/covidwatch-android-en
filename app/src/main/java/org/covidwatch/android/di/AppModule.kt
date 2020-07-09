@@ -112,7 +112,7 @@ val appModule = module {
     single {
         DiagnosisVerificationRemoteSource(
             apiKey = androidContext().getString(R.string.verification_api_key),
-            verificationServerEndpoint = BuildConfig.SERVER_VERIFICATION_ENDPOINT,
+            verificationServerEndpoint = androidContext().getString(R.string.server_verification_endpoint),
             gson = Gson(),
             httpClient = get()
         )
@@ -168,8 +168,8 @@ val appModule = module {
 
     single {
         UriManager(
-            serverUploadEndpoint = BuildConfig.SERVER_UPLOAD_ENDPOINT,
-            serverDownloadEndpoint = BuildConfig.SERVER_DOWNLOAD_ENDPOINT,
+            serverUploadEndpoint = androidContext().getString(R.string.server_upload_endpoint),
+            serverDownloadEndpoint = androidContext().getString(R.string.server_download_endpoint),
             httpClient = get()
         )
     }
