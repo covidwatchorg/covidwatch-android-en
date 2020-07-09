@@ -37,7 +37,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        resValue("string",  "verification_api_key", verification_api_key)
+        resValue("string", "verification_api_key", verification_api_key)
         resValue("string", "server_verification_endpoint", server_verification_endpoint)
         resValue("string", "server_upload_endpoint", server_upload_endpoint)
         resValue("string", "server_download_endpoint", server_download_endpoint)
