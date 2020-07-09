@@ -43,6 +43,9 @@
     <string name="cancel">Cancel</string>
 
     <!-- MENU -->
+    <string name="menu_reset_possible_exposures">[DEMO] Reset Possible Exposures</string>
+    <string name="menu_detect_exposures_from_server">[DEMO] Detect Exposures from Server</string>
+
     <string name="menu_possible_exposures">Possible Exposures</string>
     <string name="menu_notify_others">Notify Others</string>
     <string name="menu_how_it_works">How it works</string>

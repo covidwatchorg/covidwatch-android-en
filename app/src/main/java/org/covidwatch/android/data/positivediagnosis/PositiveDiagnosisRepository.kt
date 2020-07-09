@@ -6,6 +6,7 @@ import org.covidwatch.android.data.PositiveDiagnosis
 import org.covidwatch.android.data.PositiveDiagnosisReport
 import org.covidwatch.android.data.UriManager
 import org.covidwatch.android.data.countrycode.CountryCodeRepository
+import org.covidwatch.android.data.keyfile.KeyFileRepository
 import org.covidwatch.android.domain.AppCoroutineDispatchers
 import java.security.SecureRandom
 
@@ -14,6 +15,7 @@ class PositiveDiagnosisRepository(
     private val local: PositiveDiagnosisLocalSource,
     private val countryCodeRepository: CountryCodeRepository,
     private val uriManager: UriManager,
+    private val keyFileRepository: KeyFileRepository,
     private val dispatchers: AppCoroutineDispatchers
 ) {
     private val random = SecureRandom()
@@ -25,9 +27,13 @@ class PositiveDiagnosisRepository(
         val regions = countryCodeRepository.exposureRelevantCountryCodes()
         val urls = uriManager.downloadUrls(regions)
         val dir = randomDirName()
+        val checkedFiles = keyFileRepository.providedKeys().map { it.url }
 
         urls.map { keyFileBatch ->
-            val files = keyFileBatch.urls.mapNotNull { remote.diagnosisKey(dir, it) }
+            val files = keyFileBatch.urls
+                .filterNot { checkedFiles.contains(it) }
+                .mapNotNull { remote.diagnosisKey(dir, it) }
+
             keyFileBatch.copy(keys = files)
         }
     }
