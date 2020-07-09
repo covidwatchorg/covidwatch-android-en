@@ -34,9 +34,10 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        resValue("string", "safetynet_api_key", "AIzaSyDvdHktRzkayQC3JIt0rKyAtnWuhcMjOb4")
-        buildConfigField("String", "SERVER_UPLOAD_ENDPOINT", '"https://exposure-2sav64smma-uc.a.run.app"')
-        buildConfigField("String", "SERVER_DOWNLOAD_ENDPOINT", '"https://storage.googleapis.com/exposure-notification-export-ibznj"')
+        resValue("string",  "verification_api_key", verification_api_key)
+        resValue("String", "server_verification_endpoint", server_verification_endpoint)
+        resValue("String", "server_upload_endpoint", server_upload_endpoint)
+        resValue("String", "server_download_endpoint", server_download_endpoint)
     }
 
     signingConfigs {
