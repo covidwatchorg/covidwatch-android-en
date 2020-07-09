@@ -40,7 +40,7 @@ jobs:
     - name: Decode debug.keystore
       env:
         DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE }}
-      run: echo DEBUG_KEYSTORE | base64 --decode > debug.keystore
+      run: echo "$DEBUG_KEYSTORE" | base64 --decode > debug.keystore
     - name: Clean, Build
       run: bash ./gradlew clean assemble --stacktrace
     - name: Lint
@@ -72,7 +72,7 @@ jobs:
         - name: Decode debug.keystore
           env:
             DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE }}
-          run: echo DEBUG_KEYSTORE | base64 --decode > debug.keystore
+          run: echo "$DEBUG_KEYSTORE" | base64 --decode > debug.keystore
         - name: Build debug APK
           run: bash ./gradlew assembleCalibrationArizonaDebug --stacktrace
         - name: Upload APK
