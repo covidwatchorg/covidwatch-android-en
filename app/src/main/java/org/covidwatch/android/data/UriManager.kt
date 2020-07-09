@@ -11,7 +11,7 @@ class UriManager(
     private val serverDownloadEndpoint: String,
     private val httpClient: OkHttpClient
 ) {
-    private val batchNumPattern = Pattern.compile("exposureKeyExport-[A-Z]{2}/([0-9]+)-[0-9]+.zip")
+    private val batchNumPattern = Pattern.compile("exposureKeyExport-[A-Z]{2}/([0-9]+)-([0-9]+)-[0-9]+.zip")
 
     //TODO: Check if we going to use separate urls for different regions
     fun uploadUris(regions: List<String>) = listOf(serverUploadEndpoint)
