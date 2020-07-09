@@ -9,6 +9,9 @@ class PositiveDiagnosisLocalSource(private val reportDao: PositiveDiagnosisRepor
     suspend fun addPositiveDiagnosisReport(report: PositiveDiagnosisReport) =
         reportDao.insert(report)
 
+    suspend fun updatePositiveDiagnosisReport(report: PositiveDiagnosisReport) =
+        reportDao.update(report)
+
     suspend fun report(id: String) = reportDao.report(id)
 
 }

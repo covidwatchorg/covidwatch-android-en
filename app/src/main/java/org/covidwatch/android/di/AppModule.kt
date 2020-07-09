@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import androidx.work.WorkManager
 import com.google.android.gms.nearby.Nearby
-import com.google.android.gms.safetynet.SafetyNet
 import com.google.common.io.BaseEncoding
+import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
@@ -16,6 +16,8 @@ import org.covidwatch.android.data.*
 import org.covidwatch.android.data.countrycode.CountryCodeRepository
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenLocalSource
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
+import org.covidwatch.android.data.diagnosisverification.DiagnosisVerificationRemoteSource
+import org.covidwatch.android.data.diagnosisverification.DiagnosisVerificationRepository
 import org.covidwatch.android.data.exposureinformation.ExposureInformationLocalSource
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisLocalSource
@@ -25,7 +27,6 @@ import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.data.pref.SharedPreferenceStorage
 import org.covidwatch.android.domain.*
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
-
 import org.covidwatch.android.ui.Notifications
 import org.covidwatch.android.ui.exposurenotification.ExposureNotificationViewModel
 import org.covidwatch.android.ui.exposures.ExposuresViewModel
@@ -55,13 +56,9 @@ val appModule = module {
         )
     }
 
-    single { SafetyNet.getClient(androidApplication()) }
-
     single {
-        SafetyNetManager(
-            apiKey = androidContext().getString(R.string.safetynet_api_key),
-            packageName = androidContext().packageName,
-            safetyNet = get()
+        DiagnosisVerificationManager(
+            verificationRepository = get()
         )
     }
 
@@ -113,6 +110,21 @@ val appModule = module {
     }
 
     single {
+        DiagnosisVerificationRemoteSource(
+            apiKey = androidContext().getString(R.string.verification_api_key),
+            verificationServerEndpoint = androidContext().getString(R.string.server_verification_endpoint),
+            gson = Gson(),
+            httpClient = get()
+        )
+    }
+    single {
+        DiagnosisVerificationRepository(
+            remote = get(),
+            dispatchers = get()
+        )
+    }
+
+    single {
         Room.databaseBuilder(
             androidApplication(),
             AppDatabase::class.java, "database.db"
@@ -156,8 +168,8 @@ val appModule = module {
 
     single {
         UriManager(
-            serverUploadEndpoint = BuildConfig.SERVER_UPLOAD_ENDPOINT,
-            serverDownloadEndpoint = BuildConfig.SERVER_DOWNLOAD_ENDPOINT,
+            serverUploadEndpoint = androidContext().getString(R.string.server_upload_endpoint),
+            serverDownloadEndpoint = androidContext().getString(R.string.server_download_endpoint),
             httpClient = get()
         )
     }
@@ -174,7 +186,7 @@ val appModule = module {
             enManager = get(),
             diagnosisRepository = get(),
             countryCodeRepository = get(),
-            safetyNetManager = get(),
+            verificationManager = get(),
             uriManager = get(),
             appPackageName = androidContext().packageName,
             random = SecureRandom(),

@@ -46,7 +46,8 @@ class PositiveDiagnosisRepository(
             local.addPositiveDiagnosisReport(positiveDiagnosisItem)
         }
 
-    suspend fun positiveDiagnosisReport(id: String) = withContext(dispatchers.io) {
-        local.report(id)
-    }
+    suspend fun updatePositiveDiagnosisReport(positiveDiagnosisItem: PositiveDiagnosisReport) =
+        withContext(dispatchers.io) {
+            local.updatePositiveDiagnosisReport(positiveDiagnosisItem)
+        }
 }

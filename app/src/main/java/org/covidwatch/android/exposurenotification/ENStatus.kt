@@ -26,6 +26,7 @@ sealed class ENStatus(val code: Int) {
 
     companion object {
         const val FAILED_DEVICE_ATTESTATION = 444
+
         /**
          * Create [ENStatus] from [ApiException] when [ExposureNotificationClient] methods are called
          * */
@@ -73,4 +74,4 @@ class NoConnectionException : IOException() {
         get() = "No internet available, please check your WIFi or Data connections"
 }
 
-class ServerException : IOException()
+class ServerException(val error: String? = null) : IOException()

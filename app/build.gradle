@@ -10,6 +10,19 @@ apply plugin: 'com.google.protobuf'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
+
+def localPropertiesFile = rootProject.file("local.properties")
+def localProperties = new Properties()
+
+if (localPropertiesFile.canRead()) {
+    localProperties.load(new FileInputStream(localPropertiesFile))
+}
+
+ext.verification_api_key = project.hasProperty('VERIFICATION_API_KEY') ? project.getProperty('VERIFICATION_API_KEY') : localProperties["VERIFICATION_API_KEY"]
+ext.server_verification_endpoint = project.hasProperty('SERVER_VERIFICATION_ENDPOINT') ? project.getProperty('SERVER_VERIFICATION_ENDPOINT') : localProperties["SERVER_VERIFICATION_ENDPOINT"]
+ext.server_upload_endpoint = project.hasProperty('SERVER_UPLOAD_ENDPOINT') ? project.getProperty('SERVER_UPLOAD_ENDPOINT') : localProperties["SERVER_UPLOAD_ENDPOINT"]
+ext.server_download_endpoint = project.hasProperty('SERVER_DOWNLOAD_ENDPOINT') ? project.getProperty('SERVER_DOWNLOAD_ENDPOINT') : localProperties["SERVER_DOWNLOAD_ENDPOINT"]
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -24,9 +37,10 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        resValue("string", "safetynet_api_key", "AIzaSyDvdHktRzkayQC3JIt0rKyAtnWuhcMjOb4")
-        buildConfigField("String", "SERVER_UPLOAD_ENDPOINT", '"https://exposure-2sav64smma-uc.a.run.app"')
-        buildConfigField("String", "SERVER_DOWNLOAD_ENDPOINT", '"https://storage.googleapis.com/exposure-notification-export-ibznj"')
+        resValue("string", "verification_api_key", verification_api_key)
+        resValue("string", "server_verification_endpoint", server_verification_endpoint)
+        resValue("string", "server_upload_endpoint", server_upload_endpoint)
+        resValue("string", "server_download_endpoint", server_download_endpoint)
     }
 
     signingConfigs {
@@ -40,6 +54,7 @@ android {
 
     buildTypes {
         release {
+            //TODO: Use proguard
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             testCoverageEnabled false
@@ -63,7 +78,7 @@ android {
         }
         arizona {
             dimension "client"
-            applicationIdSuffix ".arizona"
+            applicationId "gov.azdhs.covidwatch.android"
         }
     }
 

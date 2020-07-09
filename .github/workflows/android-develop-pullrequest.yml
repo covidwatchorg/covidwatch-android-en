@@ -42,16 +42,21 @@ jobs:
         DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE }}
       run: echo "$DEBUG_KEYSTORE" | base64 --decode > debug.keystore
     - name: Clean, Build
-      run: bash ./gradlew clean assemble --stacktrace
+      env:
+        VERIFICATION_API_KEY: ${{ secrets.VERIFICATION_API_KEY }}
+        SERVER_VERIFICATION_ENDPOINT: ${{ secrets.SERVER_VERIFICATION_ENDPOINT }}
+        SERVER_UPLOAD_ENDPOINT: ${{ secrets.SERVER_UPLOAD_ENDPOINT }}
+        SERVER_DOWNLOAD_ENDPOINT: ${{ secrets.SERVER_DOWNLOAD_ENDPOINT }}
+      run: bash ./gradlew clean assemble -PVERIFICATION_API_KEY=$VERIFICATION_API_KEY -PSERVER_VERIFICATION_ENDPOINT=$SERVER_VERIFICATION_ENDPOINT -PSERVER_UPLOAD_ENDPOINT=$SERVER_UPLOAD_ENDPOINT -PSERVER_DOWNLOAD_ENDPOINT=$SERVER_DOWNLOAD_ENDPOINT --stacktrace
     - name: Lint
-      run: bash ./gradlew lint
+      run: bash ./gradlew lint -PVERIFICATION_API_KEY=$VERIFICATION_API_KEY -PSERVER_VERIFICATION_ENDPOINT=$SERVER_VERIFICATION_ENDPOINT -PSERVER_UPLOAD_ENDPOINT=$SERVER_UPLOAD_ENDPOINT -PSERVER_DOWNLOAD_ENDPOINT=$SERVER_DOWNLOAD_ENDPOINT
     - name: Test
-      run: bash ./gradlew -Pcoverage app:test
+      run: bash ./gradlew app:test -Pcoverage -PVERIFICATION_API_KEY=$VERIFICATION_API_KEY -PSERVER_VERIFICATION_ENDPOINT=$SERVER_VERIFICATION_ENDPOINT -PSERVER_UPLOAD_ENDPOINT=$SERVER_UPLOAD_ENDPOINT -PSERVER_DOWNLOAD_ENDPOINT=$SERVER_DOWNLOAD_ENDPOINT
     - name: Update SonarQube
       env:
         LOGIN_KEY: ${{ secrets.SONARCLOUD_LOGIN_KEY }}
         PR_BRANCH: github.event.pull_request.head.ref
-      run: bash ./gradlew sonarqube -Dsonar.login=$LOGIN_KEY -Dsonar.pullrequest.branch=$PR_BRANCH -Dsonar.pullrequest.base=develop -Dsonar.pullrequest.key=$PULL_NUMBER --stacktrace
+      run: bash ./gradlew sonarqube -Dsonar.login=$LOGIN_KEY -Dsonar.pullrequest.branch=$PR_BRANCH -Dsonar.pullrequest.base=develop -Dsonar.pullrequest.key=$PULL_NUMBER -PVERIFICATION_API_KEY=$VERIFICATION_API_KEY -PSERVER_VERIFICATION_ENDPOINT=$SERVER_VERIFICATION_ENDPOINT -PSERVER_UPLOAD_ENDPOINT=$SERVER_UPLOAD_ENDPOINT -PSERVER_DOWNLOAD_ENDPOINT=$SERVER_DOWNLOAD_ENDPOINT
   apk:
       name: Generate APK
       runs-on: ubuntu-latest
@@ -74,7 +79,7 @@ jobs:
             DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE }}
           run: echo "$DEBUG_KEYSTORE" | base64 --decode > debug.keystore
         - name: Build debug APK
-          run: bash ./gradlew assembleCalibrationArizonaDebug --stacktrace
+          run: bash ./gradlew assembleCalibrationArizonaDebug -PVERIFICATION_API_KEY=$VERIFICATION_API_KEY -PSERVER_VERIFICATION_ENDPOINT=$SERVER_VERIFICATION_ENDPOINT -PSERVER_UPLOAD_ENDPOINT=$SERVER_UPLOAD_ENDPOINT -PSERVER_DOWNLOAD_ENDPOINT=$SERVER_DOWNLOAD_ENDPOINT --stacktrace
         - name: Upload APK
           uses: actions/upload-artifact@v1
           with:

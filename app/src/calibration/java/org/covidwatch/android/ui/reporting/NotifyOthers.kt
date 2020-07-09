@@ -13,6 +13,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
+import kotlinx.coroutines.launch
 import org.covidwatch.android.BuildConfig
 import org.covidwatch.android.R
 import org.covidwatch.android.data.PositiveDiagnosisReport
@@ -21,6 +22,8 @@ import org.covidwatch.android.databinding.DialogRiskLevelsBinding
 import org.covidwatch.android.domain.ExportDiagnosisKeysAsFileUseCase
 import org.covidwatch.android.domain.StartUploadDiagnosisKeysWorkUseCase
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.exposurenotification.ExposureNotificationManager.Companion.PERMISSION_KEYS_REQUEST_CODE
+import org.covidwatch.android.exposurenotification.ExposureNotificationManager.Companion.PERMISSION_START_REQUEST_CODE
 import org.covidwatch.android.extension.launchUseCase
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.extension.send
@@ -120,12 +123,12 @@ class NotifyOthersFragment : BaseNotifyOthersFragment() {
 class NotifyOthersViewModel(
     private val exportDiagnosisKeysAsFileUseCase: ExportDiagnosisKeysAsFileUseCase,
     private val startUploadDiagnosisKeysWorkUseCase: StartUploadDiagnosisKeysWorkUseCase,
-    enManager: ExposureNotificationManager,
+    private val enManager: ExposureNotificationManager,
     positiveDiagnosisRepository: PositiveDiagnosisRepository
 ) : BaseNotifyOthersViewModel(
-    enManager,
     positiveDiagnosisRepository
 ) {
+    private val keys: MutableList<TemporaryExposureKey> = mutableListOf()
     private val defaultRiskLevel = 6
     private val riskLevelSeparator = " "
     private val riskLevels = mutableListOf<Int>()
@@ -152,7 +155,37 @@ class NotifyOthersViewModel(
         _chooseShareMethod.send()
     }
 
-    override fun onTekHistory(teks: MutableList<TemporaryExposureKey>) {
+    override fun sharePositiveDiagnosis() {
+        viewModelScope.launch {
+            enManager.isEnabled().success { enabled ->
+                if (enabled) {
+                    shareReport()
+                } else {
+                    withPermission(PERMISSION_START_REQUEST_CODE) {
+                        enManager.start().apply {
+                            success { shareReport() }
+                            failure { handleStatus(it) }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private suspend fun shareReport() {
+        withPermission(PERMISSION_KEYS_REQUEST_CODE) {
+            enManager.temporaryExposureKeyHistory().apply {
+                success {
+                    keys.clear()
+                    keys.addAll(it)
+                    onTekHistory(it)
+                }
+                failure { handleStatus(it) }
+            }
+        }
+    }
+
+    private fun onTekHistory(teks: MutableList<TemporaryExposureKey>) {
         _setTransmissionLevelRisk.send(teks.map { defaultRiskLevel })
     }
 
@@ -169,7 +202,7 @@ class NotifyOthersViewModel(
             observeStatus(
                 startUploadDiagnosisKeysWorkUseCase,
                 StartUploadDiagnosisKeysWorkUseCase.Params(
-                    riskLevels,
+                    keys,
                     PositiveDiagnosisReport(verified = true, reportDate = Date())
                 )
             )
