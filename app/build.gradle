@@ -29,6 +29,15 @@ android {
         buildConfigField("String", "SERVER_DOWNLOAD_ENDPOINT", '"https://storage.googleapis.com/exposure-notification-export-ibznj"')
     }
 
+    signingConfigs {
+        debug {
+            storeFile file("../debug.keystore")
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+            storePassword "android"
+        }
+    }
+
     buildTypes {
         release {
             //TODO: Use proguard
@@ -36,6 +45,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             testCoverageEnabled false
             buildConfigField("boolean", "FIREBASE_DEBUGGING", "false")
+            signingConfig signingConfigs.debug
         }
         debug {
             testCoverageEnabled project.hasProperty('coverage')

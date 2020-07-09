@@ -18,7 +18,22 @@ class ArizonaEnConverterTest {
             .setAttenuationDurations(intArrayOf(0, 30, 0))
 
     @Test
-    fun `Sufficiently risky individual, 30 minutes at 6 ft`() {
+    fun `Sufficiently risky individual, 30 minutes at close contact`() {
+        //given
+        val testExposure = randomExposure
+            .setAttenuationDurations(intArrayOf(30, 0, 0))
+            .setTransmissionRiskLevel(4)
+            .build()
+
+        //when
+        val resultExposure = enConverter.covidExposureInformation(testExposure)
+
+        //then
+        assertEquals(8, resultExposure.totalRiskScore)
+    }
+
+    @Test
+    fun `Sufficiently risky individual, 30 minutes at medium attenuation`() {
         //given
         val testExposure = randomExposure
             .setAttenuationDurations(intArrayOf(0, 30, 0))
@@ -29,14 +44,14 @@ class ArizonaEnConverterTest {
         val resultExposure = enConverter.covidExposureInformation(testExposure)
 
         //then
-        assertEquals(5, resultExposure.totalRiskScore)
+        assertEquals(4, resultExposure.totalRiskScore)
     }
 
     @Test
     fun `Sufficiently risky individual, 5 minutes close contact`() {
         //given
         val testExposure = randomExposure
-            .setAttenuationDurations(intArrayOf(15, 0, 0))
+            .setAttenuationDurations(intArrayOf(5, 0, 0))
             .setTransmissionRiskLevel(4)
             .build()
 
@@ -44,11 +59,11 @@ class ArizonaEnConverterTest {
         val resultExposure = enConverter.covidExposureInformation(testExposure)
 
         //then
-        assertEquals(6, resultExposure.totalRiskScore)
+        assertEquals(0, resultExposure.totalRiskScore)
     }
 
     @Test
-    fun `Highest risk individual, 30 minutes at 6 ft`() {
+    fun `Highest risk individual, 30 minutes at medium attenuation`() {
         //given
         val testExposure = randomExposure
             .setAttenuationDurations(intArrayOf(0, 30, 0))
@@ -74,11 +89,11 @@ class ArizonaEnConverterTest {
         val resultExposure = enConverter.covidExposureInformation(testExposure)
 
         //then
-        assertEquals(8, resultExposure.totalRiskScore)
+        assertEquals(2, resultExposure.totalRiskScore)
     }
 
     @Test
-    fun `Highest risk individual, 5 minutes at 6 ft`() {
+    fun `Highest risk individual, 5 minutes at medium attenuation`() {
         //given
         val testExposure = randomExposure
             .setAttenuationDurations(intArrayOf(0, 5, 0))
@@ -89,7 +104,7 @@ class ArizonaEnConverterTest {
         val resultExposure = enConverter.covidExposureInformation(testExposure)
 
         //then
-        assertEquals(7, resultExposure.totalRiskScore)
+        assertEquals(0, resultExposure.totalRiskScore)
     }
 
     @Test
@@ -104,11 +119,11 @@ class ArizonaEnConverterTest {
         val resultExposure = enConverter.covidExposureInformation(testExposure)
 
         //then
-        assertEquals(4, resultExposure.totalRiskScore)
+        assertEquals(5, resultExposure.totalRiskScore)
     }
 
     @Test
-    fun `Asymptomatic shedder at peak risk, 30 min at 6 ft`() {
+    fun `Asymptomatic shedder at peak risk, 30 min at medium attenuation`() {
         //given
         val testExposure = randomExposure
             .setAttenuationDurations(intArrayOf(0, 30, 0))
@@ -119,11 +134,11 @@ class ArizonaEnConverterTest {
         val resultExposure = enConverter.covidExposureInformation(testExposure)
 
         //then
-        assertEquals(4, resultExposure.totalRiskScore)
+        assertEquals(2, resultExposure.totalRiskScore)
     }
 
     @Test
-    fun `Low shedder, 30 min at 6 ft`() {
+    fun `Low shedder, 30 min at medium attenuation`() {
         //given
         val testExposure = randomExposure
             .setAttenuationDurations(intArrayOf(0, 30, 0))
@@ -134,11 +149,11 @@ class ArizonaEnConverterTest {
         val resultExposure = enConverter.covidExposureInformation(testExposure)
 
         //then
-        assertEquals(2, resultExposure.totalRiskScore)
+        assertEquals(1, resultExposure.totalRiskScore)
     }
 
     @Test
-    fun `Low shedder, 5 min at 6 ft`() {
+    fun `Low shedder, 5 min at medium attenuation`() {
         //given
         val testExposure = randomExposure
             .setAttenuationDurations(intArrayOf(0, 5, 0))
@@ -149,6 +164,96 @@ class ArizonaEnConverterTest {
         val resultExposure = enConverter.covidExposureInformation(testExposure)
 
         //then
-        assertEquals(1, resultExposure.totalRiskScore)
+        assertEquals(0, resultExposure.totalRiskScore)
+    }
+
+    @Test
+    fun `Highest risk individual, 30 min in each bucket`() {
+        //given
+        val testExposure = randomExposure
+            .setAttenuationDurations(intArrayOf(30, 30, 30))
+            .setTransmissionRiskLevel(6)
+            .build()
+
+        //when
+        val resultExposure = enConverter.covidExposureInformation(testExposure)
+
+        //then
+        assertEquals(8, resultExposure.totalRiskScore)
+    }
+
+    @Test
+    fun `Lowest risk individual, 30 min in each bucket`() {
+        //given
+        val testExposure = randomExposure
+            .setAttenuationDurations(intArrayOf(30, 30, 30))
+            .setTransmissionRiskLevel(1)
+            .build()
+
+        //when
+        val resultExposure = enConverter.covidExposureInformation(testExposure)
+
+        //then
+        assertEquals(2, resultExposure.totalRiskScore)
+    }
+
+    @Test
+    fun `Highest risk individual 15 minutes close contact`() {
+        //given
+        val testExposure = randomExposure
+            .setAttenuationDurations(intArrayOf(15, 15, 15))
+            .setTransmissionRiskLevel(6)
+            .build()
+
+        //when
+        val resultExposure = enConverter.covidExposureInformation(testExposure)
+
+        //then
+        assertEquals(8, resultExposure.totalRiskScore)
+    }
+
+    @Test
+    fun `Lowest risk individual 15 minutes close contact`() {
+        //given
+        val testExposure = randomExposure
+            .setAttenuationDurations(intArrayOf(15, 15, 15))
+            .setTransmissionRiskLevel(1)
+            .build()
+
+        //when
+        val resultExposure = enConverter.covidExposureInformation(testExposure)
+
+        //then
+        assertEquals(0, resultExposure.totalRiskScore)
+    }
+
+    @Test
+    fun `Highest risk individual 15 minutes long distance`() {
+        //given
+        val testExposure = randomExposure
+            .setAttenuationDurations(intArrayOf(0, 0, 15))
+            .setTransmissionRiskLevel(6)
+            .build()
+
+        //when
+        val resultExposure = enConverter.covidExposureInformation(testExposure)
+
+        //then
+        assertEquals(2, resultExposure.totalRiskScore)
+    }
+
+    @Test
+    fun `Lowest risk individual 15 minutes long distance`() {
+        //given
+        val testExposure = randomExposure
+            .setAttenuationDurations(intArrayOf(0, 0, 15))
+            .setTransmissionRiskLevel(1)
+            .build()
+
+        //when
+        val resultExposure = enConverter.covidExposureInformation(testExposure)
+
+        //then
+        assertEquals(0, resultExposure.totalRiskScore)
     }
 }

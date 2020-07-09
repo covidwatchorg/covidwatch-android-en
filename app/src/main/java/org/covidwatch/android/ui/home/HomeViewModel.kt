@@ -16,7 +16,7 @@ import org.covidwatch.android.ui.event.Event
 class HomeViewModel(
     private val enManager: ExposureNotificationManager,
     private val userFlowRepository: UserFlowRepository,
-    preferenceStorage: PreferenceStorage
+    private val preferenceStorage: PreferenceStorage
 ) : BaseViewModel() {
 
     private val _infoBannerState = MutableLiveData<InfoBannerState>()
@@ -28,8 +28,8 @@ class HomeViewModel(
     private val _navigateToOnboardingEvent = MutableLiveData<Event<Unit>>()
     val navigateToOnboardingEvent: LiveData<Event<Unit>> get() = _navigateToOnboardingEvent
 
-    val exposureSummary: LiveData<CovidExposureSummary> =
-        preferenceStorage.observableExposureSummary
+    val exposureSummary: LiveData<CovidExposureSummary>
+        get() = preferenceStorage.observableExposureSummary
 
     fun onStart() {
         val userFlow = userFlowRepository.getUserFlow()

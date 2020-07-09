@@ -21,12 +21,14 @@ val flavorSpecificModule = module {
 
     single { KeyFileSigner() }
     single { KeyFileWriter(androidApplication(), get()) }
-
+    factory {
+        androidApplication().contentResolver
+    }
     factory {
         ProvideDiagnosisKeysFromFileUseCase(
             enManager = get(),
             diagnosisKeysTokenRepository = get(),
-            contentResolver = androidApplication().contentResolver,
+            contentResolver = get(),
             preferences = get(),
             dispatchers = get()
         )

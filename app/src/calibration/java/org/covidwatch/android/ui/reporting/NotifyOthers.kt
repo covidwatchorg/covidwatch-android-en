@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
@@ -55,16 +56,27 @@ class NotifyOthersFragment : BaseNotifyOthersFragment() {
                         arrayOf(InputFilter.LengthFilter(keysNumber * 2))
                     dialogView.etRiskLevels.setText(riskLevelsAsString(riskLevels))
 
-                    AlertDialog
+                    val dialog = AlertDialog
                         .Builder(context)
                         .setView(dialogView.root)
-                        .setPositiveButton(R.string.btn_continue) { _, _ ->
-                            val risksLevels = dialogView.etRiskLevels.text.toString()
-                            viewModel.shareReport(risksLevels)
-                        }
+                        .setPositiveButton(R.string.btn_continue, null)
                         .setNegativeButton(R.string.cancel, null)
                         .create()
-                        .show()
+
+                    dialog.show()
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                        val risksLevels = dialogView.etRiskLevels.text.toString()
+                        if (risksLevels.isEmpty()) {
+                            Toast.makeText(
+                                context,
+                                "Transmission risk level string can't be empty",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            dialog.dismiss()
+                            viewModel.shareReport(risksLevels)
+                        }
+                    }
                 }
             }
             observeEvent(chooseShareMethod) {
