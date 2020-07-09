@@ -116,6 +116,7 @@ class NotifyOthersViewModel(
 ) : BaseNotifyOthersViewModel(
     positiveDiagnosisRepository
 ) {
+    private val keys: MutableList<TemporaryExposureKey> = mutableListOf()
     private val defaultRiskLevel = 6
     private val riskLevelSeparator = " "
     private val riskLevels = mutableListOf<Int>()
@@ -162,7 +163,11 @@ class NotifyOthersViewModel(
     private suspend fun shareReport() {
         withPermission(PERMISSION_KEYS_REQUEST_CODE) {
             enManager.temporaryExposureKeyHistory().apply {
-                success { onTekHistory(it) }
+                success {
+                    keys.clear()
+                    keys.addAll(it)
+                    onTekHistory(it)
+                }
                 failure { handleStatus(it) }
             }
         }
@@ -185,7 +190,7 @@ class NotifyOthersViewModel(
             observeStatus(
                 startUploadDiagnosisKeysWorkUseCase,
                 StartUploadDiagnosisKeysWorkUseCase.Params(
-                    riskLevels,
+                    keys,
                     PositiveDiagnosisReport(verified = true, reportDate = Date())
                 )
             )

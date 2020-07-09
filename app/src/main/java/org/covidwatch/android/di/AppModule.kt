@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Room
 import androidx.work.WorkManager
 import com.google.android.gms.nearby.Nearby
-import com.google.android.gms.safetynet.SafetyNet
 import com.google.common.io.BaseEncoding
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
@@ -28,7 +27,6 @@ import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.data.pref.SharedPreferenceStorage
 import org.covidwatch.android.domain.*
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
-
 import org.covidwatch.android.ui.Notifications
 import org.covidwatch.android.ui.exposurenotification.ExposureNotificationViewModel
 import org.covidwatch.android.ui.exposures.ExposuresViewModel
@@ -55,16 +53,6 @@ val appModule = module {
     single {
         ExposureNotificationManager(
             exposureNotification = get()
-        )
-    }
-
-    single { SafetyNet.getClient(androidApplication()) }
-
-    single {
-        SafetyNetManager(
-            apiKey = androidContext().getString(R.string.safetynet_api_key),
-            packageName = androidContext().packageName,
-            safetyNet = get()
         )
     }
 
