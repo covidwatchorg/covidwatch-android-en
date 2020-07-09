@@ -10,6 +10,16 @@ apply plugin: 'com.google.protobuf'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
+
+def localPropertiesFile = rootProject.file("local.properties")
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(localPropertiesFile))
+
+ext.verification_api_key = project.hasProperty('VERIFICATION_API_KEY') ? project.getProperty('VERIFICATION_API_KEY') : localProperties["VERIFICATION_API_KEY"]
+ext.server_verification_endpoint = project.hasProperty('SERVER_VERIFICATION_ENDPOINT') ? project.getProperty('SERVER_VERIFICATION_ENDPOINT') : localProperties["SERVER_VERIFICATION_ENDPOINT"]
+ext.server_upload_endpoint = project.hasProperty('SERVER_UPLOAD_ENDPOINT') ? project.getProperty('SERVER_UPLOAD_ENDPOINT') : localProperties["SERVER_UPLOAD_ENDPOINT"]
+ext.server_download_endpoint = project.hasProperty('SERVER_DOWNLOAD_ENDPOINT') ? project.getProperty('SERVER_DOWNLOAD_ENDPOINT') : localProperties["SERVER_DOWNLOAD_ENDPOINT"]
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
