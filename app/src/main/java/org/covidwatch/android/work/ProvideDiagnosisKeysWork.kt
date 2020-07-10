@@ -55,16 +55,16 @@ class ProvideDiagnosisKeysWork(
         return withContext(Dispatchers.IO) {
             try {
                 val diagnosisKeys = diagnosisRepository.diagnosisKeys()
-                Timber.d("Adding ${diagnosisKeys.size} positive diagnoses to exposure notification framework")
+                Timber.d("Adding ${diagnosisKeys.size} batches of diagnoses to EN framework")
 
                 val token = randomToken()
                 val exposureConfiguration = preferences.exposureConfiguration
-                diagnosisKeys.forEach { fileBatch ->
+                diagnosisKeys.filter { it.keys.isNotEmpty() }.forEach { fileBatch ->
                     val keys = fileBatch.keys
                     enManager.provideDiagnosisKeys(keys, token, exposureConfiguration).apply {
                         success {
                             Timber.d("Added keys to EN with token: $token")
-                            //TODO: Delete empty folder
+                            val dir = keys[0].parentFile
                             keys.forEachIndexed { i, file ->
                                 keyFileRepository.add(
                                     KeyFile(
@@ -76,11 +76,12 @@ class ProvideDiagnosisKeysWork(
                                 )
                                 file.delete()
                             }
+                            dir?.delete()
                         }
                         failure {
                             Timber.d("Failed to added keys to EN")
+                            return@withContext failure(it)
                         }
-                        //TODO: Handle failed files
                     }
                 }
 
