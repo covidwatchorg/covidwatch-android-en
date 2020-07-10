@@ -1,5 +1,6 @@
 package org.covidwatch.android.domain
 
+import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import org.covidwatch.android.data.asDiagnosisKey
 import org.covidwatch.android.data.asTemporaryExposureKey
 import org.covidwatch.android.domain.ExportDiagnosisKeysAsFileUseCase.Params
@@ -18,6 +19,8 @@ class ExportDiagnosisKeysAsFileUseCase(
 ) : UseCase<List<File>, Params>(dispatchers) {
 
     override suspend fun run(params: Params?): Either<ENStatus, List<File>> {
+        params ?: return Either.Left(ENStatus.Failed)
+
         enManager.isEnabled().apply {
             success { enabled ->
                 if (!enabled) return Either.Left(ENStatus.FailedServiceDisabled)
@@ -25,32 +28,26 @@ class ExportDiagnosisKeysAsFileUseCase(
             failure { return Either.Left(it) }
         }
 
-        enManager.temporaryExposureKeyHistory().apply {
-            success {
-                val keys = it.mapIndexed { i, key ->
-                    key.asDiagnosisKey().copy(
-                        transmissionRisk = params?.riskLevels?.get(i) ?: key.transmissionRiskLevel,
-                        rollingPeriod = 144
-                    ).asTemporaryExposureKey()
-                }
-
-                // TODO: 03.06.2020 Think of dynamic region
-                val files = keyFileWriter.writeForKeys(
-                    keys,
-                    Instant.now().minus(Duration.ofDays(keys.size.toLong())),
-                    Instant.now(),
-                    "US"
-                )
-
-                return Either.Right(files)
-            }
-
-            failure { return Either.Left(it) }
+        val keys = params.keys.mapIndexed { i, key ->
+            key.asDiagnosisKey().copy(
+                transmissionRisk = params.riskLevels[i],
+                rollingPeriod = 144
+            ).asTemporaryExposureKey()
         }
 
-        // It should not get here if the task was successful and known failures were handled
-        return Either.Left(ENStatus.Failed)
+        // TODO: 03.06.2020 Think of dynamic region
+        val files = keyFileWriter.writeForKeys(
+            keys,
+            Instant.now().minus(Duration.ofDays(keys.size.toLong())),
+            Instant.now(),
+            "US"
+        )
+
+        return Either.Right(files)
     }
 
-    data class Params(val riskLevels: List<Int>)
+    data class Params(
+        val riskLevels: List<Int>,
+        val keys: MutableList<TemporaryExposureKey>
+    )
 }

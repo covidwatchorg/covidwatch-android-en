@@ -152,7 +152,9 @@ class NotifyOthersViewModel(
         // TODO: 03.06.2020 Add validation that check correct format of the string
         this.riskLevels.clear()
         this.riskLevels.addAll(stringToRiskLevels(riskLevels))
-        _chooseShareMethod.send()
+
+        // We skip dialog to choose the method because calibration build doesn't have the validation logic
+        shareReportAs(file = true)
     }
 
     override fun sharePositiveDiagnosis() {
@@ -193,7 +195,7 @@ class NotifyOthersViewModel(
         if (file) {
             viewModelScope.launchUseCase(
                 exportDiagnosisKeysAsFileUseCase,
-                ExportDiagnosisKeysAsFileUseCase.Params(riskLevels)
+                ExportDiagnosisKeysAsFileUseCase.Params(riskLevels, keys)
             ) {
                 success { _shareDiagnosisFile.send(it) }
                 failure { handleStatus(it) }

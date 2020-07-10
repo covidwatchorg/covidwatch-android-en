@@ -41,10 +41,13 @@
 
     <!-- Test Flow -->
     <string name="cancel">Cancel</string>
-
+    <string name="btn_continue">Continue</string>
+    <string name="export_possible_exposure_for_test_case">Export Possible Exposure for Test Case</string>
+    <string name="test_case_name">Test Case</string>
     <!-- MENU -->
     <string name="menu_reset_possible_exposures">[DEMO] Reset Possible Exposures</string>
     <string name="menu_detect_exposures_from_server">[DEMO] Detect Exposures from Server</string>
+    <string name="menu_export_possible_exposures">[DEMO] Export Possible Exposures</string>
 
     <string name="menu_possible_exposures">Possible Exposures</string>
     <string name="menu_notify_others">Notify Others</string>

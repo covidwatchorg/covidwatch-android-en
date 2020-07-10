@@ -32,6 +32,11 @@ open class BaseMenuAdapter(
             0,
             Destination.None
         ),
+        MenuItem(
+            R.string.menu_export_possible_exposures,
+            0,
+            Destination.None
+        ),
         possibleExposuresMenuItem,
         MenuItem(R.string.menu_notify_others, 0, NotifyOthers),
         MenuItem(R.string.menu_how_it_works, 0, HowItWorks),

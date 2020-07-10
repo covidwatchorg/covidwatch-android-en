@@ -1,3 +1,6 @@
+plugins {
+    id 'com.gladed.androidgitversion' version '0.4.13'
+}
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -6,10 +9,10 @@ apply plugin: "com.vanniktech.android.junit.jacoco"
 apply plugin: "org.sonarqube"
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'com.google.protobuf'
+apply plugin: 'com.gladed.androidgitversion'
 
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
-
 
 def localPropertiesFile = rootProject.file("local.properties")
 def localProperties = new Properties()
@@ -23,6 +26,10 @@ ext.server_verification_endpoint = project.hasProperty('SERVER_VERIFICATION_ENDP
 ext.server_upload_endpoint = project.hasProperty('SERVER_UPLOAD_ENDPOINT') ? project.getProperty('SERVER_UPLOAD_ENDPOINT') : localProperties["SERVER_UPLOAD_ENDPOINT"]
 ext.server_download_endpoint = project.hasProperty('SERVER_DOWNLOAD_ENDPOINT') ? project.getProperty('SERVER_DOWNLOAD_ENDPOINT') : localProperties["SERVER_DOWNLOAD_ENDPOINT"]
 
+androidGitVersion {
+    baseCode 1
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -32,8 +39,8 @@ android {
         // TODO: Check if we really need 23 because of Exposure Notification
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode androidGitVersion.code()
+        versionName androidGitVersion.name()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -154,7 +161,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-safetynet:17.0.0'
 
     calibrationImplementation 'com.google.protobuf:protobuf-java:3.12.2'
-    calibrationImplementation 'com.jaredrummler:android-device-names:2.0.0'
+    implementation 'com.jaredrummler:android-device-names:2.0.0'
     calibrationImplementation 'com.google.firebase:firebase-crashlytics:17.0.1'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

@@ -42,10 +42,7 @@ class StartUploadDiagnosisKeysWorkUseCase(
         Timber.d("Start ${javaClass.simpleName}.")
 
         val uploadRequest = OneTimeWorkRequestBuilder<UploadDiagnosisKeysWork>()
-            .apply {
-                setConstraints(Constraints.Builder().build())
-                setInputData(data)
-            }
+            .setInputData(data)
             .build()
 
 
