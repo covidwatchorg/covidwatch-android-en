@@ -8,3 +8,6 @@ data class KeyFileBatch(
     val keys: List<File> = emptyList(),
     val urls: List<String> = emptyList()
 )
+
+val String.fileId: String
+    get() = split("/").last().removeSuffix(".zip")

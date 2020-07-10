@@ -27,11 +27,13 @@ class PositiveDiagnosisRepository(
         val regions = countryCodeRepository.exposureRelevantCountryCodes()
         val urls = uriManager.downloadUrls(regions)
         val dir = randomDirName()
-        val checkedFiles = keyFileRepository.providedKeys().map { it.url }
+
+        // We convert to file id in oder to be safe from change in the endpoint
+        val checkedFiles = keyFileRepository.providedKeys().map { it.url.fileId }
 
         urls.map { keyFileBatch ->
             val files = keyFileBatch.urls
-                .filterNot { checkedFiles.contains(it) }
+                .filterNot { checkedFiles.contains(it.fileId) }
                 .mapNotNull { remote.diagnosisKey(dir, it) }
 
             keyFileBatch.copy(keys = files)
