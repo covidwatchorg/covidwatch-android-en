@@ -20,6 +20,8 @@ import org.covidwatch.android.data.diagnosisverification.DiagnosisVerificationRe
 import org.covidwatch.android.data.diagnosisverification.DiagnosisVerificationRepository
 import org.covidwatch.android.data.exposureinformation.ExposureInformationLocalSource
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
+import org.covidwatch.android.data.keyfile.KeyFileLocalSource
+import org.covidwatch.android.data.keyfile.KeyFileRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisLocalSource
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRemoteSource
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
@@ -105,6 +107,7 @@ val appModule = module {
             local = get(),
             countryCodeRepository = get(),
             uriManager = get(),
+            keyFileRepository = get(),
             dispatchers = get()
         )
     }
@@ -142,6 +145,17 @@ val appModule = module {
         )
     }
 
+    single {
+        val appDatabase: AppDatabase = get()
+        appDatabase.keyFileDao()
+    }
+    single { KeyFileLocalSource(dao = get()) }
+    single {
+        KeyFileRepository(
+            local = get(),
+            dispatchers = get()
+        )
+    }
 
     single {
         val appDatabase: AppDatabase = get()
@@ -268,12 +282,6 @@ val appModule = module {
             .addInterceptor(logging)
             .addInterceptor(ConnectivityInterceptor(androidApplication()))
             .build()
-    }
-
-    single<TestedRepository> {
-        TestedRepositoryImpl(
-            preferences = get()
-        )
     }
 
     // Onboarding start
