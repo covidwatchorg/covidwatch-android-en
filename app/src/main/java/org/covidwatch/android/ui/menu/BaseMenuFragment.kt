@@ -14,13 +14,15 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.gson.GsonBuilder
+import com.google.gson.annotations.Expose
 import com.jaredrummler.android.device.DeviceName
 import kotlinx.coroutines.launch
 import org.covidwatch.android.BuildConfig
-import org.covidwatch.android.DateFormatter
 import org.covidwatch.android.R
 import org.covidwatch.android.attenuationDurationThresholds
+import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.databinding.DialogPossibleExposuresTestCaseBinding
@@ -33,6 +35,49 @@ import org.koin.android.ext.android.inject
 import java.io.File
 import java.util.*
 
+data class PossibleExposuresJson(
+    @Expose
+    val exposureConfiguration: CovidExposureConfiguration,
+    @Expose
+    val exposures: List<CovidExposureInformation>
+)
+
+@Suppress("ArrayInDataClass")
+data class CovidExposureConfiguration(
+    @Expose
+    val minimumRiskScore: Int,
+    @Expose
+    val attenuationScores: IntArray,
+    @Expose
+    val attenuationWeight: Int,
+    @Expose
+    val daysSinceLastExposureScores: IntArray,
+    @Expose
+    val daysSinceLastExposureWeight: Int,
+    @Expose
+    val durationScores: IntArray,
+    @Expose
+    val durationWeight: Int,
+    @Expose
+    val transmissionRiskScores: IntArray,
+    @Expose
+    val transmissionRiskWeight: Int,
+    @Expose
+    val attenuationDurationThresholdList: List<IntArray>? = null
+)
+
+fun ExposureConfiguration.asCovidExposureConfiguration() =
+    CovidExposureConfiguration(
+        minimumRiskScore,
+        attenuationScores,
+        attenuationWeight,
+        daysSinceLastExposureScores,
+        daysSinceLastExposureWeight,
+        durationScores,
+        durationWeight,
+        transmissionRiskScores,
+        transmissionRiskWeight
+    )
 
 open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuViewModel>() {
     private val exposureInformationRepository: ExposureInformationRepository by inject()

@@ -6,62 +6,14 @@ import androidx.appcompat.app.AlertDialog
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.annotations.Expose
 import org.covidwatch.android.R
-import org.covidwatch.android.data.CovidExposureInformation
-import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.databinding.DialogExposureConfigurationBinding
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 
 
-data class PossibleExposuresJson(
-    @Expose
-    val exposureConfiguration: CovidExposureConfiguration,
-    @Expose
-    val exposures: List<CovidExposureInformation>
-)
-
-@Suppress("ArrayInDataClass")
-data class CovidExposureConfiguration(
-    @Expose
-    val minimumRiskScore: Int,
-    @Expose
-    val attenuationScores: IntArray,
-    @Expose
-    val attenuationWeight: Int,
-    @Expose
-    val daysSinceLastExposureScores: IntArray,
-    @Expose
-    val daysSinceLastExposureWeight: Int,
-    @Expose
-    val durationScores: IntArray,
-    @Expose
-    val durationWeight: Int,
-    @Expose
-    val transmissionRiskScores: IntArray,
-    @Expose
-    val transmissionRiskWeight: Int,
-    @Expose
-    val attenuationDurationThresholdList: List<IntArray>? = null
-)
-
-fun ExposureConfiguration.asCovidExposureConfiguration() =
-    CovidExposureConfiguration(
-        minimumRiskScore,
-        attenuationScores,
-        attenuationWeight,
-        daysSinceLastExposureScores,
-        daysSinceLastExposureWeight,
-        durationScores,
-        durationWeight,
-        transmissionRiskScores,
-        transmissionRiskWeight
-    )
-
 class MenuFragment : BaseMenuFragment() {
-    private val exposureInformationRepository: ExposureInformationRepository by inject()
     private val preferences: PreferenceStorage by inject()
 
     override fun handleMenuItemClick(menuItem: MenuItem) {
