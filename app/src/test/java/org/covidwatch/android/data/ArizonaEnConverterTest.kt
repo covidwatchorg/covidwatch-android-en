@@ -11,7 +11,7 @@ class ArizonaEnConverterTest {
     private val randomExposure: ExposureInformation.ExposureInformationBuilder
         get() = ExposureInformation.ExposureInformationBuilder()
             .setDateMillisSinceEpoch(System.currentTimeMillis())
-            .setDurationMinutes(Random.nextInt(10) * 5)
+            .setDurationMinutes(Random.nextInt(5) * 5)
             .setAttenuationValue(Random.nextInt(8))
             .setTransmissionRiskLevel(Random.nextInt(4))
             .setTotalRiskScore(Random.nextInt(8))
