@@ -20,8 +20,14 @@ class DiagnosisKeysTokenRepository(
         withContext(dispatchers.io) { local.delete(tokens) }
 
     suspend fun setExposed(token: String) = withContext(dispatchers.io) {
-        val exposedToken = local.findByToken(token).copy(potentialExposure = true)
-        local.update(exposedToken)
+        val keysToken = local.findByToken(token)
+        val exposedToken = keysToken?.copy(potentialExposure = true)
+
+        exposedToken?.let { local.update(it) }
+    }
+
+    suspend fun findByToken(token: String) = withContext(dispatchers.io) {
+        local.findByToken(token)
     }
 
     suspend fun delete(token: String) =

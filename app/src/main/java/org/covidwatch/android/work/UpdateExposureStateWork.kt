@@ -10,6 +10,7 @@ import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenReposito
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.domain.UpdateExposureInformationUseCase
+import org.covidwatch.android.domain.UpdateExposureInformationUseCase.Params
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.koin.java.KoinJavaComponent.inject
 import timber.log.Timber
@@ -39,7 +40,7 @@ class UpdateExposureStateWork(
         if (exposureSummary.matchedKeyCount > 0) {
             diagnosisKeysTokenRepository.setExposed(token)
 
-            updateExposureInformationUseCase.run()
+            updateExposureInformationUseCase(Params(token))
 
             val exposures = exposureInformationRepository.exposures()
             val maxRiskScore = exposures.maxBy { it.totalRiskScore }?.totalRiskScore

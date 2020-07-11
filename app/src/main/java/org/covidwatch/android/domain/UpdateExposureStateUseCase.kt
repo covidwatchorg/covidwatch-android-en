@@ -23,8 +23,8 @@ class UpdateExposureStateUseCase(
             .build()
 
         workManager.enqueueUniqueWork(
-            WORK_NAME,
-            ExistingWorkPolicy.APPEND,
+            "Update exposure state for token: ${params.token}",
+            ExistingWorkPolicy.REPLACE,
             updateWork
         )
         val workInfoLiveData = workManager.getWorkInfoById(updateWork.id)
@@ -33,8 +33,4 @@ class UpdateExposureStateUseCase(
     }
 
     data class Params(val token: String)
-
-    companion object {
-        const val WORK_NAME = "update_exposure_state"
-    }
 }

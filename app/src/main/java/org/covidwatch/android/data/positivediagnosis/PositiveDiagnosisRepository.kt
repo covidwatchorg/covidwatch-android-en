@@ -32,11 +32,12 @@ class PositiveDiagnosisRepository(
         val checkedFiles = keyFileRepository.providedKeys().map { it.url.fileId }
 
         urls.map { keyFileBatch ->
-            val files = keyFileBatch.urls
+            val filteredUrls = keyFileBatch.urls
                 .filterNot { checkedFiles.contains(it.fileId) }
-                .mapNotNull { remote.diagnosisKey(dir, it) }
 
-            keyFileBatch.copy(keys = files)
+            val files = filteredUrls.mapNotNull { remote.diagnosisKey(dir, it) }
+
+            keyFileBatch.copy(keys = files, urls = filteredUrls)
         }
     }
 

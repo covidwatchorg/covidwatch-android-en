@@ -28,6 +28,7 @@ ext.server_download_endpoint = project.hasProperty('SERVER_DOWNLOAD_ENDPOINT') ?
 
 androidGitVersion {
     baseCode 1
+    codeFormat 'MNNPPP'
 }
 
 android {
