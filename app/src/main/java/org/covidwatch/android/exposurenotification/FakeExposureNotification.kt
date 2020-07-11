@@ -51,6 +51,10 @@ class FakeExposureNotification : ExposureNotificationClient {
     override fun getApiKey(): ApiKey<Api.ApiOptions.NoOptions> {
         TODO("not implemented")
     }
+
+    override fun getExposureWindows(p0: String?): Task<MutableList<ExposureWindow>> {
+        TODO("not implemented")
+    }
 }
 
 object RandomEnObjects {
