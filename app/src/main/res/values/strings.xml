@@ -149,16 +149,16 @@
     <string name="get_started_button">Get Started</string>
     <string name="onboarding_welcome_title">Welcome to the {UCSF Health Covid Watch} App</string>
     <string name="onboarding_welcome_subtitle">Welcome Text. Aliquet urna feugiat donec dictum. Massa dignissim commodo ut et.  Massa dignissim commodo ut et.</string>
-    <string name="how_it_works_title1">Always Anonymous</string>
-    <string name="stay_anonymous_subtitle">While Sam and Jane chat, their phones note each others’ Bluetooth signals and the app lists them securely as random numbers. Their personal information and location are <b>never recorded</b>.</string>
-    <string name="diagnosis_reports_title">Volunteer Diagnosis</string>
-    <string name="diagnosis_reports_subtitle">A few days later, Sam tests positive for COVID-19. He helps stop the spread by opting in to <b>anonymously</b> share his <b>positive results</b> in the app.</string>
-    <string name="exposure_alerts_title">Get Notifications</string>
-    <string name="exposure_alerts_subtitle">Jane’s gets a notification saying she was near a person who tested positive. The app explains <b>what to do next</b> and how to find public health resources.</string>
-    <string name="safe_communities_title">Help Communities</string>
-    <string name="safe_communities_subtitle">By opting in to <b>enable exposure notifications</b>, Jane and Sam help their communities stay safe. They share the app with others so that they can also help stop the spread.</string>
+    <string name="how_it_works_title_1">Always Anonymous</string>
+    <string name="how_it_works_text_1">While Sam and Jane chat, their phones note each others’ Bluetooth signals and the app lists them securely as random numbers. Their personal information and location are <b>never recorded</b>.</string>
+    <string name="how_it_works_title_2">Notify Others</string>
+    <string name="how_it_works_text_2">Days later, Sam tests positive for COVID-19. He decides to share his test results with the app, which then notifies others of possible exposure to the virus.</string>
+    <string name="how_it_works_title_3">Receive Notifications</string>
+    <string name="how_it_works_text_3">Jane gets a notification saying she was near a person who tested positive. The app explains <b>what to do next</b> and how to find healthcare resources nearby.</string>
+    <string name="how_it_works_title_4">Help Communities</string>
+    <string name="how_it_works_text_4">By opting in to <b>enable exposure notifications</b> and stay home while asymptomatic or sick, they help others stay safe. They share the app with family and friends so that they can help too.</string>
     <string name="enable_exposure_notifications_title">Enable Exposure Notifications</string>
-    <string name="enable_exposure_notifications_subtitle">These notifications are designed to let you know if you’ve been exposed to a person who later reports themselves as testing positive for COVID-19. You can choose to turn this off at any time.</string>
+    <string name="enable_exposure_notifications_subtitle">This setting will enable Bluetooth and let you know if <b>you’ve been exposed</b> to a person who later reports themselves as having tested positive for COVID-19. It can be turned off at any time.</string>
     <string name="enable_button">Enable</string>
     <string name="not_now_button">Not now</string>
     <string name="how_it_works">How it Works</string>
@@ -168,7 +168,7 @@
     <string name="welcome_to_the">Welcome to the</string>
     <string name="full_app_name">University of Arizona COVID-19 Exposure Notification App</string>
     <string name="finished_onboarding_title">You\'re all set!</string>
-    <string name="finished_onboarding_subtitle">The app is active. <b>You will be notified</b> of possible exposures to COVID-19 from people who share their anonymous and verified test results in the app.\n\n<b>Share the app</b> with others to improve the accuracy of your notifications.</string>
+    <string name="finished_onboarding_subtitle">You can now <b>receive exposure</b> notifications and get tips on what to do next if people you were near shared verified positive COVID-19 test results in the app.</string>
     <string name="see_exposure_summary">See Exposure Summary</string>
 
     <!-- Home Screen-->

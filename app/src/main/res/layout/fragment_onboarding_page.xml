@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
-            tools:text="@string/how_it_works_title1" />
+            tools:text="@string/how_it_works_title_1" />
 
         <ImageView
             android:id="@+id/image"
