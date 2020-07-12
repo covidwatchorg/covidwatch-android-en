@@ -23,8 +23,8 @@
     <color name="primaryBackground">#2C58B1</color>
     <color name="secondaryBackground">#FFFFFF</color>
 
-    <color name="primaryText">#585858</color>
-    <color name="secondaryText">#FFFFFF</color>
+    <color name="primaryText">#383838</color>
+    <color name="secondaryText">@color/darkGray</color>
 
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
