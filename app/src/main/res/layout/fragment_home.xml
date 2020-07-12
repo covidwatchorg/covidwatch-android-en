@@ -14,7 +14,7 @@
             style="@style/Widget.MaterialComponents.Toolbar.Surface"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            app:logo="@drawable/ic_uoa_logo">
+            app:logo="@drawable/ic_logo">
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -8,8 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textColor">@color/primaryText</item>
-        <item name="android:actionBarSize">90dp</item>
-        <item name="actionBarSize">90dp</item>
     </style>
 
     <style name="AppTheme.LauncherTheme">
@@ -147,4 +145,5 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">13sp</item>
     </style>
+
 </resources>
