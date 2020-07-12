@@ -14,6 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginTop="@dimen/padding_normal"
             android:text="@string/how_it_works"
             android:textAllCaps="true" />
 
@@ -23,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
-            tools:text="Safe Communities" />
+            tools:text="@string/how_it_works_title1" />
 
         <ImageView
             android:id="@+id/image"

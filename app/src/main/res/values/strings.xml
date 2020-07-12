@@ -149,7 +149,7 @@
     <string name="get_started_button">Get Started</string>
     <string name="onboarding_welcome_title">Welcome to the {UCSF Health Covid Watch} App</string>
     <string name="onboarding_welcome_subtitle">Welcome Text. Aliquet urna feugiat donec dictum. Massa dignissim commodo ut et.  Massa dignissim commodo ut et.</string>
-    <string name="stay_anonymous_title">Stay Anonymous</string>
+    <string name="how_it_works_title1">Always Anonymous</string>
     <string name="stay_anonymous_subtitle">While Sam and Jane chat, their phones note each others’ Bluetooth signals and the app lists them securely as random numbers. Their personal information and location are <b>never recorded</b>.</string>
     <string name="diagnosis_reports_title">Volunteer Diagnosis</string>
     <string name="diagnosis_reports_subtitle">A few days later, Sam tests positive for COVID-19. He helps stop the spread by opting in to <b>anonymously</b> share his <b>positive results</b> in the app.</string>

@@ -51,20 +51,53 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         android:background="?android:attr/colorBackground"
         android:elevation="@dimen/onboarding_footer_elevation"
         android:orientation="vertical"
         android:paddingVertical="@dimen/padding_normal">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
+
+        <LinearLayout
+            android:id="@+id/onboarding_page_indicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabBackground="@drawable/onboarding_tab_background"
-            app:tabGravity="center"
-            app:tabIndicator="@drawable/onboarding_tab_indicator"
-            app:tabIndicatorColor="@color/bluejay"
-            app:tabIndicatorGravity="center" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/btn_previous_onboarding_screen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.5"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_arrow_left" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:tabBackground="@drawable/onboarding_tab_background"
+                app:tabGravity="center"
+                app:tabIndicator="@drawable/onboarding_tab_indicator"
+                app:tabIndicatorColor="@color/bluejay"
+                app:tabIndicatorFullWidth="true"
+                app:tabIndicatorGravity="center" />
+
+            <ImageView
+                android:id="@+id/btn_next_onboarding_screen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".5"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_arrow_right" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/continue_setup_button"

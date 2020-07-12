@@ -18,7 +18,7 @@ class OnboardingPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment
     private fun howItWorksParameters(position: Int): OnboardingPageParameters {
         return when (position) {
             0 -> OnboardingPageParameters(
-                R.string.stay_anonymous_title,
+                R.string.how_it_works_title1,
                 R.drawable.how_it_works_1,
                 R.string.stay_anonymous_subtitle
             )
@@ -38,7 +38,7 @@ class OnboardingPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment
                 R.string.safe_communities_subtitle
             )
             else -> OnboardingPageParameters(
-                R.string.stay_anonymous_title,
+                R.string.how_it_works_title1,
                 R.drawable.how_it_works_1,
                 R.string.stay_anonymous_subtitle
             )

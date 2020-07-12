@@ -20,7 +20,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
             val isLastPage = position == pagerAdapter.itemCount - 1
-            binding.tabLayout.isVisible = !isLastPage
+            binding.onboardingPageIndicator.isVisible = !isLastPage
             binding.continueSetupButton.isVisible = isLastPage
         }
     }
@@ -33,14 +33,25 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pagerAdapter = OnboardingPagerAdapter(this)
-        binding.viewPager.adapter = pagerAdapter
-        binding.viewPager.registerOnPageChangeCallback(onPageChangeCallback)
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) { _, _ -> }.attach()
 
-        binding.continueSetupButton.setOnClickListener {
-            // Remove previous onboarding fragments from the stack so we can't go back.
-            findNavController().popBackStack(R.id.homeFragment, false)
-            findNavController().navigate(R.id.enableExposureNotificationsFragment)
+        with(binding) {
+            viewPager.adapter = pagerAdapter
+            viewPager.registerOnPageChangeCallback(onPageChangeCallback)
+            TabLayoutMediator(tabLayout, viewPager) { _, _ -> }.attach()
+
+            btnPreviousOnboardingScreen.setOnClickListener {
+                viewPager.currentItem = tabLayout.selectedTabPosition - 1
+            }
+
+            btnNextOnboardingScreen.setOnClickListener {
+                viewPager.currentItem = tabLayout.selectedTabPosition + 1
+            }
+
+            continueSetupButton.setOnClickListener {
+                // Remove previous onboarding fragments from the stack so we can't go back.
+                findNavController().popBackStack(R.id.homeFragment, false)
+                findNavController().navigate(R.id.enableExposureNotificationsFragment)
+            }
         }
     }
 
