@@ -27,7 +27,6 @@ ext.server_upload_endpoint = project.hasProperty('SERVER_UPLOAD_ENDPOINT') ? pro
 ext.server_download_endpoint = project.hasProperty('SERVER_DOWNLOAD_ENDPOINT') ? project.getProperty('SERVER_DOWNLOAD_ENDPOINT') : localProperties["SERVER_DOWNLOAD_ENDPOINT"]
 
 androidGitVersion {
-    baseCode 1
     codeFormat 'MNNPPP'
 }
 
