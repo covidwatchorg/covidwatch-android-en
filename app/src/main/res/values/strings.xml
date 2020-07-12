@@ -172,6 +172,7 @@
     <string name="see_exposure_summary">See Exposure Summary</string>
 
     <!-- Home Screen-->
+    <string name="current_region">&lt;b>Region:&lt;/b> &lt;u>%s&lt;/u></string>
     <string name="home_days_since_last_exposure"><b>days</b>\nsince last exposure</string>
     <string name="home_possible_exposures"><b>possible exposures</b>\nin the last 14 days</string>
     <string name="home_total_risk_score"><b>total risk score</b> (1–8) scale</string>

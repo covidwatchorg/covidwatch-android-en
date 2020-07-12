@@ -4,9 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.RiskScoreLevel.*
@@ -45,18 +49,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 }
             }
         })
-        homeViewModel.warningBannerState.observe(viewLifecycleOwner, Observer { banner ->
-            when (banner) {
-                is WarningBannerState.Visible -> {
-                    binding.warningBanner.isVisible = true
-                    binding.warningBanner.setText(banner.text)
-                }
-                WarningBannerState.Hidden -> {
-                    binding.warningBanner.isVisible = false
-                }
-            }
-        })
 
+        // TODO: 12.07.2020 Change to a value from a server
+        binding.tvRegion.text = HtmlCompat.fromHtml(
+            getString(R.string.current_region, "Arizona"),
+            HtmlCompat.FROM_HTML_MODE_COMPACT
+        )
+        lifecycleScope.launch {
+            // TODO: 12.07.2020 Change time of the animation
+            delay(1000)
+            binding.homeScreenArt.isVisible = true
+        }
         initClickListeners()
     }
 
@@ -74,8 +77,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             infoBanner.setOnClickListener {
                 findNavController().navigate(R.id.enableExposureNotificationsFragment)
             }
-
-            warningBanner.setOnClickListener { findNavController().navigate(R.id.exposuresFragment) }
 
             exposureSummary.root.setOnClickListener {
                 findNavController().navigate(R.id.exposuresFragment)

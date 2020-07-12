@@ -22,9 +22,6 @@ class HomeViewModel(
     private val _infoBannerState = MutableLiveData<InfoBannerState>()
     val infoBannerState: LiveData<InfoBannerState> get() = _infoBannerState
 
-    private val _warningBannerState = MutableLiveData<WarningBannerState>()
-    val warningBannerState: LiveData<WarningBannerState> get() = _warningBannerState
-
     private val _navigateToOnboardingEvent = MutableLiveData<Event<Unit>>()
     val navigateToOnboardingEvent: LiveData<Event<Unit>> get() = _navigateToOnboardingEvent
 
