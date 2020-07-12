@@ -5,6 +5,8 @@ import androidx.lifecycle.liveData
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import org.covidwatch.android.data.CovidExposureSummary
+import org.covidwatch.android.data.Region
+import org.covidwatch.android.data.Regions
 import org.covidwatch.android.exposurenotification.RandomEnObjects
 
 @Suppress("UNUSED_PARAMETER", "unused")
@@ -28,6 +30,18 @@ class FakePreferenceStorage : PreferenceStorage {
     )
 
     override fun resetExposureSummary() {}
+    override var regions: Regions
+        get() = TODO("not implemented")
+        set(value) {}
+    override val observableRegions: LiveData<Regions>
+        get() = TODO("not implemented")
+    override val region: Region
+        get() = TODO("not implemented")
+    override var selectedRegion: Int
+        get() = TODO("not implemented")
+        set(value) {}
+    override val observableRegion: LiveData<Region>
+        get() = TODO("not implemented")
 
     override var exposureConfiguration: ExposureConfiguration
         get() = ExposureConfiguration.ExposureConfigurationBuilder()

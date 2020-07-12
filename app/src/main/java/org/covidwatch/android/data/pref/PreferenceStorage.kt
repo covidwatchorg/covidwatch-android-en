@@ -9,6 +9,8 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.gson.Gson
 import org.covidwatch.android.data.CovidExposureSummary
+import org.covidwatch.android.data.Region
+import org.covidwatch.android.data.Regions
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -22,6 +24,13 @@ interface PreferenceStorage {
 
     fun resetExposureSummary()
 
+    var regions: Regions
+    val observableRegions: LiveData<Regions>
+
+    val region: Region
+    var selectedRegion: Int
+    val observableRegion: LiveData<Region>
+
     // TODO: 05.06.2020 Replace with our own class when the API is stable
     var exposureConfiguration: ExposureConfiguration
     val observableExposureSummary: LiveData<CovidExposureSummary>
@@ -30,6 +39,8 @@ interface PreferenceStorage {
 class SharedPreferenceStorage(context: Context) : PreferenceStorage {
     private val prefs = context.applicationContext.getSharedPreferences(NAME, MODE_PRIVATE)
     private val _exposureSummary = MutableLiveData<CovidExposureSummary>()
+    private val _regions = MutableLiveData<Regions>()
+    private val _region = MutableLiveData<Region>()
     private val defaultExposureSummary = CovidExposureSummary(
         daySinceLastExposure = 0,
         matchedKeyCount = 0,
@@ -41,6 +52,10 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
     private val changeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         when (key) {
             EXPOSURE_SUMMARY -> _exposureSummary.value = exposureSummary
+            REGIONS -> {
+                _regions.value = regions
+                _region.value = region
+            }
         }
     }
 
@@ -52,13 +67,30 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
 
     override var onboardingFinished by Preference(prefs, ONBOARDING_FINISHED, false)
 
-
     override var exposureSummary: CovidExposureSummary by ObjectPreference(
         prefs,
         EXPOSURE_SUMMARY,
         defaultExposureSummary,
         CovidExposureSummary::class.java
     )
+
+    override var regions: Regions by ObjectPreference(
+        prefs,
+        REGIONS,
+        Regions(emptyList()),
+        Regions::class.java
+    )
+
+    override val observableRegions: LiveData<Regions>
+        get() = _regions.also { it.value = regions }
+
+    override val region: Region
+        get() = regions.regions[selectedRegion]
+
+    override var selectedRegion by Preference(prefs, SELECTED_REGION, 0)
+
+    override val observableRegion: LiveData<Region>
+        get() = _region.also { it.value = region }
 
     override fun resetExposureSummary() {
         exposureSummary = defaultExposureSummary
@@ -85,6 +117,8 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
         private const val NAME = "ag_minimal_prefs"
         private const val LAST_FETCH_DATE = "last_fetch_date"
         private const val EXPOSURE_SUMMARY = "exposure_summary"
+        private const val REGIONS = "regions"
+        private const val SELECTED_REGION = "selected_region"
         private const val EXPOSURE_CONFIGURATION = "exposure_configuration"
         private const val ONBOARDING_FINISHED = "onboarding_finished"
     }

@@ -112,11 +112,12 @@ val appModule = module {
         )
     }
 
+    single { Gson() }
     single {
         DiagnosisVerificationRemoteSource(
             apiKey = androidContext().getString(R.string.verification_api_key),
             verificationServerEndpoint = androidContext().getString(R.string.server_verification_endpoint),
-            gson = Gson(),
+            gson = get(),
             httpClient = get()
         )
     }
@@ -222,6 +223,15 @@ val appModule = module {
     factory {
         UpdateExposureStateUseCase(
             workManager = get(),
+            dispatchers = get()
+        )
+    }
+
+    factory {
+        UpdateRegionsUseCase(
+            httpClient = get(),
+            preferences = get(),
+            gson = get(),
             dispatchers = get()
         )
     }

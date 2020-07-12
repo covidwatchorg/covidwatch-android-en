@@ -6,6 +6,7 @@ import org.covidwatch.android.di.appModule
 import org.covidwatch.android.di.flavorSpecificModule
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase.Params
+import org.covidwatch.android.domain.UpdateRegionsUseCase
 import org.covidwatch.android.extension.launchUseCase
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -15,6 +16,7 @@ import timber.log.Timber
 open class BaseCovidWatchApplication : Application() {
 
     private val provideDiagnosisKeysUseCase: ProvideDiagnosisKeysUseCase by inject()
+    private val updateRegionsUseCase: UpdateRegionsUseCase by inject()
 
     override fun onCreate() {
         super.onCreate()
@@ -25,9 +27,12 @@ open class BaseCovidWatchApplication : Application() {
             modules(appModule, flavorSpecificModule)
         }
 
-        GlobalScope.launchUseCase(
-            provideDiagnosisKeysUseCase,
-            Params(recurrent = true)
-        )
+        with(GlobalScope) {
+            launchUseCase(
+                provideDiagnosisKeysUseCase,
+                Params(recurrent = true)
+            )
+            launchUseCase(updateRegionsUseCase)
+        }
     }
 }

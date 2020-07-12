@@ -86,6 +86,7 @@ android {
         arizona {
             dimension "client"
             applicationId "gov.azdhs.covidwatch.android"
+            buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/covid-watch-arizona-app-regions/arizona.json"'
         }
     }
 
