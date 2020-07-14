@@ -1,5 +1,6 @@
 package org.covidwatch.android.ui.home
 
+import android.animation.LayoutTransition
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +38,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             })
 
             observe(nextSteps, ::bindNextSteps)
+            observe(showOnboardingAnimation) {
+                lifecycleScope.launch {
+                    binding.homeScreenArt.isVisible = false
+                    binding.homeScreenContent.layoutTransition = LayoutTransition()
+                    delay(1000)
+                    binding.homeScreenArt.isVisible = true
+                }
+            }
 
             observe(infoBannerState) { banner ->
                 when (banner) {
@@ -57,11 +66,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             getString(R.string.current_region, "Arizona"),
             HtmlCompat.FROM_HTML_MODE_COMPACT
         )
-        lifecycleScope.launch {
-            // TODO: 12.07.2020 Change time of the animation
-            delay(1000)
-            binding.homeScreenArt.isVisible = true
-        }
+
         initClickListeners()
     }
 

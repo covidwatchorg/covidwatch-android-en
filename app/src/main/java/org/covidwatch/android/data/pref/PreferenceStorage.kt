@@ -21,6 +21,7 @@ import kotlin.reflect.KProperty
 interface PreferenceStorage {
     var lastFetchDate: Long
     var onboardingFinished: Boolean
+    var showOnboardingHomeAnimation: Boolean
     var exposureSummary: CovidExposureSummary
 
     fun resetExposureSummary()
@@ -67,6 +68,12 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
     override var lastFetchDate by Preference(prefs, LAST_FETCH_DATE, 0L)
 
     override var onboardingFinished by Preference(prefs, ONBOARDING_FINISHED, false)
+
+    override var showOnboardingHomeAnimation by Preference(
+        prefs,
+        SHOW_ONBOARDING_HOME_ANIMATION,
+        true
+    )
 
     override var exposureSummary: CovidExposureSummary by ObjectPreference(
         prefs,
@@ -122,6 +129,7 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
         private const val SELECTED_REGION = "selected_region"
         private const val EXPOSURE_CONFIGURATION = "exposure_configuration"
         private const val ONBOARDING_FINISHED = "onboarding_finished"
+        private const val SHOW_ONBOARDING_HOME_ANIMATION = "show_onboarding_home_animation"
     }
 }
 

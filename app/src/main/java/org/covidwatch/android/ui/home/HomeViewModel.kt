@@ -12,6 +12,7 @@ import org.covidwatch.android.data.NextStep
 import org.covidwatch.android.data.UserFlowRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.extension.send
 import org.covidwatch.android.ui.BaseViewModel
 import org.covidwatch.android.ui.event.Event
 
@@ -20,6 +21,9 @@ class HomeViewModel(
     private val userFlowRepository: UserFlowRepository,
     private val preferences: PreferenceStorage
 ) : BaseViewModel() {
+
+    private val _showOnboardingAnimation = MutableLiveData<Event<Boolean>>()
+    val showOnboardingAnimation: LiveData<Event<Boolean>> = _showOnboardingAnimation
 
     private val _infoBannerState = MutableLiveData<InfoBannerState>()
     val infoBannerState: LiveData<InfoBannerState> get() = _infoBannerState
@@ -36,6 +40,11 @@ class HomeViewModel(
     }
 
     fun onStart() {
+        if (preferences.showOnboardingHomeAnimation) {
+            _showOnboardingAnimation.send(true)
+            preferences.showOnboardingHomeAnimation = false
+        }
+
         val userFlow = userFlowRepository.getUserFlow()
         if (userFlow is FirstTimeUser) {
             _navigateToOnboardingEvent.value = Event(Unit)

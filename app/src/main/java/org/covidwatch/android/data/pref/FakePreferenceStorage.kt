@@ -17,6 +17,10 @@ class FakePreferenceStorage : PreferenceStorage {
     override var onboardingFinished: Boolean
         get() = true
         set(value) {}
+
+    override var showOnboardingHomeAnimation: Boolean
+        get() = true
+        set(value) {}
     override var exposureSummary: CovidExposureSummary
         get() = RandomEnObjects.exposureSummary.asCovidExposureSummary()
         set(value) {}
