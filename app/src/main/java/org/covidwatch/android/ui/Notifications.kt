@@ -41,7 +41,7 @@ class Notifications(private val context: Context) {
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
-        notificationManager.notify(1, builder.build())
+        notificationManager.notify(EXPOSURE_NOTIFICATION_ID, builder.build())
     }
 
     private fun createExposureNotificationChannel() {
@@ -138,6 +138,7 @@ class Notifications(private val context: Context) {
         const val EXPOSURE_NOTIFICATION_CHANNEL_ID = "EXPOSURE_NOTIFICATION_CHANNEL_ID"
         const val UPLOAD_REPORT_CHANNEL_ID = "UPLOAD_REPORT_CHANNEL_ID"
         const val DOWNLOAD_REPORTS_CHANNEL_ID = "DOWNLOAD_REPORTS_CHANNEL_ID"
+        const val EXPOSURE_NOTIFICATION_ID = 55
         const val UPLOADING_REPORT_NOTIFICATION_ID = 66
         const val DOWNLOAD_REPORTS_NOTIFICATION_ID = 77
     }
