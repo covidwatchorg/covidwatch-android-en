@@ -28,11 +28,11 @@ open class BaseCovidWatchApplication : Application() {
         }
 
         with(GlobalScope) {
+            launchUseCase(updateRegionsUseCase)
             launchUseCase(
                 provideDiagnosisKeysUseCase,
                 Params(recurrent = true)
             )
-            launchUseCase(updateRegionsUseCase)
         }
     }
 }

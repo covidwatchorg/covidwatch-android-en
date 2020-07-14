@@ -176,7 +176,7 @@
     <string name="home_days_since_last_exposure"><b>days</b>\nsince last exposure</string>
     <string name="home_possible_exposures"><b>possible exposures</b>\nin the last 14 days</string>
     <string name="home_total_risk_score"><b>total risk score</b> (1–8) scale</string>
-    <string name="possible_exposure_summary">Possible Exposure Summary</string>
+    <string name="my_risk_level">My Risk Level: &lt;b>%s&lt;/b></string>
     <string name="notify_others_button_question"><b>Have a positive diagnosis?</b> Anonymously notify others to help your community stay safe.</string>
     <string name="notify_others_button">Notify Others</string>
     <string name="notify_others_button_text">Share your result anonymously to help your community stay safe.</string>
@@ -255,5 +255,6 @@
     <string name="dialog_test_verification_code_expl_title">What are they?</string>
     <string name="dialog_test_verification_code_expl_text">They are strings of numbers and letters that are provided by The Public Health Department to accurately identify valid positive COVID-19 diagnoses. They help protect users of the app by preventing the entry of inacurrate or fraudulent test results.</string>
     <string name="dialog_test_verification_code_expl_more">Learn more</string>
+    <string name="next_steps_title">Next steps based on risk level and region:</string>
 
 </resources>

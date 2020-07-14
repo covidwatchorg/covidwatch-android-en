@@ -35,7 +35,7 @@
                 app:title="@string/exposure_title" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/exposure_summary"
+                android:id="@+id/next_steps"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorAccent"
@@ -57,7 +57,7 @@
                 app:itemBinding="@{ItemBindings.bind()}"
                 app:items="@{viewModel.exposureInfo}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/exposure_summary"
+                app:layout_constraintTop_toBottomOf="@id/next_steps"
                 tools:listitem="@layout/item_exposure_info" />
 
             <com.google.android.material.button.MaterialButton

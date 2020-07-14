@@ -2,11 +2,13 @@ package org.covidwatch.android.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.FirstTimeUser
+import org.covidwatch.android.data.NextStep
 import org.covidwatch.android.data.UserFlowRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
@@ -16,7 +18,7 @@ import org.covidwatch.android.ui.event.Event
 class HomeViewModel(
     private val enManager: ExposureNotificationManager,
     private val userFlowRepository: UserFlowRepository,
-    private val preferenceStorage: PreferenceStorage
+    private val preferences: PreferenceStorage
 ) : BaseViewModel() {
 
     private val _infoBannerState = MutableLiveData<InfoBannerState>()
@@ -26,7 +28,12 @@ class HomeViewModel(
     val navigateToOnboardingEvent: LiveData<Event<Unit>> get() = _navigateToOnboardingEvent
 
     val exposureSummary: LiveData<CovidExposureSummary>
-        get() = preferenceStorage.observableExposureSummary
+        get() = preferences.observableExposureSummary
+
+    val nextSteps: LiveData<List<NextStep>> = preferences.observableRegion.map {
+        // TODO: 14.07.2020 Handle different risk levels
+        it.nextStepsRiskUnknown
+    }
 
     fun onStart() {
         val userFlow = userFlowRepository.getUserFlow()

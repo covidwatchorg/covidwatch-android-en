@@ -6,16 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.covidwatch.android.R
-import org.covidwatch.android.data.CovidExposureSummary
-import org.covidwatch.android.data.RiskScoreLevel.*
-import org.covidwatch.android.data.level
+import org.covidwatch.android.data.NextStep
 import org.covidwatch.android.databinding.FragmentHomeBinding
+import org.covidwatch.android.databinding.ItemNextStepBinding
+import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.shareApp
 import org.covidwatch.android.ui.BaseFragment
 import org.covidwatch.android.ui.event.EventObserver
@@ -24,31 +23,34 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    private val homeViewModel: HomeViewModel by viewModel()
+    private val viewModel: HomeViewModel by viewModel()
 
     override fun bind(inflater: LayoutInflater, container: ViewGroup?): FragmentHomeBinding =
         FragmentHomeBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewModel.onStart()
-        homeViewModel.navigateToOnboardingEvent.observe(viewLifecycleOwner, EventObserver {
-            findNavController().navigate(R.id.splashFragment)
-        })
+        with(viewModel) {
+            onStart()
+            navigateToOnboardingEvent.observe(viewLifecycleOwner, EventObserver {
+                findNavController().navigate(R.id.splashFragment)
+            })
 
-        homeViewModel.exposureSummary.observe(viewLifecycleOwner, Observer(::bindExposureSummary))
+            observe(nextSteps, ::bindNextSteps)
 
-        homeViewModel.infoBannerState.observe(viewLifecycleOwner, Observer { banner ->
-            when (banner) {
-                is InfoBannerState.Visible -> {
-                    binding.infoBanner.isVisible = true
-                    binding.infoBanner.setText(banner.text)
-                }
-                InfoBannerState.Hidden -> {
-                    binding.infoBanner.isVisible = false
+            observe(infoBannerState) { banner ->
+                when (banner) {
+                    is InfoBannerState.Visible -> {
+                        binding.infoBanner.isVisible = true
+                        binding.infoBanner.setText(banner.text)
+                    }
+                    InfoBannerState.Hidden -> {
+                        binding.infoBanner.isVisible = false
+                    }
                 }
             }
-        })
+        }
+
 
         // TODO: 12.07.2020 Change to a value from a server
         binding.tvRegion.text = HtmlCompat.fromHtml(
@@ -77,31 +79,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             infoBanner.setOnClickListener {
                 findNavController().navigate(R.id.enableExposureNotificationsFragment)
             }
-
-            exposureSummary.root.setOnClickListener {
-                findNavController().navigate(R.id.exposuresFragment)
-            }
         }
     }
 
-    private fun bindExposureSummary(exposureSummary: CovidExposureSummary) {
-        with(binding.exposureSummary) {
-            val days = exposureSummary.daySinceLastExposure.takeIf { it > 0 }?.toString()
-            val total = exposureSummary.matchedKeyCount.takeIf { it > 0 }?.toString()
-            val risk = exposureSummary.maximumRiskScore.takeIf { it > 0 }?.toString()
-            when (exposureSummary.maximumRiskScore.level) {
-                HIGH -> highRiskScore.background =
-                    context?.getDrawable(R.drawable.bg_exposure_dashboard_high_risk)
-                MEDIUM -> highRiskScore.background =
-                    context?.getDrawable(R.drawable.bg_exposure_dashboard_med_risk)
-                LOW -> highRiskScore.background =
-                    context?.getDrawable(R.drawable.bg_exposure_dashboard_low_risk)
-                NONE -> highRiskScore.background =
-                    context?.getDrawable(R.drawable.bg_exposure_dashboard_number)
+    private fun bindNextSteps(nextSteps: List<NextStep>) {
+        val layoutInflater = LayoutInflater.from(context)
+        nextSteps.forEach {
+            val nextStep = ItemNextStepBinding.inflate(layoutInflater, binding.nextSteps, true)
+            with(nextStep) {
+                nextSteText.text = it.description
             }
-            daysSinceLastExposure.text = days ?: "-"
-            totalExposures.text = total ?: "-"
-            highRiskScore.text = risk ?: "-"
         }
     }
 }

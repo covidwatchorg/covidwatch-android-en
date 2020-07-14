@@ -89,40 +89,38 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/gradient_top_to_bottom"
                 android:contentDescription="@null"
-                android:visibility="gone"
                 android:paddingTop="@dimen/padding_extra_large"
+                android:visibility="gone"
                 app:srcCompat="@drawable/home_screen_art" />
 
-            <View
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lightGray" />
+                android:layout_height="wrap_content"
+                android:background="@color/darkGray"
+                android:padding="@dimen/padding_normal"
+                android:text="@string/my_risk_level"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="My Risk Level: Unknown" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/lightGray"
-                android:gravity="center"
                 android:padding="@dimen/padding_normal"
-                android:text="@string/possible_exposure_summary"
+                android:text="@string/next_steps_title"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <View
+            <LinearLayout
+                android:id="@+id/next_steps"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lightGray" />
+                android:layout_height="wrap_content"
+                android:background="@color/lightGray"
+                android:orientation="vertical" />
 
-            <include
-                android:id="@+id/exposure_summary"
-                layout="@layout/exposure_summary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lightGray" />
+            <View style="@style/Divider.Horizontal" />
 
             <TextView
                 android:id="@+id/notify_others_button_question"
@@ -141,7 +139,9 @@
 
             <Button
                 android:id="@+id/share_app_button"
-                style="@style/Button.Action"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/padding_normal"
                 android:text="@string/share_app_button" />
 

@@ -46,9 +46,9 @@
     <color name="lavender">#A680B7</color>
     <color name="tangerine">#F05452</color>
     <color name="transparentGray">#E0E0E0</color>
-    <color name="lightGray">#EFEFEF</color>
+    <color name="lightGray">#F2F2F2</color>
     <color name="gray">#BDBDBD</color>
-    <color name="darkGray">#828282</color>
+    <color name="darkGray">#999999</color>
 
 
 </resources>

@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.gson.Gson
 import org.covidwatch.android.data.CovidExposureSummary
+import org.covidwatch.android.data.DefaultRegions
 import org.covidwatch.android.data.Region
 import org.covidwatch.android.data.Regions
 import kotlin.properties.ReadWriteProperty
@@ -77,7 +78,7 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
     override var regions: Regions by ObjectPreference(
         prefs,
         REGIONS,
-        Regions(emptyList()),
+        Regions(DefaultRegions.all),
         Regions::class.java
     )
 
@@ -116,7 +117,7 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
     companion object {
         private const val NAME = "ag_minimal_prefs"
         private const val LAST_FETCH_DATE = "last_fetch_date"
-        private const val EXPOSURE_SUMMARY = "exposure_summary"
+        private const val EXPOSURE_SUMMARY = "next_steps"
         private const val REGIONS = "regions"
         private const val SELECTED_REGION = "selected_region"
         private const val EXPOSURE_CONFIGURATION = "exposure_configuration"
