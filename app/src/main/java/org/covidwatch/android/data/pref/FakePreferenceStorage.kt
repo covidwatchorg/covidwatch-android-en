@@ -25,6 +25,11 @@ class FakePreferenceStorage : PreferenceStorage {
         get() = RandomEnObjects.exposureSummary.asCovidExposureSummary()
         set(value) {}
 
+    override var riskLevelValue: Float? = null
+
+    override val observableRiskLevelValue: LiveData<Float?>
+        get() = TODO("not implemented")
+
     private fun ExposureSummary.asCovidExposureSummary() = CovidExposureSummary(
         daysSinceLastExposure,
         matchedKeyCount,

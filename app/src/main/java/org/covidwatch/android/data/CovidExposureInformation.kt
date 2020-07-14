@@ -55,5 +55,5 @@ data class CovidExposureInformation(
     val riskScoreLevel = totalRiskScore.level
 
     @Ignore
-    val highRisk = riskScoreLevel == RiskScoreLevel.HIGH
+    val highRisk = riskScoreLevel == RiskLevel.HIGH
 }

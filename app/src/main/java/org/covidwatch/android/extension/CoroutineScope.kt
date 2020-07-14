@@ -3,6 +3,7 @@ package org.covidwatch.android.extension
 import androidx.lifecycle.asFlow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -28,6 +29,9 @@ fun <T : Any?> CoroutineScope.io(block: suspend () -> T) {
         }
     }
 }
+
+suspend fun <T : Any?, L : Flow<T>> CoroutineScope.observe(flow: L, body: (T) -> Unit = {}) =
+    flow.collect { body(it) }
 
 fun <Type : Any, Params> CoroutineScope.launchUseCase(
     useCase: UseCase<Type, Params>,

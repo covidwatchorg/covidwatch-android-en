@@ -16,9 +16,11 @@ import org.covidwatch.android.data.NextStep
 import org.covidwatch.android.databinding.FragmentHomeBinding
 import org.covidwatch.android.databinding.ItemNextStepBinding
 import org.covidwatch.android.extension.observe
+import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.extension.shareApp
 import org.covidwatch.android.ui.BaseFragment
-import org.covidwatch.android.ui.event.EventObserver
+import org.covidwatch.android.ui.name
+import org.covidwatch.android.ui.setBackgroundFromRiskLevel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -33,12 +35,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         super.onViewCreated(view, savedInstanceState)
         with(viewModel) {
             onStart()
-            navigateToOnboardingEvent.observe(viewLifecycleOwner, EventObserver {
+            observeEvent(navigateToOnboarding) {
                 findNavController().navigate(R.id.splashFragment)
-            })
+            }
 
+            observe(region) {
+                binding.tvRegion.text = HtmlCompat.fromHtml(
+                    getString(R.string.current_region, it.name),
+                    HtmlCompat.FROM_HTML_MODE_COMPACT
+                )
+            }
+
+            observe(riskLevel) {
+                binding.myRiskLevel.setBackgroundFromRiskLevel(it)
+                binding.myRiskLevel.text = HtmlCompat.fromHtml(
+                    getString(R.string.my_risk_level, it.name(requireContext())),
+                    HtmlCompat.FROM_HTML_MODE_COMPACT
+                )
+            }
             observe(nextSteps, ::bindNextSteps)
-            observe(showOnboardingAnimation) {
+            observeEvent(showOnboardingAnimation) {
                 lifecycleScope.launch {
                     binding.homeScreenArt.isVisible = false
                     binding.homeScreenContent.layoutTransition = LayoutTransition()
@@ -60,12 +76,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
         }
 
-
-        // TODO: 12.07.2020 Change to a value from a server
-        binding.tvRegion.text = HtmlCompat.fromHtml(
-            getString(R.string.current_region, "Arizona"),
-            HtmlCompat.FROM_HTML_MODE_COMPACT
-        )
 
         initClickListeners()
     }

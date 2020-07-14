@@ -2,15 +2,14 @@ package org.covidwatch.android.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.map
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.covidwatch.android.R
-import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.FirstTimeUser
-import org.covidwatch.android.data.NextStep
 import org.covidwatch.android.data.UserFlowRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
+import org.covidwatch.android.data.risklevel.RiskLevelRepository
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.extension.send
 import org.covidwatch.android.ui.BaseViewModel
@@ -19,6 +18,7 @@ import org.covidwatch.android.ui.event.Event
 class HomeViewModel(
     private val enManager: ExposureNotificationManager,
     private val userFlowRepository: UserFlowRepository,
+    private val riskLevelRepository: RiskLevelRepository,
     private val preferences: PreferenceStorage
 ) : BaseViewModel() {
 
@@ -29,15 +29,13 @@ class HomeViewModel(
     val infoBannerState: LiveData<InfoBannerState> get() = _infoBannerState
 
     private val _navigateToOnboardingEvent = MutableLiveData<Event<Unit>>()
-    val navigateToOnboardingEvent: LiveData<Event<Unit>> get() = _navigateToOnboardingEvent
+    val navigateToOnboarding: LiveData<Event<Unit>> get() = _navigateToOnboardingEvent
 
-    val exposureSummary: LiveData<CovidExposureSummary>
-        get() = preferences.observableExposureSummary
+    val region = preferences.observableRegion
 
-    val nextSteps: LiveData<List<NextStep>> = preferences.observableRegion.map {
-        // TODO: 14.07.2020 Handle different risk levels
-        it.nextStepsRiskUnknown
-    }
+    val riskLevel = riskLevelRepository.riskLevel.asLiveData()
+
+    val nextSteps = riskLevelRepository.riskLevelNextSteps.asLiveData()
 
     fun onStart() {
         if (preferences.showOnboardingHomeAnimation) {

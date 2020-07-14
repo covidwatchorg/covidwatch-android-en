@@ -93,14 +93,15 @@
                 app:srcCompat="@drawable/home_screen_art" />
 
             <TextView
+                android:id="@+id/my_risk_level"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/darkGray"
+                android:drawableStart="@drawable/ic_unknown_risk"
+                android:drawablePadding="@dimen/padding_normal"
                 android:padding="@dimen/padding_normal"
-                android:text="@string/my_risk_level"
                 android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:textSize="18sp"
                 tools:text="My Risk Level: Unknown" />
 
             <TextView
@@ -109,8 +110,7 @@
                 android:background="@color/lightGray"
                 android:padding="@dimen/padding_normal"
                 android:text="@string/next_steps_title"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:id="@+id/next_steps"
@@ -118,8 +118,6 @@
                 android:layout_height="wrap_content"
                 android:background="@color/lightGray"
                 android:orientation="vertical" />
-
-            <View style="@style/Divider.Horizontal" />
 
             <TextView
                 android:id="@+id/notify_others_button_question"

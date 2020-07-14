@@ -8,8 +8,8 @@ import androidx.databinding.BindingAdapter
 import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.CovidExposureSummary
-import org.covidwatch.android.data.RiskScoreLevel
-import org.covidwatch.android.data.RiskScoreLevel.*
+import org.covidwatch.android.data.RiskLevel
+import org.covidwatch.android.data.RiskLevel.*
 import org.covidwatch.android.data.level
 import org.covidwatch.android.ui.util.DateFormatter
 import java.util.*
@@ -63,7 +63,7 @@ fun TextView.setTextFromExposure(exposure: CovidExposureInformation?) {
                     FROM_HTML_MODE_COMPACT
                 )
             }
-            NONE,
+            UNKNOWN,
             LOW -> {
                 setCompoundDrawablesRelativeWithIntrinsicBounds(
                     R.drawable.ic_risk_low,
@@ -127,25 +127,27 @@ fun TextView.setTextFromLastExposureTime(time: Date?) {
 }
 
 @BindingAdapter("risk_level")
-fun TextView.setRiskLevelText(riskScoreLevel: RiskScoreLevel) {
+fun TextView.setRiskLevelText(riskLevel: RiskLevel) {
     setText(
-        when (riskScoreLevel) {
+        when (riskLevel) {
+            VERIFIED_POSITIVE -> R.string.high_risk_title
             HIGH -> R.string.high_risk_title
             MEDIUM -> R.string.med_risk_title
-            NONE,
+            UNKNOWN,
             LOW -> R.string.low_risk_title
         }
     )
 }
 
 @BindingAdapter("background_risk_level")
-fun View.setBackgroundFromRiskLevel(riskScoreLevel: RiskScoreLevel) {
+fun View.setBackgroundFromRiskLevel(riskLevel: RiskLevel) {
     background = context.getDrawable(
-        when (riskScoreLevel) {
+        when (riskLevel) {
+            VERIFIED_POSITIVE -> R.color.high_risk
             HIGH -> R.color.high_risk
             MEDIUM -> R.color.med_risk
-            NONE,
             LOW -> R.color.low_risk
+            UNKNOWN -> R.color.unknown_risk
         }
     )
 }

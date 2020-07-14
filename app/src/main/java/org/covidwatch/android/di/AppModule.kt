@@ -27,6 +27,7 @@ import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRemoteSour
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.data.pref.SharedPreferenceStorage
+import org.covidwatch.android.data.risklevel.RiskLevelRepository
 import org.covidwatch.android.domain.*
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.ui.Notifications
@@ -253,6 +254,14 @@ val appModule = module {
     }
 
     single {
+        RiskLevelRepository(
+            preferences = get(),
+            positiveDiagnosisRepository = get(),
+            dispatchers = get()
+        )
+    }
+
+    single {
         val context = androidContext()
 
         context.getSharedPreferences(
@@ -265,6 +274,7 @@ val appModule = module {
         HomeViewModel(
             enManager = get(),
             userFlowRepository = get(),
+            riskLevelRepository = get(),
             preferences = get()
         )
     }

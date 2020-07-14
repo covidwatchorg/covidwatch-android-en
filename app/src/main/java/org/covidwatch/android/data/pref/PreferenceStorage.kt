@@ -23,6 +23,8 @@ interface PreferenceStorage {
     var onboardingFinished: Boolean
     var showOnboardingHomeAnimation: Boolean
     var exposureSummary: CovidExposureSummary
+    val riskLevelValue: Float?
+    val observableRiskLevelValue: LiveData<Float?>
 
     fun resetExposureSummary()
 
@@ -42,6 +44,7 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
     private val prefs = context.applicationContext.getSharedPreferences(NAME, MODE_PRIVATE)
     private val _exposureSummary = MutableLiveData<CovidExposureSummary>()
     private val _regions = MutableLiveData<Regions>()
+    private val _ristkLevelValue = MutableLiveData<Float>()
     private val _region = MutableLiveData<Region>()
     private val defaultExposureSummary = CovidExposureSummary(
         daySinceLastExposure = 0,
@@ -81,6 +84,15 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
         defaultExposureSummary,
         CovidExposureSummary::class.java
     )
+
+    override var riskLevelValue: Float? by NullablePreference(
+        prefs,
+        RISK_LEVEL_VALUE,
+        null
+    )
+
+    override val observableRiskLevelValue: LiveData<Float?>
+        get() = _ristkLevelValue.also { it.value = riskLevelValue }
 
     override var regions: Regions by ObjectPreference(
         prefs,
@@ -125,6 +137,7 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
         private const val NAME = "ag_minimal_prefs"
         private const val LAST_FETCH_DATE = "last_fetch_date"
         private const val EXPOSURE_SUMMARY = "next_steps"
+        private const val RISK_LEVEL_VALUE = "risk_level_value"
         private const val REGIONS = "regions"
         private const val SELECTED_REGION = "selected_region"
         private const val EXPOSURE_CONFIGURATION = "exposure_configuration"
