@@ -44,7 +44,7 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
     private val prefs = context.applicationContext.getSharedPreferences(NAME, MODE_PRIVATE)
     private val _exposureSummary = MutableLiveData<CovidExposureSummary>()
     private val _regions = MutableLiveData<Regions>()
-    private val _ristkLevelValue = MutableLiveData<Float>()
+    private val _riskLevelValue = MutableLiveData<Float>()
     private val _region = MutableLiveData<Region>()
     private val defaultExposureSummary = CovidExposureSummary(
         daySinceLastExposure = 0,
@@ -59,6 +59,9 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
             EXPOSURE_SUMMARY -> _exposureSummary.value = exposureSummary
             REGIONS -> {
                 _regions.value = regions
+                _region.value = region
+            }
+            SELECTED_REGION -> {
                 _region.value = region
             }
         }
@@ -92,7 +95,7 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
     )
 
     override val observableRiskLevelValue: LiveData<Float?>
-        get() = _ristkLevelValue.also { it.value = riskLevelValue }
+        get() = _riskLevelValue.also { it.value = riskLevelValue }
 
     override var regions: Regions by ObjectPreference(
         prefs,

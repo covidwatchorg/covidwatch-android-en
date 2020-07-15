@@ -98,12 +98,12 @@
         style="@style/Button.Action"
         android:layout_marginHorizontal="@dimen/padding_normal"
         android:text="@string/how_it_works"
-        app:layout_constraintBottom_toTopOf="@id/powered_by"
+        app:layout_constraintBottom_toTopOf="@id/btn_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <include
-        android:id="@+id/powered_by"
+        android:id="@+id/btn_back"
         layout="@layout/powered_by"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

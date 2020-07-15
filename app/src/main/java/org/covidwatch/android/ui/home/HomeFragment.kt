@@ -102,6 +102,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 findNavController().navigate(R.id.menuFragment)
             }
 
+            tvRegion.setOnClickListener { findNavController().navigate(R.id.selectRegionFragment) }
             infoBanner.setOnClickListener {
                 findNavController().navigate(R.id.enableExposureNotificationsFragment)
             }

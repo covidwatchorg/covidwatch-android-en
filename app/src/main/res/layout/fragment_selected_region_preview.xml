@@ -14,8 +14,7 @@
         android:layout_marginTop="@dimen/padding_extra_large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cw_big_logo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -40,20 +39,36 @@
         android:textColor="@color/white"
         android:textSize="19sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/btn_get_started"
+        app:layout_constraintBottom_toTopOf="@id/btn_continue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btn_get_started"
+        android:id="@+id/btn_continue"
         style="@style/Button.Action"
         android:layout_marginBottom="@dimen/padding_normal"
         android:backgroundTint="@color/white"
-        android:text="@string/get_started_button"
+        android:text="@string/btn_continue"
         android:textColor="@color/bluejay"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_extra_large"
+        android:background="?selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:drawableStart="@drawable/ic_arrow_back"
+        android:drawablePadding="@dimen/padding_normal"
+        android:focusable="true"
+        android:gravity="center_horizontal"
+        android:text="Back"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
