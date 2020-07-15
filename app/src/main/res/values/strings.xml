@@ -180,14 +180,15 @@
 
     <!-- Home Screen-->
     <string name="current_region">&lt;b>Region:&lt;/b> &lt;u>%s&lt;/u></string>
-    <string name="next_steps_title">Next steps based on your possible <b>COVID-19 exposure</b> and selected region:</string>
+    <string name="unknown_risk_title">The app is active and will continue to work in the background when you close it, so check back later to see updates on your &lt;b>possible COVID-19 exposures&lt;/b>.</string>
+    <string name="next_steps_title">Next steps based on your &lt;b>possible COVID-19 exposures&lt;/b> and selected &lt;b>region&lt;/b>:</string>
     <string name="home_days_since_last_exposure"><b>days</b>\nsince last exposure</string>
     <string name="home_possible_exposures"><b>possible exposures</b>\nin the last 14 days</string>
     <string name="home_total_risk_score"><b>total risk score</b> (1–8) scale</string>
     <string name="my_risk_level">My Risk Today: &lt;b>%s&lt;/b></string>
-    <string name="notify_others_button_question"><b>Have a positive diagnosis?</b> Anonymously notify others to help your community stay safe.</string>
-    <string name="notify_others_button">Notify Others</string>
-    <string name="notify_others_button_text">Share your result anonymously to help your community stay safe.</string>
+    <string name="positive_diagnosis_question">Have a positive diagnosis?</string>
+    <string name="positive_diagnosis_info">Help stop the spread by anonymously notifying other people who use this app of possible exposure to COVID-19.</string>
+    <string name="learn_how_btn">Learn How</string>
     <string name="contact_alert_text">Possible COVID-19 exposure.\nTap for more information.</string>
     <string name="reported_alert_text">You reported that you tested positive for COVID-19</string>
     <string name="turn_on_exposure_notification_text">Exposure notifications must be enabled for the app to work. Tap to review your app settings.</string>

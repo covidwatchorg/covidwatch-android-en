@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import org.covidwatch.android.R
 import org.covidwatch.android.data.NextStep
 import org.covidwatch.android.data.NextStepType
+import org.covidwatch.android.data.RiskLevel
 import org.covidwatch.android.databinding.FragmentHomeBinding
 import org.covidwatch.android.databinding.ItemNextStepBinding
 import org.covidwatch.android.extension.observe
@@ -52,6 +53,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
 
             observe(riskLevel) {
+                val info = when (it) {
+                    RiskLevel.UNKNOWN -> getString(R.string.unknown_risk_title)
+                    else -> getString(R.string.next_steps_title)
+                }
+                binding.riskInfo.text = HtmlCompat.fromHtml(
+                    info, HtmlCompat.FROM_HTML_MODE_COMPACT
+                )
                 binding.myRiskLevel.setBackgroundFromRiskLevel(it)
                 binding.myRiskLevel.text = HtmlCompat.fromHtml(
                     getString(R.string.my_risk_level, it.name(requireContext())),

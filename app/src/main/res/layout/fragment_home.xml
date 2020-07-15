@@ -102,14 +102,14 @@
                 android:padding="@dimen/padding_normal"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                tools:text="My Risk Level: Unknown" />
+                tools:text="My Risk Today: Unknown" />
 
             <TextView
+                android:id="@+id/risk_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/lightGray"
                 android:padding="@dimen/padding_normal"
-                android:text="@string/next_steps_title"
                 android:textSize="14sp" />
 
             <LinearLayout
@@ -120,28 +120,26 @@
                 android:orientation="vertical" />
 
             <TextView
-                android:id="@+id/notify_others_button_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/padding_normal"
+                android:layout_marginTop="@dimen/padding_normal"
+                android:text="@string/positive_diagnosis_question"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/padding_normal"
                 android:layout_marginVertical="@dimen/padding_normal"
-                android:text="@string/notify_others_button_question"
-                android:textAlignment="center" />
+                android:text="@string/positive_diagnosis_info" />
 
             <Button
                 android:id="@+id/notify_others_button"
                 style="@style/Button.Action"
                 android:layout_marginHorizontal="@dimen/padding_normal"
-                android:text="@string/notify_others_button" />
-
-            <TextView
-                android:id="@+id/tester_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:paddingHorizontal="32dp"
-                android:textAlignment="center"
-                android:visibility="gone" />
+                android:text="@string/learn_how_btn" />
 
             <View
                 android:layout_width="0dp"
