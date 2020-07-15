@@ -14,7 +14,7 @@
         tools:ignore="UseCompoundDrawables">
 
         <TextView
-            android:id="@+id/next_ste_text"
+            android:id="@+id/next_step_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"

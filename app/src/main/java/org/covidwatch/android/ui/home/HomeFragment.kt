@@ -1,10 +1,14 @@
 package org.covidwatch.android.ui.home
 
 import android.animation.LayoutTransition
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -13,6 +17,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.covidwatch.android.R
 import org.covidwatch.android.data.NextStep
+import org.covidwatch.android.data.NextStepType
 import org.covidwatch.android.databinding.FragmentHomeBinding
 import org.covidwatch.android.databinding.ItemNextStepBinding
 import org.covidwatch.android.extension.observe
@@ -88,9 +93,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             menu.setOnClickListener {
                 findNavController().navigate(R.id.menuFragment)
             }
-            shareAppButton.setOnClickListener {
-                context?.shareApp()
-            }
+
             infoBanner.setOnClickListener {
                 findNavController().navigate(R.id.enableExposureNotificationsFragment)
             }
@@ -99,11 +102,45 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun bindNextSteps(nextSteps: List<NextStep>) {
         val layoutInflater = LayoutInflater.from(context)
-        nextSteps.forEach {
-            val nextStep = ItemNextStepBinding.inflate(layoutInflater, binding.nextSteps, true)
-            with(nextStep) {
-                nextSteText.text = it.description
+        binding.nextSteps.removeAllViews()
+        nextSteps.forEach { nextStep ->
+            val view = ItemNextStepBinding.inflate(layoutInflater, binding.nextSteps, true)
+            with(view) {
+                nextStepText.text = nextStep.description
+                when (nextStep.type) {
+                    NextStepType.INFO -> {
+                        nextStepIcon.setImageResource(R.drawable.ic_info_filled)
+                    }
+                    NextStepType.PHONE -> {
+                        nextStepIcon.setImageResource(R.drawable.ic_next_step_phone)
+                    }
+                    NextStepType.GET_TESTED_DATES,
+                    NextStepType.WEBSITE -> {
+                        root.addCircleRipple()
+                        root.setOnClickListener {
+                            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(nextStep.url))
+                            startActivity(browserIntent)
+                        }
+                        nextStepIcon.setImageResource(R.drawable.ic_next_step_web)
+                    }
+                    NextStepType.SHARE -> {
+                        root.addCircleRipple()
+                        root.setOnClickListener {
+                            context?.shareApp()
+                        }
+                        nextStepIcon.setImageResource(R.drawable.ic_next_step_share)
+                    }
+                }
             }
         }
+    }
+
+    private fun View.addCircleRipple() = with(TypedValue()) {
+        context.theme.resolveAttribute(
+            android.R.attr.selectableItemBackgroundBorderless,
+            this,
+            true
+        )
+        foreground = ContextCompat.getDrawable(requireContext(), resourceId)
     }
 }

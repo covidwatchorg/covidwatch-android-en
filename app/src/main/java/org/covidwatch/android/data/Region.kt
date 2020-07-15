@@ -1,5 +1,6 @@
 package org.covidwatch.android.data
 
+import com.google.gson.annotations.SerializedName
 import org.covidwatch.android.data.NextStepType.*
 
 data class Region(
@@ -23,10 +24,19 @@ data class NextStep(
 )
 
 enum class NextStepType {
+    @SerializedName("0")
     INFO,
+
+    @SerializedName("1")
     PHONE,
+
+    @SerializedName("2")
     WEBSITE,
+
+    @SerializedName("3")
     GET_TESTED_DATES,
+
+    @SerializedName("4")
     SHARE
 }
 

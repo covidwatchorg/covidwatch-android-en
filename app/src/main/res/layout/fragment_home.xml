@@ -134,14 +134,6 @@
                 android:layout_marginHorizontal="@dimen/padding_normal"
                 android:text="@string/notify_others_button" />
 
-            <Button
-                android:id="@+id/share_app_button"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/padding_normal"
-                android:text="@string/share_app_button" />
-
             <TextView
                 android:id="@+id/tester_id"
                 android:layout_width="match_parent"
