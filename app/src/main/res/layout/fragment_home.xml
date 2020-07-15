@@ -110,6 +110,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/lightGray"
                 android:padding="@dimen/padding_normal"
+                android:text="@string/unknown_risk_title"
                 android:textSize="14sp" />
 
             <LinearLayout
