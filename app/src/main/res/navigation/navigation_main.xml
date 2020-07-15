@@ -11,8 +11,13 @@
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
         <action
-            android:id="@+id/action_splashFragment_to_howItWorksFragment"
-            app:destination="@id/selectRegionFragment" />
+            android:id="@+id/action_splashFragment_to_selectRegionFragment"
+            app:destination="@id/selectRegionFragment">
+            <argument
+                android:name="onboarding"
+                android:defaultValue="true"
+                app:argType="boolean" />
+        </action>
     </fragment>
 
     <fragment

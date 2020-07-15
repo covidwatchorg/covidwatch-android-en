@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
-import org.covidwatch.android.R
 import org.covidwatch.android.databinding.FragmentSplashBinding
 import org.covidwatch.android.ui.BaseFragment
 
@@ -31,7 +30,9 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnGetStarted.setOnClickListener {
-            findNavController().navigate(R.id.selectRegionFragment)
+            findNavController().navigate(
+                SplashFragmentDirections.actionSplashFragmentToSelectRegionFragment()
+            )
         }
     }
 }

@@ -38,15 +38,14 @@ class HomeViewModel(
     val nextSteps = riskLevelRepository.riskLevelNextSteps.asLiveData()
 
     fun onStart() {
+        if (userFlowRepository.getUserFlow() is FirstTimeUser) {
+            _navigateToOnboardingEvent.value = Event(Unit)
+            return
+        }
+
         if (preferences.showOnboardingHomeAnimation) {
             _showOnboardingAnimation.send(true)
             preferences.showOnboardingHomeAnimation = false
-        }
-
-        val userFlow = userFlowRepository.getUserFlow()
-        if (userFlow is FirstTimeUser) {
-            _navigateToOnboardingEvent.value = Event(Unit)
-            return
         }
 
         viewModelScope.launch {
