@@ -11,13 +11,8 @@
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
         <action
-            android:id="@+id/action_splashFragment_to_selectRegionFragment"
-            app:destination="@id/selectRegionFragment">
-            <argument
-                android:name="onboarding"
-                android:defaultValue="true"
-                app:argType="boolean" />
-        </action>
+            android:id="@+id/action_splashFragment_to_howItWorksFragment"
+            app:destination="@id/howItWorksFragment" />
     </fragment>
 
     <fragment
@@ -26,18 +21,8 @@
         android:label="SelectRegionFragment"
         tools:layout="@layout/fragment_select_region">
         <action
-            android:id="@+id/action_splashFragment_to_selectedRegionPreviewFragment"
-            app:destination="@id/selectedRegionPreviewFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/selectedRegionPreviewFragment"
-        android:name="org.covidwatch.android.ui.selectregion.SelectedRegionPreviewFragment"
-        android:label="SelectedRegionPreviewFragment"
-        tools:layout="@layout/fragment_selected_region_preview">
-        <action
-            android:id="@+id/action_selectedRegionPreviewFragment_to_howItWorksFragment"
-            app:destination="@id/howItWorksFragment" />
+            android:id="@+id/action_splashFragment_to_finishedOnboardingFragment"
+            app:destination="@id/finishedOnboardingFragment" />
     </fragment>
 
     <fragment
@@ -127,7 +112,16 @@
         android:id="@+id/enableExposureNotificationsFragment"
         android:name="org.covidwatch.android.ui.onboarding.EnableExposureNotificationsFragment"
         android:label="EnableExposureNotificationsFragment"
-        tools:layout="@layout/fragment_enable_exposure_notifications" />
+        tools:layout="@layout/fragment_enable_exposure_notifications">
+        <action
+            android:id="@+id/action_enableExposureNotificationsFragment_to_selectRegionFragment"
+            app:destination="@id/selectRegionFragment">
+            <argument
+                android:name="onboarding"
+                android:defaultValue="true"
+                app:argType="boolean" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/finishedOnboardingFragment"

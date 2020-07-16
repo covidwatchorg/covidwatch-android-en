@@ -43,6 +43,9 @@ enum class NextStepType {
 data class Regions(val regions: List<Region>)
 
 object DefaultRegions {
+    const val ARIZONA_ID = 0
+    const val THE_UOA_ID = 1
+
     private val infoAppIsActive = NextStep(
         type = INFO,
         description = "The app is active. You can now receive exposure notifications from others you were near who later report themselves as positive for COVID-19.",
@@ -61,7 +64,7 @@ object DefaultRegions {
         url = "https://covidwatch.org"
     )
 
-    val default = Region(
+    private val default = Region(
         id = 0,
         name = "Arizona State",
         logoTypeImageName = "Public Health Authority Logotype - Arizona State",
@@ -92,7 +95,7 @@ object DefaultRegions {
         )
     )
 
-    val universityOfArizona = Region(
+    private val universityOfArizona = Region(
         id = 1,
         name = "University of Arizona",
         logoTypeImageName = "Public Health Authority Logotype - University of Arizona",

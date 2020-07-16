@@ -174,9 +174,10 @@
     <string name="onboarding_title" />
     <string name="welcome_to_the">Welcome to the</string>
     <string name="full_app_name">University of Arizona COVID-19 Exposure Notification App</string>
-    <string name="finished_onboarding_title">You\'re all set!</string>
-    <string name="finished_onboarding_subtitle">You can now <b>receive exposure</b> notifications and get tips on what to do next if people you were near shared verified positive COVID-19 test results in the app.</string>
-    <string name="see_exposure_summary">See Exposure Summary</string>
+    <string name="finished_onboarding_title">Setup Complete</string>
+    <string name="finished_onboarding_subtitle">You can now…</string>
+    <string name="finished_onboarding_text"><ul>&#8226;Get exposure notifications\n</ul><ul>&#8226;Anonymously notify others\n</ul><ul>&#8226;Get COVID-19 exposure updates\n</ul><ul>&#8226;Get resources and recommendations\n</ul></string>
+    <string name="see_exposure_summary">View Detected Exposures</string>
 
     <!-- Home Screen-->
     <string name="current_region">&lt;b>Region:&lt;/b> &lt;u>%s&lt;/u></string>

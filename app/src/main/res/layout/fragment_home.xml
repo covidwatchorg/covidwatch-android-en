@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            app:logo="@drawable/ic_logo">
+            app:logo="@drawable/uoa_logo">
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -19,8 +19,8 @@ class EnableExposureNotificationsViewModel(
     private val _showHome = MutableLiveData<Event<Unit>>()
     val showHome: LiveData<Event<Unit>> = _showHome
 
-    private val _showOnboardingFinish = MutableLiveData<Event<Unit>>()
-    val showOnboardingFinish: LiveData<Event<Unit>> = _showOnboardingFinish
+    private val _continueOnboarding = MutableLiveData<Event<Unit>>()
+    val continueOnboarding: LiveData<Event<Unit>> = _continueOnboarding
 
     fun onEnableClicked() {
         viewModelScope.launch {
@@ -39,7 +39,7 @@ class EnableExposureNotificationsViewModel(
 
     private fun handleFirstOrReturnUser() {
         if (userFlowRepository.getUserFlow() == FirstTimeUser) {
-            _showOnboardingFinish.send()
+            _continueOnboarding.send()
             userFlowRepository.finishOnboarding()
         } else {
             _showHome.send()

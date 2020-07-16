@@ -51,7 +51,7 @@ class SelectRegionFragment : BaseFragment<FragmentSelectRegionBinding>() {
                 findNavController().popBackStack()
             }
             observeEvent(showRegionPreviewScreen) {
-                findNavController().navigate(R.id.selectedRegionPreviewFragment)
+                findNavController().navigate(R.id.finishedOnboardingFragment)
             }
         }
         binding.btnContinue.setOnClickListener {

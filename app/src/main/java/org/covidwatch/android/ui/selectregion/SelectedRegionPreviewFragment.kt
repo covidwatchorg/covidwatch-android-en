@@ -9,6 +9,7 @@ import org.covidwatch.android.R
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.databinding.FragmentSelectedRegionPreviewBinding
 import org.covidwatch.android.ui.BaseFragment
+import org.covidwatch.android.ui.bigLogo
 import org.koin.android.ext.android.inject
 
 
@@ -25,10 +26,7 @@ class SelectedRegionPreviewFragment : BaseFragment<FragmentSelectedRegionPreview
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        when (prefs.region.id) {
-            0 -> binding.regionLogo.setImageResource(R.drawable.cw_big_logo)
-            1 -> binding.regionLogo.setImageResource(R.drawable.uoa_logo)
-        }
+        binding.regionLogo.setImageResource(prefs.region.bigLogo(requireContext()))
 
         binding.btnContinue.setOnClickListener {
             findNavController().navigate(R.id.howItWorksFragment)
