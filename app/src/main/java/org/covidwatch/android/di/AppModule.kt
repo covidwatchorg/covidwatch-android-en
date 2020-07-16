@@ -205,6 +205,7 @@ val appModule = module {
             countryCodeRepository = get(),
             verificationManager = get(),
             uriManager = get(),
+            enConverter = get(),
             appPackageName = androidContext().packageName,
             random = SecureRandom(),
             encoding = BaseEncoding.base64(),

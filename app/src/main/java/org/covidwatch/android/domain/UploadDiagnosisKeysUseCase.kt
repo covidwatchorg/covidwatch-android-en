@@ -18,6 +18,7 @@ class UploadDiagnosisKeysUseCase(
     private val diagnosisRepository: PositiveDiagnosisRepository,
     private val countryCodeRepository: CountryCodeRepository,
     private val verificationManager: DiagnosisVerificationManager,
+    private val enConverter: EnConverter,
     private val uriManager: UriManager,
     private val appPackageName: String,
     private val random: SecureRandom,
@@ -46,10 +47,10 @@ class UploadDiagnosisKeysUseCase(
         }
         Timber.d("Start ${javaClass.simpleName}")
         try {
-            val diagnosisKeys = params.keys.map { key ->
-                // TODO: 08.07.2020 Add calculation of transmission risk
-                key.asDiagnosisKey().copy(transmissionRisk = 6)
-            }
+            val diagnosisKeys = params.keys
+                .map { enConverter.diagnosisKey(it, verificationData.symptomsStartDate) }
+                .filter { it.transmissionRisk != 0 }
+
             Timber.d("Diagnosis Keys ${diagnosisKeys.joinToString()}")
 
             val regions = countryCodeRepository.exposureRelevantCountryCodes()

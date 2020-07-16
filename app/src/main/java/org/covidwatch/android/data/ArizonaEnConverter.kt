@@ -2,9 +2,12 @@ package org.covidwatch.android.data
 
 import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
+import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
+import org.covidwatch.android.exposurenotification.ExposureNotification
+import java.time.temporal.ChronoUnit
 import java.util.*
+import kotlin.math.abs
 import kotlin.math.exp
-import kotlin.math.pow
 
 class ArizonaEnConverter : EnConverter {
 
@@ -40,14 +43,28 @@ class ArizonaEnConverter : EnConverter {
      * Examples are below.
      */
     private val transmissionRiskValuesForLevels = doubleArrayOf(
-        0.00E+00, // Level 0
-        1.00E+01, // Level 1
-        10.0.pow(1 + 2 / 6.0), // Level 2
-        10.0.pow(1 + 3 / 6.0), // Level 3
-        10.0.pow(1 + 4 / 6.0), // Level 4
-        10.0.pow(1 + 5 / 6.0), // Level 5
-        10.0.pow(1 + 6 / 6.0), // Level 6
-        10.0.pow(1 + 7 / 6.0)  // Level 7 (unused)
+        0.0, // Level 0
+        10.0, // Level 1
+        21.5443469, // Level 2
+        31.6227766, // Level 3
+        46.4158883, // Level 4
+        68.1292069, // Level 5
+        100.0, // Level 6
+        100.0 // Level 7 (unused)
+    )
+
+    /**
+     * Risk levels for days including and before symptoms start day
+     */
+    private val riskLevelsBeforeSymptoms = listOf(
+        6, 6, 5, 3, 2, 1, 1
+    )
+
+    /**
+     * Risk levels for days including and after symptoms start day
+     */
+    private val riskLevelsAfterSymptoms = listOf(
+        6, 6, 6, 5, 4, 3, 2, 1, 1, 1, 1, 1
     )
 
     private fun computeAttenuationDurationRiskScore(attenuationDurations: IntArray): Double {
@@ -92,20 +109,41 @@ class ArizonaEnConverter : EnConverter {
             )
         }
 
+    override fun diagnosisKey(key: TemporaryExposureKey, symptomsStartDate: Date?): DiagnosisKey {
+        symptomsStartDate ?: return key.asDiagnosisKey()
+
+        val keyDate = Calendar.getInstance().apply {
+            time = Date(key.rollingStartIntervalNumber * ExposureNotification.rollingInterval)
+        }.toInstant()
+
+        val symptomsDate = Calendar.getInstance().apply {
+            time = symptomsStartDate
+        }.toInstant()
+
+        val days = ChronoUnit.DAYS.between(keyDate, symptomsDate).toInt()
+        val absDays = abs(days)
+
+        val transmissionRisk = when {
+            days <= 0 && absDays < riskLevelsBeforeSymptoms.count() -> riskLevelsBeforeSymptoms[absDays]
+            absDays < riskLevelsAfterSymptoms.count() -> riskLevelsAfterSymptoms[absDays]
+            else -> 0
+        }
+        return key.asDiagnosisKey().copy(transmissionRisk = transmissionRisk)
+    }
+
     override fun covidExposureInformation(
         exposureInformation: ExposureInformation
-    ) =
-        with(exposureInformation) {
-            CovidExposureInformation(
-                date = Date(dateMillisSinceEpoch),
-                duration = durationMinutes,
-                attenuationValue = attenuationValue,
-                transmissionRiskLevel = transmissionRiskLevel,
-                totalRiskScore = computeRiskScore(
-                    attenuationDurationsInMinutes,
-                    transmissionRiskLevel
-                ),
-                attenuationDurations = attenuationDurationsInMinutes.toList()
-            )
-        }
+    ) = with(exposureInformation) {
+        CovidExposureInformation(
+            date = Date(dateMillisSinceEpoch),
+            duration = durationMinutes,
+            attenuationValue = attenuationValue,
+            transmissionRiskLevel = transmissionRiskLevel,
+            totalRiskScore = computeRiskScore(
+                attenuationDurationsInMinutes,
+                transmissionRiskLevel
+            ),
+            attenuationDurations = attenuationDurationsInMinutes.toList()
+        )
+    }
 }

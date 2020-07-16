@@ -2,11 +2,13 @@ package org.covidwatch.android.data
 
 import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
+import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import java.util.*
 
 interface EnConverter {
     fun covidExposureSummary(exposureSummary: ExposureSummary): CovidExposureSummary
     fun covidExposureInformation(exposureInformation: ExposureInformation): CovidExposureInformation
+    fun diagnosisKey(key: TemporaryExposureKey, symptomsStartDate: Date?): DiagnosisKey
 }
 
 @Suppress("unused")
@@ -35,4 +37,7 @@ class DefaultEnConverter : EnConverter {
                 attenuationDurations = attenuationDurationsInMinutes.toList()
             )
         }
+
+    override fun diagnosisKey(key: TemporaryExposureKey, symptomsStartDate: Date?): DiagnosisKey =
+        key.asDiagnosisKey().copy(transmissionRisk = 6)
 }

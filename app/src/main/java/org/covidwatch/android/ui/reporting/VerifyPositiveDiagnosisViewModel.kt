@@ -28,7 +28,8 @@ class VerifyPositiveDiagnosisViewModel(
     val readyToSubmit: LiveData<Boolean> = diagnosisVerification.map { it?.readyToSubmit ?: false }
 
     fun symptomsStartDate(date: Long) {
-        diagnosisVerification.value = diagnosisVerification.value?.copy(symptomsStartDate = date)
+        diagnosisVerification.value =
+            diagnosisVerification.value?.copy(symptomsStartDate = Date(date))
     }
 
     fun testedDate(date: Long) {
