@@ -12,23 +12,40 @@
         android:orientation="vertical"
         android:padding="@dimen/padding_normal">
 
-        <ImageView
-            android:id="@+id/close_button"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dialog_test_verification_code_title"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/close_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_close"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_region"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
             android:background="?selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
-            android:src="@drawable/ic_close"
-            tools:ignore="ContentDescription" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/dialog_test_verification_code_title"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:paddingVertical="@dimen/padding_small"
+            tools:text="Region: Arizona" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,7 +61,7 @@
                 android:text="@string/dialog_test_verification_code_info_title"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-            <!--TODO: Ask for the same size icons or check if the changed size in the drawables is okay with the designer-->
+
             <TextView
                 style="@style/TextView.TestCodeInfoItem"
                 android:drawableStart="@drawable/ic_email"

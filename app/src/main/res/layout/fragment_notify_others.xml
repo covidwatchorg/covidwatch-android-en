@@ -17,13 +17,6 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/padding_normal"
-            android:text="@string/step_1_notify_others"
-            android:textAllCaps="true" />
-
-        <TextView
             style="@style/TextView.ScreenTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,43 +24,28 @@
             android:text="@string/notify_others_title"
             android:textSize="27sp" />
 
+        <!--TODO: Replace with separate TextView for a nicer list-->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
-            android:layout_marginTop="@dimen/padding_normal"
-            android:lineSpacingExtra="2sp"
+            android:layout_marginTop="@dimen/padding_large"
+            android:lineSpacingExtra="20sp"
             android:text="@string/notify_others_subtitle"
             android:textSize="16sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/btn_code_explanation"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
             android:layout_marginTop="@dimen/padding_large"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/padding_normal"
-                android:layout_weight="1"
-                android:lineSpacingExtra="2sp"
-                android:text="@string/test_verification_code_warning"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:id="@+id/iv_test_verification_code_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:contentDescription="@string/test_verification_code_info"
-                android:focusable="true"
-                android:src="@drawable/ic_info_filled" />
-        </LinearLayout>
-
+            android:clickable="true"
+            android:focusable="true"
+            android:lineSpacingExtra="2sp"
+            android:text="@string/test_verification_code_warning"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/share_positive_diagnosis_button"
@@ -87,7 +65,8 @@
             android:text="@string/past_positive_diagnoses"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/subtitle_font_size" />
+            android:textSize="@dimen/subtitle_font_size"
+            android:visibility="gone" />
 
         <ImageView
             android:layout_width="match_parent"

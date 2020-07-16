@@ -6,6 +6,7 @@ import android.os.Parcel
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.CalendarConstraints
@@ -15,7 +16,6 @@ import org.covidwatch.android.databinding.FragmentVerifyPositiveDiagnosisBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseViewModelFragment
-import org.covidwatch.android.ui.Dialogs
 import org.covidwatch.android.ui.util.DateFormatter
 import org.koin.android.ext.android.inject
 import java.util.*
@@ -44,7 +44,7 @@ class VerifyPositiveDiagnosisFragment :
             }
 
             ivTestVerificationCodeInfo.setOnClickListener {
-                Dialogs.testVerificationCodeInfo(requireContext())
+                VerificationCodeHelpDialog().show(childFragmentManager, null)
             }
             etVerificationCode.addTextChangedListener(afterTextChanged = {
                 viewModel.verificationCode(it.toString())
@@ -60,7 +60,7 @@ class VerifyPositiveDiagnosisFragment :
 
         with(viewModel) {
             observe(readyToSubmit) {
-                binding.btnFinishVerification.isEnabled = it
+                binding.btnFinishVerification.isVisible = it
             }
 
             observeEvent(showThankYou) {

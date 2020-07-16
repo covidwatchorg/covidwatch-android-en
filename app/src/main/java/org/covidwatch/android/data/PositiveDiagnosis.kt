@@ -64,4 +64,5 @@ data class PositiveDiagnosisVerification(
 ) {
     val readyToSubmit: Boolean
         get() = verificationTestCode.trim().isNotEmpty()
+                && symptomsStartDate != null
 }

@@ -15,7 +15,6 @@ import org.covidwatch.android.databinding.FragmentNotifyOthersBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseViewModelFragment
-import org.covidwatch.android.ui.Dialogs
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -39,8 +38,8 @@ open class BaseNotifyOthersFragment :
                 findNavController().popBackStack()
             }
 
-            ivTestVerificationCodeInfo.setOnClickListener {
-                Dialogs.testVerificationCodeInfo(requireContext())
+            btnCodeExplanation.setOnClickListener {
+                VerificationCodeHelpDialog().show(childFragmentManager, null)
             }
 
             sharePositiveDiagnosisButton.setOnClickListener {

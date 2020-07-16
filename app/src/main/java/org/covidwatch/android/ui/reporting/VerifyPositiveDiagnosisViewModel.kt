@@ -64,8 +64,6 @@ class VerifyPositiveDiagnosisViewModel(
         withPermission(ExposureNotificationManager.PERMISSION_KEYS_REQUEST_CODE) {
             enManager.temporaryExposureKeyHistory().apply {
                 success {
-                    _showThankYou.send()
-                    // TODO: 23.06.2020 Use proper logic for assigning transmission risk levels
                     observeStatus(
                         startUploadDiagnosisKeysWorkUseCase,
                         StartUploadDiagnosisKeysWorkUseCase.Params(
@@ -74,7 +72,9 @@ class VerifyPositiveDiagnosisViewModel(
                                 verificationData = diagnosisVerification.value
                             )
                         )
-                    )
+                    ) {
+                        _showThankYou.send()
+                    }
                 }
                 failure { handleStatus(it) }
             }

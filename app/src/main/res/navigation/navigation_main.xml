@@ -144,6 +144,7 @@
     <fragment
         android:id="@+id/verifyPositiveDiagnosisFragment"
         android:name="org.covidwatch.android.ui.reporting.VerifyPositiveDiagnosisFragment"
+        tools:layout="@layout/fragment_verify_positive_diagnosis"
         android:label="VerifyPositiveDiagnosisFragment">
         <action
             android:id="@+id/action_verifyPositiveDiagnosisFragment_to_thanksForReportingFragment"

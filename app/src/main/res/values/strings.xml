@@ -176,7 +176,7 @@
     <string name="full_app_name">University of Arizona COVID-19 Exposure Notification App</string>
     <string name="finished_onboarding_title">Setup Complete</string>
     <string name="finished_onboarding_subtitle">You can now…</string>
-    <string name="finished_onboarding_text"><ul>&#8226;Get exposure notifications\n</ul><ul>&#8226;Anonymously notify others\n</ul><ul>&#8226;Get COVID-19 exposure updates\n</ul><ul>&#8226;Get resources and recommendations\n</ul></string>
+    <string name="finished_onboarding_text"><ul>&#8226; Get exposure notifications\n</ul><ul>&#8226; Anonymously notify others\n</ul><ul>&#8226; Get COVID-19 exposure updates\n</ul><ul>&#8226; Get resources and recommendations\n</ul></string>
     <string name="see_exposure_summary">View Detected Exposures</string>
 
     <!-- Home Screen-->
@@ -196,13 +196,13 @@
 
 
     <!-- Reporting -->
-    <string name="notify_others_title">Notify Others</string>
-    <string name="notify_others_subtitle">If you tested positive for COVID-19 by the Public Health Department, you can <b>help</b> stop the spread in your communities by <b>anonymously notifying others.</b></string>
-    <string name="test_verification_code_warning">Have your <b>Test Verification Code</b>\nready before you begin.</string>
+    <string name="notify_others_title">How to Share a Positive Diagnosis</string>
+    <string name="notify_others_subtitle"><b>1</b> Provide a <b>Diagnosis Verification Code</b>\n<b>2</b> Answer brief questions\n<b>3</b> Anonymously share diagnosis to help stop the spread by letting other app users get notified of possible exposure if they were nearby.</string>
+    <string name="test_verification_code_warning">Where is my code?</string>
     <string name="covid_19_positive">COVID-19 Positive</string>
     <string name="test_date_fmt">Test Date: %s</string>
     <string name="verify_positive_diagnosis_title">Anonymously Share a Positive Diagnosis</string>
-    <string name="share_positive_diagnosis_button">Share a Positive Diagnosis</string>
+    <string name="share_positive_diagnosis_button">Anonymously Share Diagnosis</string>
     <string name="past_positive_diagnoses">View Past Positive Diagnoses</string>
     <string name="finish_code_verification_button">Anonymously Notify Others</string>
     <string name="verify_subtitle">To share a positive diagnosis, enter your Test Verification Code below.</string>
@@ -220,7 +220,7 @@
     <string name="choose_sharing_method_dialog_btn_server">Covid Watch server</string>
     <string name="choose_sharing_method_dialog_btn_other">Others…</string>
     <string name="test_verification_code_info">Test verification codes information</string>
-    <string name="test_verification_code_label">Test Verification Code</string>
+    <string name="test_verification_code_label">What is your Verification Code?</string>
     <string name="test_verification_code_hint">12345678</string>
     <string name="symptoms_date_label">When did your symptoms start?</string>
     <string name="no_symptoms">I have no symptoms</string>
@@ -256,7 +256,7 @@
     <string name="step_3_notify_others">Diagnosis shared</string>
 
     <!-- DIALOG TEST VERIFICATION CODE -->
-    <string name="dialog_test_verification_code_title">Test Verification Codes</string>
+    <string name="dialog_test_verification_code_title">Where is my code?</string>
     <string name="dialog_test_verification_code_info_title">Where can I fine one?</string>
     <string name="dialog_test_verification_code_info_email">It may have been provided with your <b>test result</b></string>
     <string name="dialog_test_verification_code_info_kit">It may have been provided with your <b>test kit</b></string>
