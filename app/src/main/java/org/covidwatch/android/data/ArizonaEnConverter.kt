@@ -4,7 +4,8 @@ import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import org.covidwatch.android.exposurenotification.ExposureNotification
-import java.time.temporal.ChronoUnit
+import java.time.LocalDate
+import java.time.Period
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.exp
@@ -112,15 +113,27 @@ class ArizonaEnConverter : EnConverter {
     override fun diagnosisKey(key: TemporaryExposureKey, symptomsStartDate: Date?): DiagnosisKey {
         symptomsStartDate ?: return key.asDiagnosisKey()
 
-        val keyDate = Calendar.getInstance().apply {
-            time = Date(key.rollingStartIntervalNumber * ExposureNotification.rollingInterval)
-        }.toInstant()
+        val keyDate = Calendar.getInstance().let {
+            it.time = Date(key.rollingStartIntervalNumber * ExposureNotification.rollingInterval)
 
-        val symptomsDate = Calendar.getInstance().apply {
-            time = symptomsStartDate
-        }.toInstant()
+            LocalDate.of(
+                it.get(Calendar.YEAR),
+                it.get(Calendar.MONTH),
+                it.get(Calendar.DAY_OF_MONTH)
+            )
+        }
 
-        val days = ChronoUnit.DAYS.between(keyDate, symptomsDate).toInt()
+        val symptomsDate = Calendar.getInstance().let {
+            it.time = symptomsStartDate
+
+            LocalDate.of(
+                it.get(Calendar.YEAR),
+                it.get(Calendar.MONTH),
+                it.get(Calendar.DAY_OF_MONTH)
+            )
+        }
+
+        val days = Period.between(symptomsDate, keyDate).days
         val absDays = abs(days)
 
         val transmissionRisk = when {
