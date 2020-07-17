@@ -14,7 +14,6 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
 import com.jaredrummler.android.device.DeviceName
@@ -49,24 +48,26 @@ data class CovidExposureConfiguration(
     @Expose
     val attenuationScores: IntArray,
     @Expose
-    val attenuationWeight: Int,
+    val attenuationWeight: Int?,
     @Expose
     val daysSinceLastExposureScores: IntArray,
     @Expose
-    val daysSinceLastExposureWeight: Int,
+    val daysSinceLastExposureWeight: Int?,
     @Expose
     val durationScores: IntArray,
     @Expose
-    val durationWeight: Int,
+    val durationWeight: Int?,
     @Expose
     val transmissionRiskScores: IntArray,
     @Expose
-    val transmissionRiskWeight: Int,
+    val transmissionRiskWeight: Int?,
+    @Expose
+    val attenuationDurationThresholds: IntArray,
     @Expose
     val attenuationDurationThresholdList: List<IntArray>? = null
 )
 
-fun ExposureConfiguration.asCovidExposureConfiguration() =
+fun org.covidwatch.android.data.CovidExposureConfiguration.asCovidExposureConfiguration() =
     CovidExposureConfiguration(
         minimumRiskScore,
         attenuationScores,
@@ -76,7 +77,8 @@ fun ExposureConfiguration.asCovidExposureConfiguration() =
         durationScores,
         durationWeight,
         transmissionRiskScores,
-        transmissionRiskWeight
+        transmissionRiskWeight,
+        durationAtAttenuationThresholds
     )
 
 open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuViewModel>() {

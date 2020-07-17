@@ -17,18 +17,11 @@
             android:paddingHorizontal="@dimen/padding_normal" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/padding_normal"
-            android:text="@string/step_3_notify_others"
-            android:textAllCaps="true" />
-
-        <TextView
             style="@style/TextView.ScreenTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
-            android:text="@string/thank_you_for_sharing_title" />
+            android:text="@string/step_3_notify_others" />
 
         <TextView
             android:id="@+id/past_positive_diagnoses"
@@ -37,7 +30,6 @@
             android:layout_marginHorizontal="@dimen/padding_normal"
             android:layout_marginTop="@dimen/padding_large"
             android:layout_weight="1"
-            android:text="@string/thank_you_for_sharing_text"
             android:textSize="16sp" />
 
         <ImageView

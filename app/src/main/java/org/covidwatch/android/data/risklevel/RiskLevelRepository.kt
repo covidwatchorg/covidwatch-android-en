@@ -23,11 +23,8 @@ class RiskLevelRepository(
             diagnoses.any {
                 it.verified && TestType.CONFIRMED == it.verificationData?.testType
             } -> RiskLevel.VERIFIED_POSITIVE
-            risk == null -> RiskLevel.UNKNOWN
-            risk < region.riskLowThreshold -> RiskLevel.LOW
-            risk in region.riskLowThreshold..region.riskLowThreshold -> RiskLevel.MEDIUM
-            risk > region.riskHighThreshold -> RiskLevel.HIGH
-            else -> RiskLevel.UNKNOWN
+            risk != null && risk > region.riskHighThreshold -> RiskLevel.HIGH
+            else -> RiskLevel.LOW
         }
     }
 
@@ -36,11 +33,9 @@ class RiskLevelRepository(
         preferences.observableRegion.asFlow()
     ) { riskLevel, region ->
         when (riskLevel) {
-            RiskLevel.VERIFIED_POSITIVE -> region.nextStepsRiskVerifiedPositive
-            RiskLevel.HIGH -> region.nextStepsRiskHigh
-            RiskLevel.MEDIUM -> region.nextStepsRiskMedium
-            RiskLevel.LOW -> region.nextStepsRiskLow
-            RiskLevel.UNKNOWN -> region.nextStepsRiskUnknown
+            RiskLevel.VERIFIED_POSITIVE -> region.nextStepsVerifiedPositive
+            RiskLevel.HIGH -> region.nextStepsSignificantExposure
+            RiskLevel.LOW -> region.nextStepsNoSignificantExposure
         }
     }
 }

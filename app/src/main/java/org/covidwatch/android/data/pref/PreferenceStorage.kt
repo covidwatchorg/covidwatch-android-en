@@ -6,12 +6,8 @@ import android.content.SharedPreferences
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.gson.Gson
-import org.covidwatch.android.data.CovidExposureSummary
-import org.covidwatch.android.data.DefaultRegions
-import org.covidwatch.android.data.Region
-import org.covidwatch.android.data.Regions
+import org.covidwatch.android.data.*
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -36,7 +32,7 @@ interface PreferenceStorage {
     val observableRegion: LiveData<Region>
 
     // TODO: 05.06.2020 Replace with our own class when the API is stable
-    var exposureConfiguration: ExposureConfiguration
+    val exposureConfiguration: CovidExposureConfiguration
     val observableExposureSummary: LiveData<CovidExposureSummary>
 }
 
@@ -119,19 +115,8 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
         exposureSummary = defaultExposureSummary
     }
 
-    override var exposureConfiguration: ExposureConfiguration by ObjectPreference(
-        prefs,
-        EXPOSURE_CONFIGURATION,
-        ExposureConfiguration.ExposureConfigurationBuilder()
-            .setMinimumRiskScore(1)
-            .setDurationAtAttenuationThresholds(50, 58)
-            .setAttenuationScores(2, 5, 8, 8, 8, 8, 8, 8)
-            .setDaysSinceLastExposureScores(1, 2, 2, 4, 6, 8, 8, 8)
-            .setDurationScores(1, 1, 4, 7, 7, 8, 8, 8)
-            .setTransmissionRiskScores(0, 3, 6, 8, 8, 6, 0, 6)
-            .build(),
-        ExposureConfiguration::class.java
-    )
+    override val exposureConfiguration: CovidExposureConfiguration
+        get() = region.exposureConfiguration.asCovidExposureConfiguration()
 
     override val observableExposureSummary: LiveData<CovidExposureSummary>
         get() = _exposureSummary.also { it.value = exposureSummary }

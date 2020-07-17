@@ -2,26 +2,61 @@ package org.covidwatch.android.data
 
 import com.google.gson.annotations.SerializedName
 import org.covidwatch.android.data.NextStepType.*
+import org.covidwatch.android.data.RegionId.*
 
 data class Region(
-    val id: Int,
+    val id: RegionId?,
     val name: String,
-    val logoTypeImageName: String,
-    val logoImageName: String,
+
     val riskLowThreshold: Float,
     val riskHighThreshold: Float,
-    val nextStepsRiskUnknown: List<NextStep>,
-    val nextStepsRiskLow: List<NextStep>,
-    val nextStepsRiskMedium: List<NextStep>,
-    val nextStepsRiskHigh: List<NextStep>,
-    val nextStepsRiskVerifiedPositive: List<NextStep>
+
+    val nextStepsNoSignificantExposure: List<NextStep>,
+    val nextStepsSignificantExposure: List<NextStep>,
+    val nextStepsVerifiedPositive: List<NextStep>,
+
+    val nextStepsVerificationCode: List<NextStep>,
+
+    val exposureConfiguration: ExposureConfiguration = ExposureConfiguration()
+)
+
+class ExposureConfiguration(
+    val minimumRiskScore: Int = 0,
+    val attenuationDurationThresholds: IntArray = intArrayOf(50, 70),
+    val attenuationLevelValues: IntArray = intArrayOf(1, 1, 1, 1, 1, 1, 1, 1),
+    val daysSinceLastExposureLevelValues: IntArray = intArrayOf(1, 1, 1, 1, 1, 1, 1, 1),
+    val durationLevelValues: IntArray = intArrayOf(1, 1, 1, 1, 1, 1, 1, 1),
+    val transmissionRiskLevelValues: IntArray = intArrayOf(1, 1, 1, 1, 1, 1, 1, 1)
+)
+
+fun ExposureConfiguration.asCovidExposureConfiguration() = CovidExposureConfiguration(
+    minimumRiskScore,
+    attenuationLevelValues,
+    daysSinceLastExposureLevelValues,
+    durationLevelValues,
+    transmissionRiskLevelValues,
+    attenuationDurationThresholds
 )
 
 data class NextStep(
     val type: NextStepType,
     val description: String,
-    val url: String?
+    val url: String? = null
 )
+
+enum class RegionId {
+    @SerializedName("0")
+    ARIZONA_STATE,
+
+    @SerializedName("1")
+    UOA,
+
+    @SerializedName("2")
+    ASU,
+
+    @SerializedName("3")
+    NAU
+}
 
 enum class NextStepType {
     @SerializedName("0")
@@ -34,31 +69,18 @@ enum class NextStepType {
     WEBSITE,
 
     @SerializedName("3")
-    GET_TESTED_DATES,
+    STAY_AT_HOME,
 
     @SerializedName("4")
+    GET_TESTED_DATES,
+
+    @SerializedName("5")
     SHARE
 }
 
 data class Regions(val regions: List<Region>)
 
 object DefaultRegions {
-    const val ARIZONA_ID = 0
-    const val THE_UOA_ID = 1
-    const val THE_ASU_ID = 2
-    const val THE_NAU_ID = 3
-
-    private val infoAppIsActive = NextStep(
-        type = INFO,
-        description = "The app is active. You can now receive exposure notifications from others you were near who later report themselves as positive for COVID-19.",
-        url = null
-    )
-
-    private val infoKeepAppInstalled = NextStep(
-        type = INFO,
-        description = "Keep the app installed until the pandemic is over so that you can continue to help reduce the spread in your communities.",
-        url = null
-    )
 
     private val shareTheApp = NextStep(
         type = SHARE,
@@ -66,59 +88,39 @@ object DefaultRegions {
         url = "https://covidwatch.org"
     )
 
+    private val nextStepsVerificationCodeDefault = NextStep(
+        type = PHONE,
+        description = "For others in this region, please call Arizona Department of Health Services at (844) 542-8201 for assistance.",
+        url = "tel:1-844-542-8201"
+    )
+
     private val default = Region(
-        id = 0,
+        id = ARIZONA_STATE,
         name = "Arizona State",
-        logoTypeImageName = "Public Health Authority Logotype - Arizona State",
-        logoImageName = "Public Health Authority Logo - Arizona State",
         riskLowThreshold = 0.14F,
         riskHighThreshold = 3.00F,
-        nextStepsRiskUnknown = listOf(
-            infoAppIsActive,
-            infoKeepAppInstalled,
+        nextStepsNoSignificantExposure = listOf(shareTheApp),
+        nextStepsSignificantExposure = listOf(shareTheApp),
+        nextStepsVerifiedPositive = listOf(shareTheApp),
+        nextStepsVerificationCode = listOf(
             NextStep(
-                type = WEBSITE,
-                description = "Visit the Public Health Website for local resources that are available to you.",
-                url = "https://www.azdhs.gov"
-            ),
-            shareTheApp
-        ),
-        nextStepsRiskLow = listOf(
-            shareTheApp
-        ),
-        nextStepsRiskMedium = listOf(
-            shareTheApp
-        ),
-        nextStepsRiskHigh = listOf(
-            shareTheApp
-        ),
-        nextStepsRiskVerifiedPositive = listOf(
-            shareTheApp
+                type = PHONE,
+                description = "Please call Arizona Department of Health Services at (844) 542-8201 for assistance.",
+                url = "tel:1-844-542-8201"
+            )
         )
     )
 
     private val universityOfArizona = Region(
-        id = 1,
+        id = UOA,
         name = "University of Arizona",
-        logoTypeImageName = "Public Health Authority Logotype - University of Arizona",
-        logoImageName = "Public Health Authority Logo - University of Arizona",
         riskLowThreshold = 0.14F,
         riskHighThreshold = 3.00F,
-        nextStepsRiskUnknown = listOf(
-            infoAppIsActive,
-            infoKeepAppInstalled,
-            NextStep(
-                type = WEBSITE,
-                description = "Visit the University of Arizona website for local resources that are available to you.",
-                url = "https://arizona.edu"
-            ),
-            shareTheApp
-        ),
-        nextStepsRiskLow = listOf(
+        nextStepsNoSignificantExposure = listOf(
             NextStep(
                 type = WEBSITE,
                 description = "Monitor yourself for COVID-19 symtoms.",
-                url = "http://covid19.arizona.edu/prevention-health/protect-yourself-others?utm_source=covid_watch_ios_app&utm_medium=referral&utm_campaign=covid_symptoms"
+                url = "https://covid19.arizona.edu/prevention-health/covid-19-symptoms?utm_source=covid_watch_app&utm_medium=referral&utm_campaign=covid_watch_covid19_symptoms_no_exposure"
             ),
             NextStep(
                 type = PHONE,
@@ -128,38 +130,24 @@ object DefaultRegions {
             NextStep(
                 type = WEBSITE,
                 description = "Protect yourself and others.",
-                url = "http://covid19.arizona.edu/prevention-health/protect-yourself-others?utm_source=covid_watch_ios_app&utm_medium=referral&utm_campaign=covid_watch_protect_yourself"
+                url = "http://covid19.arizona.edu/prevention-health/protect-yourself-others?utm_source=covid_watch_app&utm_medium=referral&utm_campaign=covid_watch_protect_yourself"
             ),
             shareTheApp
         ),
-        nextStepsRiskMedium = listOf(
+        nextStepsSignificantExposure = listOf(
             NextStep(
-                type = PHONE,
-                description = "Call Campus Health at (520) 621-9202.",
-                url = "tel:1-520-621-9202"
-            ),
-            NextStep(
-                type = WEBSITE,
-                description = "Monitor yourself for COVID-19 symtoms.",
-                url = "http://covid19.arizona.edu/prevention-health/protect-yourself-others?utm_source=covid_watch_ios_app&utm_medium=referral&utm_campaign=covid_symptoms"
-            ),
-            shareTheApp
-        ),
-        nextStepsRiskHigh = listOf(
-            NextStep(
-                type = PHONE,
-                description = "Stay at home and contact Campus Health at (520) 621-9202.",
-                url = "tel:1-520-621-9202"
+                type = STAY_AT_HOME,
+                description = "Stay at home until: "
             ),
             NextStep(
                 type = GET_TESTED_DATES,
-                description = "Schedule a COVID-19 test between= ",
-                url = null
+                description = "Call Campus Health at (520) 621-9202 and schedule a COVID-19 test for: ",
+                url = "tel:1-520-621-9202"
             ),
             NextStep(
                 type = WEBSITE,
                 description = "Monitor COVID-19 symptoms and get tested ASAP if symptoms appear.",
-                url = "http://covid19.arizona.edu/prevention-health/protect-yourself-others?utm_source=covid_watch_ios_app&utm_medium=referral&utm_campaign=covid_symptoms"
+                url = "https://covid19.arizona.edu/prevention-health/covid-19-symptoms?utm_source=covid_watch_app&utm_medium=referral&utm_campaign=covid_watch_covid19_significant_exposure"
             ),
             NextStep(
                 type = WEBSITE,
@@ -168,7 +156,7 @@ object DefaultRegions {
             ),
             shareTheApp
         ),
-        nextStepsRiskVerifiedPositive = listOf(
+        nextStepsVerifiedPositive = listOf(
             NextStep(
                 type = PHONE,
                 description = "Follow up with Campus Health at (520) 621-9202 and your healthcare provider for more instructions.",
@@ -180,8 +168,42 @@ object DefaultRegions {
                 url = "https://health.arizona.edu/SAFER?utm_source=covid_watch_app&utm_medium=referral&utm_campaign=covid_watch_case_management"
             ),
             shareTheApp
+        ),
+        nextStepsVerificationCode = listOf(
+            NextStep(
+                type = PHONE,
+                description = "If you are a student or staff at UArizona, please call Campus Health Services at 520-621-9202 to obtain one. If you were tested in a different region, have a copy of your results ready.",
+                url = "tel:1-520-621-9202"
+            )
         )
     )
 
-    val all = listOf(default, universityOfArizona)
+    private val arizonaStateUniversity = Region(
+        id = ASU,
+        name = "Arizona State University",
+        riskLowThreshold = 0.14F,
+        riskHighThreshold = 3.00F,
+        nextStepsNoSignificantExposure = listOf(shareTheApp),
+        nextStepsSignificantExposure = listOf(shareTheApp),
+        nextStepsVerifiedPositive = listOf(shareTheApp),
+        nextStepsVerificationCode = listOf(nextStepsVerificationCodeDefault)
+    )
+
+    private val northernArizonaUniversity = Region(
+        id = ASU,
+        name = "Arizona State University",
+        riskLowThreshold = 0.14F,
+        riskHighThreshold = 3.00F,
+        nextStepsNoSignificantExposure = listOf(shareTheApp),
+        nextStepsSignificantExposure = listOf(shareTheApp),
+        nextStepsVerifiedPositive = listOf(shareTheApp),
+        nextStepsVerificationCode = listOf(nextStepsVerificationCodeDefault)
+    )
+
+    val all = listOf(
+        default,
+        universityOfArizona,
+        arizonaStateUniversity,
+        northernArizonaUniversity
+    )
 }

@@ -1,23 +1,20 @@
 package org.covidwatch.android.data
 
-import org.covidwatch.android.data.RiskLevel.*
+import org.covidwatch.android.data.RiskLevel.HIGH
+import org.covidwatch.android.data.RiskLevel.LOW
 
 typealias RiskScore = Int
 
 enum class RiskLevel {
     VERIFIED_POSITIVE,
     HIGH,
-    MEDIUM,
-    LOW,
-    UNKNOWN
+    LOW
 }
 
 val RiskScore.level: RiskLevel
     get() {
         return when (this) {
-            0 -> UNKNOWN
-            in 1..2 -> LOW
-            in 3..5 -> MEDIUM
+            in 0..5 -> LOW
             in 6..8 -> HIGH
             else -> HIGH
         }

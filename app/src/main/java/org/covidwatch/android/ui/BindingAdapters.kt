@@ -48,22 +48,6 @@ fun TextView.setTextFromExposure(exposure: CovidExposureInformation?) {
                     FROM_HTML_MODE_COMPACT
                 )
             }
-            MEDIUM -> {
-                setCompoundDrawablesRelativeWithIntrinsicBounds(
-                    R.drawable.ic_risk_med,
-                    0,
-                    0,
-                    0
-                )
-                text = HtmlCompat.fromHtml(
-                    context.getString(
-                        R.string.med_risk_exposure,
-                        DateFormatter.format(it.date)
-                    ),
-                    FROM_HTML_MODE_COMPACT
-                )
-            }
-            UNKNOWN,
             LOW -> {
                 setCompoundDrawablesRelativeWithIntrinsicBounds(
                     R.drawable.ic_risk_low,
@@ -132,8 +116,6 @@ fun TextView.setRiskLevelText(riskLevel: RiskLevel) {
         when (riskLevel) {
             VERIFIED_POSITIVE -> R.string.high_risk_title
             HIGH -> R.string.high_risk_title
-            MEDIUM -> R.string.med_risk_title
-            UNKNOWN,
             LOW -> R.string.low_risk_title
         }
     )
@@ -145,9 +127,7 @@ fun View.setBackgroundFromRiskLevel(riskLevel: RiskLevel) {
         when (riskLevel) {
             VERIFIED_POSITIVE -> R.color.high_risk
             HIGH -> R.color.high_risk
-            MEDIUM -> R.color.med_risk
-            LOW -> R.color.low_risk
-            UNKNOWN -> R.color.unknown_risk
+            LOW -> R.color.unknown_risk
         }
     )
 }

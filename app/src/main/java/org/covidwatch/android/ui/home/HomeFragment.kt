@@ -25,6 +25,7 @@ import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.extension.shareApp
 import org.covidwatch.android.ui.BaseFragment
+import org.covidwatch.android.ui.logo
 import org.covidwatch.android.ui.name
 import org.covidwatch.android.ui.setBackgroundFromRiskLevel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -50,21 +51,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     getString(R.string.current_region, it.name),
                     HtmlCompat.FROM_HTML_MODE_COMPACT
                 )
+                binding.toolbar.logo = ContextCompat.getDrawable(view.context, it.logo)
             }
 
             observe(riskLevel) {
                 val info = when (it) {
-                    RiskLevel.UNKNOWN -> getString(R.string.unknown_risk_title)
+                    RiskLevel.LOW -> getString(R.string.unknown_risk_title)
                     else -> getString(R.string.next_steps_title)
                 }
                 binding.riskInfo.text = HtmlCompat.fromHtml(
                     info, HtmlCompat.FROM_HTML_MODE_COMPACT
                 )
+
                 binding.myRiskLevel.setBackgroundFromRiskLevel(it)
-                binding.myRiskLevel.text = HtmlCompat.fromHtml(
-                    getString(R.string.my_risk_level, it.name(requireContext())),
-                    HtmlCompat.FROM_HTML_MODE_COMPACT
-                )
+                binding.myRiskLevel.text =
+                    getString(R.string.my_risk_level, it.name(requireContext()))
             }
             observe(nextSteps, ::bindNextSteps)
             observeEvent(showOnboardingAnimation) {
@@ -96,7 +97,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun initClickListeners() {
         with(binding) {
             notifyOthersButton.setOnClickListener {
-                findNavController().navigate(R.id.notifyOthersFragment)
+                findNavController().navigate(R.id.thanksForReportingFragment)
             }
             menu.setOnClickListener {
                 findNavController().navigate(R.id.menuFragment)
@@ -117,9 +118,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             with(view) {
                 nextStepText.text = nextStep.description
                 when (nextStep.type) {
+                    NextStepType.STAY_AT_HOME,
                     NextStepType.INFO -> {
                         nextStepIcon.setImageResource(R.drawable.ic_info_filled)
                     }
+                    NextStepType.GET_TESTED_DATES,
                     NextStepType.PHONE -> {
                         nextStepIcon.setImageResource(R.drawable.ic_next_step_phone)
                         root.addCircleRipple()
@@ -132,7 +135,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                             }
                         }
                     }
-                    NextStepType.GET_TESTED_DATES,
                     NextStepType.WEBSITE -> {
                         root.addCircleRipple()
                         root.setOnClickListener {

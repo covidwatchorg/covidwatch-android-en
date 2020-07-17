@@ -116,11 +116,9 @@
     <string name="last_exposure_time">&lt;b>Last checked:&lt;/b> %s</string>
 
     <!-- RISK LEVEL -->
-    <string name="unknown_risk_name">Unknown</string>
-    <string name="low_risk_name">Low</string>
-    <string name="med_risk_name">Medium</string>
-    <string name="high_risk_name">High</string>
-    <string name="verified_positive_risk_name">Verified Positive</string>
+    <string name="low_risk_name">No Significant Exposures</string>
+    <string name="high_risk_name">Significant Exposure Detected</string>
+    <string name="verified_positive_risk_name">Verified Positive Diagnosis</string>
 
     <!-- EXPOSURE DETAILS-->
     <string name="title_exposure_details">Possible Exposure</string>
@@ -181,12 +179,12 @@
 
     <!-- Home Screen-->
     <string name="current_region">&lt;b>Region:&lt;/b> &lt;u>%s&lt;/u></string>
-    <string name="unknown_risk_title">The app is active and will continue to work in the background when you close it, so check back later to see updates on your &lt;b>possible COVID-19 exposures&lt;/b>.</string>
+    <string name="unknown_risk_title">The app is active and will continue to detect and notify you of possible exposures.</string>
     <string name="next_steps_title">Next steps based on your &lt;b>possible COVID-19 exposures&lt;/b> and selected &lt;b>region&lt;/b>:</string>
     <string name="home_days_since_last_exposure"><b>days</b>\nsince last exposure</string>
     <string name="home_possible_exposures"><b>possible exposures</b>\nin the last 14 days</string>
     <string name="home_total_risk_score"><b>total risk score</b> (1–8) scale</string>
-    <string name="my_risk_level">My Risk Today: &lt;b>%s&lt;/b></string>
+    <string name="my_risk_level">%s</string>
     <string name="positive_diagnosis_question">Have a positive diagnosis?</string>
     <string name="positive_diagnosis_info">Help stop the spread by anonymously notifying other people who use this app of possible exposure to COVID-19.</string>
     <string name="learn_how_btn">Learn How</string>

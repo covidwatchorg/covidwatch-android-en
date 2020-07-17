@@ -48,24 +48,24 @@ class VerificationCodeHelpDialog : BottomSheetDialogFragment() {
 
             val layoutInflater = LayoutInflater.from(context)
             verificationCodeSteps.removeAllViews()
-            // TODO: 17.07.2020 Remove the source of the steps to be the right one
-            region.nextStepsRiskHigh.filter { it.type == NextStepType.PHONE }.forEach { step ->
-                val stepView = ItemVerificationCodeStepBinding.inflate(
-                    layoutInflater,
-                    verificationCodeSteps,
-                    true
-                )
+            region.nextStepsVerificationCode.filter { it.type == NextStepType.PHONE }
+                .forEach { step ->
+                    val stepView = ItemVerificationCodeStepBinding.inflate(
+                        layoutInflater,
+                        verificationCodeSteps,
+                        true
+                    )
 
-                stepView.verificationCodeStep.text = step.description
-                stepView.btnCall.setOnClickListener {
-                    val intent = Intent(Intent.ACTION_DIAL).apply {
-                        data = Uri.parse(step.url)
-                    }
-                    if (intent.resolveActivity(view.context.packageManager) != null) {
-                        startActivity(intent)
+                    stepView.verificationCodeStep.text = step.description
+                    stepView.btnCall.setOnClickListener {
+                        val intent = Intent(Intent.ACTION_DIAL).apply {
+                            data = Uri.parse(step.url)
+                        }
+                        if (intent.resolveActivity(view.context.packageManager) != null) {
+                            startActivity(intent)
+                        }
                     }
                 }
-            }
 
             tvRegion.setOnClickListener { findNavController().navigate(R.id.selectRegionFragment) }
 
