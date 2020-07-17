@@ -24,9 +24,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                tools:ignore="ContentDescription"
                 android:layout_marginStart="@dimen/padding_normal"
-                android:src="@drawable/uoa_logo" />
+                android:src="@drawable/cw_logo"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -42,13 +42,14 @@
     </com.google.android.material.appbar.MaterialToolbar>
 
     <ImageView
+        android:id="@+id/art"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/padding_normal"
         android:background="@drawable/gradient_how_it_works"
         android:contentDescription="@null"
         app:layout_constraintBottom_toTopOf="@id/welcome"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:srcCompat="@drawable/how_it_works_art" />
@@ -63,7 +64,9 @@
         android:textAllCaps="true"
         app:layout_constraintBottom_toTopOf="@id/app_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/art"
+        app:layout_constraintVertical_bias="0.1" />
 
     <TextView
         android:id="@+id/app_title"
