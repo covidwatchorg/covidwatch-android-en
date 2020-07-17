@@ -43,6 +43,11 @@ class VerifyPositiveDiagnosisFragment :
                 viewModel.noSymptoms(noSymptoms)
             }
 
+            cbNoExposedDate.setOnCheckedChangeListener { _, noExposedDate ->
+                etExposedDate.isEnabled = !noExposedDate
+                viewModel.noExposedDate(noExposedDate)
+            }
+
             ivTestVerificationCodeInfo.setOnClickListener {
                 VerificationCodeHelpDialog().show(childFragmentManager, null)
             }
@@ -50,8 +55,24 @@ class VerifyPositiveDiagnosisFragment :
                 viewModel.verificationCode(it.toString())
             })
 
-            etSymptomsDate.setOnClickListener { showSymptomsDatePicker() }
-            etTestedDate.setOnClickListener { showTestedDatePicker() }
+            etSymptomsDate.setOnClickListener {
+                showDatePicker {
+                    binding.etSymptomsDate.setText(DateFormatter.format(it))
+                    viewModel.symptomsStartDate(it)
+                }
+            }
+            etTestedDate.setOnClickListener {
+                showDatePicker {
+                    binding.etTestedDate.setText(DateFormatter.format(it))
+                    viewModel.testedDate(it)
+                }
+            }
+            etExposedDate.setOnClickListener {
+                showDatePicker {
+                    binding.etExposedDate.setText(DateFormatter.format(it))
+                    viewModel.exposedDate(it)
+                }
+            }
 
             btnFinishVerification.setOnClickListener {
                 viewModel.sharePositiveDiagnosis()
@@ -69,27 +90,7 @@ class VerifyPositiveDiagnosisFragment :
         }
     }
 
-    private fun showSymptomsDatePicker() {
-        val builder = MaterialDatePicker.Builder.datePicker()
-        val constraints = CalendarConstraints.Builder()
-        val now = Date().time
-
-        constraints.setValidator(
-            BaseDateValidator { it < now }
-        )
-
-        val datePicker = builder
-            .setCalendarConstraints(constraints.build())
-            .build()
-
-        datePicker.addOnPositiveButtonClickListener {
-            binding.etSymptomsDate.setText(DateFormatter.format(it))
-            viewModel.symptomsStartDate(it)
-        }
-        datePicker.show(parentFragmentManager, null)
-    }
-
-    private fun showTestedDatePicker() {
+    private fun showDatePicker(selectedDate: (Long) -> Unit) {
         val builder = MaterialDatePicker.Builder.datePicker()
         val constraints = CalendarConstraints.Builder()
 
@@ -105,11 +106,8 @@ class VerifyPositiveDiagnosisFragment :
             .setCalendarConstraints(constraints.build())
             .build()
 
-        datePicker.addOnPositiveButtonClickListener {
-            binding.etTestedDate.setText(DateFormatter.format(it))
-            viewModel.testedDate(it)
-        }
-        datePicker.show(parentFragmentManager, null)
+        datePicker.addOnPositiveButtonClickListener { selectedDate(it) }
+        datePicker.show(childFragmentManager, null)
     }
 
     @SuppressLint("ParcelCreator")

@@ -36,12 +36,21 @@ class VerifyPositiveDiagnosisViewModel(
         diagnosisVerification.value = diagnosisVerification.value?.copy(testDate = Date(date))
     }
 
+    fun exposedDate(date: Long) {
+        diagnosisVerification.value = diagnosisVerification.value?.copy(exposedDate = Date(date))
+    }
+
     fun verificationCode(code: String) {
         diagnosisVerification.value = diagnosisVerification.value?.copy(verificationTestCode = code)
     }
 
     fun noSymptoms(noSymptoms: Boolean) {
         diagnosisVerification.value = diagnosisVerification.value?.copy(noSymptoms = noSymptoms)
+    }
+
+    fun noExposedDate(noExposedDate: Boolean) {
+        diagnosisVerification.value =
+            diagnosisVerification.value?.copy(noExposedDate = noExposedDate)
     }
 
     fun sharePositiveDiagnosis() {

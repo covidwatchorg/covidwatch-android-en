@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,6 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         android:orientation="vertical">
 
         <ImageView
@@ -58,6 +59,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding_normal"
             android:layout_marginHorizontal="@dimen/padding_normal"
             android:hint="@string/test_verification_code_hint"
             app:hintEnabled="true">
@@ -79,6 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginTop="@dimen/padding_normal"
             android:text="@string/symptoms_date_label"
             android:textSize="@dimen/big_font_size"
             android:textStyle="bold" />
@@ -105,41 +108,77 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
-            android:layout_marginBottom="@dimen/padding_normal"
             android:text="@string/no_symptoms" />
 
-        <LinearLayout
+        <View
+            style="@style/Divider.Horizontal"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginVertical="@dimen/padding_normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginTop="@dimen/padding_normal"
+            android:text="@string/exposed_date_label"
+            android:textSize="@dimen/big_font_size"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:hint="@string/select_date_hint"
+            app:hintEnabled="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/padding_normal"
-                android:text="@string/tested_date_label"
-                android:textSize="@dimen/big_font_size"
-                android:textStyle="bold" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_exposed_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/padding_normal"
-                android:layout_marginBottom="@dimen/padding_normal"
-                app:hintEnabled="false">
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:foreground="?selectableItemBackground" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_tested_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:cursorVisible="false"
-                    android:focusable="false"
-                    android:foreground="?selectableItemBackground"
-                    android:hint="@string/select_date_hint" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+        <CheckBox
+            android:id="@+id/cb_no_exposed_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:text="@string/no_exposed_date" />
+
+        <View
+            style="@style/Divider.Horizontal"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginVertical="@dimen/padding_normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginTop="@dimen/padding_normal"
+            android:text="@string/tested_date_label"
+            android:textSize="@dimen/big_font_size"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginBottom="@dimen/padding_normal"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_tested_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:foreground="?selectableItemBackground"
+                android:hint="@string/select_date_hint" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_finish_verification"
@@ -157,4 +196,4 @@
             android:src="@drawable/notify_others_art_1"
             tools:ignore="ContentDescription" />
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

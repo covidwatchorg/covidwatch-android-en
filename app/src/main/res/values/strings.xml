@@ -268,5 +268,7 @@
     <!--REGION SELECTION-->
     <string name="privacy_select_region"><b>We value your privacy.</b> This application is always anonymous and your location is never collected or stored. Selecting a region will allow you to receive information on available healthcare resources in that region without ever having to share a location. Your region can be changed at any time.</string>
     <string name="select_region_label">Select Region</string>
+    <string name="exposed_date_label">When do you think you were exposed?</string>
+    <string name="no_exposed_date">I do not know</string>
 
 </resources>

@@ -97,7 +97,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun initClickListeners() {
         with(binding) {
             notifyOthersButton.setOnClickListener {
-                findNavController().navigate(R.id.exposuresFragment)
+                findNavController().navigate(R.id.notifyOthersFragment)
             }
             menu.setOnClickListener {
                 findNavController().navigate(R.id.menuFragment)
