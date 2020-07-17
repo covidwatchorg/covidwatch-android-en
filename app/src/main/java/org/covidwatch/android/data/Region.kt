@@ -45,6 +45,8 @@ data class Regions(val regions: List<Region>)
 object DefaultRegions {
     const val ARIZONA_ID = 0
     const val THE_UOA_ID = 1
+    const val THE_ASU_ID = 2
+    const val THE_NAU_ID = 3
 
     private val infoAppIsActive = NextStep(
         type = INFO,
