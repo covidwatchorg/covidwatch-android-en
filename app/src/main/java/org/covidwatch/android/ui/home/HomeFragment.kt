@@ -122,6 +122,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     }
                     NextStepType.PHONE -> {
                         nextStepIcon.setImageResource(R.drawable.ic_next_step_phone)
+                        root.addCircleRipple()
+                        root.setOnClickListener {
+                            val intent = Intent(Intent.ACTION_DIAL).apply {
+                                data = Uri.parse(nextStep.url)
+                            }
+                            if (intent.resolveActivity(view.root.context.packageManager) != null) {
+                                startActivity(intent)
+                            }
+                        }
                     }
                     NextStepType.GET_TESTED_DATES,
                     NextStepType.WEBSITE -> {
