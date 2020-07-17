@@ -262,9 +262,12 @@
     <string name="dialog_test_verification_code_info_kit">It may have been provided with your <b>test kit</b></string>
     <string name="dialog_test_verification_code_info_support">Or you can call 1-800-COVID19  now to obtain one</string>
 
-    <string name="dialog_test_verification_code_expl_title">What are they?</string>
-    <string name="dialog_test_verification_code_expl_text">They are strings of numbers and letters that are provided by The Public Health Department to accurately identify valid positive COVID-19 diagnoses. They help protect users of the app by preventing the entry of inacurrate or fraudulent test results.</string>
+    <string name="dialog_test_verification_code_expl_title">What is a\nDiagnosis Verification Code?</string>
+    <string name="dialog_test_verification_code_expl_text">It is a string of numbers that is provided by an official COVID-19 testing source to verify a diagnosis. It can be used in the app to share a completely anonymous diagnosis with other people using the app.</string>
     <string name="dialog_test_verification_code_expl_more">Learn more</string>
+    <string name="btn_call">Call</string>
+
+    <!--REGION SELECTION-->
     <string name="privacy_select_region"><b>We value your privacy.</b> This application is always anonymous and your location is never collected or stored. Selecting a region will allow you to receive information on available healthcare resources in that region without ever having to share a location. Your region can be changed at any time.</string>
     <string name="select_region_label">Select Region</string>
 

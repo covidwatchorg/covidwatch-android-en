@@ -1,5 +1,7 @@
 package org.covidwatch.android.ui.reporting
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +10,10 @@ import androidx.core.text.HtmlCompat
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.covidwatch.android.R
+import org.covidwatch.android.data.NextStepType
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.databinding.DialogTestVerificationCodeInfoBinding
+import org.covidwatch.android.databinding.ItemVerificationCodeStepBinding
 import org.koin.android.ext.android.inject
 
 class VerificationCodeHelpDialog : BottomSheetDialogFragment() {
@@ -41,7 +45,30 @@ class VerificationCodeHelpDialog : BottomSheetDialogFragment() {
                 getString(R.string.current_region, region.name),
                 HtmlCompat.FROM_HTML_MODE_COMPACT
             )
+
+            val layoutInflater = LayoutInflater.from(context)
+            verificationCodeSteps.removeAllViews()
+            // TODO: 17.07.2020 Remove the source of the steps to be the right one
+            region.nextStepsRiskHigh.filter { it.type == NextStepType.PHONE }.forEach { step ->
+                val stepView = ItemVerificationCodeStepBinding.inflate(
+                    layoutInflater,
+                    verificationCodeSteps,
+                    true
+                )
+
+                stepView.verificationCodeStep.text = step.description
+                stepView.btnCall.setOnClickListener {
+                    val intent = Intent(Intent.ACTION_DIAL).apply {
+                        data = Uri.parse(step.url)
+                    }
+                    if (intent.resolveActivity(view.context.packageManager) != null) {
+                        startActivity(intent)
+                    }
+                }
+            }
+
             tvRegion.setOnClickListener { findNavController().navigate(R.id.selectRegionFragment) }
+
             closeButton.setOnClickListener { dismiss() }
         }
     }

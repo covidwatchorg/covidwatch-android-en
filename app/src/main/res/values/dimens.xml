@@ -17,6 +17,7 @@
     <dimen name="tested_button_font_size">18dp</dimen>
     <dimen name="title_font_size">24sp</dimen>
     <dimen name="subtitle_font_size">16sp</dimen>
+    <dimen name="button_font_size">16sp</dimen>
     <dimen name="big_font_size">18sp</dimen>
     <dimen name="exposure_summary_text">20sp</dimen>
 
