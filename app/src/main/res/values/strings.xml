@@ -16,6 +16,8 @@
     <string name="channel_name">Channel Name</string>
     <string name="channel_description">Channel Description</string>
     <string name="notification_current_user_was_exposed">You have been notified</string>
+    <string name="ok">OK</string>
+    <string name="screen_title" />
 
     <!--  FROM THE UX REPO  -->
     <string name="start">Start</string>
@@ -201,7 +203,7 @@
     <string name="test_date_fmt">Test Date: %s</string>
     <string name="verify_positive_diagnosis_title">Anonymously Share a Positive Diagnosis</string>
     <string name="share_positive_diagnosis_button">Anonymously Share Diagnosis</string>
-    <string name="past_positive_diagnoses">View Past Positive Diagnoses</string>
+    <string name="past_positive_diagnoses">View Shared Positive Diagnoses</string>
     <string name="finish_code_verification_button">Anonymously Notify Others</string>
     <string name="verify_subtitle">To share a positive diagnosis, enter your Test Verification Code below.</string>
     <string name="call_button">Call 1–800–000–0000</string>
@@ -224,6 +226,12 @@
     <string name="no_symptoms">I have no symptoms</string>
     <string name="tested_date_label">When did get tested?</string>
     <string name="select_date_hint">Select Date</string>
+    <string name="no_past_positive_diagnoses">No past positive diagnoses</string>
+    <string name="diagnosis_shared_title">Diagnosis shared</string>
+    <string name="diagnosis_shared_subtitle">Thank you for helping slow the spread of COVID-19 within your region.</string>
+    <string name="diagnosis_shared_next_steps_title">To continue to help others:</string>
+    <string name="diagnosis_shared_next_step_1">Please keep the app installed until the pandemic is over. </string>
+    <string name="diagnosis_shared_next_step_2">Share it with others so that they can help too. The more people use it, the more accurate everyone’s exposure notifications will be.</string>
 
     <!-- Notifications -->
     <string name="upload_report_notification_channel">Reporting</string>
@@ -246,12 +254,6 @@
     <string name="device_attestation_error">Failed to verify this device</string>
     <string name="no_connection_error">No internet available, please check your WIFi or Data connections</string>
     <string name="insufficient_storage">Insufficient storage to run Exposure Notification</string>
-    <string name="ok">OK</string>
-    <string name="screen_title" />
-    <string name="step_1_notify_others">Step 1 of 3</string>
-    <string name="no_past_positive_diagnoses">No past positive diagnoses</string>
-    <string name="step_2_notify_others">Step 2 of 3</string>
-    <string name="step_3_notify_others">Diagnosis shared</string>
 
     <!-- DIALOG TEST VERIFICATION CODE -->
     <string name="dialog_test_verification_code_title">Where is my code?</string>
@@ -259,7 +261,6 @@
     <string name="dialog_test_verification_code_info_email">It may have been provided with your <b>test result</b></string>
     <string name="dialog_test_verification_code_info_kit">It may have been provided with your <b>test kit</b></string>
     <string name="dialog_test_verification_code_info_support">Or you can call 1-800-COVID19  now to obtain one</string>
-
     <string name="dialog_test_verification_code_expl_title">What is a\nDiagnosis Verification Code?</string>
     <string name="dialog_test_verification_code_expl_text">It is a string of numbers that is provided by an official COVID-19 testing source to verify a diagnosis. It can be used in the app to share a completely anonymous diagnosis with other people using the app.</string>
     <string name="dialog_test_verification_code_expl_more">Learn more</string>

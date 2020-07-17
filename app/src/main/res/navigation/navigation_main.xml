@@ -152,6 +152,6 @@
     </fragment>
     <fragment
         android:id="@+id/thanksForReportingFragment"
-        android:name="org.covidwatch.android.ui.reporting.ThanksForReportingFragment"
+        android:name="org.covidwatch.android.ui.reporting.SharedDiagnosisFragment"
         android:label="ThanksForReportingFragment" />
 </navigation>

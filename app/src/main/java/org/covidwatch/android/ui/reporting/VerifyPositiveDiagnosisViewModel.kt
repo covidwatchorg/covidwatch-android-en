@@ -82,8 +82,10 @@ class VerifyPositiveDiagnosisViewModel(
                                 verificationData = diagnosisVerification.value
                             )
                         )
-                    ) {
-                        _showThankYou.send()
+                    ) { uploading ->
+                        uploading.success {
+                            _showThankYou.send()
+                        }
                     }
                 }
                 failure { handleStatus(it) }

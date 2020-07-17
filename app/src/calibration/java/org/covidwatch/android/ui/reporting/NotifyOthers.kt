@@ -123,11 +123,8 @@ class NotifyOthersFragment : BaseNotifyOthersFragment() {
 class NotifyOthersViewModel(
     private val exportDiagnosisKeysAsFileUseCase: ExportDiagnosisKeysAsFileUseCase,
     private val startUploadDiagnosisKeysWorkUseCase: StartUploadDiagnosisKeysWorkUseCase,
-    private val enManager: ExposureNotificationManager,
-    positiveDiagnosisRepository: PositiveDiagnosisRepository
-) : BaseNotifyOthersViewModel(
-    positiveDiagnosisRepository
-) {
+    private val enManager: ExposureNotificationManager
+) : BaseNotifyOthersViewModel() {
     private val keys: MutableList<TemporaryExposureKey> = mutableListOf()
     private val defaultRiskLevel = 6
     private val riskLevelSeparator = " "

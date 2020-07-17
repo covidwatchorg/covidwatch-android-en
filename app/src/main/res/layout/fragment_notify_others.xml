@@ -54,20 +54,6 @@
             android:layout_marginTop="@dimen/padding_large"
             android:text="@string/share_positive_diagnosis_button" />
 
-        <Button
-            android:id="@+id/btn_view_past_positive_diagnoses"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/padding_normal"
-            android:layout_marginTop="@dimen/padding_small"
-            android:paddingVertical="@dimen/padding_small"
-            android:text="@string/past_positive_diagnoses"
-            android:textAllCaps="false"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/subtitle_font_size"
-            android:visibility="gone" />
-
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
