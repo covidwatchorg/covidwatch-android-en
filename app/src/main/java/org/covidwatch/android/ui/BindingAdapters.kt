@@ -5,12 +5,13 @@ import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
 import androidx.databinding.BindingAdapter
+import com.skydoves.expandablelayout.ExpandableLayout
 import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.RiskLevel
 import org.covidwatch.android.data.RiskLevel.*
-import org.covidwatch.android.data.level
+import org.covidwatch.android.databinding.ExposureInformationDetailsBinding
 import org.covidwatch.android.ui.util.DateFormatter
 import java.util.*
 
@@ -30,40 +31,18 @@ fun TextView.setExposureSummary(exposureSummary: CovidExposureSummary?) {
 }
 
 @BindingAdapter("exposure")
-fun TextView.setTextFromExposure(exposure: CovidExposureInformation?) {
+fun ExpandableLayout.setTextFromExposure(exposure: CovidExposureInformation?) {
+    parentLayoutResource = R.layout.item_exposure_parent
+    secondLayoutResource = R.layout.exposure_information_details
+
     exposure?.let {
-        when (it.totalRiskScore.level) {
-            HIGH -> {
-                setCompoundDrawablesRelativeWithIntrinsicBounds(
-                    R.drawable.ic_risk_high,
-                    0,
-                    0,
-                    0
-                )
-                text = HtmlCompat.fromHtml(
-                    context.getString(
-                        R.string.high_risk_exposure,
-                        DateFormatter.format(it.date)
-                    ),
-                    FROM_HTML_MODE_COMPACT
-                )
-            }
-            LOW -> {
-                setCompoundDrawablesRelativeWithIntrinsicBounds(
-                    R.drawable.ic_risk_low,
-                    0,
-                    0,
-                    0
-                )
-                text = HtmlCompat.fromHtml(
-                    context.getString(
-                        R.string.low_risk_exposure,
-                        DateFormatter.format(it.date)
-                    ),
-                    FROM_HTML_MODE_COMPACT
-                )
-            }
+        parentLayout.setOnClickListener {
+            if (isExpanded) collapse() else expand()
         }
+        parentLayout.findViewById<TextView>(R.id.text).text = DateFormatter.format(it.date)
+
+        val demoExposureDetails = ExposureInformationDetailsBinding.bind(secondLayout)
+        demoExposureDetails.exposure = it
     }
 }
 

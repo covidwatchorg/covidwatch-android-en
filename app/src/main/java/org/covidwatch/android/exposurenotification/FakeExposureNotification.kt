@@ -86,7 +86,7 @@ object RandomEnObjects {
                     System.currentTimeMillis() + 66666
                 )
             )
-            .setDurationMinutes(Random.nextInt(10) * 5)
+            .setDurationMinutes(Random.nextInt(2) * 5)
             .setTotalRiskScore(Random.nextInt(8))
             .setTransmissionRiskLevel(Random.nextInt(8))
             .build()
