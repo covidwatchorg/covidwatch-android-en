@@ -17,12 +17,9 @@
     <com.skydoves.expandablelayout.ExpandableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawablePadding="@dimen/padding_normal"
         android:foregroundTint="@color/lightGray"
-        android:paddingHorizontal="@dimen/padding_normal"
-        android:paddingVertical="@dimen/padding_normal"
-        app:expandable_spinner="@drawable/ic_drop_down_arrow"
         app:expandable_spinner_color="@color/primaryText"
+        app:expandable_spinner_margin="@dimen/padding_normal"
         app:exposure="@{item}"
         tools:text="May 20, 2020" />
 </layout>

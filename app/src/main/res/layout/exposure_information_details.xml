@@ -14,11 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingVertical="@dimen/padding_normal">
+        android:padding="@dimen/padding_normal">
 
-        <LinearLayout
-            style="@style/ExposureInformationRow"
-            android:layout_marginTop="@dimen/padding_normal">
+        <LinearLayout style="@style/ExposureInformationRow">
 
             <TextView
                 style="@style/TextView.ExposureInformationRowTitle"
