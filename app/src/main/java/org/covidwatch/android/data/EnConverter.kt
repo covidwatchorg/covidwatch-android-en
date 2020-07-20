@@ -5,10 +5,14 @@ import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import java.util.*
 
+// TODO: 20.07.2020 Rename and rework into ExposureRiskModeling interface similarly to iOS
 interface EnConverter {
     fun covidExposureSummary(exposureSummary: ExposureSummary): CovidExposureSummary
     fun covidExposureInformation(exposureInformation: ExposureInformation): CovidExposureInformation
     fun diagnosisKey(key: TemporaryExposureKey, symptomsStartDate: Date?): DiagnosisKey
+    fun riskLevelValue(exposures: List<CovidExposureInformation>, computeDate: Date): Double
+    fun mostRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Date?
+    fun leastRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Date?
 }
 
 @Suppress("unused")
@@ -40,4 +44,19 @@ class DefaultEnConverter : EnConverter {
 
     override fun diagnosisKey(key: TemporaryExposureKey, symptomsStartDate: Date?): DiagnosisKey =
         key.asDiagnosisKey().copy(transmissionRisk = 6)
+
+    override fun riskLevelValue(
+        exposures: List<CovidExposureInformation>,
+        computeDate: Date
+    ): Double {
+        TODO("not implemented")
+    }
+
+    override fun mostRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Date? {
+        TODO("not implemented")
+    }
+
+    override fun leastRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Date? {
+        TODO("not implemented")
+    }
 }

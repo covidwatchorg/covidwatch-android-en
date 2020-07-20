@@ -4,13 +4,56 @@ import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import org.covidwatch.android.exposurenotification.ExposureNotification
-import java.time.LocalDate
+import org.covidwatch.android.extension.toLocalDate
 import java.time.Period
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.exp
 
 class ArizonaEnConverter : EnConverter {
+
+    var significantRiskLevelValueThreshold = 0.011
+
+    private val discountSchedule = listOf(
+        1.0,
+        0.99998,
+        0.994059,
+        0.9497885,
+        0.858806,
+        0.755134,
+        0.660103392,
+        0.586894919,
+        0.533407703,
+        0.494373128,
+        0.463039432,
+        0.438587189,
+        0.416241392,
+        0.393207216,
+        0.367287169,
+        0.340932595,
+        0.313997176,
+        0.286927378,
+        0.265554932,
+        0.240765331,
+        0.217746365,
+        0.201059905,
+        0.185435372,
+        0.172969757,
+        0.156689676,
+        0.141405162,
+        0.124388311,
+        0.108319101,
+        0.094752304,
+        0.081300662,
+        0.070016527,
+        0.056302622,
+        0.044703284,
+        0.036214683,
+        0.030309399,
+        0.024554527,
+        0.018833743,
+        0.014769669
+    )
 
     /**
      * According to preliminary dose estimates, the high attenuation distance has a dose 7 times
@@ -97,6 +140,67 @@ class ArizonaEnConverter : EnConverter {
         }
     }
 
+    override fun riskLevelValue(
+        exposures: List<CovidExposureInformation>,
+        computeDate: Date
+    ): Double {
+        var infectedRisk = 0.0
+        getDateExposureRisks(exposures).forEach { (date, transmissionRisk) ->
+            val days = Period.between(date.toLocalDate(), computeDate.toLocalDate()).days
+            if (days >= 0 && days < discountSchedule.size) {
+                val discountedRisk = transmissionRisk * discountSchedule[days]
+                infectedRisk = combineRisks(infectedRisk, discountedRisk)
+            }
+        }
+
+        return infectedRisk * 100
+    }
+
+    override fun mostRecentSignificantExposureDate(exposures: List<CovidExposureInformation>) =
+        getDateExposureRisks(exposures)
+            .filter { it.value > significantRiskLevelValueThreshold }
+            .maxBy { it.key }
+            ?.key
+
+    override fun leastRecentSignificantExposureDate(exposures: List<CovidExposureInformation>) =
+        getDateExposureRisks(exposures)
+            .filter { it.value > significantRiskLevelValueThreshold }
+            .minBy { it.key }
+            ?.key
+
+    private fun getDateExposureRisks(exposures: List<CovidExposureInformation>): Map<Date, Double> {
+        val dateExposureRisks = hashMapOf<Date, Double>()
+
+        exposures.forEach { exposure ->
+            val date = exposure.date
+            val newRisk = computeRisk(exposure)
+            val prevRisk = dateExposureRisks[date]
+            if (prevRisk == null) {
+                dateExposureRisks[date] = newRisk
+            } else {
+                dateExposureRisks[date] = combineRisks(newRisk, prevRisk)
+            }
+        }
+        return dateExposureRisks
+    }
+
+    private fun computeRisk(exposure: CovidExposureInformation): Double {
+        val transmissionRiskLevel = exposure.transmissionRiskLevel
+        val attenuationDurations = exposure.attenuationDurations.toIntArray()
+
+        val transmissionRiskValue = transmissionRiskValuesForLevels[transmissionRiskLevel]
+        val attenuationDurationRiskScore = computeAttenuationDurationRiskScore(attenuationDurations)
+        return 1 - exp(-doseResponseLambda * transmissionRiskValue * attenuationDurationRiskScore)
+    }
+
+    private fun combineRisks(vararg risks: Double): Double {
+        var inverseProduct = 1.0
+        risks.forEach { risk ->
+            inverseProduct *= (1.0 - risk)
+        }
+        return (1.0 - inverseProduct)
+    }
+
     private fun Double.within(min: Double, max: Double) = this >= min && this < max
 
     override fun covidExposureSummary(exposureSummary: ExposureSummary) =
@@ -113,27 +217,10 @@ class ArizonaEnConverter : EnConverter {
     override fun diagnosisKey(key: TemporaryExposureKey, symptomsStartDate: Date?): DiagnosisKey {
         symptomsStartDate ?: return key.asDiagnosisKey()
 
-        val keyDate = Calendar.getInstance().let {
-            it.time = Date(key.rollingStartIntervalNumber * ExposureNotification.rollingInterval)
+        val keyDate =
+            Date(key.rollingStartIntervalNumber * ExposureNotification.rollingInterval).toLocalDate()
 
-            LocalDate.of(
-                it.get(Calendar.YEAR),
-                it.get(Calendar.MONTH),
-                it.get(Calendar.DAY_OF_MONTH)
-            )
-        }
-
-        val symptomsDate = Calendar.getInstance().let {
-            it.time = symptomsStartDate
-
-            LocalDate.of(
-                it.get(Calendar.YEAR),
-                it.get(Calendar.MONTH),
-                it.get(Calendar.DAY_OF_MONTH)
-            )
-        }
-
-        val days = Period.between(symptomsDate, keyDate).days
+        val days = Period.between(symptomsStartDate.toLocalDate(), keyDate).days
         val absDays = abs(days)
 
         val transmissionRisk = when {
