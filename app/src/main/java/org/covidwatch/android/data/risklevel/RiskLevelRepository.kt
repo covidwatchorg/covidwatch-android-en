@@ -2,6 +2,7 @@ package org.covidwatch.android.data.risklevel
 
 import androidx.lifecycle.asFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
 import org.covidwatch.android.data.RiskLevel
 import org.covidwatch.android.data.diagnosisverification.TestType
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
@@ -31,7 +32,7 @@ class RiskLevelRepository(
 
             else -> RiskLevel.LOW
         }
-    }
+    }.flowOn(dispatchers.io)
 
     val riskLevelNextSteps = combine(
         riskLevel,
@@ -42,5 +43,5 @@ class RiskLevelRepository(
             RiskLevel.HIGH -> region.nextStepsSignificantExposure
             RiskLevel.LOW -> region.nextStepsNoSignificantExposure
         }
-    }
+    }.flowOn(dispatchers.io)
 }
