@@ -118,11 +118,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             with(view) {
                 nextStepText.text = nextStep.description
                 when (nextStep.type) {
-                    NextStepType.STAY_AT_HOME,
                     NextStepType.INFO -> {
                         nextStepIcon.setImageResource(R.drawable.ic_info_filled)
                     }
-                    NextStepType.GET_TESTED_DATES,
                     NextStepType.PHONE -> {
                         nextStepIcon.setImageResource(R.drawable.ic_next_step_phone)
                         root.addCircleRipple()

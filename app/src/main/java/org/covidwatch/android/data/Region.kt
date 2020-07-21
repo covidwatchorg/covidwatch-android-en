@@ -77,12 +77,6 @@ enum class NextStepType {
     WEBSITE,
 
     @SerializedName("3")
-    STAY_AT_HOME,
-
-    @SerializedName("4")
-    GET_TESTED_DATES,
-
-    @SerializedName("5")
     SHARE
 }
 
@@ -145,11 +139,11 @@ object DefaultRegions {
         ),
         nextStepsSignificantExposure = listOf(
             NextStep(
-                type = STAY_AT_HOME,
+                type = INFO,
                 description = "Stay at home until: "
             ),
             NextStep(
-                type = GET_TESTED_DATES,
+                type = INFO,
                 description = "Call Campus Health at (520) 621-9202 and schedule a COVID-19 test for: ",
                 url = "tel:1-520-621-9202"
             ),
