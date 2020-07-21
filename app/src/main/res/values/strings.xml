@@ -102,8 +102,8 @@
     <string name="notification_channel_name">Exposure Notification</string>
     <string name="notification_channel_description">Exposure notification alerts.</string>
     <string name="menu">Menu</string>
-    <string name="powered_by">Powered by</string>
-    <string name="powered_by_logo_content_description">Covid Watch</string>
+    <string name="powered_by">Powered by Covid Watch for</string>
+    <string name="powered_by_logo_content_description">Arizona Department of Health Services</string>
 
     <!-- POSSIBLE EXPOSURES-->
     <string name="title_exposures">Possible Exposures</string>

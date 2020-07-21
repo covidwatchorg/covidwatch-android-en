@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal">
 
-    <LinearLayout
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:paddingVertical="@dimen/padding_normal">
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/padding_micro"
-            android:gravity="center"
-            android:text="@string/powered_by"
-            android:textSize="12sp" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/covid_watch_logo" />
-    </LinearLayout>
-</layout>
+        android:layout_marginEnd="@dimen/padding_micro"
+        android:drawableEnd="@drawable/adhs_logo"
+        android:drawablePadding="@dimen/padding_small"
+        android:gravity="center"
+        android:paddingVertical="@dimen/padding_normal"
+        android:text="@string/powered_by"
+        android:textSize="12sp" />
+</LinearLayout>
