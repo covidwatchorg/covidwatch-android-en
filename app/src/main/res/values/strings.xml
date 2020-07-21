@@ -51,8 +51,10 @@
     <string name="menu_detect_exposures_from_server">[DEMO] Detect Exposures from Server</string>
     <string name="menu_export_possible_exposures">[DEMO] Export Possible Exposures</string>
 
-    <string name="menu_possible_exposures">Possible Exposures</string>
-    <string name="menu_notify_others">Notify Others</string>
+    <string name="menu_possible_exposures">Possible COVID-19 Exposures</string>
+    <string name="menu_notify_others">Have a Positive Diagnosis?</string>
+    <string name="menu_past_diagnoses">View Past Diagnoses</string>
+    <string name="menu_change_region">Change Region</string>
     <string name="menu_how_it_works">How it works</string>
     <string name="menu_covid_watch_website">Covid Watch Website</string>
     <string name="menu_health_guidelines">Health Guidelines</string>
@@ -232,6 +234,7 @@
     <string name="diagnosis_shared_next_steps_title">To continue to help others:</string>
     <string name="diagnosis_shared_next_step_1">Please keep the app installed until the pandemic is over. </string>
     <string name="diagnosis_shared_next_step_2">Share it with others so that they can help too. The more people use it, the more accurate everyone’s exposure notifications will be.</string>
+    <string name="empty_past_diagnoses_list">No Past Diagnoses</string>
 
     <!-- Notifications -->
     <string name="upload_report_notification_channel">Reporting</string>
@@ -271,5 +274,6 @@
     <string name="select_region_label">Select Region</string>
     <string name="exposed_date_label">When do you think you were exposed?</string>
     <string name="no_exposed_date">I do not know</string>
+    <string name="past_positive_diagnoses_title">My Past Positive Diagnoses</string>
 
 </resources>

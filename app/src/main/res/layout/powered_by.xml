@@ -1,17 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal">
+<?xml version="1.0" encoding="utf-8"?><!--It's data binding layout in order to be compatible with layouts that use data binding-->
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.google.android.material.textview.MaterialTextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/padding_micro"
-        android:drawableEnd="@drawable/adhs_logo"
-        android:drawablePadding="@dimen/padding_small"
-        android:gravity="center"
-        android:paddingVertical="@dimen/padding_normal"
-        android:text="@string/powered_by"
-        android:textSize="12sp" />
-</LinearLayout>
+        android:layout_gravity="center_horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/padding_micro"
+            android:drawableEnd="@drawable/adhs_logo"
+            android:drawablePadding="@dimen/padding_small"
+            android:gravity="center"
+            android:paddingVertical="@dimen/padding_normal"
+            android:text="@string/powered_by"
+            android:textSize="12sp" />
+    </LinearLayout>
+</layout>

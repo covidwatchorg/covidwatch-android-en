@@ -1,18 +1,19 @@
 package org.covidwatch.android.ui.reporting
 
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.skydoves.expandablelayout.ExpandableLayout
 import org.covidwatch.android.R
 import org.covidwatch.android.ui.util.DateFormatter
 
-class PositiveDiagnosisViewHolder(private val root: View) : RecyclerView.ViewHolder(root) {
+class PositiveDiagnosisViewHolder(private val root: ExpandableLayout) :
+    RecyclerView.ViewHolder(root) {
 
-    private val testStatusImage: ImageView = root.findViewById(R.id.test_status_image)
-    private val testStatusText: TextView = root.findViewById(R.id.test_status_text)
-    private val testDateText: TextView = root.findViewById(R.id.test_date)
+    private val testStatusImage: ImageView = root.parentLayout.findViewById(R.id.test_status_image)
+    private val testStatusText: TextView = root.parentLayout.findViewById(R.id.test_status_text)
+    private val testDateText: TextView = root.parentLayout.findViewById(R.id.submit_date)
 
     private val plum: Int = ContextCompat.getColor(itemView.context, R.color.plum)
     private val tangerine: Int = ContextCompat.getColor(itemView.context, R.color.tangerine)
@@ -23,6 +24,10 @@ class PositiveDiagnosisViewHolder(private val root: View) : RecyclerView.ViewHol
             R.string.test_date_fmt,
             DateFormatter.format(positiveDiagnosis.testDate)
         )
+
+        root.parentLayout.setOnClickListener {
+            if (root.isExpanded) root.collapse() else root.collapse()
+        }
     }
 
     private fun bindTestStatus(testStatus: TestStatus) {

@@ -31,7 +31,8 @@ open class BaseNotifyOthersFragment :
             }
 
             btnCodeExplanation.setOnClickListener {
-                VerificationCodeHelpDialog().show(childFragmentManager, null)
+                findNavController().navigate(R.id.verificationCodeHelpDialog)
+//                VerificationCodeHelpDialog().show(childFragmentManager, null)
             }
 
             sharePositiveDiagnosisButton.setOnClickListener {

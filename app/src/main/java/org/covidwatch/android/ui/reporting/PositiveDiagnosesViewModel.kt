@@ -4,7 +4,7 @@ import androidx.lifecycle.map
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.ui.BaseViewModel
 
-open class SharedDiagnosisViewModel(
+class PositiveDiagnosesViewModel(
     positiveDiagnosisRepository: PositiveDiagnosisRepository
 ) : BaseViewModel() {
 

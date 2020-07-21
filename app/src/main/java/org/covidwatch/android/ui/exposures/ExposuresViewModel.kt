@@ -29,7 +29,8 @@ class ExposuresViewModel(
 
     val exposureInfo: LiveData<List<Any>> =
         exposureInformationRepository.exposureInformation().map {
-            it + Footer
+            if (it.isNotEmpty()) it + Footer
+            else it
         }
 
     object Footer

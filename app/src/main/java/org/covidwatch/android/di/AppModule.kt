@@ -36,7 +36,7 @@ import org.covidwatch.android.ui.exposures.ExposuresViewModel
 import org.covidwatch.android.ui.home.HomeViewModel
 import org.covidwatch.android.ui.menu.MenuViewModel
 import org.covidwatch.android.ui.onboarding.EnableExposureNotificationsViewModel
-import org.covidwatch.android.ui.reporting.SharedDiagnosisViewModel
+import org.covidwatch.android.ui.reporting.PositiveDiagnosesViewModel
 import org.covidwatch.android.ui.reporting.VerifyPositiveDiagnosisViewModel
 import org.covidwatch.android.ui.selectregion.SelectRegionViewModel
 import org.covidwatch.android.ui.settings.SettingsViewModel
@@ -295,7 +295,7 @@ val appModule = module {
     }
 
     viewModel {
-        SharedDiagnosisViewModel(positiveDiagnosisRepository = get())
+        PositiveDiagnosesViewModel(positiveDiagnosisRepository = get())
     }
 
     viewModel {

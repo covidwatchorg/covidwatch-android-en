@@ -3,6 +3,7 @@ package org.covidwatch.android.ui.reporting
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.skydoves.expandablelayout.ExpandableLayout
 import org.covidwatch.android.R
 
 class PositiveDiagnosisAdapter : RecyclerView.Adapter<PositiveDiagnosisViewHolder>() {
@@ -12,7 +13,7 @@ class PositiveDiagnosisAdapter : RecyclerView.Adapter<PositiveDiagnosisViewHolde
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PositiveDiagnosisViewHolder {
         val root = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_positive_diagnosis, parent, false)
-        return PositiveDiagnosisViewHolder(root)
+        return PositiveDiagnosisViewHolder(root as ExpandableLayout)
     }
 
     override fun getItemCount(): Int = positiveDiagnoses.size
@@ -26,6 +27,4 @@ class PositiveDiagnosisAdapter : RecyclerView.Adapter<PositiveDiagnosisViewHolde
         positiveDiagnoses.addAll(items)
         notifyDataSetChanged()
     }
-
-    fun isEmpty() = positiveDiagnoses.isEmpty()
 }

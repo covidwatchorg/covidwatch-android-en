@@ -39,6 +39,8 @@ open class BaseMenuAdapter(
         ),
         possibleExposuresMenuItem,
         MenuItem(R.string.menu_notify_others, 0, NotifyOthers),
+        MenuItem(R.string.menu_past_diagnoses, 0, NotifyOthers),
+        MenuItem(R.string.menu_change_region, 0, NotifyOthers),
         MenuItem(R.string.menu_how_it_works, 0, HowItWorks),
         MenuItem(
             R.string.menu_health_guidelines,
