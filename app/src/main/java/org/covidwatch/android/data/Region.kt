@@ -17,7 +17,10 @@ data class Region(
 
     val nextStepsVerificationCode: List<NextStep>,
 
-    val exposureConfiguration: ExposureConfiguration = ExposureConfiguration()
+    val exposureConfiguration: ExposureConfiguration = ExposureConfiguration(),
+
+    @SerializedName("azRiskModelConfiguration")
+    val riskModelConfiguration: RiskModelConfiguration = ArizonaRiskModelConfiguration()
 )
 
 class ExposureConfiguration(

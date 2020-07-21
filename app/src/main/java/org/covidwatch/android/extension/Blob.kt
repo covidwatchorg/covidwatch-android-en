@@ -1,6 +1,7 @@
 package org.covidwatch.android.extension
 
 import java.time.LocalDate
+import java.time.Period
 import java.util.*
 
 fun Date.toLocalDate(): LocalDate {
@@ -13,3 +14,6 @@ fun Date.toLocalDate(): LocalDate {
         calendar.get(Calendar.DAY_OF_MONTH)
     )
 }
+
+fun Date.daysTo(anotherDate: Date) =
+    Period.between(this.toLocalDate(), anotherDate.toLocalDate()).days

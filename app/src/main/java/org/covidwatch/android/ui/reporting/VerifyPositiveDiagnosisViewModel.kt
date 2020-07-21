@@ -37,7 +37,8 @@ class VerifyPositiveDiagnosisViewModel(
     }
 
     fun exposedDate(date: Long) {
-        diagnosisVerification.value = diagnosisVerification.value?.copy(exposedDate = Date(date))
+        diagnosisVerification.value =
+            diagnosisVerification.value?.copy(possibleInfectionDate = Date(date))
     }
 
     fun verificationCode(code: String) {

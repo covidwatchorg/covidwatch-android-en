@@ -57,7 +57,7 @@ data class PositiveDiagnosisVerification(
     val symptomsStartDate: Date? = null,
     val noSymptoms: Boolean = false,
     val testDate: Date? = null,
-    val exposedDate: Date? = null,
+    val possibleInfectionDate: Date? = null,
     val noExposedDate: Boolean = false,
     val testType: String? = null,
     val token: String? = null,
@@ -68,5 +68,5 @@ data class PositiveDiagnosisVerification(
     val readyToSubmit: Boolean
         get() = verificationTestCode.trim().isNotEmpty()
                 && (symptomsStartDate != null || noSymptoms)
-                && (exposedDate != null || noExposedDate)
+                && (possibleInfectionDate != null || noExposedDate)
 }

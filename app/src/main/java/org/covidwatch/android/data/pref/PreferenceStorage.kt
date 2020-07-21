@@ -28,10 +28,10 @@ interface PreferenceStorage {
     val observableRegions: LiveData<Regions>
 
     val region: Region
+    val riskModelConfiguration: RiskModelConfiguration
     var selectedRegion: Int
     val observableRegion: LiveData<Region>
 
-    // TODO: 05.06.2020 Replace with our own class when the API is stable
     val exposureConfiguration: CovidExposureConfiguration
     val observableExposureSummary: LiveData<CovidExposureSummary>
 }
@@ -106,6 +106,9 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
     override val region: Region
         get() = regions.regions[selectedRegion]
 
+    override val riskModelConfiguration: RiskModelConfiguration
+        get() = region.riskModelConfiguration
+
     override var selectedRegion by Preference(prefs, SELECTED_REGION, 0)
 
     override val observableRegion: LiveData<Region>
@@ -128,7 +131,6 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
         private const val RISK_LEVEL_VALUE = "risk_level_value"
         private const val REGIONS = "regions"
         private const val SELECTED_REGION = "selected_region"
-        private const val EXPOSURE_CONFIGURATION = "exposure_configuration"
         private const val ONBOARDING_FINISHED = "onboarding_finished"
         private const val SHOW_ONBOARDING_HOME_ANIMATION = "show_onboarding_home_animation"
     }

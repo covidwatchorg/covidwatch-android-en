@@ -48,7 +48,14 @@ class UploadDiagnosisKeysUseCase(
         Timber.d("Start ${javaClass.simpleName}")
         try {
             val diagnosisKeys = params.keys
-                .map { enConverter.diagnosisKey(it, verificationData.symptomsStartDate) }
+                .map {
+                    enConverter.diagnosisKey(
+                        it,
+                        verificationData.symptomsStartDate,
+                        verificationData.testDate,
+                        verificationData.possibleInfectionDate
+                    )
+                }
                 .filter { it.transmissionRisk != 0 }
 
             Timber.d("Diagnosis Keys ${diagnosisKeys.joinToString()}")

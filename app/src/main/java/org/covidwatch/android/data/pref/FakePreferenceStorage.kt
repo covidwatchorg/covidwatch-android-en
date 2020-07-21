@@ -3,10 +3,7 @@ package org.covidwatch.android.data.pref
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
-import org.covidwatch.android.data.CovidExposureConfiguration
-import org.covidwatch.android.data.CovidExposureSummary
-import org.covidwatch.android.data.Region
-import org.covidwatch.android.data.Regions
+import org.covidwatch.android.data.*
 import org.covidwatch.android.exposurenotification.RandomEnObjects
 
 @Suppress("UNUSED_PARAMETER", "unused")
@@ -45,6 +42,8 @@ class FakePreferenceStorage : PreferenceStorage {
     override val observableRegions: LiveData<Regions>
         get() = TODO("not implemented")
     override val region: Region
+        get() = TODO("not implemented")
+    override val riskModelConfiguration: RiskModelConfiguration
         get() = TODO("not implemented")
     override var selectedRegion: Int
         get() = TODO("not implemented")
