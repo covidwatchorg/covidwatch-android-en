@@ -22,9 +22,9 @@ class FakePreferenceStorage : PreferenceStorage {
         get() = RandomEnObjects.exposureSummary.asCovidExposureSummary()
         set(value) {}
 
-    override var riskLevelValue: Float? = null
+    override var riskMetrics: RiskMetrics? = null
 
-    override val observableRiskLevelValue: LiveData<Float?>
+    override val observableRiskMetrics: LiveData<RiskMetrics?>
         get() = TODO("not implemented")
 
     private fun ExposureSummary.asCovidExposureSummary() = CovidExposureSummary(
@@ -44,7 +44,7 @@ class FakePreferenceStorage : PreferenceStorage {
     override val region: Region
         get() = TODO("not implemented")
     override val riskModelConfiguration: RiskModelConfiguration
-        get() = TODO("not implemented")
+        get() = ArizonaRiskModelConfiguration()
     override var selectedRegion: Int
         get() = TODO("not implemented")
         set(value) {}

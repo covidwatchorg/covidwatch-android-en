@@ -2,6 +2,8 @@ package org.covidwatch.android.data
 
 import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
+import org.covidwatch.android.data.pref.FakePreferenceStorage
+import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ExposureNotification
 import org.junit.jupiter.api.Assertions.assertArrayEquals
 import org.junit.jupiter.api.Test
@@ -10,7 +12,8 @@ import kotlin.random.Random
 import kotlin.test.assertEquals
 
 class ArizonaEnConverterTest {
-    private val enConverter = ArizonaEnConverter()
+    private val prefs: PreferenceStorage = FakePreferenceStorage()
+    private val enConverter = ArizonaEnConverter(prefs)
 
     private val randomExposure: ExposureInformation.ExposureInformationBuilder
         get() = ExposureInformation.ExposureInformationBuilder()
@@ -289,7 +292,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -310,7 +313,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -331,7 +334,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -352,7 +355,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -373,7 +376,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -394,7 +397,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -415,7 +418,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -437,7 +440,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -458,7 +461,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -479,7 +482,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -500,7 +503,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -521,7 +524,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)

@@ -258,7 +258,7 @@ val appModule = module {
 
     single {
         RiskLevelRepository(
-            preferences = get(),
+            prefs = get(),
             positiveDiagnosisRepository = get(),
             dispatchers = get()
         )

@@ -14,6 +14,7 @@ import org.covidwatch.android.domain.UpdateExposureInformationUseCase.Params
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.koin.java.KoinJavaComponent.inject
 import timber.log.Timber
+import java.util.*
 
 class UpdateExposureStateWork(
     context: Context,
@@ -43,6 +44,11 @@ class UpdateExposureStateWork(
             updateExposureInformationUseCase(Params(token))
 
             val exposures = exposureInformationRepository.exposures()
+
+            // Update risk metrics
+            preferenceStorage.riskMetrics = enConverter.riskMetrics(exposures, Date())
+
+            // Update risk summary
             val maxRiskScore = exposures.maxBy { it.totalRiskScore }?.totalRiskScore
             val summationRiskScore = exposures.sumBy { it.totalRiskScore }
 

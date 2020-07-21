@@ -7,30 +7,35 @@ import org.covidwatch.android.data.diagnosisverification.TestType
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.domain.AppCoroutineDispatchers
+import org.covidwatch.android.extension.daysTo
+import java.util.*
 
 class RiskLevelRepository(
-    val preferences: PreferenceStorage,
+    val prefs: PreferenceStorage,
     val positiveDiagnosisRepository: PositiveDiagnosisRepository,
     val dispatchers: AppCoroutineDispatchers
 ) {
 
     val riskLevel = combine(
-        preferences.observableRiskLevelValue.asFlow(),
+        prefs.observableRiskMetrics.asFlow(),
         positiveDiagnosisRepository.positiveDiagnosisReports().asFlow(),
-        preferences.observableRegion.asFlow()
+        prefs.observableRegion.asFlow()
     ) { risk, diagnoses, region ->
+        val recentExposureDate = risk?.mostRecentSignificantExposureDate
         when {
-            diagnoses.any {
-                it.verified && TestType.CONFIRMED == it.verificationData?.testType
-            } -> RiskLevel.VERIFIED_POSITIVE
-            risk != null && risk > region.riskHighThreshold -> RiskLevel.HIGH
+            diagnoses.any { it.verified && TestType.CONFIRMED == it.verificationData?.testType } ->
+                RiskLevel.VERIFIED_POSITIVE
+
+            recentExposureDate != null && recentExposureDate.daysTo(Date()) <= region.recentExposureDays ->
+                RiskLevel.HIGH
+
             else -> RiskLevel.LOW
         }
     }
 
     val riskLevelNextSteps = combine(
         riskLevel,
-        preferences.observableRegion.asFlow()
+        prefs.observableRegion.asFlow()
     ) { riskLevel, region ->
         when (riskLevel) {
             RiskLevel.VERIFIED_POSITIVE -> region.nextStepsVerifiedPositive

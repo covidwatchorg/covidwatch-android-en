@@ -20,7 +20,14 @@ interface EnConverter {
     fun riskLevelValue(exposures: List<CovidExposureInformation>, computeDate: Date): Double
     fun mostRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Date?
     fun leastRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Date?
+    fun riskMetrics(exposures: List<CovidExposureInformation>, computeDate: Date): RiskMetrics
 }
+
+data class RiskMetrics(
+    val riskLevel: Double,
+    val leastRecentSignificantExposureDate: Date?,
+    val mostRecentSignificantExposureDate: Date?
+)
 
 open class RiskModelConfiguration(
     /**
@@ -128,6 +135,13 @@ class DefaultEnConverter : EnConverter {
     }
 
     override fun leastRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Date? {
+        TODO("not implemented")
+    }
+
+    override fun riskMetrics(
+        exposures: List<CovidExposureInformation>,
+        computeDate: Date
+    ): RiskMetrics {
         TODO("not implemented")
     }
 }

@@ -18,29 +18,29 @@ interface PreferenceStorage {
     var lastFetchDate: Long
     var onboardingFinished: Boolean
     var showOnboardingHomeAnimation: Boolean
-    var exposureSummary: CovidExposureSummary
-    val riskLevelValue: Float?
-    val observableRiskLevelValue: LiveData<Float?>
 
+    var exposureSummary: CovidExposureSummary
+    val observableExposureSummary: LiveData<CovidExposureSummary>
     fun resetExposureSummary()
+
+    var riskMetrics: RiskMetrics?
+    val observableRiskMetrics: LiveData<RiskMetrics?>
 
     var regions: Regions
     val observableRegions: LiveData<Regions>
-
     val region: Region
-    val riskModelConfiguration: RiskModelConfiguration
-    var selectedRegion: Int
     val observableRegion: LiveData<Region>
+    var selectedRegion: Int
 
+    val riskModelConfiguration: RiskModelConfiguration
     val exposureConfiguration: CovidExposureConfiguration
-    val observableExposureSummary: LiveData<CovidExposureSummary>
 }
 
 class SharedPreferenceStorage(context: Context) : PreferenceStorage {
     private val prefs = context.applicationContext.getSharedPreferences(NAME, MODE_PRIVATE)
     private val _exposureSummary = MutableLiveData<CovidExposureSummary>()
     private val _regions = MutableLiveData<Regions>()
-    private val _riskLevelValue = MutableLiveData<Float>()
+    private val _riskMetrics = MutableLiveData<RiskMetrics?>()
     private val _region = MutableLiveData<Region>()
     private val defaultExposureSummary = CovidExposureSummary(
         daySinceLastExposure = 0,
@@ -84,14 +84,14 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
         CovidExposureSummary::class.java
     )
 
-    override var riskLevelValue: Float? by NullablePreference(
+    override var riskMetrics: RiskMetrics? by NullableObjectPreference(
         prefs,
-        RISK_LEVEL_VALUE,
-        null
+        RISK_METRICS,
+        RiskMetrics::class.java
     )
 
-    override val observableRiskLevelValue: LiveData<Float?>
-        get() = _riskLevelValue.also { it.value = riskLevelValue }
+    override val observableRiskMetrics: LiveData<RiskMetrics?>
+        get() = _riskMetrics.also { it.value = riskMetrics }
 
     override var regions: Regions by ObjectPreference(
         prefs,
@@ -128,7 +128,7 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
         private const val NAME = "ag_minimal_prefs"
         private const val LAST_FETCH_DATE = "last_fetch_date"
         private const val EXPOSURE_SUMMARY = "next_steps"
-        private const val RISK_LEVEL_VALUE = "risk_level_value"
+        private const val RISK_METRICS = "risk_metrics"
         private const val REGIONS = "regions"
         private const val SELECTED_REGION = "selected_region"
         private const val ONBOARDING_FINISHED = "onboarding_finished"
@@ -136,31 +136,44 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
     }
 }
 
-class ObjectPreference<T>(
+open class NullableObjectPreference<T>(
     private val preferences: SharedPreferences,
     private val name: String,
-    private val defaultValue: T,
     private val clazz: Class<T>,
+    private val defaultValue: T? = null,
     private val gson: Gson = Gson()
-) : ReadWriteProperty<Any, T> {
+) : ReadWriteProperty<Any, T?> {
 
     private var value: T? = null
 
     @WorkerThread
-    override fun getValue(thisRef: Any, property: KProperty<*>): T {
+    override fun getValue(thisRef: Any, property: KProperty<*>): T? {
         return preferences.getString(name, null)?.let { json ->
             value ?: gson.fromJson(json, clazz).also { value = it }
-        } ?: defaultValue.also { setValue(it) }
+        } ?: defaultValue?.also { setValue(it) }
     }
 
-    override fun setValue(thisRef: Any, property: KProperty<*>, value: T) = setValue(value)
+    override fun setValue(thisRef: Any, property: KProperty<*>, value: T?) = setValue(value)
 
-    private fun setValue(value: T) {
+    private fun setValue(value: T?) {
         this.value = value
         preferences.edit()
             .putString(name, gson.toJson(value))
             .apply()
     }
+}
+
+class ObjectPreference<T>(
+    preferences: SharedPreferences,
+    name: String,
+    defaultValue: T,
+    clazz: Class<T>,
+    gson: Gson = Gson()
+) : NullableObjectPreference<T>(preferences, name, clazz, defaultValue, gson) {
+
+    @WorkerThread
+    override fun getValue(thisRef: Any, property: KProperty<*>) =
+        super.getValue(thisRef, property)!!
 }
 
 open class NullablePreference<T>(

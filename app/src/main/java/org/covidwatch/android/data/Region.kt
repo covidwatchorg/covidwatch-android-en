@@ -20,7 +20,12 @@ data class Region(
     val exposureConfiguration: ExposureConfiguration = ExposureConfiguration(),
 
     @SerializedName("azRiskModelConfiguration")
-    val riskModelConfiguration: RiskModelConfiguration = ArizonaRiskModelConfiguration()
+    val riskModelConfiguration: RiskModelConfiguration = ArizonaRiskModelConfiguration(),
+
+    /**
+     * How many days since the last significant exposure considered to be a high risk exposure
+     */
+    val recentExposureDays: Int
 )
 
 class ExposureConfiguration(
@@ -111,7 +116,8 @@ object DefaultRegions {
                 description = "Please call Arizona Department of Health Services at (844) 542-8201 for assistance.",
                 url = "tel:1-844-542-8201"
             )
-        )
+        ),
+        recentExposureDays = 14
     )
 
     private val universityOfArizona = Region(
@@ -178,7 +184,8 @@ object DefaultRegions {
                 description = "If you are a student or staff at UArizona, please call Campus Health Services at 520-621-9202 to obtain one. If you were tested in a different region, have a copy of your results ready.",
                 url = "tel:1-520-621-9202"
             )
-        )
+        ),
+        recentExposureDays = 14
     )
 
     private val arizonaStateUniversity = Region(
@@ -189,7 +196,8 @@ object DefaultRegions {
         nextStepsNoSignificantExposure = listOf(shareTheApp),
         nextStepsSignificantExposure = listOf(shareTheApp),
         nextStepsVerifiedPositive = listOf(shareTheApp),
-        nextStepsVerificationCode = listOf(nextStepsVerificationCodeDefault)
+        nextStepsVerificationCode = listOf(nextStepsVerificationCodeDefault),
+        recentExposureDays = 14
     )
 
     private val northernArizonaUniversity = Region(
@@ -200,7 +208,8 @@ object DefaultRegions {
         nextStepsNoSignificantExposure = listOf(shareTheApp),
         nextStepsSignificantExposure = listOf(shareTheApp),
         nextStepsVerifiedPositive = listOf(shareTheApp),
-        nextStepsVerificationCode = listOf(nextStepsVerificationCodeDefault)
+        nextStepsVerificationCode = listOf(nextStepsVerificationCodeDefault),
+        recentExposureDays = 14
     )
 
     val all = listOf(

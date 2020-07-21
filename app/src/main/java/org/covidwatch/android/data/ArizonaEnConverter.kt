@@ -151,9 +151,17 @@ class ArizonaEnConverter(private val prefs: PreferenceStorage) : EnConverter {
             else -> 0
         }
 
-        return key.asDiagnosisKey()
-            .copy(transmissionRisk = transmissionRisk)
+        return key.asDiagnosisKey().copy(transmissionRisk = transmissionRisk)
     }
+
+    override fun riskMetrics(
+        exposures: List<CovidExposureInformation>,
+        computeDate: Date
+    ) = RiskMetrics(
+        riskLevelValue(exposures, computeDate),
+        leastRecentSignificantExposureDate(exposures),
+        mostRecentSignificantExposureDate(exposures)
+    )
 
     override fun covidExposureInformation(
         exposureInformation: ExposureInformation
