@@ -56,8 +56,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
             observe(riskLevel) {
                 val info = when (it) {
-                    RiskLevel.LOW -> getString(R.string.unknown_risk_title)
-                    else -> getString(R.string.next_steps_title)
+                    RiskLevel.LOW -> {
+                        binding.riskInfo.setOnClickListener(null)
+                        getString(R.string.unknown_risk_title)
+                    }
+                    else -> {
+                        binding.riskInfo.setOnClickListener {
+                            findNavController().navigate(R.id.exposuresFragment)
+                        }
+                        getString(R.string.next_steps_title)
+                    }
                 }
                 binding.riskInfo.text = HtmlCompat.fromHtml(
                     info, HtmlCompat.FROM_HTML_MODE_COMPACT
