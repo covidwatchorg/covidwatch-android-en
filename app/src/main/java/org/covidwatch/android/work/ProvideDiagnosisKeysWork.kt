@@ -81,6 +81,9 @@ class ProvideDiagnosisKeysWork(
                             dir?.delete()
                         }
                         failure {
+                            val dir = keys[0].parentFile
+                            keys.forEach { file -> file.delete() }
+                            dir?.delete()
                             Timber.d("Failed to added keys to EN")
                             return@withContext failure(it)
                         }
