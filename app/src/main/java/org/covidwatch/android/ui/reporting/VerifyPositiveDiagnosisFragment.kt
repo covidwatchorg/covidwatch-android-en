@@ -40,12 +40,13 @@ class VerifyPositiveDiagnosisFragment :
 
             cbNoSymptoms.setOnCheckedChangeListener { _, noSymptoms ->
                 etSymptomsDate.isEnabled = !noSymptoms
+                noSymptomsLayout.isVisible = noSymptoms
                 viewModel.noSymptoms(noSymptoms)
             }
 
             cbNoExposedDate.setOnCheckedChangeListener { _, noExposedDate ->
                 etExposedDate.isEnabled = !noExposedDate
-                viewModel.noExposedDate(noExposedDate)
+                viewModel.noInfectionDate(noExposedDate)
             }
 
             ivTestVerificationCodeInfo.setOnClickListener {
@@ -58,19 +59,19 @@ class VerifyPositiveDiagnosisFragment :
             etSymptomsDate.setOnClickListener {
                 showDatePicker {
                     binding.etSymptomsDate.setText(DateFormatter.format(it))
-                    viewModel.symptomsStartDate(it)
+                    viewModel.symptomDate(it)
                 }
             }
             etTestedDate.setOnClickListener {
                 showDatePicker {
                     binding.etTestedDate.setText(DateFormatter.format(it))
-                    viewModel.testedDate(it)
+                    viewModel.testDate(it)
                 }
             }
             etExposedDate.setOnClickListener {
                 showDatePicker {
                     binding.etExposedDate.setText(DateFormatter.format(it))
-                    viewModel.exposedDate(it)
+                    viewModel.infectionDate(it)
                 }
             }
 

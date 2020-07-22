@@ -27,18 +27,25 @@ class VerifyPositiveDiagnosisViewModel(
 
     val readyToSubmit: LiveData<Boolean> = diagnosisVerification.map { it?.readyToSubmit ?: false }
 
-    fun symptomsStartDate(date: Long) {
+    private var infectionDate: Date? = null
+    private var testDate: Date? = null
+    private var symptomDate: Date? = null
+
+    fun symptomDate(date: Long) {
+        symptomDate = Date(date)
         diagnosisVerification.value =
-            diagnosisVerification.value?.copy(symptomsStartDate = Date(date))
+            diagnosisVerification.value?.copy(symptomsStartDate = symptomDate)
     }
 
-    fun testedDate(date: Long) {
-        diagnosisVerification.value = diagnosisVerification.value?.copy(testDate = Date(date))
+    fun testDate(date: Long) {
+        testDate = Date(date)
+        diagnosisVerification.value = diagnosisVerification.value?.copy(testDate = testDate)
     }
 
-    fun exposedDate(date: Long) {
+    fun infectionDate(date: Long) {
+        infectionDate = Date(date)
         diagnosisVerification.value =
-            diagnosisVerification.value?.copy(possibleInfectionDate = Date(date))
+            diagnosisVerification.value?.copy(possibleInfectionDate = infectionDate)
     }
 
     fun verificationCode(code: String) {
@@ -46,12 +53,18 @@ class VerifyPositiveDiagnosisViewModel(
     }
 
     fun noSymptoms(noSymptoms: Boolean) {
-        diagnosisVerification.value = diagnosisVerification.value?.copy(noSymptoms = noSymptoms)
+        diagnosisVerification.value = diagnosisVerification.value?.copy(
+            symptomsStartDate = if (noSymptoms) null else symptomDate,
+            noSymptoms = noSymptoms
+        )
     }
 
-    fun noExposedDate(noExposedDate: Boolean) {
+    fun noInfectionDate(noInfectionDate: Boolean) {
         diagnosisVerification.value =
-            diagnosisVerification.value?.copy(noExposedDate = noExposedDate)
+            diagnosisVerification.value?.copy(
+                possibleInfectionDate = if (noInfectionDate) null else infectionDate,
+                noInfectionDate = noInfectionDate
+            )
     }
 
     fun sharePositiveDiagnosis() {

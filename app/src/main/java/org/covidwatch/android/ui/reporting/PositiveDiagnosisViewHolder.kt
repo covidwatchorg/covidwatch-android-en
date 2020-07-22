@@ -51,17 +51,18 @@ class PositiveDiagnosisViewHolder(private val root: ExpandableLayout) :
         symptomsDate.text = context.getString(
             R.string.symptoms_diagnosis_date,
             symptomsDateText
-        )
+        ).fromHtml()
 
         val possibleInfectionDate = positiveDiagnosis.verificationData?.possibleInfectionDate
         val infectionDateText = possibleInfectionDate?.let { DateFormatter.format(it) }
             ?: context.getString(R.string.no_infection_date_report)
-        infectionDate.text = context.getString(R.string.infection_diagnosis_date, infectionDateText)
+        infectionDate.text =
+            context.getString(R.string.infection_diagnosis_date, infectionDateText).fromHtml()
 
         val testDiagnosisDate = positiveDiagnosis.verificationData?.testDate
         val testDateText = testDiagnosisDate?.let { DateFormatter.format(it) }
             ?: context.getString(R.string.no_test_date_report)
-        testDate.text = context.getString(R.string.test_diagnosis_date, testDateText)
+        testDate.text = context.getString(R.string.test_diagnosis_date, testDateText).fromHtml()
 
         btnDeleteDiagnosis.setOnClickListener {
             viewModel.deleteDiagnosis(positiveDiagnosis)
