@@ -71,7 +71,7 @@ class UploadDiagnosisKeysUseCase(
             val verifiedDiagnosis = params.report.copy(
                 verified = true,
                 verificationData = verificationData.copy(
-                    symptomsStartDate = DateFormatter.testDate(codeVerification.symptomDate),
+                    symptomsStartDate = DateFormatter.symptomDate(codeVerification.symptomDate),
                     testType = codeVerification.testType,
                     token = codeVerification.token,
                     hmacKey = codeVerification.hmacKey,
