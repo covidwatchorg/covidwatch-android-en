@@ -18,9 +18,12 @@ class ExposureNotificationReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         Timber.d("Receive a broadcast from Exposure Notification")
-        if (intent?.action == ExposureNotificationClient.ACTION_EXPOSURE_STATE_UPDATED) {
+        val action = intent?.action
+        if (action == ExposureNotificationClient.ACTION_EXPOSURE_STATE_UPDATED ||
+            action == ExposureNotificationClient.ACTION_EXPOSURE_NOT_FOUND
+        ) {
             val token = intent.getStringExtra(ExposureNotificationClient.EXTRA_TOKEN) ?: return
-            Timber.d("Received broadcast is ACTION_EXPOSURE_STATE_UPDATED for token: $token")
+            Timber.d("Received broadcast is $action for token: $token")
             GlobalScope.launchUseCase(
                 updateExposureStateUseCase,
                 UpdateExposureStateUseCase.Params(token)

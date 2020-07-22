@@ -23,12 +23,13 @@ import org.covidwatch.android.R
 import org.covidwatch.android.attenuationDurationThresholds
 import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
+import org.covidwatch.android.data.keyfile.KeyFileRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.databinding.DialogPossibleExposuresTestCaseBinding
 import org.covidwatch.android.databinding.FragmentMenuBinding
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
+import org.covidwatch.android.extension.launchUseCase
 import org.covidwatch.android.extension.observe
-import org.covidwatch.android.extension.observeUseCase
 import org.covidwatch.android.ui.BaseViewModelFragment
 import org.koin.android.ext.android.inject
 import java.io.File
@@ -83,6 +84,7 @@ fun org.covidwatch.android.data.CovidExposureConfiguration.asCovidExposureConfig
 
 open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuViewModel>() {
     private val exposureInformationRepository: ExposureInformationRepository by inject()
+    private val keyFileRepository: KeyFileRepository by inject()
     private val provideDiagnosisKeysUseCase: ProvideDiagnosisKeysUseCase by inject()
     private val preferences: PreferenceStorage by inject()
 
@@ -130,25 +132,22 @@ open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuVie
             R.string.menu_reset_possible_exposures -> {
                 lifecycleScope.launch {
                     exposureInformationRepository.reset()
+                    keyFileRepository.reset()
                     preferences.resetExposureSummary()
-                }
-                Toast.makeText(context, "Possible exposures were deleted", Toast.LENGTH_SHORT)
-                    .show()
-                findNavController().popBackStack()
-            }
-            R.string.menu_detect_exposures_from_server -> {
-                lifecycleScope.observeUseCase(provideDiagnosisKeysUseCase) {
-                    success {
-                        Toast.makeText(
-                            context,
-                            "Positive diagnosis downloaded",
-                            Toast.LENGTH_SHORT
-                        ).show()
 
-                    }
-                    failure { handleStatus(it) }
+                    Toast.makeText(context, "Possible exposures were deleted", Toast.LENGTH_SHORT)
+                        .show()
                     findNavController().popBackStack()
                 }
+            }
+            R.string.menu_detect_exposures_from_server -> {
+                lifecycleScope.launchUseCase(provideDiagnosisKeysUseCase)
+                Toast.makeText(
+                    context,
+                    "Downloading positive diagnoses. Watch a notification for status",
+                    Toast.LENGTH_SHORT
+                ).show()
+                findNavController().popBackStack()
             }
             R.string.menu_export_possible_exposures -> {
                 context?.let { context ->

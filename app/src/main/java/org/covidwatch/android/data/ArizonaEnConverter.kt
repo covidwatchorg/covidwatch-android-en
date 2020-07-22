@@ -175,7 +175,8 @@ class ArizonaEnConverter(private val prefs: PreferenceStorage) : EnConverter {
                 attenuationDurationsInMinutes,
                 transmissionRiskLevel
             ),
-            attenuationDurations = attenuationDurationsInMinutes.toList()
+            attenuationDurations = attenuationDurationsInMinutes.toList(),
+            id = dateMillisSinceEpoch
         )
     }
 }

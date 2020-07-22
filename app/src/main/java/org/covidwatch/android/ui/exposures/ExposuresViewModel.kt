@@ -28,12 +28,10 @@ class ExposuresViewModel(
     val showExposureDetails: LiveData<Event<CovidExposureInformation>> = _showExposureDetails
 
     val exposureInfo: LiveData<List<Any>> =
-        exposureInformationRepository.exposureInformation().map {
-            if (it.isNotEmpty()) it + Footer
-            else it
+        exposureInformationRepository.exposureInformation().map { exposures ->
+            if (exposures.isNotEmpty()) exposures.sortedByDescending { it.date.time } + Footer
+            else exposures
         }
-
-    object Footer
 
     val lastExposureTime = preferenceStorage.observableExposureSummary.map { it.modifiedTime }
 
@@ -56,9 +54,7 @@ class ExposuresViewModel(
         }
     }
 
-    fun showExposureDetails(exposureInformation: CovidExposureInformation) {
-        _showExposureDetails.value = Event(exposureInformation)
-    }
-
     private suspend fun isExposureNotificationEnabled() = enManager.isEnabled().result() ?: false
+
+    object Footer
 }

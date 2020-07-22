@@ -27,8 +27,8 @@ data class CovidExposureInformation(
     val totalRiskScore: RiskScore,
     @Expose
     val attenuationDurations: List<Int>,
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0
+    @PrimaryKey
+    val id: Long
 ) : Serializable {
 
     // TODO: 17.06.2020 Remove this hacks after calibration is done or move to calibration specific
