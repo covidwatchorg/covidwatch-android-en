@@ -27,12 +27,25 @@ class VerifyPositiveDiagnosisViewModel(
 
     val readyToSubmit: LiveData<Boolean> = diagnosisVerification.map { it?.readyToSubmit ?: false }
 
-    fun symptomsStartDate(date: Long) {
-        diagnosisVerification.value = diagnosisVerification.value?.copy(symptomsStartDate = date)
+    private var infectionDate: Date? = null
+    private var testDate: Date? = null
+    private var symptomDate: Date? = null
+
+    fun symptomDate(date: Long) {
+        symptomDate = Date(date)
+        diagnosisVerification.value =
+            diagnosisVerification.value?.copy(symptomsStartDate = symptomDate)
     }
 
-    fun testedDate(date: Long) {
-        diagnosisVerification.value = diagnosisVerification.value?.copy(testDate = Date(date))
+    fun testDate(date: Long) {
+        testDate = Date(date)
+        diagnosisVerification.value = diagnosisVerification.value?.copy(testDate = testDate)
+    }
+
+    fun infectionDate(date: Long) {
+        infectionDate = Date(date)
+        diagnosisVerification.value =
+            diagnosisVerification.value?.copy(possibleInfectionDate = infectionDate)
     }
 
     fun verificationCode(code: String) {
@@ -40,7 +53,18 @@ class VerifyPositiveDiagnosisViewModel(
     }
 
     fun noSymptoms(noSymptoms: Boolean) {
-        diagnosisVerification.value = diagnosisVerification.value?.copy(noSymptoms = noSymptoms)
+        diagnosisVerification.value = diagnosisVerification.value?.copy(
+            symptomsStartDate = if (noSymptoms) null else symptomDate,
+            noSymptoms = noSymptoms
+        )
+    }
+
+    fun noInfectionDate(noInfectionDate: Boolean) {
+        diagnosisVerification.value =
+            diagnosisVerification.value?.copy(
+                possibleInfectionDate = if (noInfectionDate) null else infectionDate,
+                noInfectionDate = noInfectionDate
+            )
     }
 
     fun sharePositiveDiagnosis() {
@@ -64,8 +88,6 @@ class VerifyPositiveDiagnosisViewModel(
         withPermission(ExposureNotificationManager.PERMISSION_KEYS_REQUEST_CODE) {
             enManager.temporaryExposureKeyHistory().apply {
                 success {
-                    _showThankYou.send()
-                    // TODO: 23.06.2020 Use proper logic for assigning transmission risk levels
                     observeStatus(
                         startUploadDiagnosisKeysWorkUseCase,
                         StartUploadDiagnosisKeysWorkUseCase.Params(
@@ -74,7 +96,11 @@ class VerifyPositiveDiagnosisViewModel(
                                 verificationData = diagnosisVerification.value
                             )
                         )
-                    )
+                    ) { uploading ->
+                        uploading.success {
+                            _showThankYou.send()
+                        }
+                    }
                 }
                 failure { handleStatus(it) }
             }

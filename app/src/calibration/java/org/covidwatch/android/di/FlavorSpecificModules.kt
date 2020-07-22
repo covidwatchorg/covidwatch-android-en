@@ -14,8 +14,7 @@ val flavorSpecificModule = module {
         NotifyOthersViewModel(
             startUploadDiagnosisKeysWorkUseCase = get(),
             exportDiagnosisKeysAsFileUseCase = get(),
-            enManager = get(),
-            positiveDiagnosisRepository = get()
+            enManager = get()
         )
     }
 

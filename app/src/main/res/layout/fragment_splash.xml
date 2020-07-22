@@ -8,14 +8,14 @@
     android:paddingHorizontal="25dp">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/region_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_extra_large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/uoa_logo" />
+        app:srcCompat="@drawable/cw_big_logo" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -27,7 +27,7 @@
         app:layout_constraintBottom_toTopOf="@id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/region_logo" />
 
     <TextView
         android:id="@+id/textView"
@@ -40,28 +40,20 @@
         android:textColor="@color/white"
         android:textSize="19sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/start_button"
+        app:layout_constraintBottom_toTopOf="@id/btn_get_started"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/start_button"
+        android:id="@+id/btn_get_started"
         style="@style/Button.Action"
         android:layout_marginBottom="@dimen/padding_normal"
         android:backgroundTint="@color/white"
         android:text="@string/get_started_button"
         android:textColor="@color/bluejay"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/powered_by"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <include
-        android:id="@+id/powered_by"
-        layout="@layout/powered_by_white"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

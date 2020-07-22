@@ -22,8 +22,25 @@ open class BaseMenuAdapter(
     )
 
     protected val items = mutableListOf(
+        MenuItem(
+            R.string.menu_reset_possible_exposures,
+            0,
+            Destination.None
+        ),
+        MenuItem(
+            R.string.menu_detect_exposures_from_server,
+            0,
+            Destination.None
+        ),
+        MenuItem(
+            R.string.menu_export_possible_exposures,
+            0,
+            Destination.None
+        ),
         possibleExposuresMenuItem,
         MenuItem(R.string.menu_notify_others, 0, NotifyOthers),
+        MenuItem(R.string.menu_past_diagnoses, 0, PastDiagnoses),
+        MenuItem(R.string.menu_change_region, 0, ChangeRegion),
         MenuItem(R.string.menu_how_it_works, 0, HowItWorks),
         MenuItem(
             R.string.menu_health_guidelines,
@@ -36,14 +53,14 @@ open class BaseMenuAdapter(
             Browser(R.string.covidwatch_website)
         ),
         MenuItem(
-            R.string.menu_faq,
+            R.string.menu_privacy,
             R.drawable.ic_exit_to_app,
-            Browser(R.string.faq)
+            Browser(R.string.privacy)
         ),
         MenuItem(
             R.string.menu_terms_of_use,
             R.drawable.ic_exit_to_app,
-            Browser(R.string.terms)
+            Browser(R.string.privacy)
         ),
         MenuItem(
             R.string.menu_support,

@@ -6,6 +6,7 @@ import android.os.Parcel
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.CalendarConstraints
@@ -15,7 +16,6 @@ import org.covidwatch.android.databinding.FragmentVerifyPositiveDiagnosisBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseViewModelFragment
-import org.covidwatch.android.ui.Dialogs
 import org.covidwatch.android.ui.util.DateFormatter
 import org.koin.android.ext.android.inject
 import java.util.*
@@ -40,18 +40,40 @@ class VerifyPositiveDiagnosisFragment :
 
             cbNoSymptoms.setOnCheckedChangeListener { _, noSymptoms ->
                 etSymptomsDate.isEnabled = !noSymptoms
+                noSymptomsLayout.isVisible = noSymptoms
                 viewModel.noSymptoms(noSymptoms)
             }
 
+            cbNoExposedDate.setOnCheckedChangeListener { _, noExposedDate ->
+                etExposedDate.isEnabled = !noExposedDate
+                viewModel.noInfectionDate(noExposedDate)
+            }
+
             ivTestVerificationCodeInfo.setOnClickListener {
-                Dialogs.testVerificationCodeInfo(requireContext())
+                VerificationCodeHelpDialog().show(childFragmentManager, null)
             }
             etVerificationCode.addTextChangedListener(afterTextChanged = {
                 viewModel.verificationCode(it.toString())
             })
 
-            etSymptomsDate.setOnClickListener { showSymptomsDatePicker() }
-            etTestedDate.setOnClickListener { showTestedDatePicker() }
+            etSymptomsDate.setOnClickListener {
+                showDatePicker {
+                    binding.etSymptomsDate.setText(DateFormatter.format(it))
+                    viewModel.symptomDate(it)
+                }
+            }
+            etTestedDate.setOnClickListener {
+                showDatePicker {
+                    binding.etTestedDate.setText(DateFormatter.format(it))
+                    viewModel.testDate(it)
+                }
+            }
+            etExposedDate.setOnClickListener {
+                showDatePicker {
+                    binding.etExposedDate.setText(DateFormatter.format(it))
+                    viewModel.infectionDate(it)
+                }
+            }
 
             btnFinishVerification.setOnClickListener {
                 viewModel.sharePositiveDiagnosis()
@@ -60,7 +82,7 @@ class VerifyPositiveDiagnosisFragment :
 
         with(viewModel) {
             observe(readyToSubmit) {
-                binding.btnFinishVerification.isEnabled = it
+                binding.btnFinishVerification.isVisible = it
             }
 
             observeEvent(showThankYou) {
@@ -69,27 +91,7 @@ class VerifyPositiveDiagnosisFragment :
         }
     }
 
-    private fun showSymptomsDatePicker() {
-        val builder = MaterialDatePicker.Builder.datePicker()
-        val constraints = CalendarConstraints.Builder()
-        val now = Date().time
-
-        constraints.setValidator(
-            BaseDateValidator { it < now }
-        )
-
-        val datePicker = builder
-            .setCalendarConstraints(constraints.build())
-            .build()
-
-        datePicker.addOnPositiveButtonClickListener {
-            binding.etSymptomsDate.setText(DateFormatter.format(it))
-            viewModel.symptomsStartDate(it)
-        }
-        datePicker.show(parentFragmentManager, null)
-    }
-
-    private fun showTestedDatePicker() {
+    private fun showDatePicker(selectedDate: (Long) -> Unit) {
         val builder = MaterialDatePicker.Builder.datePicker()
         val constraints = CalendarConstraints.Builder()
 
@@ -105,11 +107,8 @@ class VerifyPositiveDiagnosisFragment :
             .setCalendarConstraints(constraints.build())
             .build()
 
-        datePicker.addOnPositiveButtonClickListener {
-            binding.etTestedDate.setText(DateFormatter.format(it))
-            viewModel.testedDate(it)
-        }
-        datePicker.show(parentFragmentManager, null)
+        datePicker.addOnPositiveButtonClickListener { selectedDate(it) }
+        datePicker.show(childFragmentManager, null)
     }
 
     @SuppressLint("ParcelCreator")

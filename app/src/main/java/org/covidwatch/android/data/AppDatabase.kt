@@ -8,6 +8,8 @@ import org.covidwatch.android.data.countrycode.CountryCodeDao
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenDao
 import org.covidwatch.android.data.exposureinformation.ExposureInformationDao
+import org.covidwatch.android.data.keyfile.KeyFile
+import org.covidwatch.android.data.keyfile.KeyFileDao
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisReportDao
 
 @Database(
@@ -15,7 +17,8 @@ import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisReportDao
         CovidExposureInformation::class,
         DiagnosisKeysToken::class,
         PositiveDiagnosisReport::class,
-        CountryCode::class
+        CountryCode::class,
+        KeyFile::class
     ],
     version = 1,
     exportSchema = false
@@ -24,6 +27,7 @@ import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisReportDao
 abstract class AppDatabase : RoomDatabase() {
     abstract fun exposureInformationDao(): ExposureInformationDao
     abstract fun diagnosisKeysTokenDao(): DiagnosisKeysTokenDao
+    abstract fun keyFileDao(): KeyFileDao
     abstract fun positiveDiagnosisReportDao(): PositiveDiagnosisReportDao
     abstract fun countryCodeDao(): CountryCodeDao
 }

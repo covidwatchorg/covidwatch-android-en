@@ -1,42 +1,51 @@
 package org.covidwatch.android.data
 
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
-import com.google.gson.annotations.Expose
-import java.io.Serializable
 
-@Suppress("ArrayInDataClass")
-data class CovidExposureConfiguration(
-    @Expose
+class CovidExposureConfiguration(
     val minimumRiskScore: Int,
-    @Expose
     val attenuationScores: IntArray,
-    @Expose
-    val attenuationWeight: Int,
-    @Expose
     val daysSinceLastExposureScores: IntArray,
-    @Expose
-    val daysSinceLastExposureWeight: Int,
-    @Expose
     val durationScores: IntArray,
-    @Expose
-    val durationWeight: Int,
-    @Expose
     val transmissionRiskScores: IntArray,
-    @Expose
-    val transmissionRiskWeight: Int,
-    @Expose
-    val durationAtAttenuationThresholds: IntArray
-) : Serializable
+    val durationAtAttenuationThresholds: IntArray,
+
+    val attenuationWeight: Int? = null,
+    val daysSinceLastExposureWeight: Int? = null,
+    val durationWeight: Int? = null,
+    val transmissionRiskWeight: Int? = null
+)
 
 fun ExposureConfiguration.asCovidExposureConfiguration() = CovidExposureConfiguration(
     minimumRiskScore,
     attenuationScores,
-    attenuationWeight,
     daysSinceLastExposureScores,
-    daysSinceLastExposureWeight,
     durationScores,
-    durationWeight,
     transmissionRiskScores,
-    transmissionRiskWeight,
-    durationAtAttenuationThresholds
+    durationAtAttenuationThresholds,
+
+    attenuationWeight,
+    daysSinceLastExposureWeight,
+    durationWeight,
+    transmissionRiskWeight
 )
+
+fun CovidExposureConfiguration.asExposureConfiguration(): ExposureConfiguration =
+    ExposureConfiguration.ExposureConfigurationBuilder().let { builder ->
+        builder.setMinimumRiskScore(minimumRiskScore)
+        builder.setDurationAtAttenuationThresholds(*durationAtAttenuationThresholds)
+
+        builder.setAttenuationScores(*attenuationScores)
+        attenuationWeight?.let { builder.setAttenuationWeight(it) }
+
+        builder.setDaysSinceLastExposureScores(*daysSinceLastExposureScores)
+        daysSinceLastExposureWeight?.let { builder.setDaysSinceLastExposureWeight(it) }
+
+        builder.setDurationScores(*durationScores)
+        durationWeight?.let { builder.setDurationWeight(it) }
+
+        builder.setTransmissionRiskScores(*transmissionRiskScores)
+        transmissionRiskWeight?.let { builder.setTransmissionRiskWeight(it) }
+
+        builder.build()
+    }

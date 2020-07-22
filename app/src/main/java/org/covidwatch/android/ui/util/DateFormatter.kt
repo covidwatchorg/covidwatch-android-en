@@ -5,7 +5,7 @@ import java.util.*
 
 object DateFormatter {
     private const val DATE_PATTERN = "MMM dd, yyyy"
-    private const val TEST_DATE_PATTERN = "mm-dd-yyyy"
+    private const val SYMPTOM_DATE_PATTERN = "yyyy-MM-dd"
     private const val DATE_TIME_PATTERN = "MMM dd, yyyy, hh:mm aaa"
 
     private var locale = Locale.getDefault()
@@ -28,7 +28,7 @@ object DateFormatter {
             return SimpleDateFormat(DATE_TIME_PATTERN, locale).also { field = it }
         }
 
-    private var testDateFormat = SimpleDateFormat(TEST_DATE_PATTERN, Locale.US)
+    private var symptomDateFormat = SimpleDateFormat(SYMPTOM_DATE_PATTERN, Locale.US)
 
     @JvmStatic
     fun format(time: Date?): String = time?.let { dateFormat.format(it) } ?: ""
@@ -36,9 +36,9 @@ object DateFormatter {
     @JvmStatic
     fun format(time: Long?): String = time?.let { dateFormat.format(it) } ?: ""
 
-    fun formatTestDate(time: Long?): String = time?.let { testDateFormat.format(it) } ?: ""
+    fun formatTestDate(time: Long?): String = time?.let { symptomDateFormat.format(it) } ?: ""
 
-    fun testDate(date: String?): Date = date?.let { testDateFormat.parse(it) } ?: Date()
+    fun symptomDate(date: String?): Date = date?.let { symptomDateFormat.parse(it) } ?: Date()
 
     @JvmStatic
     fun formatDateAndTime(time: Date?): String = time?.let { dateAndTimeFormat.format(it) } ?: ""

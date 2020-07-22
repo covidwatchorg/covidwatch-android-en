@@ -20,11 +20,14 @@ import org.covidwatch.android.data.diagnosisverification.DiagnosisVerificationRe
 import org.covidwatch.android.data.diagnosisverification.DiagnosisVerificationRepository
 import org.covidwatch.android.data.exposureinformation.ExposureInformationLocalSource
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
+import org.covidwatch.android.data.keyfile.KeyFileLocalSource
+import org.covidwatch.android.data.keyfile.KeyFileRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisLocalSource
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRemoteSource
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.data.pref.SharedPreferenceStorage
+import org.covidwatch.android.data.risklevel.RiskLevelRepository
 import org.covidwatch.android.domain.*
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.ui.Notifications
@@ -33,7 +36,9 @@ import org.covidwatch.android.ui.exposures.ExposuresViewModel
 import org.covidwatch.android.ui.home.HomeViewModel
 import org.covidwatch.android.ui.menu.MenuViewModel
 import org.covidwatch.android.ui.onboarding.EnableExposureNotificationsViewModel
+import org.covidwatch.android.ui.reporting.PositiveDiagnosesViewModel
 import org.covidwatch.android.ui.reporting.VerifyPositiveDiagnosisViewModel
+import org.covidwatch.android.ui.selectregion.SelectRegionViewModel
 import org.covidwatch.android.ui.settings.SettingsViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -46,7 +51,7 @@ val appModule = module {
         Nearby.getExposureNotificationClient(androidApplication())
     }
 
-    single<EnConverter> { ArizonaEnConverter() }
+    single<EnConverter> { ArizonaEnConverter(prefs = get()) }
 
     single { Notifications(context = androidApplication()) }
 
@@ -105,15 +110,17 @@ val appModule = module {
             local = get(),
             countryCodeRepository = get(),
             uriManager = get(),
+            keyFileRepository = get(),
             dispatchers = get()
         )
     }
 
+    single { Gson() }
     single {
         DiagnosisVerificationRemoteSource(
             apiKey = androidContext().getString(R.string.verification_api_key),
             verificationServerEndpoint = androidContext().getString(R.string.server_verification_endpoint),
-            gson = Gson(),
+            gson = get(),
             httpClient = get()
         )
     }
@@ -142,6 +149,17 @@ val appModule = module {
         )
     }
 
+    single {
+        val appDatabase: AppDatabase = get()
+        appDatabase.keyFileDao()
+    }
+    single { KeyFileLocalSource(dao = get()) }
+    single {
+        KeyFileRepository(
+            local = get(),
+            dispatchers = get()
+        )
+    }
 
     single {
         val appDatabase: AppDatabase = get()
@@ -188,6 +206,7 @@ val appModule = module {
             countryCodeRepository = get(),
             verificationManager = get(),
             uriManager = get(),
+            enConverter = get(),
             appPackageName = androidContext().packageName,
             random = SecureRandom(),
             encoding = BaseEncoding.base64(),
@@ -213,6 +232,15 @@ val appModule = module {
     }
 
     factory {
+        UpdateRegionsUseCase(
+            httpClient = get(),
+            preferences = get(),
+            gson = get(),
+            dispatchers = get()
+        )
+    }
+
+    factory {
         UpdateExposureInformationUseCase(
             enManager = get(),
             tokenRepository = get(),
@@ -229,6 +257,14 @@ val appModule = module {
     }
 
     single {
+        RiskLevelRepository(
+            prefs = get(),
+            positiveDiagnosisRepository = get(),
+            dispatchers = get()
+        )
+    }
+
+    single {
         val context = androidContext()
 
         context.getSharedPreferences(
@@ -241,7 +277,8 @@ val appModule = module {
         HomeViewModel(
             enManager = get(),
             userFlowRepository = get(),
-            preferenceStorage = get()
+            riskLevelRepository = get(),
+            preferences = get()
         )
     }
 
@@ -250,7 +287,15 @@ val appModule = module {
     }
 
     viewModel {
+        SelectRegionViewModel(preferences = get())
+    }
+
+    viewModel {
         MenuViewModel(exposureInformationRepository = get())
+    }
+
+    viewModel {
+        PositiveDiagnosesViewModel(positiveDiagnosisRepository = get())
     }
 
     viewModel {
@@ -268,12 +313,6 @@ val appModule = module {
             .addInterceptor(logging)
             .addInterceptor(ConnectivityInterceptor(androidApplication()))
             .build()
-    }
-
-    single<TestedRepository> {
-        TestedRepositoryImpl(
-            preferences = get()
-        )
     }
 
     // Onboarding start

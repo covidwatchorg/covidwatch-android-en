@@ -28,4 +28,8 @@ abstract class UseCase<Type, in Params>(
         val job = scope.async(dispatchers.io) { run(params) }
         scope.launch(dispatchers.main) { onResult(job.await()) }
     }
+
+    suspend operator fun invoke(
+        params: Params? = null
+    ) = run(params)
 }

@@ -37,7 +37,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/padding_normal"
-                        android:src="@drawable/ic_uoa_logo"
+                        android:src="@drawable/uoa_logo"
                         tools:ignore="ContentDescription" />
 
                     <TextView
@@ -96,6 +96,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/not_now_button" />
+            android:text="@string/not_now_button"
+            android:textAllCaps="false" />
     </LinearLayout>
 </LinearLayout>

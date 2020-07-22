@@ -8,7 +8,7 @@ class ExposureConfigurationConverter {
     private val gson = Gson()
 
     @TypeConverter
-    fun toExposureConfiguration(configurationJson: String?): CovidExposureConfiguration =
+    fun toExposureConfiguration(configurationJson: String?): CovidExposureConfiguration? =
         gson.fromJson(configurationJson, CovidExposureConfiguration::class.java)
 
     @TypeConverter

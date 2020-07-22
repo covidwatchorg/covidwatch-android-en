@@ -8,8 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textColor">@color/primaryText</item>
-        <item name="android:actionBarSize">90dp</item>
-        <item name="actionBarSize">90dp</item>
     </style>
 
     <style name="AppTheme.LauncherTheme">
@@ -119,8 +117,7 @@
         <item name="android:paddingTop">@dimen/padding_small</item>
         <item name="android:paddingBottom">@dimen/padding_small</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/big_font_size</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/button_font_size</item>
     </style>
 
     <style name="TextView.ExposureDashboardStat">
@@ -147,4 +144,5 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">13sp</item>
     </style>
+
 </resources>

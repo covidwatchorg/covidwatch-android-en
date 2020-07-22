@@ -14,17 +14,12 @@
             type="org.covidwatch.android.data.CovidExposureInformation" />
     </data>
 
-    <TextView
+    <com.skydoves.expandablelayout.ExpandableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?selectableItemBackground"
-        android:clickable="true"
-        android:drawableStart="@drawable/ic_info_red"
-        android:drawablePadding="@dimen/padding_normal"
-        android:focusable="true"
-        android:onClick="@{()->viewModel.showExposureDetails(item)}"
-        android:paddingHorizontal="@dimen/padding_normal"
-        android:paddingVertical="@dimen/padding_normal"
+        android:foregroundTint="@color/lightGray"
+        app:expandable_spinner_color="@color/primaryText"
+        app:expandable_spinner_margin="@dimen/padding_normal"
         app:exposure="@{item}"
         tools:text="May 20, 2020" />
 </layout>

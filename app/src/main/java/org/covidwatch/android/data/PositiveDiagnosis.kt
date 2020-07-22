@@ -51,11 +51,14 @@ fun TemporaryExposureKey.asDiagnosisKey() = DiagnosisKey(
     rollingPeriod
 )
 
+@Suppress("ArrayInDataClass")
 data class PositiveDiagnosisVerification(
     val verificationTestCode: String = "",
-    val symptomsStartDate: Long? = null,
+    val symptomsStartDate: Date? = null,
     val noSymptoms: Boolean = false,
     val testDate: Date? = null,
+    val possibleInfectionDate: Date? = null,
+    val noInfectionDate: Boolean = false,
     val testType: String? = null,
     val token: String? = null,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
@@ -63,5 +66,10 @@ data class PositiveDiagnosisVerification(
     val verificationCertificate: String? = null
 ) {
     val readyToSubmit: Boolean
-        get() = verificationTestCode.trim().isNotEmpty()
+        get() = verificationTestCode.trim().isNotEmpty() && ( // must contain verification code and
+                symptomsStartDate != null || ( // either symptoms date
+                        // or no symptoms with infection date info and test date
+                        noSymptoms && (possibleInfectionDate != null || noInfectionDate) && testDate != null
+                        )
+                )
 }

@@ -71,11 +71,11 @@ class ProvideDiagnosisKeysFromFileWork(
                 .setDaysSinceLastExposureScores(*configuration.daysSinceLastExposureScores)
                 .setDurationScores(*configuration.durationScores)
                 .setTransmissionRiskScores(*configuration.transmissionRiskScores)
-                .setAttenuationWeight(configuration.attenuationWeight)
-                .setAttenuationWeight(configuration.attenuationWeight)
-                .setDaysSinceLastExposureWeight(configuration.daysSinceLastExposureWeight)
-                .setDurationWeight(configuration.durationWeight)
-                .setTransmissionRiskWeight(configuration.transmissionRiskWeight)
+                .setAttenuationWeight(configuration.attenuationWeight ?: 0)
+                .setAttenuationWeight(configuration.attenuationWeight ?: 0)
+                .setDaysSinceLastExposureWeight(configuration.daysSinceLastExposureWeight ?: 0)
+                .setDurationWeight(configuration.durationWeight ?: 0)
+                .setTransmissionRiskWeight(configuration.transmissionRiskWeight ?: 0)
 
             for (thresholds in attenuationDurationThresholds) {
                 val exposureConfiguration = configurationBuilder

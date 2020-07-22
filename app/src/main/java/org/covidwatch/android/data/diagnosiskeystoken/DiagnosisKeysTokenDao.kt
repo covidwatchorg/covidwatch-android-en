@@ -11,7 +11,7 @@ interface DiagnosisKeysTokenDao : BaseDao<DiagnosisKeysToken> {
     suspend fun exposedTokens(): List<DiagnosisKeysToken>
 
     @Query("SELECT * FROM diagnosis_keys_token WHERE token = :token")
-    suspend fun findByToken(token: String): DiagnosisKeysToken
+    suspend fun findByToken(token: String): DiagnosisKeysToken?
 
     @Query("DELETE FROM diagnosis_keys_token WHERE token = :token")
     suspend fun deleteByToken(token: String)

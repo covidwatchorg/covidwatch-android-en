@@ -10,9 +10,12 @@ import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenReposito
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.domain.UpdateExposureInformationUseCase
+import org.covidwatch.android.domain.UpdateExposureInformationUseCase.Params
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.ui.Notifications
 import org.koin.java.KoinJavaComponent.inject
 import timber.log.Timber
+import java.util.*
 
 class UpdateExposureStateWork(
     context: Context,
@@ -22,6 +25,7 @@ class UpdateExposureStateWork(
     private val exposureNotification by inject(ExposureNotificationManager::class.java)
     private val diagnosisKeysTokenRepository by inject(DiagnosisKeysTokenRepository::class.java)
     private val exposureInformationRepository by inject(ExposureInformationRepository::class.java)
+    private val notifications by inject(Notifications::class.java)
 
     private val preferenceStorage by inject(PreferenceStorage::class.java)
     private val enConverter by inject(EnConverter::class.java)
@@ -39,9 +43,14 @@ class UpdateExposureStateWork(
         if (exposureSummary.matchedKeyCount > 0) {
             diagnosisKeysTokenRepository.setExposed(token)
 
-            updateExposureInformationUseCase.run()
+            updateExposureInformationUseCase(Params(token))
 
             val exposures = exposureInformationRepository.exposures()
+
+            // Update risk metrics
+            preferenceStorage.riskMetrics = enConverter.riskMetrics(exposures, Date())
+
+            // Update risk summary
             val maxRiskScore = exposures.maxBy { it.totalRiskScore }?.totalRiskScore
             val summationRiskScore = exposures.sumBy { it.totalRiskScore }
 
@@ -53,6 +62,7 @@ class UpdateExposureStateWork(
                 maximumRiskScore = maxRiskScore ?: covidExposureSummary.maximumRiskScore,
                 summationRiskScore = summationRiskScore
             )
+            notifications.postExposureNotification()
             Timber.d("Exposure summary to display: ${preferenceStorage.exposureSummary}")
         } else {
             Timber.d("No exposure for token: $token")

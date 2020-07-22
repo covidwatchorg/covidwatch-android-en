@@ -14,5 +14,7 @@ sealed class Destination {
 
 object PossibleExposures : Destination()
 object NotifyOthers : Destination()
+object PastDiagnoses : Destination()
+object ChangeRegion : Destination()
 object HowItWorks : Destination()
 class Browser(@StringRes val url: Int) : Destination()
