@@ -20,8 +20,7 @@ data class VerifyCodeRequest(
 data class VerifyCodeResponse(
     @SerializedName("testtype")
     val testType: String?,
-    @SerializedName("testdate")
-    val testDate: String?,
+    val symptomDate: String?,
     val token: String?,
     val error: String?
 )
