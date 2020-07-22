@@ -57,9 +57,9 @@
     <string name="menu_change_region">Change Region</string>
     <string name="menu_how_it_works">How it works</string>
     <string name="menu_covid_watch_website">Covid Watch Website</string>
-    <string name="menu_health_guidelines">Health Guidelines</string>
-    <string name="menu_faq">FAQ</string>
-    <string name="menu_terms_of_use">Terms of Use</string>
+    <string name="menu_health_guidelines">CDC Health Guidelines</string>
+    <string name="menu_privacy">Privacy Policy</string>
+    <string name="menu_terms_of_use">Terms of Service</string>
     <string name="menu_privacy_policy">Privacy Policy</string>
     <string name="menu_support">Get Support</string>
 
@@ -199,7 +199,10 @@
 
     <!-- Reporting -->
     <string name="notify_others_title">How to Share a Positive Diagnosis</string>
-    <string name="notify_others_subtitle"><b>1</b> Provide a <b>Diagnosis Verification Code</b>\n<b>2</b> Answer brief questions\n<b>3</b> Anonymously share diagnosis to help stop the spread by letting other app users get notified of possible exposure if they were nearby.</string>
+    <string name="notify_others_subtitle"><b>1</b> \n<b>2</b> Answer brief questions\n<b>3</b> Anonymously share diagnosis to help stop the spread by letting other app users get notified of possible exposure if they were nearby.</string>
+    <string name="notify_others_step_1">Provide a <b>Diagnosis Verification Code</b></string>
+    <string name="notify_others_step_2">Answer brief questions</string>
+    <string name="notify_others_step_3">Anonymously share diagnosis to help stop the spread by letting other app users get notified of possible exposure if they were nearby.</string>
     <string name="test_verification_code_warning">Where is my code?</string>
     <string name="covid_19_positive">COVID-19 Positive</string>
     <string name="submitted_diagnosis_date">&lt;b>Submitted:&lt;/b> %s</string>

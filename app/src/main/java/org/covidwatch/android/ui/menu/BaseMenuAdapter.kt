@@ -53,14 +53,14 @@ open class BaseMenuAdapter(
             Browser(R.string.covidwatch_website)
         ),
         MenuItem(
-            R.string.menu_faq,
+            R.string.menu_privacy,
             R.drawable.ic_exit_to_app,
-            Browser(R.string.faq)
+            Browser(R.string.privacy)
         ),
         MenuItem(
             R.string.menu_terms_of_use,
             R.drawable.ic_exit_to_app,
-            Browser(R.string.terms)
+            Browser(R.string.privacy)
         ),
         MenuItem(
             R.string.menu_support,

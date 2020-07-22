@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="health_guidelines">https://www.cdc.gov/coronavirus/2019-ncov/index.html</string>
-    <string name="covidwatch_website">https://www.covid-watch.org/</string>
-    <string name="faq">https://www.covid-watch.org/faq</string>
-    <string name="terms">https://www.covid-watch.org/privacy</string>
-    <string name="support">https://www.covid-watch.org/support</string>
+    <string name="covidwatch_website">https://www.covidwatch.org</string>
+    <string name="privacy">https://www.azdhs.gov/privacy-policy.php</string>
+    <string name="terms">https://www.covidwatch.org/privacy</string>
+    <string name="support">https://www.covidwatch.org/get_support</string>
 </resources>
