@@ -28,11 +28,8 @@ class ProvideDiagnosisKeysUseCase(
             ).setConstraints(
                 Constraints
                     .Builder()
-                    .setRequiredNetworkType(NetworkType.UNMETERED)
-                    .setRequiresCharging(true)
                     .setRequiresBatteryNotLow(true)
-                    .setRequiresDeviceIdle(true)
-                    .setRequiresStorageNotLow(true) //TODO: Do we need this strict constraints?
+                    .setRequiresStorageNotLow(true)
                     .build()
             ).build()
 

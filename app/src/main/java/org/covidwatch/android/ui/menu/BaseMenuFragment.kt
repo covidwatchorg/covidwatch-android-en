@@ -14,7 +14,6 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
 import com.jaredrummler.android.device.DeviceName
@@ -24,12 +23,13 @@ import org.covidwatch.android.R
 import org.covidwatch.android.attenuationDurationThresholds
 import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
+import org.covidwatch.android.data.keyfile.KeyFileRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.databinding.DialogPossibleExposuresTestCaseBinding
 import org.covidwatch.android.databinding.FragmentMenuBinding
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
+import org.covidwatch.android.extension.launchUseCase
 import org.covidwatch.android.extension.observe
-import org.covidwatch.android.extension.observeUseCase
 import org.covidwatch.android.ui.BaseViewModelFragment
 import org.koin.android.ext.android.inject
 import java.io.File
@@ -49,24 +49,26 @@ data class CovidExposureConfiguration(
     @Expose
     val attenuationScores: IntArray,
     @Expose
-    val attenuationWeight: Int,
+    val attenuationWeight: Int?,
     @Expose
     val daysSinceLastExposureScores: IntArray,
     @Expose
-    val daysSinceLastExposureWeight: Int,
+    val daysSinceLastExposureWeight: Int?,
     @Expose
     val durationScores: IntArray,
     @Expose
-    val durationWeight: Int,
+    val durationWeight: Int?,
     @Expose
     val transmissionRiskScores: IntArray,
     @Expose
-    val transmissionRiskWeight: Int,
+    val transmissionRiskWeight: Int?,
+    @Expose
+    val attenuationDurationThresholds: IntArray,
     @Expose
     val attenuationDurationThresholdList: List<IntArray>? = null
 )
 
-fun ExposureConfiguration.asCovidExposureConfiguration() =
+fun org.covidwatch.android.data.CovidExposureConfiguration.asCovidExposureConfiguration() =
     CovidExposureConfiguration(
         minimumRiskScore,
         attenuationScores,
@@ -76,11 +78,13 @@ fun ExposureConfiguration.asCovidExposureConfiguration() =
         durationScores,
         durationWeight,
         transmissionRiskScores,
-        transmissionRiskWeight
+        transmissionRiskWeight,
+        durationAtAttenuationThresholds
     )
 
 open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuViewModel>() {
     private val exposureInformationRepository: ExposureInformationRepository by inject()
+    private val keyFileRepository: KeyFileRepository by inject()
     private val provideDiagnosisKeysUseCase: ProvideDiagnosisKeysUseCase by inject()
     private val preferences: PreferenceStorage by inject()
 
@@ -116,35 +120,34 @@ open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuVie
 
     open fun handleMenuItemClick(menuItem: MenuItem) {
         when (menuItem.destination) {
-            is PossibleExposures -> findNavController().navigate(R.id.exposuresFragment)
-            is NotifyOthers -> findNavController().navigate(R.id.notifyOthersFragment)
-            is HowItWorks -> findNavController().navigate(R.id.onboardingFragment)
             is Browser -> openBrowser(getString(menuItem.destination.url))
+            PossibleExposures -> findNavController().navigate(R.id.exposuresFragment)
+            NotifyOthers -> findNavController().navigate(R.id.notifyOthersFragment)
+            HowItWorks -> findNavController().navigate(R.id.onboardingFragment)
+            PastDiagnoses -> findNavController().navigate(R.id.positiveDiagnosesFragment)
+            ChangeRegion -> findNavController().navigate(R.id.selectRegionFragment)
         }
         // TODO: 10.07.2020 Remove demo functionality from prod version
         when (menuItem.title) {
             R.string.menu_reset_possible_exposures -> {
                 lifecycleScope.launch {
                     exposureInformationRepository.reset()
+                    keyFileRepository.reset()
                     preferences.resetExposureSummary()
-                }
-                Toast.makeText(context, "Possible exposures were deleted", Toast.LENGTH_SHORT)
-                    .show()
-                findNavController().popBackStack()
-            }
-            R.string.menu_detect_exposures_from_server -> {
-                lifecycleScope.observeUseCase(provideDiagnosisKeysUseCase) {
-                    success {
-                        Toast.makeText(
-                            context,
-                            "Positive diagnosis downloaded",
-                            Toast.LENGTH_SHORT
-                        ).show()
 
-                    }
-                    failure { handleStatus(it) }
+                    Toast.makeText(context, "Possible exposures were deleted", Toast.LENGTH_SHORT)
+                        .show()
                     findNavController().popBackStack()
                 }
+            }
+            R.string.menu_detect_exposures_from_server -> {
+                lifecycleScope.launchUseCase(provideDiagnosisKeysUseCase)
+                Toast.makeText(
+                    context,
+                    "Downloading positive diagnoses. Watch a notification for status",
+                    Toast.LENGTH_SHORT
+                ).show()
+                findNavController().popBackStack()
             }
             R.string.menu_export_possible_exposures -> {
                 context?.let { context ->

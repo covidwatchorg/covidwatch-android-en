@@ -9,9 +9,10 @@ import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.functional.Either
 import timber.log.Timber
 
+// TODO: 13.07.2020 Use proper adapter from Task to Coroutines
 suspend fun <T> Task<T>.await(): Either<ApiException?, T> = withContext(Dispatchers.IO) {
     try {
-       Either.Right(Tasks.await(this@await))
+        Either.Right(Tasks.await(this@await))
     } catch (e: Exception) {
         val apiException = e.cause as? ApiException
         Timber.e(apiException)

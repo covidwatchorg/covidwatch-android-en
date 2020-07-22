@@ -36,8 +36,10 @@ class EnableExposureNotificationsFragment :
             observeEvent(showHome) {
                 findNavController().popBackStack(R.id.homeFragment, false)
             }
-            observeEvent(showOnboardingFinish) {
-                findNavController().navigate(R.id.finishedOnboardingFragment)
+            observeEvent(continueOnboarding) {
+                findNavController().navigate(
+                    EnableExposureNotificationsFragmentDirections.actionEnableExposureNotificationsFragmentToSelectRegionFragment()
+                )
             }
         }
     }

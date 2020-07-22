@@ -30,7 +30,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.startButton.setOnClickListener {
+        binding.btnGetStarted.setOnClickListener {
             findNavController().navigate(R.id.howItWorksFragment)
         }
     }

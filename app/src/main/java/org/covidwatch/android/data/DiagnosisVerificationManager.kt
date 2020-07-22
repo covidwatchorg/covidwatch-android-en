@@ -32,15 +32,16 @@ class DiagnosisVerificationManager(
         val token = verifyCodeResponse.token ?: throw ServerException("Verification Token is null")
         val testType =
             verifyCodeResponse.testType ?: throw ServerException("Verification Test Type is null")
-        val testDate =
-            verifyCodeResponse.testDate ?: throw ServerException("Verification Test Date is null")
+        val symptomDate =
+            verifyCodeResponse.symptomDate
+                ?: throw ServerException("Verification Test Date is null")
 
         val kgen: KeyGenerator = KeyGenerator.getInstance("HMACSHA256")
         val skey: SecretKey = kgen.generateKey()
 
         val hmac = encoding.encode(sha256(keys(keys), skey))
         val certificate = verificationRepository.certificate(token, hmac)
-        return CodeVerification(testType, testDate, token, certificate, skey.encoded)
+        return CodeVerification(testType, symptomDate, token, certificate, skey.encoded)
     }
 
     private fun keys(
@@ -58,7 +59,7 @@ class DiagnosisVerificationManager(
 
 data class CodeVerification(
     val testType: String,
-    val testDate: String,
+    val symptomDate: String,
     val token: String,
     val certificate: String,
     val hmacKey: ByteArray

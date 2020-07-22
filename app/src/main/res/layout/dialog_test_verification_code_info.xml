@@ -9,96 +9,71 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/padding_normal">
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/close_button"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingHorizontal="@dimen/padding_normal"
+                android:paddingVertical="@dimen/padding_normal"
+                android:text="@string/dialog_test_verification_code_title"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/close_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="@dimen/padding_normal"
+                android:src="@drawable/ic_close"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_region"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
             android:background="?selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
-            android:src="@drawable/ic_close"
-            tools:ignore="ContentDescription" />
+            android:paddingHorizontal="@dimen/padding_normal"
+            android:paddingVertical="@dimen/padding_micro"
+            tools:text="Region: Arizona" />
+
+        <LinearLayout
+            android:id="@+id/verification_code_steps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_normal"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/padding_normal" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/dialog_test_verification_code_title"
-            android:textSize="20sp"
+            android:layout_marginTop="@dimen/padding_normal"
+            android:paddingHorizontal="@dimen/padding_normal"
+            android:text="@string/dialog_test_verification_code_expl_title"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_normal"
-            android:background="@drawable/bg_my_possible_exposures"
-            android:orientation="vertical"
-            android:padding="@dimen/padding_normal">
+            android:lineSpacingExtra="4sp"
+            android:paddingHorizontal="@dimen/padding_normal"
+            android:text="@string/dialog_test_verification_code_expl_text" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/dialog_test_verification_code_info_title"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-            <!--TODO: Ask for the same size icons or check if the changed size in the drawables is okay with the designer-->
-            <TextView
-                style="@style/TextView.TestCodeInfoItem"
-                android:drawableStart="@drawable/ic_email"
-                android:text="@string/dialog_test_verification_code_info_email" />
-
-            <TextView
-                style="@style/TextView.TestCodeInfoItem"
-                android:drawableStart="@drawable/ic_test_kit"
-                android:text="@string/dialog_test_verification_code_info_kit" />
-
-            <TextView
-                style="@style/TextView.TestCodeInfoItem"
-                android:drawableStart="@drawable/ic_online_support"
-                android:text="@string/dialog_test_verification_code_info_support" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_normal"
-            android:background="@drawable/bg_my_possible_exposures"
-            android:orientation="vertical"
-            android:padding="@dimen/padding_normal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/dialog_test_verification_code_expl_title"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_normal"
-                android:lineSpacingExtra="4sp"
-                android:text="@string/dialog_test_verification_code_expl_text"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/btn_learn_more"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_normal"
-                android:background="?selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:drawableEnd="@drawable/ic_keyboard_arrow_right_small"
-                android:drawablePadding="@dimen/padding_small"
-                android:drawableTint="@color/colorPrimary"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:text="@string/dialog_test_verification_code_expl_more"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold" />
-        </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

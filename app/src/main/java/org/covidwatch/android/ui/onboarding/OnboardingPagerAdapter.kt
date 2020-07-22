@@ -18,29 +18,29 @@ class OnboardingPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment
     private fun howItWorksParameters(position: Int): OnboardingPageParameters {
         return when (position) {
             0 -> OnboardingPageParameters(
-                R.string.stay_anonymous_title,
+                R.string.how_it_works_title_1,
                 R.drawable.how_it_works_1,
-                R.string.stay_anonymous_subtitle
+                R.string.how_it_works_text_1
             )
             1 -> OnboardingPageParameters(
-                R.string.diagnosis_reports_title,
+                R.string.how_it_works_title_2,
                 R.drawable.how_it_works_2,
-                R.string.diagnosis_reports_subtitle
+                R.string.how_it_works_text_2
             )
             2 -> OnboardingPageParameters(
-                R.string.exposure_alerts_title,
+                R.string.how_it_works_title_3,
                 R.drawable.how_it_works_3,
-                R.string.exposure_alerts_subtitle
+                R.string.how_it_works_text_3
             )
             3 -> OnboardingPageParameters(
-                R.string.safe_communities_title,
+                R.string.how_it_works_title_4,
                 R.drawable.how_it_works_4,
-                R.string.safe_communities_subtitle
+                R.string.how_it_works_text_4
             )
             else -> OnboardingPageParameters(
-                R.string.stay_anonymous_title,
+                R.string.how_it_works_title_1,
                 R.drawable.how_it_works_1,
-                R.string.stay_anonymous_subtitle
+                R.string.how_it_works_text_1
             )
         }
     }

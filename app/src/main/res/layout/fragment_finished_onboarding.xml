@@ -33,11 +33,12 @@
                     android:layout_height="match_parent">
 
                     <ImageView
+                        android:id="@+id/iv_logo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/padding_normal"
-                        android:src="@drawable/ic_uoa_logo"
+                        android:src="@drawable/cw_logo"
                         tools:ignore="ContentDescription" />
 
                     <TextView
@@ -53,11 +54,18 @@
 
             </com.google.android.material.appbar.MaterialToolbar>
 
-            <ImageView
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_region"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_normal"
-                android:src="@drawable/finished_onboarding_art" />
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="@dimen/padding_normal"
+                android:paddingVertical="@dimen/padding_small"
+                android:textColor="@color/secondaryText"
+                android:textSize="12sp"
+                tools:text="Region: Arizona" />
 
             <TextView
                 style="@style/TextView.ScreenTitle"
@@ -66,14 +74,28 @@
                 android:layout_marginHorizontal="@dimen/padding_normal"
                 android:text="@string/finished_onboarding_title" />
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/padding_normal"
+                android:src="@drawable/finished_onboarding_art" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/padding_normal"
+                android:text="@string/finished_onboarding_subtitle"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
             <TextView
                 style="@style/TextView.ScreenSubtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/padding_normal"
+                android:lineSpacingExtra="4sp"
                 android:paddingBottom="@dimen/padding_normal"
-                android:text="@string/finished_onboarding_subtitle" />
-
+                android:text="@string/finished_onboarding_text" />
         </LinearLayout>
     </ScrollView>
 
@@ -87,14 +109,8 @@
         android:paddingVertical="@dimen/padding_normal">
 
         <Button
-            android:id="@+id/share_app_button"
-            style="@style/Button.Action"
-            android:text="@string/share_app_button" />
-
-        <Button
             android:id="@+id/see_exposure_summary"
             style="@style/Button.Action"
             android:text="@string/see_exposure_summary" />
-
     </LinearLayout>
 </LinearLayout>

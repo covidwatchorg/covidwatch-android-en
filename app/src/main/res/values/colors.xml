@@ -23,8 +23,8 @@
     <color name="primaryBackground">#2C58B1</color>
     <color name="secondaryBackground">#FFFFFF</color>
 
-    <color name="primaryText">#585858</color>
-    <color name="secondaryText">#FFFFFF</color>
+    <color name="primaryText">#383838</color>
+    <color name="secondaryText">@color/darkGray</color>
 
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
@@ -34,8 +34,9 @@
 
     <!-- RISK LEVEL-->
     <color name="high_risk">@color/tangerine</color>
-    <color name="med_risk">#F2994A</color>
-    <color name="low_risk">#F2C94C</color>
+    <color name="med_risk">#FF7800</color>
+    <color name="low_risk">#F9AB03</color>
+    <color name="unknown_risk">@color/darkGray</color>
 
     <!-- FROM DESIGN LIBRARY AT https://www.figma.com/file/0qkRp3TrKBRnpEnmQeA5m4/-->
     <color name="bluejay">#2C58B1</color>
@@ -46,9 +47,9 @@
     <color name="lavender">#A680B7</color>
     <color name="tangerine">#F05452</color>
     <color name="transparentGray">#E0E0E0</color>
-    <color name="lightGray">#EFEFEF</color>
+    <color name="lightGray">#F2F2F2</color>
     <color name="gray">#BDBDBD</color>
-    <color name="darkGray">#828282</color>
+    <color name="darkGray">#999999</color>
 
 
 </resources>

@@ -15,6 +15,7 @@ object ItemBindings {
             R.layout.item_exposure_info
         )
 
+
     @JvmStatic
     fun bind(viewModel: ExposuresViewModel) = ItemBinding.of<Any> { itemBinding, _, item ->
         when (item::class) {

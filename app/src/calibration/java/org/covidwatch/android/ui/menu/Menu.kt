@@ -29,19 +29,19 @@ class MenuFragment : BaseMenuFragment() {
                     with(dialogView) {
                         setNumber(minRiskScore, configuration.minimumRiskScore)
                         setArray(attenuationScores, configuration.attenuationScores)
-                        setNumber(attenuationWeight, configuration.attenuationWeight)
+                        setNumber(attenuationWeight, configuration.attenuationWeight ?: 0)
                         setArray(
                             daysSinceLastExposureScores,
                             configuration.daysSinceLastExposureScores
                         )
                         setNumber(
                             daysSinceLastExposureWeight,
-                            configuration.daysSinceLastExposureWeight
+                            configuration.daysSinceLastExposureWeight ?: 0
                         )
                         setArray(durationScores, configuration.durationScores)
-                        setNumber(durationWeight, configuration.durationWeight)
+                        setNumber(durationWeight, configuration.durationWeight ?: 0)
                         setArray(transmissionRiskScores, configuration.transmissionRiskScores)
-                        setNumber(transmissionRiskWeight, configuration.transmissionRiskWeight)
+                        setNumber(transmissionRiskWeight, configuration.transmissionRiskWeight ?: 0)
                         setArray(
                             durationAtAttenuationThresholds,
                             configuration.durationAtAttenuationThresholds
@@ -82,7 +82,8 @@ class MenuFragment : BaseMenuFragment() {
                     .setTransmissionRiskWeight(getNumber(transmissionRiskWeight))
                     .setDurationAtAttenuationThresholds(*getArray(durationAtAttenuationThresholds))
                     .build()
-                preferences.exposureConfiguration = configuration
+                // TODO: 22.07.2020 Think what we need from calibration build and if we need it at all
+//                preferences.exposureConfiguration = configuration.asCovidExposureConfiguration()
                 return true
             } catch (e: Exception) {
                 Timber.e(e)

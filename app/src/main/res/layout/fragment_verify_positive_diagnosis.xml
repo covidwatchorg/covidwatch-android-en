@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:animateLayoutChanges="true"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         android:orientation="vertical">
 
         <ImageView
@@ -19,27 +20,12 @@
             android:paddingHorizontal="@dimen/padding_normal" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/padding_normal"
-            android:text="@string/step_2_notify_others"
-            android:textAllCaps="true" />
-
-        <TextView
             style="@style/TextView.ScreenTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
             android:text="@string/verify_positive_diagnosis_title"
             android:textSize="27sp" />
-
-        <TextView
-            android:id="@+id/past_positive_diagnoses"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/padding_normal"
-            android:layout_marginTop="@dimen/padding_normal"
-            android:text="@string/verify_subtitle" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,10 +72,16 @@
                 android:maxLength="8" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <View
+            style="@style/Divider.Horizontal"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginVertical="@dimen/padding_normal" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginTop="@dimen/padding_normal"
             android:text="@string/symptoms_date_label"
             android:textSize="@dimen/big_font_size"
             android:textStyle="bold" />
@@ -116,53 +108,100 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
-            android:layout_marginBottom="@dimen/padding_normal"
             android:text="@string/no_symptoms" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/padding_normal"
-            android:text="@string/tested_date_label"
-            android:textSize="@dimen/big_font_size"
-            android:textStyle="bold" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <LinearLayout
+            android:id="@+id/no_symptoms_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/padding_normal"
-            android:layout_marginBottom="@dimen/padding_normal"
-            app:hintEnabled="false">
+            android:orientation="vertical"
+            android:visibility="gone">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_tested_date"
+            <View
+                style="@style/Divider.Horizontal"
+                android:layout_marginHorizontal="@dimen/padding_normal"
+                android:layout_marginVertical="@dimen/padding_normal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/padding_normal"
+                android:layout_marginTop="@dimen/padding_normal"
+                android:text="@string/exposed_date_label"
+                android:textSize="@dimen/big_font_size"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:foreground="?selectableItemBackground"
-                android:hint="@string/select_date_hint" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginHorizontal="@dimen/padding_normal"
+                android:hint="@string/select_date_hint"
+                app:hintEnabled="true">
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_exposed_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:foreground="?selectableItemBackground" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/cb_no_exposed_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/padding_normal"
+                android:text="@string/no_exposed_date" />
+
+            <View
+                style="@style/Divider.Horizontal"
+                android:layout_marginHorizontal="@dimen/padding_normal"
+                android:layout_marginVertical="@dimen/padding_normal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/padding_normal"
+                android:layout_marginTop="@dimen/padding_normal"
+                android:text="@string/tested_date_label"
+                android:textSize="@dimen/big_font_size"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/padding_normal"
+                android:layout_marginBottom="@dimen/padding_normal"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_tested_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:foreground="?selectableItemBackground"
+                    android:hint="@string/select_date_hint" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_finish_verification"
             style="@style/Button.Action"
             android:layout_marginHorizontal="@dimen/padding_normal"
             android:layout_marginTop="@dimen/padding_small"
-            android:enabled="false"
-            android:text="@string/finish_code_verification_button" />
+            android:text="@string/share_positive_diagnosis_button"
+            android:visibility="gone" />
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/gradient_bottom_top_top"
-            android:src="@drawable/notify_others_art_2"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:src="@drawable/notify_others_art_1"
             tools:ignore="ContentDescription" />
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

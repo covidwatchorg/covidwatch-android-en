@@ -8,6 +8,7 @@ import com.google.common.io.BaseEncoding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.covidwatch.android.data.asCovidExposureConfiguration
+import org.covidwatch.android.data.asExposureConfiguration
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.keyfile.KeyFile
@@ -58,7 +59,8 @@ class ProvideDiagnosisKeysWork(
                 Timber.d("Adding ${diagnosisKeys.size} batches of diagnoses to EN framework")
 
                 val token = randomToken()
-                val exposureConfiguration = preferences.exposureConfiguration
+                val exposureConfiguration =
+                    preferences.exposureConfiguration.asExposureConfiguration()
                 diagnosisKeys.filter { it.keys.isNotEmpty() }.forEach { fileBatch ->
                     val keys = fileBatch.keys
                     enManager.provideDiagnosisKeys(keys, token, exposureConfiguration).apply {
@@ -79,6 +81,9 @@ class ProvideDiagnosisKeysWork(
                             dir?.delete()
                         }
                         failure {
+                            val dir = keys[0].parentFile
+                            keys.forEach { file -> file.delete() }
+                            dir?.delete()
                             Timber.d("Failed to added keys to EN")
                             return@withContext failure(it)
                         }

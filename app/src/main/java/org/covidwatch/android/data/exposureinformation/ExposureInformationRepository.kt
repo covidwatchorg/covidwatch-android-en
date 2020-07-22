@@ -10,6 +10,7 @@ class ExposureInformationRepository(
     private val local: ExposureInformationLocalSource,
     private val dispatchers: AppCoroutineDispatchers
 ) {
+
     suspend fun saveExposureInformation(exposureInformation: List<CovidExposureInformation>) =
         withContext(dispatchers.io) {
             local.saveExposureInformation(exposureInformation)
