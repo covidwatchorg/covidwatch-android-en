@@ -121,6 +121,7 @@
                 android:orientation="vertical" />
 
             <TextView
+                android:id="@+id/action_layout_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/padding_normal"
@@ -130,17 +131,19 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/action_layout_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/padding_normal"
+                android:textSize="16sp"
                 android:layout_marginVertical="@dimen/padding_normal"
                 android:text="@string/positive_diagnosis_info" />
 
             <Button
-                android:id="@+id/notify_others_button"
+                android:id="@+id/action_layout_btn"
                 style="@style/Button.Action"
                 android:layout_marginHorizontal="@dimen/padding_normal"
-                android:text="@string/learn_how_btn" />
+                android:text="@string/btn_how_to_share_diagnosis" />
 
             <View
                 android:layout_width="0dp"

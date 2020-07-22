@@ -21,6 +21,7 @@ import org.covidwatch.android.data.NextStepType
 import org.covidwatch.android.data.RiskLevel
 import org.covidwatch.android.databinding.FragmentHomeBinding
 import org.covidwatch.android.databinding.ItemNextStepBinding
+import org.covidwatch.android.extension.fromHtml
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.extension.shareApp
@@ -55,21 +56,35 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
 
             observe(riskLevel) {
-                val info = when (it) {
-                    RiskLevel.LOW -> {
-                        binding.riskInfo.setOnClickListener(null)
-                        getString(R.string.unknown_risk_title)
+                // TODO: 22.07.2020 Make this logic more clear and separate for different view groups
+                if (RiskLevel.VERIFIED_POSITIVE == it || RiskLevel.HIGH == it) {
+                    binding.myRiskLevel.addCircleRipple()
+                    binding.myRiskLevel.setOnClickListener {
+                        findNavController().navigate(R.id.exposuresFragment)
                     }
-                    else -> {
-                        binding.riskInfo.setOnClickListener {
-                            findNavController().navigate(R.id.exposuresFragment)
+                    binding.riskInfo.text = getString(R.string.next_steps_title).fromHtml()
+                }
+                when (it) {
+                    RiskLevel.VERIFIED_POSITIVE -> {
+                        binding.actionLayoutBtn.setOnClickListener {
+                            context?.shareApp()
                         }
-                        getString(R.string.next_steps_title)
+                    }
+                    RiskLevel.HIGH -> {
+                        binding.actionLayoutBtn.setOnClickListener {
+                            findNavController().navigate(R.id.notifyOthersFragment)
+                        }
+                    }
+                    RiskLevel.LOW -> {
+                        binding.actionLayoutBtn.setOnClickListener {
+                            findNavController().navigate(R.id.notifyOthersFragment)
+                        }
+                        binding.myRiskLevel.setOnClickListener(null)
+                        binding.myRiskLevel.foreground = null
+
+                        binding.riskInfo.text = getString(R.string.unknown_risk_title).fromHtml()
                     }
                 }
-                binding.riskInfo.text = HtmlCompat.fromHtml(
-                    info, HtmlCompat.FROM_HTML_MODE_COMPACT
-                )
 
                 binding.myRiskLevel.setBackgroundFromRiskLevel(it)
                 binding.myRiskLevel.text =
@@ -104,9 +119,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun initClickListeners() {
         with(binding) {
-            notifyOthersButton.setOnClickListener {
-                findNavController().navigate(R.id.notifyOthersFragment)
-            }
             menu.setOnClickListener {
                 findNavController().navigate(R.id.menuFragment)
             }
