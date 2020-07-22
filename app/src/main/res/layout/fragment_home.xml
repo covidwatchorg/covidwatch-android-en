@@ -89,16 +89,20 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/gradient_top_to_bottom"
                 android:contentDescription="@null"
-                android:paddingTop="@dimen/padding_extra_large"
-                app:srcCompat="@drawable/home_screen_art" />
+                android:paddingTop="@dimen/padding_normal"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/home_art" />
 
             <TextView
                 android:id="@+id/my_risk_level"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/darkGray"
+                android:clickable="true"
+                android:focusable="true"
                 android:drawableStart="@drawable/ic_unknown_risk"
                 android:drawablePadding="@dimen/padding_normal"
+                android:foreground="?selectableItemBackground"
                 android:padding="@dimen/padding_normal"
                 android:textColor="@color/white"
                 android:textSize="18sp"
@@ -135,9 +139,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/padding_normal"
-                android:textSize="16sp"
                 android:layout_marginVertical="@dimen/padding_normal"
-                android:text="@string/positive_diagnosis_info" />
+                android:text="@string/positive_diagnosis_info"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/action_layout_btn"
