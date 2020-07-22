@@ -11,7 +11,7 @@ import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.RiskLevel
 import org.covidwatch.android.data.RiskLevel.*
-import org.covidwatch.android.databinding.ExposureInformationDetailsBinding
+import org.covidwatch.android.databinding.ItemExposureChildBinding
 import org.covidwatch.android.ui.util.DateFormatter
 import java.util.*
 
@@ -33,7 +33,7 @@ fun TextView.setExposureSummary(exposureSummary: CovidExposureSummary?) {
 @BindingAdapter("exposure")
 fun ExpandableLayout.bindFromExposure(exposure: CovidExposureInformation?) {
     parentLayoutResource = R.layout.item_exposure_parent
-    secondLayoutResource = R.layout.exposure_information_details
+    secondLayoutResource = R.layout.item_exposure_child
 
     exposure?.let {
         parentLayout.setOnClickListener {
@@ -41,9 +41,27 @@ fun ExpandableLayout.bindFromExposure(exposure: CovidExposureInformation?) {
         }
         parentLayout.findViewById<TextView>(R.id.text).text = DateFormatter.format(it.date)
 
-        val demoExposureDetails = ExposureInformationDetailsBinding.bind(secondLayout)
-        demoExposureDetails.exposure = it
+        ItemExposureChildBinding.bind(secondLayout).exposure = it
     }
+}
+
+@BindingAdapter("exposure_info")
+fun TextView.setExposureInfo(exposure: CovidExposureInformation?) {
+    val attenuationDurations =
+        exposure?.attenuationDurations?.joinToString { if (it >= 30) "≥30m" else "${it}m" }
+
+    val riskLevel = context.getString(
+        R.string.exposure_information_transmission_risk_text,
+        exposure?.transmissionRiskLevel
+    )
+    val totalRiskScore = exposure?.totalRiskScore
+
+    text = context.getString(
+        R.string.exposure_info,
+        attenuationDurations,
+        riskLevel,
+        totalRiskScore
+    )
 }
 
 @BindingAdapter("attenuation_durations")

@@ -151,6 +151,9 @@
     <string name="med_risk_title">Medium Risk</string>
     <string name="high_risk_title">High Risk</string>
     <string name="exposure_date_and_info">On &lt;b>%s&lt;/b> you were near someone who shared a &lt;b>positive&lt;/b> and &lt;b>verified&lt;/b> diagnosis of COVID-19.</string>
+    <string name="exposure_data">Exposure Data</string>
+    <string name="exposure_info">&#8226; Attenuation Durations: %1$s\n\n&#8226; Transmission Risk Level: %2$s\n\n&#8226; Total Risk Score: %3$d</string>
+    <string name="btn_learn_more">Learn More</string>
 
     <!--  Onboarding  -->
     <string name="splash_screen_header_content_description">State of California</string>

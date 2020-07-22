@@ -80,6 +80,13 @@ object RandomEnObjects {
     val exposureInformation: ExposureInformation
         get() = ExposureInformation.ExposureInformationBuilder()
             .setAttenuationValue(Random.nextInt(8))
+            .setAttenuationDurations(
+                intArrayOf(
+                    Random.nextInt(30),
+                    Random.nextInt(30),
+                    Random.nextInt(30)
+                )
+            )
             .setDateMillisSinceEpoch(
                 Random.nextLong(
                     System.currentTimeMillis(),

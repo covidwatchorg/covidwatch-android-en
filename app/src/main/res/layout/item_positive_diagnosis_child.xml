@@ -54,7 +54,6 @@
             android:gravity="center_vertical"
             android:paddingVertical="@dimen/padding_normal"
             android:text="@string/btn_delete_diagnosis"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold" />
+            android:textColor="@color/colorPrimary" />
     </LinearLayout>
 </FrameLayout>
