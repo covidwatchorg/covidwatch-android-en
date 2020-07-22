@@ -41,6 +41,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        throw RuntimeException()
         with(viewModel) {
             onStart()
             observeEvent(navigateToOnboarding) {

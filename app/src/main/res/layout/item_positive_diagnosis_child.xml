@@ -56,4 +56,10 @@
             android:text="@string/btn_delete_diagnosis"
             android:textColor="@color/colorPrimary" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/down_shadow" />
 </FrameLayout>

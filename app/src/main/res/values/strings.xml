@@ -100,7 +100,7 @@
     <string name="reset_all_data">Clear data</string>
 
     <string name="notification_title">Possible COVID-19 exposure</string>
-    <string name="notification_message">Someone you were near has tested positive for COVID-19. Tap for more info.</string>
+    <string name="notification_message">You were near someone who has shared a positive and verified diagnosis of COVID-19. The app has accessed the date, duration, and signal strength of this exposure.</string>
     <string name="notification_channel_name">Exposure Notification</string>
     <string name="notification_channel_description">Exposure notification alerts.</string>
     <string name="menu">Menu</string>
