@@ -1,3 +1,10 @@
 package org.covidwatch.android
 
-class CovidWatchApplication : BaseCovidWatchApplication()
+import timber.log.Timber
+
+class CovidWatchApplication : BaseCovidWatchApplication() {
+    override fun onCreate() {
+        super.onCreate()
+        Timber.plant(CrashlyticsTree())
+    }
+}

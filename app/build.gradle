@@ -164,7 +164,7 @@ dependencies {
 
     calibrationImplementation 'com.google.protobuf:protobuf-java:3.12.2'
     implementation 'com.jaredrummler:android-device-names:2.0.0'
-    calibrationImplementation 'com.google.firebase:firebase-crashlytics:17.1.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.1.0'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
