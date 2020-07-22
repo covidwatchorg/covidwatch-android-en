@@ -29,7 +29,7 @@ data class Region(
 )
 
 class ExposureConfiguration(
-    val minimumRiskScore: Int = 0,
+    val minimumRiskScore: Int = 1,
     val attenuationDurationThresholds: IntArray = intArrayOf(50, 70),
     val attenuationLevelValues: IntArray = intArrayOf(1, 1, 1, 1, 1, 1, 1, 1),
     val daysSinceLastExposureLevelValues: IntArray = intArrayOf(1, 1, 1, 1, 1, 1, 1, 1),
@@ -38,7 +38,7 @@ class ExposureConfiguration(
 )
 
 fun ExposureConfiguration.asCovidExposureConfiguration() = CovidExposureConfiguration(
-    minimumRiskScore,
+    if (minimumRiskScore == 0) 1 else minimumRiskScore,
     attenuationLevelValues,
     daysSinceLastExposureLevelValues,
     durationLevelValues,
