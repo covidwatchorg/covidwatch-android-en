@@ -3,11 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?selectableItemBackgroundBorderless"
-    android:clickable="true"
-    android:focusable="true"
-    android:foregroundTint="@color/lightGray"
-    android:paddingHorizontal="@dimen/padding_normal"
     app:expandable_parentLayout="@layout/item_positive_diagnosis_parent"
     app:expandable_secondLayout="@layout/item_positive_diagnosis_child"
+    app:expandable_spinner_margin="@dimen/padding_normal"
     app:expandable_spinner_color="@color/primaryText" />

@@ -19,7 +19,7 @@ class RiskLevelRepository(
 
     val riskLevel = combine(
         prefs.observableRiskMetrics.asFlow(),
-        positiveDiagnosisRepository.positiveDiagnosisReports().asFlow(),
+        positiveDiagnosisRepository.diagnoses().asFlow(),
         prefs.observableRegion.asFlow()
     ) { risk, diagnoses, region ->
         val recentExposureDate = risk?.mostRecentSignificantExposureDate

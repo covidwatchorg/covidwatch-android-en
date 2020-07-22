@@ -61,8 +61,13 @@
         android:id="@+id/menuFragment"
         android:name="org.covidwatch.android.ui.menu.MenuFragment"
         android:label="MenuFragment"
-        tools:layout="@layout/fragment_menu">
-    </fragment>
+        tools:layout="@layout/fragment_menu" />
+
+    <fragment
+        android:id="@+id/positiveDiagnosesFragment"
+        android:name="org.covidwatch.android.ui.reporting.PositiveDiagnosesFragment"
+        android:label="PositiveDiagnosesFragment"
+        tools:layout="@layout/fragment_positive_diagnoses" />
 
     <fragment
         android:id="@+id/verificationCodeHelpDialog"
@@ -138,8 +143,8 @@
     <fragment
         android:id="@+id/verifyPositiveDiagnosisFragment"
         android:name="org.covidwatch.android.ui.reporting.VerifyPositiveDiagnosisFragment"
-        tools:layout="@layout/fragment_verify_positive_diagnosis"
-        android:label="VerifyPositiveDiagnosisFragment">
+        android:label="VerifyPositiveDiagnosisFragment"
+        tools:layout="@layout/fragment_verify_positive_diagnosis">
         <action
             android:id="@+id/action_verifyPositiveDiagnosisFragment_to_thanksForReportingFragment"
             app:destination="@id/thanksForReportingFragment" />

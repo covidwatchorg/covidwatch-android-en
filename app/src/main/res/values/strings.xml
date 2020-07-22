@@ -202,7 +202,13 @@
     <string name="notify_others_subtitle"><b>1</b> Provide a <b>Diagnosis Verification Code</b>\n<b>2</b> Answer brief questions\n<b>3</b> Anonymously share diagnosis to help stop the spread by letting other app users get notified of possible exposure if they were nearby.</string>
     <string name="test_verification_code_warning">Where is my code?</string>
     <string name="covid_19_positive">COVID-19 Positive</string>
-    <string name="test_date_fmt">Test Date: %s</string>
+    <string name="submitted_diagnosis_date">&lt;b>Submitted:&lt;/b> %s</string>
+    <string name="symptoms_diagnosis_date">&lt;b>Symptom onset date:&lt;/b> %s</string>
+    <string name="infection_diagnosis_date">&lt;b>Possible infection date:&lt;/b> %s</string>
+    <string name="test_diagnosis_date">&lt;b>Test date:&lt;/b> %s</string>
+    <string name="no_symptoms_report">No symptoms</string>
+    <string name="no_infection_date_report">Unknown</string>
+    <string name="no_test_date_report">Unknown</string>
     <string name="verify_positive_diagnosis_title">Anonymously Share a Positive Diagnosis</string>
     <string name="share_positive_diagnosis_button">Anonymously Share Diagnosis</string>
     <string name="past_positive_diagnoses">View Shared Positive Diagnoses</string>
@@ -275,5 +281,6 @@
     <string name="exposed_date_label">When do you think you were exposed?</string>
     <string name="no_exposed_date">I do not know</string>
     <string name="past_positive_diagnoses_title">My Past Positive Diagnoses</string>
+    <string name="btn_delete_diagnosis">Delete Diagnosis</string>
 
 </resources>

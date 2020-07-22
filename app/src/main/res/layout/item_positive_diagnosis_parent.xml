@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/padding_normal">
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingHorizontal="@dimen/padding_normal"
+    android:paddingVertical="@dimen/padding_normal">
 
     <ImageView
         android:id="@+id/test_status_image"
@@ -32,8 +36,8 @@
         android:layout_marginStart="@dimen/padding_normal"
         android:textColor="@color/tangerine"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/test_date"
-        app:layout_constraintStart_toEndOf="@+id/barrier"
+        app:layout_constraintBottom_toTopOf="@id/submit_date"
+        app:layout_constraintStart_toEndOf="@id/barrier"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/needs_verification" />
 

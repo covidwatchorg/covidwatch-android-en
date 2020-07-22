@@ -21,7 +21,8 @@ class PositiveDiagnosisRepository(
     private val random = SecureRandom()
     private val encoding = BaseEncoding.base32().lowerCase().omitPadding()
 
-    fun positiveDiagnosisReports() = local.reports()
+    fun diagnoses() = local.diagnoses()
+
 
     suspend fun diagnosisKeys() = withContext(dispatchers.io) {
         val regions = countryCodeRepository.exposureRelevantCountryCodes()
@@ -59,4 +60,8 @@ class PositiveDiagnosisRepository(
         withContext(dispatchers.io) {
             local.updatePositiveDiagnosisReport(positiveDiagnosisItem)
         }
+
+    suspend fun delete(diagnosis: PositiveDiagnosisReport) = withContext(dispatchers.io) {
+        local.delete(diagnosis)
+    }
 }

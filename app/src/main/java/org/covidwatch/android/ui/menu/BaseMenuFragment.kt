@@ -13,6 +13,7 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
 import com.jaredrummler.android.device.DeviceName
@@ -95,12 +96,12 @@ open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuVie
 
         val adapter = MenuAdapter { handleMenuItemClick(it) }
         with(binding) {
-//            menuList.addItemDecoration(
-//                DividerItemDecoration(
-//                    requireContext(),
-//                    DividerItemDecoration.VERTICAL
-//                )
-//            )
+            menuList.addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    DividerItemDecoration.VERTICAL
+                )
+            )
 
             menuList.adapter = adapter
             closeButton.setOnClickListener { findNavController().popBackStack() }
@@ -121,7 +122,7 @@ open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuVie
             PossibleExposures -> findNavController().navigate(R.id.exposuresFragment)
             NotifyOthers -> findNavController().navigate(R.id.notifyOthersFragment)
             HowItWorks -> findNavController().navigate(R.id.onboardingFragment)
-            PastDiagnoses -> findNavController().navigate(R.id.onboardingFragment)
+            PastDiagnoses -> findNavController().navigate(R.id.positiveDiagnosesFragment)
             ChangeRegion -> findNavController().navigate(R.id.selectRegionFragment)
         }
         // TODO: 10.07.2020 Remove demo functionality from prod version
