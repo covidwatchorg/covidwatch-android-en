@@ -66,9 +66,9 @@ jobs:
             DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE }}
           run: echo "$DEBUG_KEYSTORE" | base64 --decode > debug.keystore
         - name: Build debug APK
-          run: bash ./gradlew assembleCalibrationArizonaDebug -PVERIFICATION_API_KEY=$VERIFICATION_API_KEY -PSERVER_VERIFICATION_ENDPOINT=$SERVER_VERIFICATION_ENDPOINT -PSERVER_UPLOAD_ENDPOINT=$SERVER_UPLOAD_ENDPOINT -PSERVER_DOWNLOAD_ENDPOINT=$SERVER_DOWNLOAD_ENDPOINT --stacktrace
+          run: bash ./gradlew assembleProductionArizonaDebug -PVERIFICATION_API_KEY=$VERIFICATION_API_KEY -PSERVER_VERIFICATION_ENDPOINT=$SERVER_VERIFICATION_ENDPOINT -PSERVER_UPLOAD_ENDPOINT=$SERVER_UPLOAD_ENDPOINT -PSERVER_DOWNLOAD_ENDPOINT=$SERVER_DOWNLOAD_ENDPOINT --stacktrace
         - name: Upload APK
           uses: actions/upload-artifact@v1
           with:
             name: app
-            path: app/build/outputs/apk/calibrationArizona/debug/app-calibration-arizona-debug.apk
+            path: app/build/outputs/apk/calibrationArizona/debug/app-production-arizona-debug.apk
