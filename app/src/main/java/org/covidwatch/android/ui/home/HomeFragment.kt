@@ -58,31 +58,32 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
             observe(riskLevel) {
                 // TODO: 22.07.2020 Make this logic more clear and separate for different view groups
-                if (RiskLevel.VERIFIED_POSITIVE == it || RiskLevel.HIGH == it) {
-                    binding.myRiskLevel.addCircleRipple()
-                    binding.myRiskLevel.setOnClickListener {
-                        findNavController().navigate(R.id.exposuresFragment)
-                    }
-                    binding.riskInfo.text = getString(R.string.next_steps_title).fromHtml()
-                }
                 when (it) {
                     RiskLevel.VERIFIED_POSITIVE -> {
+                        binding.actionLayoutTitle.setText(R.string.action_layout_share_title)
+                        binding.actionLayoutInfo.setText(R.string.action_layout_share_info)
+                        binding.actionLayoutBtn.setText(R.string.action_layout_share_btn)
                         binding.actionLayoutBtn.setOnClickListener {
                             context?.shareApp()
                         }
+                        binding.riskInfo.text = getString(R.string.next_steps_title).fromHtml()
                     }
                     RiskLevel.HIGH -> {
+                        binding.actionLayoutTitle.setText(R.string.action_layout_share_title)
+                        binding.actionLayoutInfo.setText(R.string.action_layout_share_info)
+                        binding.actionLayoutBtn.setText(R.string.action_layout_share_btn)
                         binding.actionLayoutBtn.setOnClickListener {
                             findNavController().navigate(R.id.notifyOthersFragment)
                         }
+                        binding.riskInfo.text = getString(R.string.next_steps_title).fromHtml()
                     }
                     RiskLevel.LOW -> {
+                        binding.actionLayoutTitle.setText(R.string.positive_diagnosis_question)
+                        binding.actionLayoutInfo.setText(R.string.positive_diagnosis_info)
+                        binding.actionLayoutBtn.setText(R.string.btn_how_to_share_diagnosis)
                         binding.actionLayoutBtn.setOnClickListener {
                             findNavController().navigate(R.id.notifyOthersFragment)
                         }
-                        binding.myRiskLevel.setOnClickListener(null)
-                        binding.myRiskLevel.foreground = null
-
                         binding.riskInfo.text = getString(R.string.unknown_risk_title).fromHtml()
                     }
                 }
@@ -123,7 +124,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             menu.setOnClickListener {
                 findNavController().navigate(R.id.menuFragment)
             }
-
+            myRiskLevel.setOnClickListener {
+                findNavController().navigate(R.id.exposuresFragment)
+            }
             tvRegion.setOnClickListener { findNavController().navigate(R.id.selectRegionFragment) }
             infoBanner.setOnClickListener {
                 findNavController().navigate(R.id.enableExposureNotificationsFragment)

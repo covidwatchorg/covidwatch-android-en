@@ -192,6 +192,9 @@
     <string name="home_possible_exposures"><b>possible exposures</b>\nin the last 14 days</string>
     <string name="home_total_risk_score"><b>total risk score</b> (1–8) scale</string>
     <string name="my_risk_level">%s</string>
+    <string name="action_layout_share_title">Share the App with Others</string>
+    <string name="action_layout_share_info">It works best when everyone uses it because, together, we can stop the spread and get things back to normal.</string>
+    <string name="action_layout_share_btn">Share the App</string>
     <string name="positive_diagnosis_question">Have a positive diagnosis?</string>
     <string name="positive_diagnosis_info">Anonymously share it with others to help stop the spread in your region.</string>
     <string name="btn_how_to_share_diagnosis">How to Share It</string>
