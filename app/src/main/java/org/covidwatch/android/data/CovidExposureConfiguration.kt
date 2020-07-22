@@ -30,7 +30,7 @@ fun ExposureConfiguration.asCovidExposureConfiguration() = CovidExposureConfigur
     transmissionRiskWeight
 )
 
-fun CovidExposureConfiguration.asExposureConfiguration() =
+fun CovidExposureConfiguration.asExposureConfiguration(): ExposureConfiguration =
     ExposureConfiguration.ExposureConfigurationBuilder().let { builder ->
         builder.setMinimumRiskScore(minimumRiskScore)
         builder.setDurationAtAttenuationThresholds(*durationAtAttenuationThresholds)
