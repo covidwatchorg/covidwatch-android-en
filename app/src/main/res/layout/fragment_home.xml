@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/gradient_top_to_bottom"
                 android:contentDescription="@null"
-                android:paddingTop="@dimen/padding_normal"
+                android:paddingTop="@dimen/padding_extra_large"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/home_art" />
 
@@ -99,9 +99,9 @@
                 android:layout_height="wrap_content"
                 android:background="@color/darkGray"
                 android:clickable="true"
-                android:focusable="true"
                 android:drawableStart="@drawable/ic_unknown_risk"
                 android:drawablePadding="@dimen/padding_normal"
+                android:focusable="true"
                 android:foreground="?selectableItemBackground"
                 android:padding="@dimen/padding_normal"
                 android:textColor="@color/white"
