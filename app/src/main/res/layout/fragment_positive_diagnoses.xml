@@ -10,13 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/padding_normal">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingHorizontal="@dimen/padding_normal"
             android:text="@string/past_positive_diagnoses_title"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -24,11 +24,12 @@
         <ImageView
             android:id="@+id/close_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="?selectableItemBackgroundBorderless"
             android:clickable="true"
             android:contentDescription="@string/close_button_content_descriptor"
             android:focusable="true"
+            android:paddingHorizontal="@dimen/padding_normal"
             android:src="@drawable/ic_close" />
     </LinearLayout>
 

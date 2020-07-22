@@ -31,7 +31,7 @@ fun TextView.setExposureSummary(exposureSummary: CovidExposureSummary?) {
 }
 
 @BindingAdapter("exposure")
-fun ExpandableLayout.setTextFromExposure(exposure: CovidExposureInformation?) {
+fun ExpandableLayout.bindFromExposure(exposure: CovidExposureInformation?) {
     parentLayoutResource = R.layout.item_exposure_parent
     secondLayoutResource = R.layout.exposure_information_details
 

@@ -24,15 +24,7 @@
             android:text="@string/notify_others_title"
             android:textSize="27sp" />
 
-        <!--TODO: Replace with separate TextView for a nicer list-->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/padding_normal"
-            android:layout_marginTop="@dimen/padding_large"
-            android:lineSpacingExtra="20sp"
-            android:text="@string/notify_others_subtitle"
-            android:textSize="16sp" />
+        <include layout="@layout/notify_other_steps" />
 
         <TextView
             android:id="@+id/btn_code_explanation"
