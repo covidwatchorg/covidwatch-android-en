@@ -34,8 +34,8 @@ class ProvideDiagnosisKeysUseCase(
             ).build()
 
             workManager.enqueueUniquePeriodicWork(
-                WORK_NAME,
-                ExistingPeriodicWorkPolicy.REPLACE,
+                RECURRENT_WORK_NAME,
+                ExistingPeriodicWorkPolicy.KEEP,
                 downloadRequest
             )
         } else {
@@ -66,5 +66,6 @@ class ProvideDiagnosisKeysUseCase(
     companion object {
         private const val RECURRENCE_PERIOD = 24L // Hours
         const val WORK_NAME = "provide_diagnosis_keys"
+        const val RECURRENT_WORK_NAME = "provide_diagnosis_keys_daily"
     }
 }
