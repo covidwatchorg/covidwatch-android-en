@@ -10,6 +10,7 @@ import org.covidwatch.android.data.Regions
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.functional.Either
+import timber.log.Timber
 
 @Suppress("BlockingMethodInNonBlockingContext")
 class UpdateRegionsUseCase(
@@ -20,14 +21,20 @@ class UpdateRegionsUseCase(
 ) : UseCase<Unit, Unit>(dispatchers) {
 
     override suspend fun run(params: Unit?): Either<ENStatus, Unit> {
-        val request = Request.Builder().url(BuildConfig.REGIONS_JSON).build()
+        try {
+            val request = Request.Builder().url(BuildConfig.REGIONS_JSON).build()
 
-        val jsonResponse = httpClient.newCall(request).execute()
-        if (jsonResponse.code != 200) return Either.Left(ENStatus.ServerError)
-        val regionsType = object : TypeToken<List<Region?>?>() {}.type
+            val jsonResponse = httpClient.newCall(request).execute()
+            if (jsonResponse.code != 200) return Either.Left(ENStatus.ServerError)
+            val regionsType = object : TypeToken<List<Region?>?>() {}.type
 
-        val regions: List<Region> = gson.fromJson(jsonResponse.body?.charStream(), regionsType)
-        preferences.regions = Regions(regions)
+            val regions: List<Region> = gson.fromJson(jsonResponse.body?.charStream(), regionsType)
+            preferences.regions = Regions(regions)
+        } catch (e: Exception) {
+            Timber.d("Failed to update regions data")
+            Timber.e(e)
+            return Either.Left(ENStatus(e))
+        }
 
         return Either.Right(Unit)
     }

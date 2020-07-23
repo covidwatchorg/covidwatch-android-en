@@ -15,6 +15,7 @@ import org.covidwatch.android.data.keyfile.KeyFile
 import org.covidwatch.android.data.keyfile.KeyFileRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
+import org.covidwatch.android.domain.UpdateRegionsUseCase
 import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.extension.failure
@@ -32,6 +33,7 @@ class ProvideDiagnosisKeysWork(
     private val enManager by inject(ExposureNotificationManager::class.java)
     private val diagnosisRepository by inject(PositiveDiagnosisRepository::class.java)
     private val diagnosisKeysTokenRepository by inject(DiagnosisKeysTokenRepository::class.java)
+    private val updateRegionsUseCase by inject(UpdateRegionsUseCase::class.java)
     private val notifications by inject(Notifications::class.java)
     private val preferences by inject(PreferenceStorage::class.java)
     private val keyFileRepository by inject(KeyFileRepository::class.java)
@@ -55,6 +57,11 @@ class ProvideDiagnosisKeysWork(
         )
         return withContext(Dispatchers.IO) {
             try {
+
+                // Update regions data before we proceed because we need the latest exposure configuration
+                // If it fails we use default values
+                updateRegionsUseCase()
+
                 val diagnosisKeys = diagnosisRepository.diagnosisKeys()
                 Timber.d("Adding ${diagnosisKeys.size} batches of diagnoses to EN framework")
 
