@@ -14,7 +14,6 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.covidwatch.android.R
 import org.covidwatch.android.data.NextStep
 import org.covidwatch.android.data.NextStepType
@@ -94,7 +93,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
             observe(nextSteps, ::bindNextSteps)
             observeEvent(showOnboardingAnimation) {
-                lifecycleScope.launch {
+                lifecycleScope.launchWhenResumed {
                     binding.homeScreenArt.isVisible = false
                     binding.homeScreenContent.layoutTransition = LayoutTransition()
                     delay(1000)
