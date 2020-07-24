@@ -5,13 +5,11 @@ import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
 import androidx.databinding.BindingAdapter
-import com.skydoves.expandablelayout.ExpandableLayout
 import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.RiskLevel
 import org.covidwatch.android.data.RiskLevel.*
-import org.covidwatch.android.databinding.ItemExposureChildBinding
 import org.covidwatch.android.ui.util.DateFormatter
 import java.util.*
 
@@ -27,21 +25,6 @@ fun TextView.setExposureSummary(exposureSummary: CovidExposureSummary?) {
     }
     if (exposureSummary == null) {
         text = context.getString(R.string.no_exposure)
-    }
-}
-
-@BindingAdapter("exposure")
-fun ExpandableLayout.bindFromExposure(exposure: CovidExposureInformation?) {
-    parentLayoutResource = R.layout.item_exposure_parent
-    secondLayoutResource = R.layout.item_exposure_child
-
-    exposure?.let {
-        parentLayout.setOnClickListener {
-            if (isExpanded) collapse() else expand()
-        }
-        parentLayout.findViewById<TextView>(R.id.text).text = DateFormatter.format(it.date)
-
-        ItemExposureChildBinding.bind(secondLayout).exposure = it
     }
 }
 
