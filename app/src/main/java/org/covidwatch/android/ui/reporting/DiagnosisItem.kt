@@ -27,7 +27,6 @@ class DiagnosisItem(val context: Context, val diagnosis: PositiveDiagnosisReport
     override fun getLayout(): Int = R.layout.item_positive_diagnosis_parent
 
     override fun bind(viewBinding: ItemPositiveDiagnosisParentBinding, position: Int) {
-        viewBinding.expandArrow.setImageResource(if (expandableGroup!!.isExpanded) R.drawable.collapse else R.drawable.expand)
         viewBinding.root.setOnClickListener {
             expandableGroup!!.onToggleExpanded()
             bindIcon(viewBinding)

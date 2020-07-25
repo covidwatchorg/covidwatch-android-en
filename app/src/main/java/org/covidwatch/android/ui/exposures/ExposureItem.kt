@@ -21,13 +21,6 @@ class ExposureItem(val exposure: CovidExposureInformation) :
     override fun getLayout(): Int = R.layout.item_exposure_parent
 
     override fun bind(viewBinding: ItemExposureParentBinding, position: Int) {
-        // Initial icon state -- not animated.
-        viewBinding.text.setCompoundDrawablesRelativeWithIntrinsicBounds(
-            0,
-            0,
-            (if (expandableGroup!!.isExpanded) R.drawable.collapse else R.drawable.expand),
-            0
-        )
         viewBinding.text.text = DateFormatter.format(exposure.date)
 
         viewBinding.root.setOnClickListener {

@@ -93,7 +93,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintTop_toBottomOf="@id/next_steps"
-            tools:listitem="@layout/item_exposure" />
+            tools:listitem="@layout/item_exposure_parent" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
