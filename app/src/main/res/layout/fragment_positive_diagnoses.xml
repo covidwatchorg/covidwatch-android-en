@@ -52,5 +52,5 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/padding_normal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_positive_diagnosis" />
+        tools:listitem="@layout/item_positive_diagnosis_parent" />
 </LinearLayout>

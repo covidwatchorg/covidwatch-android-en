@@ -8,6 +8,9 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.xwray.groupie.ExpandableGroup
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 import org.covidwatch.android.R
 import org.covidwatch.android.databinding.FragmentPositiveDiagnosesBinding
 import org.covidwatch.android.extension.observe
@@ -18,7 +21,7 @@ class PositiveDiagnosesFragment : BottomSheetDialogFragment() {
     private val binding get() = _binding!!
 
     private val viewModel: PositiveDiagnosesViewModel by viewModel()
-    private val adapter = PositiveDiagnosisAdapter()
+    private val adapter = GroupAdapter<GroupieViewHolder>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,9 +56,16 @@ class PositiveDiagnosesFragment : BottomSheetDialogFragment() {
         }
 
         with(viewModel) {
-            adapter.setViewModel(this)
             observe(positiveDiagnoses) {
-                adapter.setItems(it)
+                if (it.isNotEmpty()) adapter.clear()
+
+                it.forEach { diagnosis ->
+                    adapter.add(
+                        ExpandableGroup(DiagnosisItem(requireContext(), diagnosis)).apply {
+                            add(DiagnosisDetailsItem(viewModel, diagnosis))
+                        }
+                    )
+                }
                 binding.noPastPositiveDiagnoses.isVisible = it.isEmpty()
                 binding.pastPositiveDiagnosesList.isVisible = it.isNotEmpty()
             }
