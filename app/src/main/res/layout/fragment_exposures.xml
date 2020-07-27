@@ -26,12 +26,12 @@
             android:background="@color/white"
             app:liftOnScroll="true">
 
+            <!--TODO: Fix scroll when the list is empty-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                app:layout_scrollFlags="scroll|enterAlways"
-                tools:context="org.covidwatch.android.ui.exposurenotification.ExposureNotificationFragment">
+                app:layout_scrollFlags="scroll|enterAlways">
 
                 <ImageView
                     android:id="@+id/btn_close"
@@ -69,21 +69,24 @@
                     app:last_exposure_time="@{viewModel.lastExposureTime}"
                     tools:text="Exposure last checked today at 3:15pm" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/gradient_bottom_top_top"
-                    android:drawableEnd="@drawable/doctor_with_heart"
-                    android:drawablePadding="@dimen/padding_normal"
-                    android:lineSpacingExtra="4dp"
-                    android:paddingHorizontal="@dimen/padding_normal"
-                    android:paddingTop="@dimen/padding_normal"
-                    android:text="@string/empty_exposures_list"
-                    android:textSize="13sp"
-                    android:visibility="@{viewModel.exposureInfo.empty ? View.VISIBLE : View.GONE }"
-                    tools:visibility="gone" />
             </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient_bottom_top_top"
+            android:drawableEnd="@drawable/doctor_with_heart"
+            android:drawablePadding="@dimen/padding_normal"
+            android:lineSpacingExtra="4dp"
+            android:paddingHorizontal="@dimen/padding_normal"
+            android:paddingTop="@dimen/padding_normal"
+            android:text="@string/empty_exposures_list"
+            android:textSize="13sp"
+            android:visibility="@{viewModel.exposureInfo.empty ? View.VISIBLE : View.GONE }"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintTop_toBottomOf="@id/next_steps"
+            tools:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/exposure_info_list"
@@ -92,7 +95,6 @@
             android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintTop_toBottomOf="@id/next_steps"
             tools:listitem="@layout/item_exposure_parent" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
