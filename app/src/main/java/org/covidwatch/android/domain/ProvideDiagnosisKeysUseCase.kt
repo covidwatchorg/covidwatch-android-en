@@ -28,6 +28,7 @@ class ProvideDiagnosisKeysUseCase(
             ).setConstraints(
                 Constraints
                     .Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
                     .setRequiresBatteryNotLow(true)
                     .setRequiresStorageNotLow(true)
                     .build()
