@@ -93,9 +93,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/padding_normal"
-                android:lineSpacingExtra="4sp"
+                android:lineSpacingExtra="15sp"
                 android:paddingBottom="@dimen/padding_normal"
-                android:text="@string/finished_onboarding_text" />
+                android:text="@string/finished_onboarding_text"
+                android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
 

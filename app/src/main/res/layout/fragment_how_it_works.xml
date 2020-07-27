@@ -44,12 +44,10 @@
     <ImageView
         android:id="@+id/art"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/gradient_how_it_works"
         android:contentDescription="@null"
-        app:layout_constraintBottom_toTopOf="@id/welcome"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:srcCompat="@drawable/how_it_works_art" />
@@ -77,11 +75,11 @@
         android:paddingTop="@dimen/padding_small"
         android:paddingBottom="@dimen/padding_normal"
         android:text="@string/full_app_name"
-        android:textSize="20sp"
+        android:textSize="23sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/explanation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/welcome" />
 
     <TextView
         android:id="@+id/explanation"
@@ -92,26 +90,18 @@
         android:paddingBottom="@dimen/padding_normal"
         android:text="@string/how_it_works_explanation"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/btn_how_it_works"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_title" />
 
     <Button
         android:id="@+id/btn_how_it_works"
         style="@style/Button.Action"
         android:layout_marginHorizontal="@dimen/padding_normal"
         android:text="@string/how_it_works"
-        app:layout_constraintBottom_toTopOf="@id/btn_back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <include
-        android:id="@+id/btn_back"
-        layout="@layout/powered_by"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/explanation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

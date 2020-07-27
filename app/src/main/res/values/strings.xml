@@ -250,6 +250,10 @@
     <string name="diagnosis_shared_next_step_1">Please keep the app installed until the pandemic is over. </string>
     <string name="diagnosis_shared_next_step_2">Share it with others so that they can help too. The more people use it, the more accurate everyone’s exposure notifications will be.</string>
     <string name="empty_past_diagnoses_list">No Past Diagnoses</string>
+    <string name="exposed_date_label">When do you think you were exposed?</string>
+    <string name="no_exposed_date">I do not know</string>
+    <string name="past_positive_diagnoses_title">My Past Positive Diagnoses</string>
+    <string name="btn_delete_diagnosis">Delete Diagnosis</string>
 
     <!-- Notifications -->
     <string name="upload_report_notification_channel">Reporting</string>
@@ -287,9 +291,6 @@
     <!--REGION SELECTION-->
     <string name="privacy_select_region"><b>We value your privacy.</b> This application is always anonymous and your location is never collected or stored. Selecting a region will allow you to receive information on available healthcare resources in that region without ever having to share a location. Your region can be changed at any time.</string>
     <string name="select_region_label">Select Region</string>
-    <string name="exposed_date_label">When do you think you were exposed?</string>
-    <string name="no_exposed_date">I do not know</string>
-    <string name="past_positive_diagnoses_title">My Past Positive Diagnoses</string>
-    <string name="btn_delete_diagnosis">Delete Diagnosis</string>
+
 
 </resources>

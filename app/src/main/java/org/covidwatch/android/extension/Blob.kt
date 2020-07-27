@@ -11,7 +11,7 @@ fun Date.toLocalDate(): LocalDate {
     }
     return LocalDate.of(
         calendar.get(Calendar.YEAR),
-        calendar.get(Calendar.MONTH),
+        calendar.get(Calendar.MONTH) + 1, // Calendar month is from 0 LocalDate is from 1 :shrug:
         calendar.get(Calendar.DAY_OF_MONTH)
     )
 }

@@ -28,6 +28,7 @@ class ProvideDiagnosisKeysUseCase(
             ).setConstraints(
                 Constraints
                     .Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
                     .setRequiresBatteryNotLow(true)
                     .setRequiresStorageNotLow(true)
                     .build()
@@ -64,7 +65,7 @@ class ProvideDiagnosisKeysUseCase(
     data class Params(val recurrent: Boolean)
 
     companion object {
-        private const val RECURRENCE_PERIOD = 24L // Hours
+        private const val RECURRENCE_PERIOD = 6L // Hours
         const val WORK_NAME = "provide_diagnosis_keys"
         const val RECURRENT_WORK_NAME = "provide_diagnosis_keys_daily"
     }

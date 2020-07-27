@@ -49,11 +49,12 @@
         style="@style/Button.Action"
         android:layout_marginBottom="@dimen/padding_normal"
         android:backgroundTint="@color/white"
+        android:paddingVertical="@dimen/button_vertical_padding"
         android:text="@string/get_started_button"
         android:textColor="@color/bluejay"
         android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

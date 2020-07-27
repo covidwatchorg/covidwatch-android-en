@@ -6,7 +6,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
 
-        <com.google.android.material.textview.MaterialTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/padding_micro"

@@ -27,10 +27,9 @@ class ExposuresViewModel(
     private val _showExposureDetails = MutableLiveData<Event<CovidExposureInformation>>()
     val showExposureDetails: LiveData<Event<CovidExposureInformation>> = _showExposureDetails
 
-    val exposureInfo: LiveData<List<Any>> =
+    val exposureInfo: LiveData<List<CovidExposureInformation>> =
         exposureInformationRepository.exposureInformation().map { exposures ->
-            if (exposures.isNotEmpty()) exposures.sortedByDescending { it.date.time } + Footer
-            else exposures
+            exposures.sortedByDescending { it.date.time }
         }
 
     val lastExposureTime = preferenceStorage.observableExposureSummary.map { it.modifiedTime }

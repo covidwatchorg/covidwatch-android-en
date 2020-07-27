@@ -6,7 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.xwray.groupie.ExpandableGroup
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 import org.covidwatch.android.databinding.FragmentExposuresBinding
+import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseViewModelFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -14,6 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ExposuresFragment : BaseViewModelFragment<FragmentExposuresBinding, ExposuresViewModel>() {
 
     override val viewModel: ExposuresViewModel by viewModel()
+    private val adapter = GroupAdapter<GroupieViewHolder>()
 
     override fun bind(
         inflater: LayoutInflater,
@@ -29,6 +34,7 @@ class ExposuresFragment : BaseViewModelFragment<FragmentExposuresBinding, Exposu
             viewModel = this@ExposuresFragment.viewModel
             executePendingBindings()
 
+            exposureInfoList.adapter = adapter
             exposureInfoList.addItemDecoration(
                 DividerItemDecoration(
                     context,
@@ -40,6 +46,19 @@ class ExposuresFragment : BaseViewModelFragment<FragmentExposuresBinding, Exposu
             }
         }
         with(viewModel) {
+            observe(exposureInfo) { exposures ->
+                if (exposures.isNotEmpty()) adapter.clear()
+
+                exposures.forEach { exposure ->
+                    adapter.add(
+                        ExpandableGroup(ExposureItem(exposure)).apply {
+                            add(ExposureDetailsItem(exposure))
+                        }
+                    )
+                }
+
+                if (exposures.isNotEmpty()) adapter.add(FooterItem())
+            }
             observeEvent(showExposureDetails) {
                 val action =
                     ExposuresFragmentDirections.actionExposuresFragmentToExposureDetailsFragment(it)
