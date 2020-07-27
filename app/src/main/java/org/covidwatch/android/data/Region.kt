@@ -86,7 +86,7 @@ object DefaultRegions {
 
     private val shareTheApp = NextStep(
         type = SHARE,
-        description = "Share the app to improve your exposure notification and risk level accuracy. It works best when everyone uses it.",
+        description = "Share the app to improve your exposure notification accuracy.",
         url = "https://covidwatch.org"
     )
 

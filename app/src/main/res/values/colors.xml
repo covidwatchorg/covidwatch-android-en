@@ -9,8 +9,8 @@
     <color name="colorPrimary">@color/bluejay</color>
     <color name="colorSecondary">#FFFFFF</color>
     <color name="colorTertiary">#779F98</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimaryDark">#1E3D7B</color>
+    <color name="colorAccent">@color/bluejay</color>
 
     <color name="splashBackgroundLight">#43C4D9</color>
     <color name="splashBackgroundDark">#2C58B1</color>

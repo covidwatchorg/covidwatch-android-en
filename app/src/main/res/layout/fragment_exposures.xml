@@ -26,12 +26,12 @@
             android:background="@color/white"
             app:liftOnScroll="true">
 
+            <!--TODO: Fix scroll when the list is empty-->
+            <!-- app:layout_scrollFlags="scroll|enterAlways" -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_scrollFlags="scroll|enterAlways"
-                tools:context="org.covidwatch.android.ui.exposurenotification.ExposureNotificationFragment">
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/btn_close"
@@ -92,8 +92,6 @@
             android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintTop_toBottomOf="@id/next_steps"
             tools:listitem="@layout/item_exposure_parent" />
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
