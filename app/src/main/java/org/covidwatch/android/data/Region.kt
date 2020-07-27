@@ -8,15 +8,11 @@ data class Region(
     val id: RegionId?,
     val name: String,
 
-    val riskLowThreshold: Float,
-    val riskHighThreshold: Float,
-
     val nextStepsNoSignificantExposure: List<NextStep>,
     val nextStepsSignificantExposure: List<NextStep>,
+
     val nextStepsVerifiedPositive: List<NextStep>,
-
     val nextStepsVerificationCode: List<NextStep>,
-
     val exposureConfiguration: ExposureConfiguration = ExposureConfiguration(),
 
     @SerializedName("azRiskModelConfiguration")
@@ -98,9 +94,7 @@ object DefaultRegions {
 
     private val default = Region(
         id = ARIZONA_STATE,
-        name = "Arizona State",
-        riskLowThreshold = 0.14F,
-        riskHighThreshold = 3.00F,
+        name = "The State of Arizona",
         nextStepsNoSignificantExposure = listOf(shareTheApp),
         nextStepsSignificantExposure = listOf(shareTheApp),
         nextStepsVerifiedPositive = listOf(shareTheApp),
@@ -117,8 +111,6 @@ object DefaultRegions {
     private val universityOfArizona = Region(
         id = UOA,
         name = "University of Arizona",
-        riskLowThreshold = 0.14F,
-        riskHighThreshold = 3.00F,
         nextStepsNoSignificantExposure = listOf(
             NextStep(
                 type = WEBSITE,
@@ -139,18 +131,19 @@ object DefaultRegions {
         ),
         nextStepsSignificantExposure = listOf(
             NextStep(
-                type = INFO,
-                description = "Stay at home until: "
+                type = WEBSITE,
+                description = "Stay at home until DAYS_FROM_EXPOSURE{LATEST,14,FALSE}.",
+                url = "http://covid19.arizona.edu/self-quarantine?utm_source=covid_watch_app&utm_medium=referral&utm_campaign=covid_watch_self_quarantine"
             ),
             NextStep(
-                type = INFO,
-                description = "Call Campus Health at (520) 621-9202 and schedule a COVID-19 test for: ",
+                type = PHONE,
+                description = "Call Campus Health at (520) 621-9202 and schedule a COVID-19 test for DAYS_FROM_EXPOSURE{EARLIEST,7,TRUE}.",
                 url = "tel:1-520-621-9202"
             ),
             NextStep(
                 type = WEBSITE,
                 description = "Monitor COVID-19 symptoms and get tested ASAP if symptoms appear.",
-                url = "https://covid19.arizona.edu/prevention-health/covid-19-symptoms?utm_source=covid_watch_app&utm_medium=referral&utm_campaign=covid_watch_covid19_significant_exposure"
+                url = "https://covid19.arizona.edu/prevention-health/covid-19-symptoms?utm_source=covid_watch_app&utm_medium=referral&utm_campaign=covid_watch_covid19_symptoms"
             ),
             NextStep(
                 type = WEBSITE,
@@ -185,8 +178,6 @@ object DefaultRegions {
     private val arizonaStateUniversity = Region(
         id = ASU,
         name = "Arizona State University",
-        riskLowThreshold = 0.14F,
-        riskHighThreshold = 3.00F,
         nextStepsNoSignificantExposure = listOf(shareTheApp),
         nextStepsSignificantExposure = listOf(shareTheApp),
         nextStepsVerifiedPositive = listOf(shareTheApp),
@@ -195,10 +186,8 @@ object DefaultRegions {
     )
 
     private val northernArizonaUniversity = Region(
-        id = ASU,
-        name = "Arizona State University",
-        riskLowThreshold = 0.14F,
-        riskHighThreshold = 3.00F,
+        id = NAU,
+        name = "Northern Arizona University",
         nextStepsNoSignificantExposure = listOf(shareTheApp),
         nextStepsSignificantExposure = listOf(shareTheApp),
         nextStepsVerifiedPositive = listOf(shareTheApp),
