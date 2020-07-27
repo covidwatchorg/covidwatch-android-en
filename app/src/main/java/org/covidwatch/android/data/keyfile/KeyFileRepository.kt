@@ -11,7 +11,6 @@ class KeyFileRepository(
     suspend fun add(keyFile: KeyFile) = withContext(dispatchers.io) { local.add(keyFile) }
 
     suspend fun providedKeys(): List<KeyFile> = withContext(dispatchers.io) { local.keyFiles() }
-    suspend fun reset() = withContext(dispatchers.io) {
-        local.reset()
-    }
+
+    suspend fun reset() = withContext(dispatchers.io) { local.reset() }
 }
