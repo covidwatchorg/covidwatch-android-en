@@ -17,14 +17,14 @@ import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseViewModelFragment
 import org.covidwatch.android.ui.util.DateFormatter
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import java.util.*
 import java.util.Calendar.DAY_OF_MONTH
 
 class VerifyPositiveDiagnosisFragment :
     BaseViewModelFragment<FragmentVerifyPositiveDiagnosisBinding, VerifyPositiveDiagnosisViewModel>() {
 
-    override val viewModel: VerifyPositiveDiagnosisViewModel by inject()
+    override val viewModel: VerifyPositiveDiagnosisViewModel by stateViewModel()
 
     override fun bind(
         inflater: LayoutInflater,

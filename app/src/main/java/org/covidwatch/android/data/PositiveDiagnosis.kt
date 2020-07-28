@@ -6,6 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import java.util.*
 
 @Entity(tableName = "positive_diagnosis_report")
@@ -64,7 +65,7 @@ data class PositiveDiagnosisVerification(
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     val hmacKey: ByteArray? = null,
     val verificationCertificate: String? = null
-) {
+) : Serializable {
     val readyToSubmit: Boolean
         get() = verificationTestCode.trim().isNotEmpty() && ( // must contain verification code and
                 symptomsStartDate != null || ( // either symptoms date

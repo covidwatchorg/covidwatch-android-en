@@ -1,6 +1,7 @@
 package org.covidwatch.android.di
 
 import android.content.Context
+import androidx.lifecycle.SavedStateHandle
 import androidx.room.Room
 import androidx.work.WorkManager
 import com.google.android.gms.nearby.Nearby
@@ -298,8 +299,9 @@ val appModule = module {
         PositiveDiagnosesViewModel(positiveDiagnosisRepository = get())
     }
 
-    viewModel {
+    viewModel { (state: SavedStateHandle) ->
         VerifyPositiveDiagnosisViewModel(
+            state = state,
             startUploadDiagnosisKeysWorkUseCase = get(),
             enManager = get()
         )

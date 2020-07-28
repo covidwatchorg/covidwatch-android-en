@@ -12,12 +12,12 @@ import org.covidwatch.android.databinding.FragmentSelectRegionBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseFragment
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class SelectRegionFragment : BaseFragment<FragmentSelectRegionBinding>() {
 
-    private val viewModel: SelectRegionViewModel by inject()
+    private val viewModel: SelectRegionViewModel by viewModel()
 
     override fun bind(
         inflater: LayoutInflater,

@@ -32,6 +32,7 @@ import org.covidwatch.android.extension.launchUseCase
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.ui.BaseViewModelFragment
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.util.*
 
@@ -88,7 +89,7 @@ open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuVie
     private val provideDiagnosisKeysUseCase: ProvideDiagnosisKeysUseCase by inject()
     private val preferences: PreferenceStorage by inject()
 
-    override val viewModel: MenuViewModel by inject()
+    override val viewModel: MenuViewModel by viewModel()
 
     override fun bind(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentMenuBinding.inflate(inflater, container, false)
