@@ -1,70 +1,92 @@
 package org.covidwatch.android.ui.reporting
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.map
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import org.covidwatch.android.data.PositiveDiagnosisReport
 import org.covidwatch.android.data.PositiveDiagnosisVerification
 import org.covidwatch.android.domain.StartUploadDiagnosisKeysWorkUseCase
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
-import org.covidwatch.android.extension.mutableLiveData
 import org.covidwatch.android.extension.send
 import org.covidwatch.android.ui.BaseViewModel
 import org.covidwatch.android.ui.event.Event
 import java.util.*
 
 class VerifyPositiveDiagnosisViewModel(
+    private val state: SavedStateHandle,
     private val startUploadDiagnosisKeysWorkUseCase: StartUploadDiagnosisKeysWorkUseCase,
     private val enManager: ExposureNotificationManager
 ) : BaseViewModel() {
 
-    private val diagnosisVerification = mutableLiveData(PositiveDiagnosisVerification())
+    private val diagnosisVerification =
+        state.getLiveData<PositiveDiagnosisVerification>(STATE_DIAGNOSIS_VERIFICATION).also {
+            if (it.value == null) {
+                it.value = PositiveDiagnosisVerification()
+            }
+        }
 
     private val _showThankYou = MutableLiveData<Event<Unit>>()
     val showThankYou: LiveData<Event<Unit>> = _showThankYou
 
     val readyToSubmit: LiveData<Boolean> = diagnosisVerification.map { it?.readyToSubmit ?: false }
 
-    private var infectionDate: Date? = null
-    private var testDate: Date? = null
-    private var symptomDate: Date? = null
+    private var infectionDate: Date?
+        get() = state[STATE_INFECTION_DATE]
+        set(value) {
+            state[STATE_INFECTION_DATE] = value
+        }
+
+    private var testDate: Date?
+        get() = state[STATE_TEST_DATE]
+        set(value) {
+            state[STATE_TEST_DATE] = value
+        }
+
+    private var symptomDate: Date?
+        get() = state[STATE_SYMPTOM_DATE]
+        set(value) {
+            state[STATE_SYMPTOM_DATE] = value
+        }
 
     fun symptomDate(date: Long) {
         symptomDate = Date(date)
-        diagnosisVerification.value =
-            diagnosisVerification.value?.copy(symptomsStartDate = symptomDate)
+        setDiagnosisVerification(diagnosisVerification.value?.copy(symptomsStartDate = symptomDate))
     }
 
     fun testDate(date: Long) {
         testDate = Date(date)
-        diagnosisVerification.value = diagnosisVerification.value?.copy(testDate = testDate)
+        setDiagnosisVerification(diagnosisVerification.value?.copy(testDate = testDate))
     }
 
     fun infectionDate(date: Long) {
         infectionDate = Date(date)
-        diagnosisVerification.value =
-            diagnosisVerification.value?.copy(possibleInfectionDate = infectionDate)
+        setDiagnosisVerification(diagnosisVerification.value?.copy(possibleInfectionDate = infectionDate))
     }
 
     fun verificationCode(code: String) {
-        diagnosisVerification.value = diagnosisVerification.value?.copy(verificationTestCode = code)
+        setDiagnosisVerification(diagnosisVerification.value?.copy(verificationTestCode = code))
     }
 
     fun noSymptoms(noSymptoms: Boolean) {
-        diagnosisVerification.value = diagnosisVerification.value?.copy(
-            symptomsStartDate = if (noSymptoms) null else symptomDate,
-            noSymptoms = noSymptoms
+        setDiagnosisVerification(
+            diagnosisVerification.value?.copy(
+                symptomsStartDate = if (noSymptoms) null else symptomDate,
+                noSymptoms = noSymptoms
+            )
         )
     }
 
     fun noInfectionDate(noInfectionDate: Boolean) {
-        diagnosisVerification.value =
+        setDiagnosisVerification(
             diagnosisVerification.value?.copy(
                 possibleInfectionDate = if (noInfectionDate) null else infectionDate,
                 noInfectionDate = noInfectionDate
             )
+        )
+    }
+
+    private fun setDiagnosisVerification(data: PositiveDiagnosisVerification?) {
+        state[STATE_DIAGNOSIS_VERIFICATION] = data
+        diagnosisVerification.value = data
     }
 
     fun sharePositiveDiagnosis() {
@@ -105,5 +127,12 @@ class VerifyPositiveDiagnosisViewModel(
                 failure { handleStatus(it) }
             }
         }
+    }
+
+    companion object {
+        private const val STATE_DIAGNOSIS_VERIFICATION = "diagnosis_verification"
+        private const val STATE_INFECTION_DATE = "infection_date"
+        private const val STATE_TEST_DATE = "test_date"
+        private const val STATE_SYMPTOM_DATE = "symptom_date"
     }
 }
