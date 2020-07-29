@@ -27,7 +27,7 @@ class DiagnosisVerificationRemoteSource(
             .url("$verificationServerEndpoint/api/verify").build()
 
         return httpClient.newCall(request).execute().let { response ->
-            if (response.code != 200) throw ServerException()
+            if (response.code != 200) throw ServerException(response.message)
 
             val tokenResponse =
                 gson.fromJson(response.body?.charStream(), VerifyCodeResponse::class.java)
@@ -48,7 +48,7 @@ class DiagnosisVerificationRemoteSource(
             .url("$verificationServerEndpoint/api/certificate").build()
 
         return httpClient.newCall(request).execute().let { response ->
-            if (response.code != 200) throw ServerException()
+            if (response.code != 200) throw ServerException(response.message)
 
             val certificateResponse = gson.fromJson(
                 response.body?.charStream(),

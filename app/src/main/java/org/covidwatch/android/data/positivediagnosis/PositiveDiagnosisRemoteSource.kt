@@ -37,7 +37,7 @@ class PositiveDiagnosisRemoteSource(
         val request = Request.Builder().url(url).build()
 
         return httpClient.newCall(request).execute().let { response ->
-            if (response.code != 200) throw ServerException()
+            if (response.code != 200) throw ServerException(response.message)
 
             toFile(dir, url.split("/").last(), response.body)
         }
@@ -97,7 +97,7 @@ class PositiveDiagnosisRemoteSource(
             .post(body)
             .build()
         httpClient.newCall(request).execute().also { response ->
-            if (response.code != 200) throw ServerException()
+            if (response.code != 200) throw ServerException(response.message)
         }
     }
 
