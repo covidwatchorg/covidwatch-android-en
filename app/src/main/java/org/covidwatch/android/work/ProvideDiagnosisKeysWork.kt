@@ -7,7 +7,6 @@ import androidx.work.WorkerParameters
 import com.google.common.io.BaseEncoding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.covidwatch.android.data.asCovidExposureConfiguration
 import org.covidwatch.android.data.asExposureConfiguration
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
@@ -57,6 +56,7 @@ class ProvideDiagnosisKeysWork(
         )
         return withContext(Dispatchers.IO) {
             try {
+                if (enManager.isEnabled().right == false) return@withContext failure(ENStatus.FailedServiceDisabled)
 
                 // Update regions data before we proceed because we need the latest exposure configuration
                 // If it fails we use default values
@@ -66,10 +66,15 @@ class ProvideDiagnosisKeysWork(
                 Timber.d("Adding ${diagnosisKeys.size} batches of diagnoses to EN framework")
 
                 val token = randomToken()
-                val exposureConfiguration =
-                    preferences.exposureConfiguration.asExposureConfiguration()
+                val covidExposureConfiguration = preferences.exposureConfiguration
+                val exposureConfiguration = covidExposureConfiguration.asExposureConfiguration()
+
+                // Return success if no keys to provide
+                if (diagnosisKeys.all { it.keys.isEmpty() }) return@withContext Result.success()
+
                 diagnosisKeys.filter { it.keys.isNotEmpty() }.forEach { fileBatch ->
                     val keys = fileBatch.keys
+
                     enManager.provideDiagnosisKeys(keys, token, exposureConfiguration).apply {
                         success {
                             Timber.d("Added keys to EN with token: $token")
@@ -87,6 +92,7 @@ class ProvideDiagnosisKeysWork(
                             }
                             dir?.delete()
                         }
+
                         failure {
                             val dir = keys[0].parentFile
                             keys.forEach { file -> file.delete() }
@@ -98,11 +104,9 @@ class ProvideDiagnosisKeysWork(
                 }
 
                 diagnosisKeysTokenRepository.insert(
-                    DiagnosisKeysToken(
-                        token,
-                        exposureConfiguration = exposureConfiguration.asCovidExposureConfiguration()
-                    )
+                    DiagnosisKeysToken(token, covidExposureConfiguration)
                 )
+
                 Result.success()
             } catch (e: Exception) {
                 Timber.e(e)
