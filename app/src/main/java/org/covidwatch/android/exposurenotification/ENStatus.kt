@@ -69,9 +69,8 @@ sealed class ENStatus(val code: Int) {
     }
 }
 
-class NoConnectionException : IOException() {
-    override val message: String
-        get() = "No internet available, please check your WIFi or Data connections"
-}
+// TODO: 29.07.2020 Localization problem if we use the message in the UI
+class NoConnectionException :
+    IOException("No internet available, please check your WIFi or Data connections")
 
-class ServerException(val error: String? = null) : IOException()
+class ServerException(error: String? = null) : IOException(error)
