@@ -17,8 +17,10 @@ class Notifications(private val context: Context) {
 
     fun postExposureNotification() {
         createExposureNotificationChannel()
+
         val intent = Intent(context, MainActivity::class.java)
         intent.putExtra(POTENTIAL_EXPOSURE_NOTIFICATION, true)
+
         val pendingIntent = PendingIntent.getActivity(
             context,
             0,
@@ -26,10 +28,7 @@ class Notifications(private val context: Context) {
             PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        val builder = NotificationCompat.Builder(
-            context,
-            EXPOSURE_NOTIFICATION_CHANNEL_ID
-        )
+        val builder = NotificationCompat.Builder(context, EXPOSURE_NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.notification_title))
             .setContentText(context.getString(R.string.notification_message))
@@ -72,10 +71,8 @@ class Notifications(private val context: Context) {
         )
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.upload_report_notification_title))
-            .setStyle(
-                NotificationCompat.BigTextStyle()
-            )
-            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setStyle(NotificationCompat.BigTextStyle())
+            .setPriority(NotificationCompat.PRIORITY_MAX)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
@@ -87,7 +84,7 @@ class Notifications(private val context: Context) {
             val channel = NotificationChannel(
                 UPLOAD_REPORT_CHANNEL_ID,
                 context.getString(R.string.upload_report_notification_channel),
-                NotificationManager.IMPORTANCE_LOW
+                NotificationManager.IMPORTANCE_HIGH
             )
             channel.description =
                 context.getString(R.string.upload_report_notification_channel_description)
@@ -104,15 +101,10 @@ class Notifications(private val context: Context) {
             Intent(context, MainActivity::class.java),
             PendingIntent.FLAG_UPDATE_CURRENT
         )
-        val builder = NotificationCompat.Builder(
-            context,
-            DOWNLOAD_REPORTS_CHANNEL_ID
-        )
+        val builder = NotificationCompat.Builder(context, DOWNLOAD_REPORTS_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.download_reports_notification_title))
-            .setStyle(
-                NotificationCompat.BigTextStyle()
-            )
+            .setStyle(NotificationCompat.BigTextStyle())
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
@@ -125,7 +117,7 @@ class Notifications(private val context: Context) {
             val channel = NotificationChannel(
                 DOWNLOAD_REPORTS_CHANNEL_ID,
                 context.getString(R.string.download_reports_notification_channel),
-                NotificationManager.IMPORTANCE_LOW
+                NotificationManager.IMPORTANCE_DEFAULT
             )
             channel.description =
                 context.getString(R.string.download_reports_notification_channel_description)
