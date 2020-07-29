@@ -26,7 +26,7 @@ class StartUploadDiagnosisKeysWorkUseCase(
 ) : LiveDataUseCase<UUID, Params>(dispatchers) {
 
     override suspend fun run(params: Params?): Either<Failure, UUID> {
-        params ?: return Either.Left(Failure.Failed)
+        params ?: return Either.Left(Failure.EnStatus.Failed)
 
         val positiveDiagnosisReport = params.positiveDiagnosisReport
         positiveDiagnosisRepository.addPositiveDiagnosisReport(positiveDiagnosisReport)

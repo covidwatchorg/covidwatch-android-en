@@ -40,7 +40,7 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
 
     protected fun handleStatus(it: Failure) {
         when (it) {
-            Failure.FailedInsufficientStorage -> {
+            Failure.EnStatus.FailedDiskIo -> {
                 val snackbar = Snackbar.make(
                     binding.root,
                     R.string.insufficient_storage,
@@ -49,7 +49,7 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
                 snackbar.setAction(R.string.ok) { snackbar.dismiss() }
                 snackbar.show()
             }
-            Failure.Failed -> {
+            Failure.EnStatus.Failed -> {
                 Toast.makeText(
                     context,
                     R.string.unknown_error,
@@ -70,7 +70,7 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            Failure.FailedDeviceAttestation -> {
+            Failure.EnStatus.FailedDeviceAttestation -> {
                 Toast.makeText(
                     context,
                     R.string.device_attestation_error,

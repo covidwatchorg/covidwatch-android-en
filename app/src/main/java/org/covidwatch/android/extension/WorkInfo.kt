@@ -18,7 +18,7 @@ fun WorkInfo?.toResult() = when (this?.state) {
     WorkInfo.State.SUCCEEDED -> Either.Right(id)
     else -> {
         val code = this?.outputData?.getInt(FAILURE, UNKNOWN_FAILURE)
-        val status = code?.let { Failure(it) } ?: Failure.Failed
+        val status = code?.let { Failure(it) } ?: Failure.EnStatus.Failed
         Either.Left(status)
     }
 }

@@ -17,12 +17,13 @@ class UpdateExposureInformationUseCase(
     dispatchers: AppCoroutineDispatchers
 ) : UseCase<Unit, Params>(dispatchers) {
     override suspend fun run(params: Params?): Either<Failure, Unit> {
-        if (enManager.isEnabled().right == false) return Either.Left(Failure.FailedServiceDisabled)
-        val token = params?.token ?: return Either.Left(Failure.Failed)
+        if (enManager.isEnabled().right == false) return Either.Left(Failure.EnStatus.FailedServiceDisabled)
+        val token = params?.token ?: return Either.Left(Failure.EnStatus.Failed)
 
         Timber.d("Start ${javaClass.simpleName}")
 
-        val keysToken = tokenRepository.findByToken(token) ?: return Either.Left(Failure.Failed)
+        val keysToken =
+            tokenRepository.findByToken(token) ?: return Either.Left(Failure.EnStatus.Failed)
         Timber.d("Get Exposure Information for: $keysToken")
 
         enManager.getExposureInformation(keysToken.token).apply {

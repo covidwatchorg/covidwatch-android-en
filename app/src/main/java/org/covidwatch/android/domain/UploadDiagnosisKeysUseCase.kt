@@ -30,14 +30,16 @@ class UploadDiagnosisKeysUseCase(
     private val paddingSizeMax = 2048
 
     override suspend fun run(params: Params?): Either<Failure, Unit> {
-        params ?: return Either.Left(Failure.Failed)
-        val verificationData = params.report.verificationData ?: return Either.Left(Failure.Failed)
+        params ?: return Either.Left(Failure.EnStatus.Failed)
+        val verificationData = params.report.verificationData ?: return Either.Left(
+            Failure.EnStatus.Failed
+        )
 
         enManager.isEnabled().apply {
             success { enabled ->
                 if (!enabled) {
                     Timber.d("Can't start ${javaClass.simpleName}. EN is not enabled")
-                    return Either.Left(Failure.FailedServiceDisabled)
+                    return Either.Left(Failure.EnStatus.FailedServiceDisabled)
                 }
             }
             failure {

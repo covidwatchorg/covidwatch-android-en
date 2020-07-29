@@ -43,7 +43,7 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     private fun handleFailure(status: Failure, requestCode: Int?, task: suspend () -> Any) =
-        if (status is Failure.NeedsResolution && requestCode != null) {
+        if (status is Failure.EnStatus.NeedsResolution && requestCode != null) {
             status.exception?.let {
                 _resolvable.send(Resolvable(it, requestCode))
                 tasksInResolution.put(requestCode, task)
@@ -75,7 +75,7 @@ abstract class BaseViewModel : ViewModel() {
         if (resultCode == Activity.RESULT_OK) {
             task?.invoke()
         } else {
-            handleStatus(Failure.FailedRejectedOptIn)
+            handleStatus(Failure.EnStatus.FailedRejectedOptIn)
         }
         tasksInResolution.remove(requestCode)
     }

@@ -56,7 +56,9 @@ class ProvideDiagnosisKeysWork(
         )
         return withContext(Dispatchers.IO) {
             try {
-                if (enManager.isEnabled().right == false) return@withContext failure(Failure.FailedServiceDisabled)
+                if (enManager.isEnabled().right == false) return@withContext failure(
+                    Failure.EnStatus.FailedServiceDisabled
+                )
 
                 // Update regions data before we proceed because we need the latest exposure configuration
                 // If it fails we use default values
