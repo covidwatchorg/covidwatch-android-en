@@ -143,11 +143,6 @@ open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuVie
             }
             R.string.menu_detect_exposures_from_server -> {
                 lifecycleScope.launchUseCase(provideDiagnosisKeysUseCase)
-                Toast.makeText(
-                    context,
-                    "Downloading positive diagnoses. Watch a notification for status",
-                    Toast.LENGTH_SHORT
-                ).show()
                 findNavController().popBackStack()
             }
             R.string.menu_export_possible_exposures -> {

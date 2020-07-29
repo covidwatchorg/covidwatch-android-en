@@ -75,7 +75,7 @@ abstract class BaseViewModel : ViewModel() {
         if (resultCode == Activity.RESULT_OK) {
             task?.invoke()
         } else {
-            handleStatus(Failure.EnStatus.FailedRejectedOptIn)
+            handleStatus(Failure.EnStatus.RejectedOptIn)
         }
         tasksInResolution.remove(requestCode)
     }

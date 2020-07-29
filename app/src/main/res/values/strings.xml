@@ -260,6 +260,8 @@
     <string name="download_reports_notification_channel">Detect Exposures</string>
     <string name="download_reports_notification_channel_description">Shows notifications about the status of downloading positive diagnosis for exposure matching. Notifies about problems during the downloads.</string>
     <string name="download_reports_notification_title">Detecting exposures</string>
+    <string name="download_reports_failure_notification_title">Detecting exposures failure</string>
+    <string name="download_reports_failure_notification_settings_action">Click to open Settings</string>
 
     <string name="notification_title">Possible COVID-19 exposure</string>
     <string name="notification_message">You were near someone who has shared a positive and verified diagnosis of COVID-19. The app has accessed the date, duration, and signal strength of this exposure.</string>

@@ -39,7 +39,7 @@ class UploadDiagnosisKeysUseCase(
             success { enabled ->
                 if (!enabled) {
                     Timber.d("Can't start ${javaClass.simpleName}. EN is not enabled")
-                    return Either.Left(Failure.EnStatus.FailedServiceDisabled)
+                    return Either.Left(Failure.EnStatus.ServiceDisabled)
                 }
             }
             failure {

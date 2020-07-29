@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.provider.Settings
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import org.covidwatch.android.R
@@ -112,6 +113,37 @@ class Notifications(private val context: Context) {
         return builder.build()
     }
 
+    fun downloadingReportsNetworkFailure() {
+        createDownloadReportChannel()
+
+        val builder = NotificationCompat.Builder(context, DOWNLOAD_REPORTS_CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(context.getString(R.string.download_reports_failure_notification_title))
+            .setContentText(context.getString(R.string.no_connection_error))
+            .setSubText(context.getString(R.string.download_reports_failure_notification_settings_action))
+            .setContentIntent(
+                PendingIntent.getActivity(
+                    context,
+                    0,
+                    Intent(Settings.ACTION_WIRELESS_SETTINGS),
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                )
+            )
+            .addAction(
+                R.drawable.ic_settings_white_24dp,
+                context.getString(R.string.download_reports_failure_notification_settings_action),
+                PendingIntent.getActivity(
+                    context,
+                    0,
+                    Intent(Settings.ACTION_WIRELESS_SETTINGS),
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                )
+            )
+            .setAutoCancel(true)
+
+        notificationManager.notify(DOWNLOAD_REPORTS_ERROR_NOTIFICATION_ID, builder.build())
+    }
+
     private fun createDownloadReportChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
@@ -133,5 +165,6 @@ class Notifications(private val context: Context) {
         const val EXPOSURE_NOTIFICATION_ID = 55
         const val UPLOADING_REPORT_NOTIFICATION_ID = 66
         const val DOWNLOAD_REPORTS_NOTIFICATION_ID = 77
+        const val DOWNLOAD_REPORTS_ERROR_NOTIFICATION_ID = 78
     }
 }

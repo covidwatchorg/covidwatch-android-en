@@ -17,7 +17,7 @@ class UpdateExposureInformationUseCase(
     dispatchers: AppCoroutineDispatchers
 ) : UseCase<Unit, Params>(dispatchers) {
     override suspend fun run(params: Params?): Either<Failure, Unit> {
-        if (enManager.isEnabled().right == false) return Either.Left(Failure.EnStatus.FailedServiceDisabled)
+        if (enManager.isEnabled().right == false) return Either.Left(Failure.EnStatus.ServiceDisabled)
         val token = params?.token ?: return Either.Left(Failure.EnStatus.Failed)
 
         Timber.d("Start ${javaClass.simpleName}")

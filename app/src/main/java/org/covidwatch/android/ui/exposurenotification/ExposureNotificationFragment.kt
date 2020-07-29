@@ -87,11 +87,11 @@ class ExposureNotificationFragment : Fragment() {
 
     private fun handleError(status: Failure?) {
         when (status) {
-            Failure.EnStatus.FailedRejectedOptIn -> TODO()
-            Failure.EnStatus.FailedServiceDisabled -> TODO()
-            Failure.EnStatus.FailedBluetoothScanningDisabled -> TODO()
-            Failure.EnStatus.FailedTemporarilyDisabled -> TODO()
-            Failure.EnStatus.FailedDiskIo -> TODO()
+            Failure.EnStatus.RejectedOptIn -> TODO()
+            Failure.EnStatus.ServiceDisabled -> TODO()
+            Failure.EnStatus.BluetoothDisabled -> TODO()
+            Failure.EnStatus.TemporarilyDisabled -> TODO()
+            Failure.EnStatus.FailedDiskIO -> TODO()
             Failure.EnStatus.Failed -> TODO()
         }
     }

@@ -32,7 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
             android:layout_marginTop="@dimen/padding_normal"
-            android:src="@drawable/how_it_works_1" />
+            android:src="@drawable/how_it_works_1"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/subtitle"

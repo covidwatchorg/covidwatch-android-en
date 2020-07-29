@@ -41,9 +41,6 @@ class ProvideDiagnosisKeysUseCase(
             )
         } else {
             downloadRequest = OneTimeWorkRequestBuilder<ProvideDiagnosisKeysWork>()
-                .setConstraints(
-                    Constraints.Builder().build()
-                )
                 .build()
 
             workManager.enqueueUniqueWork(

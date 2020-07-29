@@ -57,7 +57,7 @@ class ProvideDiagnosisKeysWork(
         return withContext(Dispatchers.IO) {
             try {
                 if (enManager.isEnabled().right == false) return@withContext failure(
-                    Failure.EnStatus.FailedServiceDisabled
+                    Failure.EnStatus.ServiceDisabled
                 )
 
                 // Update regions data before we proceed because we need the latest exposure configuration
@@ -112,7 +112,20 @@ class ProvideDiagnosisKeysWork(
                 Result.success()
             } catch (e: Exception) {
                 Timber.e(e)
-                failure(Failure(e))
+                val failure = Failure(e)
+                when (failure) {
+                    Failure.EnStatus.Failed -> TODO()
+                    Failure.EnStatus.NotSupported -> TODO()
+                    Failure.EnStatus.ServiceDisabled -> notifications.downloadingReportsNetworkFailure()
+                    Failure.EnStatus.BluetoothDisabled -> TODO()
+                    Failure.EnStatus.TemporarilyDisabled -> TODO()
+                    Failure.EnStatus.FailedDiskIO -> TODO()
+                    Failure.EnStatus.Unauthorized -> TODO()
+                    Failure.EnStatus.RateLimited -> TODO()
+                    Failure.NetworkError -> notifications.downloadingReportsNetworkFailure()
+                    Failure.ServerError -> notifications.downloadingReportsNetworkFailure()
+                }
+                failure(failure)
             }
         }
     }
