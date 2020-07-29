@@ -15,8 +15,8 @@ import org.covidwatch.android.data.keyfile.KeyFileRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.domain.UpdateRegionsUseCase
-import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.extension.failure
 import org.covidwatch.android.ui.Notifications
 import org.covidwatch.android.ui.Notifications.Companion.DOWNLOAD_REPORTS_NOTIFICATION_ID
@@ -56,7 +56,7 @@ class ProvideDiagnosisKeysWork(
         )
         return withContext(Dispatchers.IO) {
             try {
-                if (enManager.isEnabled().right == false) return@withContext failure(ENStatus.FailedServiceDisabled)
+                if (enManager.isEnabled().right == false) return@withContext failure(Failure.FailedServiceDisabled)
 
                 // Update regions data before we proceed because we need the latest exposure configuration
                 // If it fails we use default values
@@ -110,7 +110,7 @@ class ProvideDiagnosisKeysWork(
                 Result.success()
             } catch (e: Exception) {
                 Timber.e(e)
-                failure(ENStatus(e))
+                failure(Failure(e))
             }
         }
     }

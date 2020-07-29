@@ -1,7 +1,7 @@
 package org.covidwatch.android.domain
 
 import androidx.work.*
-import org.covidwatch.android.exposurenotification.ENStatus
+import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.extension.toResult
 import org.covidwatch.android.functional.Either
 import org.covidwatch.android.work.UpdateExposureStateWork
@@ -12,8 +12,8 @@ class UpdateExposureStateUseCase(
     private val workManager: WorkManager,
     dispatchers: AppCoroutineDispatchers
 ) : UseCase<UUID, UpdateExposureStateUseCase.Params>(dispatchers) {
-    override suspend fun run(params: Params?): Either<ENStatus, UUID> {
-        params ?: return Either.Left(ENStatus.Failed)
+    override suspend fun run(params: Params?): Either<Failure, UUID> {
+        params ?: return Either.Left(Failure.Failed)
         Timber.d("Start ${javaClass.simpleName} for token: ${params.token}")
 
         val updateWork = OneTimeWorkRequestBuilder<UpdateExposureStateWork>()

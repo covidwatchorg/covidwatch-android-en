@@ -7,28 +7,29 @@ import java.io.IOException
 
 // TODO: 07.06.2020 Probably rename it to Failure and use for other failures in the app not related
 // Exposure Notification framework
-sealed class ENStatus(val code: Int) {
-    object FailedRejectedOptIn : ENStatus(FAILED_REJECTED_OPT_IN)
-    object FailedServiceDisabled : ENStatus(FAILED_SERVICE_DISABLED)
-    object FailedBluetoothScanningDisabled : ENStatus(FAILED_BLUETOOTH_DISABLED)
-    object FailedTemporarilyDisabled : ENStatus(FAILED_TEMPORARILY_DISABLED)
+sealed class Failure(val code: Int) {
+
+    object FailedRejectedOptIn : Failure(FAILED_REJECTED_OPT_IN)
+    object FailedServiceDisabled : Failure(FAILED_SERVICE_DISABLED)
+    object FailedBluetoothScanningDisabled : Failure(FAILED_BLUETOOTH_DISABLED)
+    object FailedTemporarilyDisabled : Failure(FAILED_TEMPORARILY_DISABLED)
 
     // TODO: 07.06.2020 Rework this status because it's not about storage but IO errors
     // Like no file or can't read a file
-    object FailedInsufficientStorage : ENStatus(FAILED_DISK_IO)
-    object FailedDeviceAttestation : ENStatus(FAILED_DEVICE_ATTESTATION)
-    object NetworkError : ENStatus(NETWORK_ERROR)
-    object ServerError : ENStatus(REMOTE_EXCEPTION)
+    object FailedInsufficientStorage : Failure(FAILED_DISK_IO)
+    object FailedDeviceAttestation : Failure(FAILED_DEVICE_ATTESTATION)
+    object NetworkError : Failure(NETWORK_ERROR)
+    object ServerError : Failure(REMOTE_EXCEPTION)
 
-    object Failed : ENStatus(FAILED)
+    object Failed : Failure(FAILED)
 
-    class NeedsResolution(val exception: ApiException? = null) : ENStatus(RESOLUTION_REQUIRED)
+    class NeedsResolution(val exception: ApiException? = null) : Failure(RESOLUTION_REQUIRED)
 
     companion object {
         const val FAILED_DEVICE_ATTESTATION = 444
 
         /**
-         * Create [ENStatus] from [ApiException] when [ExposureNotificationClient] methods are called
+         * Create [Failure] from [ApiException] when [ExposureNotificationClient] methods are called
          * */
         operator fun invoke(exception: Exception?) = when (exception) {
             is ApiException -> {
@@ -51,7 +52,7 @@ sealed class ENStatus(val code: Int) {
         }
 
         /**
-         * Generate [ENStatus] from [ApiException.getStatusCode]
+         * Generate [Failure] from [ApiException.getStatusCode]
          * */
         operator fun invoke(statusCode: Int?) = when (statusCode) {
             FAILED_REJECTED_OPT_IN -> FailedRejectedOptIn

@@ -10,7 +10,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import org.covidwatch.android.R
-import org.covidwatch.android.exposurenotification.ENStatus
+import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.extension.observeEvent
 
 abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : BaseFragment<T>() {
@@ -38,9 +38,9 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
         }
     }
 
-    protected fun handleStatus(it: ENStatus) {
+    protected fun handleStatus(it: Failure) {
         when (it) {
-            ENStatus.FailedInsufficientStorage -> {
+            Failure.FailedInsufficientStorage -> {
                 val snackbar = Snackbar.make(
                     binding.root,
                     R.string.insufficient_storage,
@@ -49,28 +49,28 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
                 snackbar.setAction(R.string.ok) { snackbar.dismiss() }
                 snackbar.show()
             }
-            ENStatus.Failed -> {
+            Failure.Failed -> {
                 Toast.makeText(
                     context,
                     R.string.unknown_error,
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            ENStatus.NetworkError -> {
+            Failure.NetworkError -> {
                 Toast.makeText(
                     context,
                     R.string.no_connection_error,
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            ENStatus.ServerError -> {
+            Failure.ServerError -> {
                 Toast.makeText(
                     context,
                     R.string.server_error,
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            ENStatus.FailedDeviceAttestation -> {
+            Failure.FailedDeviceAttestation -> {
                 Toast.makeText(
                     context,
                     R.string.device_attestation_error,
