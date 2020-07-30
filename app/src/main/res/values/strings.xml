@@ -237,7 +237,7 @@
     <string name="test_verification_code_hint">12345678</string>
     <string name="symptoms_date_label">When did your symptoms start?</string>
     <string name="no_symptoms">I have no symptoms</string>
-    <string name="tested_date_label">When did get tested?</string>
+    <string name="tested_date_label">When did you get tested?</string>
     <string name="select_date_hint">Select Date</string>
     <string name="no_past_positive_diagnoses">No past positive diagnoses</string>
     <string name="diagnosis_shared_title">Diagnosis shared</string>
@@ -261,12 +261,18 @@
     <string name="download_reports_notification_channel_description">Shows notifications about the status of downloading positive diagnosis for exposure matching. Notifies about problems during the downloads.</string>
     <string name="download_reports_notification_title">Detecting exposures</string>
     <string name="download_reports_failure_notification_title">Detecting exposures failure</string>
-    <string name="download_reports_failure_notification_settings_action">Click to open Settings</string>
+    <string name="download_reports_failure_notification_settings_action">Open Settings</string>
 
     <string name="notification_title">Possible COVID-19 exposure</string>
     <string name="notification_message">You were near someone who has shared a positive and verified diagnosis of COVID-19. The app has accessed the date, duration, and signal strength of this exposure.</string>
     <string name="notification_channel_name">Exposure Notification</string>
     <string name="notification_channel_description">Exposure notification alerts.</string>
+
+    <string name="notification_en_not_supported">Exposure Notifications are not supported on this device. Try to update Android OS version or Google Play Services.</string>
+    <string name="notification_en_not_enabled">Exposure Notifications inactive. Go to the app to enable it.</string>
+    <string name="notification_app_unauthorized">The app is not authorized to use Exposure Notifications. Contact us through "Get Support" menu in the app.</string>
+    <string name="notification_server_problem">Could\'nt finish checking for exposures due to server issues. If this repeats contact us through "Get Support" menu in the app.</string>
+    <string name="notification_general_problem">Could\'nt finish checking for exposures. If this repeats contact us through "Get Support" menu in the app.</string>
 
     <!-- Share app common action -->
     <string name="share_app_content">Become a Covid Watcher and help your community stay safe. https://www.covid-watch.org</string>
