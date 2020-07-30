@@ -277,9 +277,10 @@ val appModule = module {
     viewModel {
         HomeViewModel(
             enManager = get(),
+            provideDiagnosisKeysUseCase = get(),
             userFlowRepository = get(),
-            riskLevelRepository = get(),
-            preferences = get()
+            preferences = get(),
+            riskLevelRepository = get()
         )
     }
 
