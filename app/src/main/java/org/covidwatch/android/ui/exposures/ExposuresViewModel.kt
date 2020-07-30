@@ -54,6 +54,4 @@ class ExposuresViewModel(
     }
 
     private suspend fun isExposureNotificationEnabled() = enManager.isEnabled().result() ?: false
-
-    object Footer
 }

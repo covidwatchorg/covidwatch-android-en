@@ -56,6 +56,20 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
                     Toast.LENGTH_SHORT
                 ).show()
             }
+            Failure.EnStatus.NotSupported -> {
+                Toast.makeText(
+                    context,
+                    R.string.notification_en_not_supported,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            Failure.EnStatus.Unauthorized -> {
+                Toast.makeText(
+                    context,
+                    R.string.notification_app_unauthorized,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
             Failure.NetworkError -> {
                 Toast.makeText(
                     context,

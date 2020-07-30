@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
+import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import org.covidwatch.android.R
@@ -120,15 +121,6 @@ class Notifications(private val context: Context) {
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.download_reports_failure_notification_title))
             .setContentText(context.getString(R.string.no_connection_error))
-            .setSubText(context.getString(R.string.download_reports_failure_notification_settings_action))
-            .setContentIntent(
-                PendingIntent.getActivity(
-                    context,
-                    0,
-                    Intent(Settings.ACTION_WIRELESS_SETTINGS),
-                    PendingIntent.FLAG_UPDATE_CURRENT
-                )
-            )
             .addAction(
                 R.drawable.ic_settings_white_24dp,
                 context.getString(R.string.download_reports_failure_notification_settings_action),
@@ -139,7 +131,17 @@ class Notifications(private val context: Context) {
                     PendingIntent.FLAG_UPDATE_CURRENT
                 )
             )
-            .setAutoCancel(true)
+
+        notificationManager.notify(DOWNLOAD_REPORTS_ERROR_NOTIFICATION_ID, builder.build())
+    }
+
+    fun downloadingReportsFailure(@StringRes message: Int) {
+        createDownloadReportChannel()
+
+        val builder = NotificationCompat.Builder(context, DOWNLOAD_REPORTS_CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(context.getString(R.string.download_reports_failure_notification_title))
+            .setContentText(context.getString(message))
 
         notificationManager.notify(DOWNLOAD_REPORTS_ERROR_NOTIFICATION_ID, builder.build())
     }

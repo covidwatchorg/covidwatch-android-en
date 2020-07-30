@@ -7,6 +7,7 @@ import androidx.work.WorkerParameters
 import com.google.common.io.BaseEncoding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.covidwatch.android.R
 import org.covidwatch.android.data.asExposureConfiguration
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
@@ -26,7 +27,7 @@ import java.security.SecureRandom
 
 class ProvideDiagnosisKeysWork(
     context: Context,
-    workerParams: WorkerParameters
+    val workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
 
     private val enManager by inject(ExposureNotificationManager::class.java)
@@ -48,6 +49,7 @@ class ProvideDiagnosisKeysWork(
     }
 
     override suspend fun doWork(): Result {
+        runAttemptCount
         setForeground(
             ForegroundInfo(
                 DOWNLOAD_REPORTS_NOTIFICATION_ID,
@@ -56,11 +58,12 @@ class ProvideDiagnosisKeysWork(
         )
         return withContext(Dispatchers.IO) {
             try {
-                if (enManager.isEnabled().right == false) return@withContext failure(
-                    Failure.EnStatus.ServiceDisabled
-                )
-
+                if (enManager.isEnabled().right == false) {
+                    notifications.downloadingReportsFailure(R.string.notification_en_not_enabled)
+                    return@withContext failure(Failure.EnStatus.ServiceDisabled)
+                }
                 // Update regions data before we proceed because we need the latest exposure configuration
+
                 // If it fails we use default values
                 updateRegionsUseCase()
 
@@ -114,16 +117,14 @@ class ProvideDiagnosisKeysWork(
                 Timber.e(e)
                 val failure = Failure(e)
                 when (failure) {
-                    Failure.EnStatus.Failed -> TODO()
-                    Failure.EnStatus.NotSupported -> TODO()
-                    Failure.EnStatus.ServiceDisabled -> notifications.downloadingReportsNetworkFailure()
-                    Failure.EnStatus.BluetoothDisabled -> TODO()
-                    Failure.EnStatus.TemporarilyDisabled -> TODO()
-                    Failure.EnStatus.FailedDiskIO -> TODO()
-                    Failure.EnStatus.Unauthorized -> TODO()
-                    Failure.EnStatus.RateLimited -> TODO()
+                    Failure.EnStatus.Failed -> notifications.downloadingReportsFailure(R.string.notification_general_problem)
+                    Failure.EnStatus.NotSupported -> notifications.downloadingReportsFailure(R.string.notification_en_not_supported)
+                    Failure.EnStatus.ServiceDisabled -> notifications.downloadingReportsFailure(R.string.notification_en_not_enabled)
+                    Failure.EnStatus.Unauthorized -> notifications.downloadingReportsFailure(R.string.notification_app_unauthorized)
                     Failure.NetworkError -> notifications.downloadingReportsNetworkFailure()
-                    Failure.ServerError -> notifications.downloadingReportsNetworkFailure()
+                    Failure.ServerError -> if (runAttemptCount < 3) Result.retry() else notifications.downloadingReportsFailure(
+                        R.string.notification_server_problem
+                    )
                 }
                 failure(failure)
             }

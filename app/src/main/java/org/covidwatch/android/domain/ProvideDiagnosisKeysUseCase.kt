@@ -40,8 +40,7 @@ class ProvideDiagnosisKeysUseCase(
                 downloadRequest
             )
         } else {
-            downloadRequest = OneTimeWorkRequestBuilder<ProvideDiagnosisKeysWork>()
-                .build()
+            downloadRequest = OneTimeWorkRequestBuilder<ProvideDiagnosisKeysWork>().build()
 
             workManager.enqueueUniqueWork(
                 WORK_NAME,

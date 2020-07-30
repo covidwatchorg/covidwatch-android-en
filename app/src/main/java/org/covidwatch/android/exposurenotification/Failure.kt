@@ -32,6 +32,7 @@ sealed class Failure(val code: Int) {
          * Create [Failure] from [ApiException] when [ExposureNotificationClient] methods are called
          * */
         operator fun invoke(exception: Exception?) = when (exception) {
+            // TODO: 30.07.2020 How to get ConnectionResult object to get real status codes?
             is ApiException -> {
                 when (exception.statusCode) {
                     FAILED -> EnStatus.Failed
