@@ -34,15 +34,19 @@ sealed class Failure(val code: Int) {
         operator fun invoke(exception: Exception?) = when (exception) {
             is ApiException -> {
                 when (exception.statusCode) {
+                    FAILED -> EnStatus.Failed
+                    FAILED_ALREADY_STARTED -> EnStatus.AlreadyStarted
+                    FAILED_NOT_SUPPORTED -> EnStatus.NotSupported
                     FAILED_REJECTED_OPT_IN -> EnStatus.RejectedOptIn
                     FAILED_SERVICE_DISABLED -> EnStatus.ServiceDisabled
                     FAILED_BLUETOOTH_DISABLED -> EnStatus.BluetoothDisabled
                     FAILED_TEMPORARILY_DISABLED -> EnStatus.TemporarilyDisabled
                     FAILED_DISK_IO -> EnStatus.FailedDiskIO
+                    FAILED_UNAUTHORIZED -> EnStatus.Unauthorized
+                    FAILED_RATE_LIMITED -> EnStatus.RateLimited
                     RESOLUTION_REQUIRED -> EnStatus.NeedsResolution(exception)
                     NETWORK_ERROR -> NetworkError
                     REMOTE_EXCEPTION -> ServerError
-                    FAILED -> EnStatus.Failed
                     else -> EnStatus.Failed
                 }
             }
@@ -55,22 +59,24 @@ sealed class Failure(val code: Int) {
          * Generate [Failure] from [ApiException.getStatusCode]
          * */
         operator fun invoke(statusCode: Int?) = when (statusCode) {
+            FAILED -> EnStatus.Failed
+            FAILED_ALREADY_STARTED -> EnStatus.AlreadyStarted
+            FAILED_NOT_SUPPORTED -> EnStatus.NotSupported
             FAILED_REJECTED_OPT_IN -> EnStatus.RejectedOptIn
             FAILED_SERVICE_DISABLED -> EnStatus.ServiceDisabled
             FAILED_BLUETOOTH_DISABLED -> EnStatus.BluetoothDisabled
             FAILED_TEMPORARILY_DISABLED -> EnStatus.TemporarilyDisabled
             FAILED_DISK_IO -> EnStatus.FailedDiskIO
-            RESOLUTION_REQUIRED -> EnStatus.NeedsResolution()
+            FAILED_UNAUTHORIZED -> EnStatus.Unauthorized
+            FAILED_RATE_LIMITED -> EnStatus.RateLimited
             FAILED_DEVICE_ATTESTATION -> DeviceAttestation
             NETWORK_ERROR -> NetworkError
             REMOTE_EXCEPTION -> ServerError
-            FAILED -> EnStatus.Failed
             else -> EnStatus.Failed
         }
     }
 }
 
-// TODO: 29.07.2020 Localization problem if we use the message in the UI
 class NoConnectionException :
     IOException("No internet available, please check your WIFi or Data connections")
 
