@@ -46,6 +46,17 @@ sealed class Failure(val code: Int) {
                     FAILED_UNAUTHORIZED -> EnStatus.Unauthorized
                     FAILED_RATE_LIMITED -> EnStatus.RateLimited
                     RESOLUTION_REQUIRED -> EnStatus.NeedsResolution(exception)
+                    // Old version of play services can't return meaningful status code so we should
+                    // parse if one the unknown status code are from Exposure Notifications
+                    API_NOT_CONNECTED -> {
+                        val statusCode = when {
+                            exception.hasCode(FAILED_NOT_SUPPORTED) -> FAILED_NOT_SUPPORTED
+                            exception.hasCode(FAILED_UNAUTHORIZED) -> FAILED_UNAUTHORIZED
+                            else -> FAILED
+                        }
+
+                        invoke(statusCode)
+                    }
                     NETWORK_ERROR -> NetworkError
                     REMOTE_EXCEPTION -> ServerError
                     else -> EnStatus.Failed
@@ -55,6 +66,10 @@ sealed class Failure(val code: Int) {
             is ServerException -> ServerError
             else -> EnStatus.Failed
         }
+
+        private fun ApiException.hasCode(
+            code: Int
+        ) = this.status.statusMessage?.contains(code.toString()) == true
 
         /**
          * Generate [Failure] from [ApiException.getStatusCode]

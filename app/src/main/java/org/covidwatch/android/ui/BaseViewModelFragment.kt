@@ -1,6 +1,7 @@
 package org.covidwatch.android.ui
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -57,11 +58,22 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
                 ).show()
             }
             Failure.EnStatus.NotSupported -> {
-                Toast.makeText(
-                    context,
+                // TODO: 01.08.2020 Rework to a dialog
+                val snackbar = Snackbar.make(
+                    binding.root,
                     R.string.notification_en_not_supported,
-                    Toast.LENGTH_LONG
-                ).show()
+                    BaseTransientBottomBar.LENGTH_INDEFINITE
+                )
+                snackbar.setAction("Update") {
+                    val intent = Intent(Intent.ACTION_VIEW).apply {
+                        data = Uri.parse(
+                            "https://play.google.com/store/apps/details?id=com.google.android.gms"
+                        )
+                        setPackage("com.android.vending")
+                    }
+                    startActivity(intent)
+                }
+                snackbar.show()
             }
             Failure.EnStatus.Unauthorized -> {
                 Toast.makeText(
