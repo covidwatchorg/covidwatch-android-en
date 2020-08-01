@@ -32,6 +32,10 @@ class ProvideDiagnosisKeysUseCase(
                     .setRequiresBatteryNotLow(true)
                     .setRequiresStorageNotLow(true)
                     .build()
+            ).setBackoffCriteria(
+                BackoffPolicy.LINEAR,
+                TimeUnit.HOURS.toMillis(3), // 3 hours and 6 hours between retries
+                TimeUnit.MILLISECONDS
             ).build()
 
             workManager.enqueueUniquePeriodicWork(

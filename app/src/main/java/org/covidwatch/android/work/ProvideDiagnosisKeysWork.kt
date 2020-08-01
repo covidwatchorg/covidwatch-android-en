@@ -44,6 +44,7 @@ class ProvideDiagnosisKeysWork(
 
     private val base64 = BaseEncoding.base64()
     private val randomTokenByteLength = 32
+    private val retries = 2
     private val secureRandom: SecureRandom = SecureRandom()
 
     private fun randomToken(): String {
@@ -138,7 +139,8 @@ class ProvideDiagnosisKeysWork(
                         Intents.browser(Urls.SUPPORT)
                     )
                     Failure.NetworkError -> notifications.downloadingReportsNetworkFailure()
-                    Failure.ServerError -> if (runAttemptCount < 3) Result.retry() else notifications.downloadingReportsFailure(
+                    // Retry 2 times and then show a error to users
+                    Failure.ServerError -> if (runAttemptCount < retries) return@withContext Result.retry() else notifications.downloadingReportsFailure(
                         R.string.notification_server_problem,
                         Intents.browser(Urls.SUPPORT)
                     )
