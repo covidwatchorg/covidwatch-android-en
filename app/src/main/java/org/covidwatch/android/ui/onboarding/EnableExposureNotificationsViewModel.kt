@@ -27,7 +27,6 @@ class EnableExposureNotificationsViewModel(
             withPermission(ExposureNotificationManager.PERMISSION_START_REQUEST_CODE) {
                 enManager.start().apply {
                     success { handleFirstOrReturnUser() }
-                    failure { handleStatus(it) }
                 }
             }
         }
