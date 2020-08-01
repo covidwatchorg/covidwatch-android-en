@@ -99,10 +99,6 @@
     <string name="pha_permission_number_dialog_title">Provide test confirmation number</string>
     <string name="reset_all_data">Clear data</string>
 
-    <string name="notification_title">Possible COVID-19 exposure</string>
-    <string name="notification_message">You were near someone who has shared a positive and verified diagnosis of COVID-19. The app has accessed the date, duration, and signal strength of this exposure.</string>
-    <string name="notification_channel_name">Exposure Notification</string>
-    <string name="notification_channel_description">Exposure notification alerts.</string>
     <string name="menu">Menu</string>
     <string name="powered_by">Powered by Covid Watch for</string>
     <string name="powered_by_logo_content_description">Arizona Department of Health Services</string>
@@ -241,7 +237,7 @@
     <string name="test_verification_code_hint">12345678</string>
     <string name="symptoms_date_label">When did your symptoms start?</string>
     <string name="no_symptoms">I have no symptoms</string>
-    <string name="tested_date_label">When did get tested?</string>
+    <string name="tested_date_label">When did you get tested?</string>
     <string name="select_date_hint">Select Date</string>
     <string name="no_past_positive_diagnoses">No past positive diagnoses</string>
     <string name="diagnosis_shared_title">Diagnosis shared</string>
@@ -256,14 +252,27 @@
     <string name="btn_delete_diagnosis">Delete Diagnosis</string>
 
     <!-- Notifications -->
-    <string name="upload_report_notification_channel">Reporting</string>
-    <string name="upload_report_notification_channel_description">Upload positive diagnosis</string>
-    <string name="upload_report_notification_title">Uploading positive diagnosis</string>
+    <string name="upload_report_notification_channel">Anonymous Reporting</string>
+    <string name="upload_report_notification_channel_description">Shows notifications about the status of uploading anonymous positive diagnosis. Notifies about problems during the uploads.</string>
+    <string name="upload_report_notification_title">Uploading anonymously positive diagnosis</string>
 
     <!--TODO: Use correct wording-->
-    <string name="download_reports_notification_channel">Download reports</string>
-    <string name="download_reports_notification_channel_description">Download positive diagnosis</string>
-    <string name="download_reports_notification_title">Downloading positive diagnosis</string>
+    <string name="download_reports_notification_channel">Detect Exposures</string>
+    <string name="download_reports_notification_channel_description">Shows notifications about the status of downloading positive diagnosis for exposure matching. Notifies about problems during the downloads.</string>
+    <string name="download_reports_notification_title">Detecting exposures</string>
+    <string name="download_reports_failure_notification_title">Detecting exposures failure</string>
+    <string name="download_reports_failure_notification_settings_action">Open Settings</string>
+
+    <string name="notification_title">Possible COVID-19 exposure</string>
+    <string name="notification_message">You were near someone who has shared a positive and verified diagnosis of COVID-19. The app has accessed the date, duration, and signal strength of this exposure.</string>
+    <string name="notification_channel_name">Exposure Notification</string>
+    <string name="notification_channel_description">Exposure notification alerts.</string>
+
+    <string name="notification_en_not_supported">Exposure Notifications are not available on this device. Try to update Google Play services.</string>
+    <string name="notification_en_not_enabled">Exposure Notifications inactive. Go to the app to enable it.</string>
+    <string name="notification_app_unauthorized">The app is not authorized to use Exposure Notifications. Contact us through "Get Support" menu in the app or by tapping this notification.</string>
+    <string name="notification_server_problem">Could\'nt finish checking for exposures due to server issues. If this repeats contact us through "Get Support" menu in the app or by tapping this notification.</string>
+    <string name="notification_general_problem">Could\'nt finish checking for exposures. If this repeats contact us through "Get Support" menu in the app or by tapping this notification.</string>
 
     <!-- Share app common action -->
     <string name="share_app_content">Become a Covid Watcher and help your community stay safe. https://www.covid-watch.org</string>
@@ -276,6 +285,15 @@
     <string name="device_attestation_error">Failed to verify this device</string>
     <string name="no_connection_error">No internet available, please check your WIFi or Data connections</string>
     <string name="insufficient_storage">Insufficient storage to run Exposure Notification</string>
+    <string name="en_not_available_title">Exposure Notifications unavailable</string>
+    <string name="en_not_available_text">Try to update Google Play services to get Exposure Notifications on your device.</string>
+    <string name="app_unauthorized_title">Exposure Notifications cannot be used</string>
+    <string name="app_unauthorized_text">Covid Watch can\'t access Exposure Notifications at the moment.</string>
+
+    <!-- DIALOG BUTTONS-->
+    <string name="update">Update</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="open_settings">Open Settings</string>
 
     <!-- DIALOG TEST VERIFICATION CODE -->
     <string name="dialog_test_verification_code_title">Where is my code?</string>

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.work.*
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase.Params
-import org.covidwatch.android.exposurenotification.ENStatus
+import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.extension.getFinalWorkInfoByIdLiveData
 import org.covidwatch.android.functional.Either
 import org.covidwatch.android.work.ProvideDiagnosisKeysWork
@@ -16,7 +16,7 @@ class ProvideDiagnosisKeysUseCase(
     private val workManager: WorkManager,
     dispatchers: AppCoroutineDispatchers
 ) : LiveDataUseCase<UUID, Params>(dispatchers) {
-    override suspend fun run(params: Params?): Either<ENStatus, UUID> {
+    override suspend fun run(params: Params?): Either<Failure, UUID> {
         val recurrent = params?.recurrent ?: false
         Timber.d("Start ${javaClass.simpleName}. Recurrent: $recurrent")
 
@@ -32,6 +32,10 @@ class ProvideDiagnosisKeysUseCase(
                     .setRequiresBatteryNotLow(true)
                     .setRequiresStorageNotLow(true)
                     .build()
+            ).setBackoffCriteria(
+                BackoffPolicy.LINEAR,
+                TimeUnit.HOURS.toMillis(3), // 3 hours and 6 hours between retries
+                TimeUnit.MILLISECONDS
             ).build()
 
             workManager.enqueueUniquePeriodicWork(
@@ -40,11 +44,7 @@ class ProvideDiagnosisKeysUseCase(
                 downloadRequest
             )
         } else {
-            downloadRequest = OneTimeWorkRequestBuilder<ProvideDiagnosisKeysWork>()
-                .setConstraints(
-                    Constraints.Builder().build()
-                )
-                .build()
+            downloadRequest = OneTimeWorkRequestBuilder<ProvideDiagnosisKeysWork>().build()
 
             workManager.enqueueUniqueWork(
                 WORK_NAME,
@@ -55,7 +55,7 @@ class ProvideDiagnosisKeysUseCase(
         return Either.Right(downloadRequest.id)
     }
 
-    override suspend fun observe(params: Params?): LiveData<Either<ENStatus, UUID>> = liveData {
+    override suspend fun observe(params: Params?): LiveData<Either<Failure, UUID>> = liveData {
         run(params).apply {
             success { emitSource(workManager.getFinalWorkInfoByIdLiveData(it)) }
             failure { emit(Either.Left(it)) }

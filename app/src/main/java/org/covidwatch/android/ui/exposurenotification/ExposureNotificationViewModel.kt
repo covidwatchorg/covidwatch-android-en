@@ -12,11 +12,9 @@ import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase.Params
 import org.covidwatch.android.domain.UpdateExposureInformationUseCase
 import org.covidwatch.android.domain.UploadDiagnosisKeysUseCase
-import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.extension.doOnNext
 import org.covidwatch.android.extension.launchUseCase
-import org.covidwatch.android.functional.Either
 import org.covidwatch.android.ui.BaseViewModel
 
 class ExposureNotificationViewModel(

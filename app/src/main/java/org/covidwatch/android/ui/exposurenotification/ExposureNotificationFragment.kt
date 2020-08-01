@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_exposure_notification.*
 import org.covidwatch.android.R
 import org.covidwatch.android.databinding.DialogPhaPermissionNumberBinding
 import org.covidwatch.android.databinding.FragmentExposureNotificationBinding
-import org.covidwatch.android.exposurenotification.ENStatus
+import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -85,14 +85,14 @@ class ExposureNotificationFragment : Fragment() {
         }
     }
 
-    private fun handleError(status: ENStatus?) {
+    private fun handleError(status: Failure?) {
         when (status) {
-            ENStatus.FailedRejectedOptIn -> TODO()
-            ENStatus.FailedServiceDisabled -> TODO()
-            ENStatus.FailedBluetoothScanningDisabled -> TODO()
-            ENStatus.FailedTemporarilyDisabled -> TODO()
-            ENStatus.FailedInsufficientStorage -> TODO()
-            ENStatus.Failed -> TODO()
+            Failure.EnStatus.RejectedOptIn -> TODO()
+            Failure.EnStatus.ServiceDisabled -> TODO()
+            Failure.EnStatus.BluetoothDisabled -> TODO()
+            Failure.EnStatus.TemporarilyDisabled -> TODO()
+            Failure.EnStatus.FailedDiskIO -> TODO()
+            Failure.EnStatus.Failed -> TODO()
         }
     }
 

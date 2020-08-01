@@ -8,7 +8,7 @@ import org.covidwatch.android.BuildConfig
 import org.covidwatch.android.data.Region
 import org.covidwatch.android.data.Regions
 import org.covidwatch.android.data.pref.PreferenceStorage
-import org.covidwatch.android.exposurenotification.ENStatus
+import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.functional.Either
 import timber.log.Timber
 
@@ -20,12 +20,12 @@ class UpdateRegionsUseCase(
     dispatchers: AppCoroutineDispatchers
 ) : UseCase<Unit, Unit>(dispatchers) {
 
-    override suspend fun run(params: Unit?): Either<ENStatus, Unit> {
+    override suspend fun run(params: Unit?): Either<Failure, Unit> {
         try {
             val request = Request.Builder().url(BuildConfig.REGIONS_JSON).build()
 
             val jsonResponse = httpClient.newCall(request).execute()
-            if (jsonResponse.code != 200) return Either.Left(ENStatus.ServerError)
+            if (jsonResponse.code != 200) return Either.Left(Failure.ServerError)
             val regionsType = object : TypeToken<List<Region?>?>() {}.type
 
             val regions: List<Region> = gson.fromJson(jsonResponse.body?.charStream(), regionsType)
@@ -33,7 +33,7 @@ class UpdateRegionsUseCase(
         } catch (e: Exception) {
             Timber.d("Failed to update regions data")
             Timber.e(e)
-            return Either.Left(ENStatus(e))
+            return Either.Left(Failure(e))
         }
 
         return Either.Right(Unit)

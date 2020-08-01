@@ -91,17 +91,21 @@ class VerifyPositiveDiagnosisViewModel(
 
     fun sharePositiveDiagnosis() {
         viewModelScope.launch {
-            enManager.isEnabled().success { enabled ->
-                if (enabled) {
-                    shareReport()
-                } else {
-                    withPermission(ExposureNotificationManager.PERMISSION_START_REQUEST_CODE) {
-                        enManager.start().apply {
-                            success { shareReport() }
-                            failure { handleStatus(it) }
+            enManager.isEnabled().apply {
+                success { enabled ->
+                    if (enabled) {
+                        shareReport()
+                    } else {
+                        withPermission(ExposureNotificationManager.PERMISSION_START_REQUEST_CODE) {
+                            enManager.start().apply {
+                                success { shareReport() }
+                                failure { handleStatus(it) }
+                            }
                         }
                     }
                 }
+
+                failure { handleStatus(it) }
             }
         }
     }

@@ -6,8 +6,8 @@ import org.covidwatch.android.data.*
 import org.covidwatch.android.data.countrycode.CountryCodeRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.domain.UploadDiagnosisKeysUseCase.Params
-import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.functional.Either
 import org.covidwatch.android.ui.util.DateFormatter
 import timber.log.Timber
@@ -29,15 +29,17 @@ class UploadDiagnosisKeysUseCase(
     private val paddingSizeMin = 1024
     private val paddingSizeMax = 2048
 
-    override suspend fun run(params: Params?): Either<ENStatus, Unit> {
-        params ?: return Either.Left(ENStatus.Failed)
-        val verificationData = params.report.verificationData ?: return Either.Left(ENStatus.Failed)
+    override suspend fun run(params: Params?): Either<Failure, Unit> {
+        params ?: return Either.Left(Failure.EnStatus.Failed)
+        val verificationData = params.report.verificationData ?: return Either.Left(
+            Failure.EnStatus.Failed
+        )
 
         enManager.isEnabled().apply {
             success { enabled ->
                 if (!enabled) {
                     Timber.d("Can't start ${javaClass.simpleName}. EN is not enabled")
-                    return Either.Left(ENStatus.FailedServiceDisabled)
+                    return Either.Left(Failure.EnStatus.ServiceDisabled)
                 }
             }
             failure {
@@ -101,7 +103,7 @@ class UploadDiagnosisKeysUseCase(
         } catch (e: Exception) {
             Timber.d("Failed to upload positive diagnosis")
             Timber.e(e)
-            return Either.Left(ENStatus(e))
+            return Either.Left(Failure(e))
         }
     }
 

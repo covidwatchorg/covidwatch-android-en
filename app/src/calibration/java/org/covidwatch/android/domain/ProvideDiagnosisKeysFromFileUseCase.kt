@@ -10,8 +10,8 @@ import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.domain.ProvideDiagnosisKeysFromFileUseCase.Params
-import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.functional.Either
 import timber.log.Timber
 import java.io.File
@@ -30,8 +30,8 @@ class ProvideDiagnosisKeysFromFileUseCase(
     private val randomTokenByteLength = 32
     private val secureRandom: SecureRandom = SecureRandom()
 
-    override suspend fun run(params: Params?): Either<ENStatus, Unit> {
-        val uri = params?.uri ?: return Either.Left(ENStatus.Failed)
+    override suspend fun run(params: Params?): Either<Failure, Unit> {
+        val uri = params?.uri ?: return Either.Left(Failure.EnStatus.Failed)
         Timber.d("Start providing a test diagnosis file: ${uri.path}")
 
         val file = File.createTempFile("test_report_", ".zip")

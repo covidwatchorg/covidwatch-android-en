@@ -8,7 +8,9 @@ import org.covidwatch.android.data.NextStep
 import org.covidwatch.android.data.UserFlowRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.data.risklevel.RiskLevelRepository
+import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.extension.launchUseCase
 import org.covidwatch.android.extension.send
 import org.covidwatch.android.ui.BaseViewModel
 import org.covidwatch.android.ui.event.Event
@@ -19,9 +21,10 @@ import java.util.Calendar.*
 
 class HomeViewModel(
     private val enManager: ExposureNotificationManager,
+    private val provideDiagnosisKeysUseCase: ProvideDiagnosisKeysUseCase,
     private val userFlowRepository: UserFlowRepository,
-    private val riskLevelRepository: RiskLevelRepository,
-    private val preferences: PreferenceStorage
+    private val preferences: PreferenceStorage,
+    riskLevelRepository: RiskLevelRepository
 ) : BaseViewModel() {
 
     private val _showOnboardingAnimation = MutableLiveData<Event<Boolean>>()
@@ -126,11 +129,15 @@ class HomeViewModel(
         }
 
         viewModelScope.launch {
-            val enabled = enManager.isEnabled().result() ?: false
-            _infoBannerState.value = if (enabled) {
-                InfoBannerState.Hidden
-            } else {
+            launchUseCase(
+                provideDiagnosisKeysUseCase,
+                ProvideDiagnosisKeysUseCase.Params(recurrent = true)
+            )
+
+            _infoBannerState.value = if (enManager.isDisabled()) {
                 InfoBannerState.Visible(R.string.turn_on_exposure_notification_text)
+            } else {
+                InfoBannerState.Hidden
             }
         }
     }

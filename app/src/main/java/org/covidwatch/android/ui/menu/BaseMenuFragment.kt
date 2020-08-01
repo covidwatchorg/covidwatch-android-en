@@ -121,7 +121,7 @@ open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuVie
 
     open fun handleMenuItemClick(menuItem: MenuItem) {
         when (menuItem.destination) {
-            is Browser -> openBrowser(getString(menuItem.destination.url))
+            is Browser -> openBrowser(menuItem.destination.url)
             PossibleExposures -> findNavController().navigate(R.id.exposuresFragment)
             NotifyOthers -> findNavController().navigate(R.id.notifyOthersFragment)
             HowItWorks -> findNavController().navigate(R.id.onboardingFragment)
@@ -143,11 +143,6 @@ open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuVie
             }
             R.string.menu_detect_exposures_from_server -> {
                 lifecycleScope.launchUseCase(provideDiagnosisKeysUseCase)
-                Toast.makeText(
-                    context,
-                    "Downloading positive diagnoses. Watch a notification for status",
-                    Toast.LENGTH_SHORT
-                ).show()
                 findNavController().popBackStack()
             }
             R.string.menu_export_possible_exposures -> {
