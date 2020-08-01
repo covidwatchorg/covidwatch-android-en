@@ -23,6 +23,11 @@ class ExposureNotificationManager(
 
     suspend fun isEnabled() = exposureNotification.isEnabled.awaitWithStatus()
 
+    suspend fun isDisabled(): Boolean {
+        val enabled = exposureNotification.isEnabled.awaitWithStatus()
+        return enabled.isLeft || enabled.right == false
+    }
+
     suspend fun provideDiagnosisKeys(
         keys: List<File>,
         token: String,

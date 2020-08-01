@@ -53,5 +53,5 @@ class ExposuresViewModel(
         }
     }
 
-    private suspend fun isExposureNotificationEnabled() = enManager.isEnabled().result() ?: false
+    private suspend fun isExposureNotificationEnabled() = !enManager.isDisabled()
 }

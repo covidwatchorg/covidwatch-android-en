@@ -62,8 +62,11 @@ class ProvideDiagnosisKeysWork(
         )
         return withContext(Dispatchers.IO) {
             try {
-                if (enManager.isEnabled().right == false) {
-                    notifications.downloadingReportsFailure(R.string.notification_en_not_enabled)
+                if (enManager.isDisabled()) {
+                    notifications.downloadingReportsFailure(
+                        R.string.notification_en_not_enabled,
+                        Intent(context, MainActivity::class.java)
+                    )
                     return@withContext failure(Failure.EnStatus.ServiceDisabled)
                 }
                 // Update regions data before we proceed because we need the latest exposure configuration

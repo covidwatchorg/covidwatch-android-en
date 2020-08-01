@@ -129,16 +129,15 @@ class HomeViewModel(
         }
 
         viewModelScope.launch {
-            val enabled = enManager.isEnabled().result() ?: false
             launchUseCase(
                 provideDiagnosisKeysUseCase,
                 ProvideDiagnosisKeysUseCase.Params(recurrent = true)
             )
 
-            _infoBannerState.value = if (enabled) {
-                InfoBannerState.Hidden
-            } else {
+            _infoBannerState.value = if (enManager.isDisabled()) {
                 InfoBannerState.Visible(R.string.turn_on_exposure_notification_text)
+            } else {
+                InfoBannerState.Hidden
             }
         }
     }
