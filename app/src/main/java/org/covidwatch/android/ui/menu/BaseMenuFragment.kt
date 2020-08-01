@@ -121,7 +121,7 @@ open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuVie
 
     open fun handleMenuItemClick(menuItem: MenuItem) {
         when (menuItem.destination) {
-            is Browser -> openBrowser(getString(menuItem.destination.url))
+            is Browser -> openBrowser(menuItem.destination.url)
             PossibleExposures -> findNavController().navigate(R.id.exposuresFragment)
             NotifyOthers -> findNavController().navigate(R.id.notifyOthersFragment)
             HowItWorks -> findNavController().navigate(R.id.onboardingFragment)
