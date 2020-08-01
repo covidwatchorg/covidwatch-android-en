@@ -7,7 +7,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.provider.Settings
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -123,11 +122,11 @@ class Notifications(private val context: Context) {
             .setContentText(context.getString(R.string.no_connection_error))
             .addAction(
                 R.drawable.ic_settings_white_24dp,
-                context.getString(R.string.download_reports_failure_notification_settings_action),
+                context.getString(R.string.open_settings),
                 PendingIntent.getActivity(
                     context,
                     0,
-                    Intent(Settings.ACTION_WIRELESS_SETTINGS),
+                    Intents.wirelessSettings,
                     PendingIntent.FLAG_UPDATE_CURRENT
                 )
             )
