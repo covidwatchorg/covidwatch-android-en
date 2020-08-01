@@ -7,7 +7,6 @@ import androidx.work.WorkerParameters
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.domain.UploadDiagnosisKeysUseCase
 import org.covidwatch.android.extension.failure
 import org.covidwatch.android.ui.Notifications

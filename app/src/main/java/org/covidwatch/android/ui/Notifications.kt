@@ -156,17 +156,6 @@ class Notifications(private val context: Context) {
         notificationManager.notify(DOWNLOAD_REPORTS_ERROR_NOTIFICATION_ID, builder.build())
     }
 
-    fun downloadingReportsFailure(@StringRes message: Int) {
-        createDownloadReportChannel()
-
-        val builder = NotificationCompat.Builder(context, DOWNLOAD_REPORTS_CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle(context.getString(R.string.download_reports_failure_notification_title))
-            .setContentText(context.getString(message))
-
-        notificationManager.notify(DOWNLOAD_REPORTS_ERROR_NOTIFICATION_ID, builder.build())
-    }
-
     fun downloadingReportsFailure(@StringRes message: Int, intent: Intent) {
         createDownloadReportChannel()
 

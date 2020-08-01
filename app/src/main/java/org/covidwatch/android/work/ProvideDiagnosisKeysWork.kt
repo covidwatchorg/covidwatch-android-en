@@ -31,7 +31,7 @@ import java.security.SecureRandom
 
 class ProvideDiagnosisKeysWork(
     private val context: Context,
-    val workerParams: WorkerParameters
+    workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
 
     private val enManager by inject(ExposureNotificationManager::class.java)
