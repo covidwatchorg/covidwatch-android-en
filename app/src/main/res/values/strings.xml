@@ -268,7 +268,7 @@
     <string name="notification_channel_name">Exposure Notification</string>
     <string name="notification_channel_description">Exposure notification alerts.</string>
 
-    <string name="notification_en_not_supported">Exposure Notifications are not supported on this device. Try to update Android OS version or Google Play Services.</string>
+    <string name="notification_en_not_supported">Exposure Notifications are not available on this device. Try to update Google Play services.</string>
     <string name="notification_en_not_enabled">Exposure Notifications inactive. Go to the app to enable it.</string>
     <string name="notification_app_unauthorized">The app is not authorized to use Exposure Notifications. Contact us through "Get Support" menu in the app.</string>
     <string name="notification_server_problem">Could\'nt finish checking for exposures due to server issues. If this repeats contact us through "Get Support" menu in the app.</string>
@@ -285,6 +285,15 @@
     <string name="device_attestation_error">Failed to verify this device</string>
     <string name="no_connection_error">No internet available, please check your WIFi or Data connections</string>
     <string name="insufficient_storage">Insufficient storage to run Exposure Notification</string>
+    <string name="en_not_available_title">Exposure Notifications unavailable</string>
+    <string name="en_not_available_text">Try to update Google Play services to get Exposure Notifications on your device.</string>
+    <string name="app_unauthorized_title">Exposure Notifications cannot be used</string>
+    <string name="app_unauthorized_text">Covid Watch can\'t access Exposure Notifications at the moment.</string>
+
+    <!-- DIALOG BUTTONS-->
+    <string name="update">Update</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="open_settings">Open Settings</string>
 
     <!-- DIALOG TEST VERIFICATION CODE -->
     <string name="dialog_test_verification_code_title">Where is my code?</string>
