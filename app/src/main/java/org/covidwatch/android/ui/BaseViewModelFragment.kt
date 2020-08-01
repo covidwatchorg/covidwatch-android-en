@@ -1,18 +1,19 @@
 package org.covidwatch.android.ui
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import org.covidwatch.android.R
 import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.extension.observeEvent
+import org.covidwatch.android.ui.Intents.openBrowser
+import org.covidwatch.android.ui.Intents.playStoreWithServices
 
 abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : BaseFragment<T>() {
 
@@ -41,67 +42,56 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
 
     protected fun handleStatus(it: Failure) {
         when (it) {
-            Failure.EnStatus.FailedDiskIO -> {
+            Failure.EnStatus.Failed -> {
                 val snackbar = Snackbar.make(
                     binding.root,
-                    R.string.insufficient_storage,
+                    R.string.unknown_error,
                     BaseTransientBottomBar.LENGTH_INDEFINITE
                 )
-                snackbar.setAction(R.string.ok) { snackbar.dismiss() }
+                snackbar.setAction(R.string.contact_us) { context?.openBrowser(Urls.SUPPORT) }
                 snackbar.show()
-            }
-            Failure.EnStatus.Failed -> {
-                Toast.makeText(
-                    context,
-                    R.string.unknown_error,
-                    Toast.LENGTH_SHORT
-                ).show()
             }
             Failure.EnStatus.NotSupported -> {
-                // TODO: 01.08.2020 Rework to a dialog
-                val snackbar = Snackbar.make(
-                    binding.root,
-                    R.string.notification_en_not_supported,
-                    BaseTransientBottomBar.LENGTH_INDEFINITE
-                )
-                snackbar.setAction("Update") {
-                    val intent = Intent(Intent.ACTION_VIEW).apply {
-                        data = Uri.parse(
-                            "https://play.google.com/store/apps/details?id=com.google.android.gms"
-                        )
-                        setPackage("com.android.vending")
-                    }
-                    startActivity(intent)
+                context?.let { context ->
+                    MaterialAlertDialogBuilder(context)
+                        .setTitle(R.string.en_not_available_title)
+                        .setMessage(R.string.en_not_available_text)
+                        .setPositiveButton(R.string.update) { _, _ ->
+                            context.playStoreWithServices?.let { startActivity(it) }
+                        }
+                        .create()
+                        .show()
                 }
-                snackbar.show()
             }
             Failure.EnStatus.Unauthorized -> {
-                Toast.makeText(
-                    context,
-                    R.string.notification_app_unauthorized,
-                    Toast.LENGTH_LONG
-                ).show()
+                context?.let { context ->
+                    MaterialAlertDialogBuilder(context)
+                        .setTitle(R.string.app_unauthorized_title)
+                        .setMessage(R.string.app_unauthorized_text)
+                        .setPositiveButton(R.string.contact_us) { _, _ ->
+                            context.openBrowser(Urls.SUPPORT)
+                        }
+                        .create()
+                        .show()
+                }
             }
             Failure.NetworkError -> {
-                Toast.makeText(
-                    context,
+                val snackbar = Snackbar.make(
+                    binding.root,
                     R.string.no_connection_error,
-                    Toast.LENGTH_SHORT
-                ).show()
+                    BaseTransientBottomBar.LENGTH_INDEFINITE
+                )
+                snackbar.setAction(R.string.open_settings) { startActivity(Intents.wirelessSettings) }
+                snackbar.show()
             }
             Failure.ServerError -> {
-                Toast.makeText(
-                    context,
+                val snackbar = Snackbar.make(
+                    binding.root,
                     R.string.server_error,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            Failure.DeviceAttestation -> {
-                Toast.makeText(
-                    context,
-                    R.string.device_attestation_error,
-                    Toast.LENGTH_SHORT
-                ).show()
+                    BaseTransientBottomBar.LENGTH_INDEFINITE
+                )
+                snackbar.setAction(R.string.contact_us) { context?.openBrowser(Urls.SUPPORT) }
+                snackbar.show()
             }
         }
     }
