@@ -14,7 +14,7 @@ import org.covidwatch.android.functional.Either
 import org.covidwatch.android.ui.event.Event
 
 /**
- * Base ViewModel class with default ENStatus handling.
+ * Base ViewModel class with default Failure handling.
  * @see ViewModel
  * @see Failure
  */

@@ -13,8 +13,8 @@ import org.covidwatch.android.data.asCovidExposureConfiguration
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
-import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.extension.failure
 import org.covidwatch.android.ui.Notifications
 import org.covidwatch.android.ui.Notifications.Companion.DOWNLOAD_REPORTS_NOTIFICATION_ID
@@ -54,7 +54,7 @@ class ProvideDiagnosisKeysFromFileWork(
 
         try {
             val uriString =
-                inputData.getString(URI) ?: return@withContext failure(ENStatus.Failed)
+                inputData.getString(URI) ?: return@withContext failure(Failure.EnStatus.Failed)
             val uri = Uri.parse(uriString)
             Timber.d("Start providing a test diagnosis file: ${uri.path}")
 
@@ -110,7 +110,7 @@ class ProvideDiagnosisKeysFromFileWork(
             Result.success()
         } catch (e: Exception) {
             Timber.e(e)
-            failure(ENStatus(e))
+            failure(Failure(e))
         }
     }
 
