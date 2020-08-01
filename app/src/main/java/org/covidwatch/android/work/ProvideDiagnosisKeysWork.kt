@@ -1,6 +1,7 @@
 package org.covidwatch.android.work
 
 import android.content.Context
+import android.content.Intent
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
@@ -19,14 +20,17 @@ import org.covidwatch.android.domain.UpdateRegionsUseCase
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.extension.failure
+import org.covidwatch.android.ui.Intents
+import org.covidwatch.android.ui.MainActivity
 import org.covidwatch.android.ui.Notifications
 import org.covidwatch.android.ui.Notifications.Companion.DOWNLOAD_REPORTS_NOTIFICATION_ID
+import org.covidwatch.android.ui.Urls
 import org.koin.java.KoinJavaComponent.inject
 import timber.log.Timber
 import java.security.SecureRandom
 
 class ProvideDiagnosisKeysWork(
-    context: Context,
+    private val context: Context,
     val workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
 
@@ -117,13 +121,23 @@ class ProvideDiagnosisKeysWork(
                 Timber.e(e)
                 val failure = Failure(e)
                 when (failure) {
-                    Failure.EnStatus.Failed -> notifications.downloadingReportsFailure(R.string.notification_general_problem)
-                    Failure.EnStatus.NotSupported -> notifications.downloadingReportsFailure(R.string.notification_en_not_supported)
-                    Failure.EnStatus.ServiceDisabled -> notifications.downloadingReportsFailure(R.string.notification_en_not_enabled)
-                    Failure.EnStatus.Unauthorized -> notifications.downloadingReportsFailure(R.string.notification_app_unauthorized)
+                    Failure.EnStatus.Failed -> notifications.downloadingReportsFailure(
+                        R.string.notification_general_problem,
+                        Intents.browser(Urls.SUPPORT)
+                    )
+                    Failure.EnStatus.NotSupported -> notifications.downloadingReportsEnNotAvailable()
+                    Failure.EnStatus.ServiceDisabled -> notifications.downloadingReportsFailure(
+                        R.string.notification_en_not_enabled,
+                        Intent(context, MainActivity::class.java)
+                    )
+                    Failure.EnStatus.Unauthorized -> notifications.downloadingReportsFailure(
+                        R.string.notification_app_unauthorized,
+                        Intents.browser(Urls.SUPPORT)
+                    )
                     Failure.NetworkError -> notifications.downloadingReportsNetworkFailure()
                     Failure.ServerError -> if (runAttemptCount < 3) Result.retry() else notifications.downloadingReportsFailure(
-                        R.string.notification_server_problem
+                        R.string.notification_server_problem,
+                        Intents.browser(Urls.SUPPORT)
                     )
                 }
                 failure(failure)

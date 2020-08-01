@@ -12,6 +12,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import org.covidwatch.android.R
 import org.covidwatch.android.ui.BaseMainActivity.Companion.POTENTIAL_EXPOSURE_NOTIFICATION
+import org.covidwatch.android.ui.Intents.playStoreWithServices
 
 class Notifications(private val context: Context) {
     private val notificationManager = NotificationManagerCompat.from(context)
@@ -134,6 +135,27 @@ class Notifications(private val context: Context) {
         notificationManager.notify(DOWNLOAD_REPORTS_ERROR_NOTIFICATION_ID, builder.build())
     }
 
+    fun downloadingReportsEnNotAvailable() {
+        createDownloadReportChannel()
+
+        val builder = NotificationCompat.Builder(context, DOWNLOAD_REPORTS_CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(context.getString(R.string.download_reports_failure_notification_title))
+            .setContentText(context.getString(R.string.notification_en_not_supported))
+            .addAction(
+                R.drawable.ic_external_link,
+                context.getString(R.string.update),
+                PendingIntent.getActivity(
+                    context,
+                    0,
+                    context.playStoreWithServices,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                )
+            )
+
+        notificationManager.notify(DOWNLOAD_REPORTS_ERROR_NOTIFICATION_ID, builder.build())
+    }
+
     fun downloadingReportsFailure(@StringRes message: Int) {
         createDownloadReportChannel()
 
@@ -141,6 +163,26 @@ class Notifications(private val context: Context) {
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.download_reports_failure_notification_title))
             .setContentText(context.getString(message))
+
+        notificationManager.notify(DOWNLOAD_REPORTS_ERROR_NOTIFICATION_ID, builder.build())
+    }
+
+    fun downloadingReportsFailure(@StringRes message: Int, intent: Intent) {
+        createDownloadReportChannel()
+
+        val builder = NotificationCompat.Builder(context, DOWNLOAD_REPORTS_CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(context.getString(R.string.download_reports_failure_notification_title))
+            .setContentText(context.getString(message))
+            .setContentIntent(
+                PendingIntent.getActivity(
+                    context,
+                    0,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                )
+            )
+            .setAutoCancel(true)
 
         notificationManager.notify(DOWNLOAD_REPORTS_ERROR_NOTIFICATION_ID, builder.build())
     }
