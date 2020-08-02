@@ -38,7 +38,8 @@ object DateFormatter {
 
     fun formatTestDate(time: Long?): String = time?.let { symptomDateFormat.format(it) } ?: ""
 
-    fun symptomDate(date: String?): Date = date?.let { symptomDateFormat.parse(it) } ?: Date()
+    fun symptomDate(date: String?) =
+        date?.takeIf { it.isNotEmpty() }?.let { symptomDateFormat.parse(it) }
 
     @JvmStatic
     fun formatDateAndTime(time: Date?): String = time?.let { dateAndTimeFormat.format(it) } ?: ""

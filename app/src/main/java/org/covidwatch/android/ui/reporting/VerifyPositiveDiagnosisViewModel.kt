@@ -2,8 +2,10 @@ package org.covidwatch.android.ui.reporting
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import org.covidwatch.android.data.DiagnosisVerificationManager
 import org.covidwatch.android.data.PositiveDiagnosisReport
 import org.covidwatch.android.data.PositiveDiagnosisVerification
+import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.domain.StartUploadDiagnosisKeysWorkUseCase
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.extension.send
@@ -14,6 +16,8 @@ import java.util.*
 class VerifyPositiveDiagnosisViewModel(
     private val state: SavedStateHandle,
     private val startUploadDiagnosisKeysWorkUseCase: StartUploadDiagnosisKeysWorkUseCase,
+    private val verificationManager: DiagnosisVerificationManager,
+    private val positiveDiagnosisRepository: PositiveDiagnosisRepository,
     private val enManager: ExposureNotificationManager
 ) : BaseViewModel() {
 
@@ -91,22 +95,71 @@ class VerifyPositiveDiagnosisViewModel(
 
     fun sharePositiveDiagnosis() {
         viewModelScope.launch {
-            enManager.isEnabled().apply {
-                success { enabled ->
-                    if (enabled) {
-                        shareReport()
-                    } else {
-                        withPermission(ExposureNotificationManager.PERMISSION_START_REQUEST_CODE) {
-                            enManager.start().apply {
-                                success { shareReport() }
-                                failure { handleStatus(it) }
-                            }
+            val code = diagnosisVerification.value?.verificationTestCode ?: ""
+
+            // Check if we have verified report with this code in order to reuse token
+            val diagnosis = positiveDiagnosisRepository.diagnosisByVerificationCode(code)
+            val verificationData = diagnosis?.verificationData
+            val token = verificationData?.token
+            val symptomsStartDate = verificationData?.symptomsStartDate
+            val testType = verificationData?.testType
+            val certificate = verificationData?.verificationCertificate
+            val hmacKey = verificationData?.hmacKey
+
+            if (!token.isNullOrEmpty() && !testType.isNullOrEmpty()) {
+                setDiagnosisVerification(
+                    diagnosisVerification.value?.copy(
+                        testType = testType,
+                        symptomsStartDate = symptomsStartDate ?: symptomDate,
+                        token = token,
+                        verificationCertificate = certificate,
+                        hmacKey = hmacKey
+                    )
+                )
+
+                shareReportIfEnEnabled()
+            } else // Verify the code remotely if there is no local report with this code
+                verificationManager.verify(code).apply {
+                    success {
+                        setDiagnosisVerification(
+                            diagnosisVerification.value?.copy(
+                                testType = it.testType,
+                                symptomsStartDate = it.symptomDate ?: symptomDate,
+                                token = it.token
+                            )
+                        )
+
+                        // Save just verified code in order to reuse token
+                        positiveDiagnosisRepository.addPositiveDiagnosisReport(
+                            PositiveDiagnosisReport(
+                                verificationData = diagnosisVerification.value
+                            )
+                        )
+
+                        shareReportIfEnEnabled()
+                    }
+
+                    failure { handleStatus(it) }
+                }
+        }
+    }
+
+    private suspend fun shareReportIfEnEnabled() {
+        enManager.isEnabled().apply {
+            success { enabled ->
+                if (enabled) {
+                    shareReport()
+                } else {
+                    withPermission(ExposureNotificationManager.PERMISSION_START_REQUEST_CODE) {
+                        enManager.start().apply {
+                            success { shareReport() }
+                            failure { handleStatus(it) }
                         }
                     }
                 }
-
-                failure { handleStatus(it) }
             }
+
+            failure { handleStatus(it) }
         }
     }
 

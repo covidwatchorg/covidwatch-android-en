@@ -218,8 +218,7 @@ val appModule = module {
     factory {
         StartUploadDiagnosisKeysWorkUseCase(
             workManager = get(),
-            dispatchers = get(),
-            positiveDiagnosisRepository = get()
+            dispatchers = get()
         )
     }
 
@@ -304,6 +303,8 @@ val appModule = module {
         VerifyPositiveDiagnosisViewModel(
             state = state,
             startUploadDiagnosisKeysWorkUseCase = get(),
+            verificationManager = get(),
+            positiveDiagnosisRepository = get(),
             enManager = get()
         )
     }
@@ -314,6 +315,8 @@ val appModule = module {
 
         OkHttpClient.Builder()
             .addInterceptor(logging)
+//            .followRedirects(false)
+//            .followSslRedirects(false)
             .addInterceptor(ConnectivityInterceptor(androidApplication()))
             .build()
     }

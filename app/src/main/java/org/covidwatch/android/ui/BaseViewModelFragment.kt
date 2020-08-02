@@ -46,7 +46,7 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
                 val snackbar = Snackbar.make(
                     binding.root,
                     R.string.unknown_error,
-                    BaseTransientBottomBar.LENGTH_INDEFINITE
+                    BaseTransientBottomBar.LENGTH_LONG
                 )
                 snackbar.setAction(R.string.contact_us) { context?.openBrowser(Urls.SUPPORT) }
                 snackbar.show()
@@ -79,16 +79,25 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
                 val snackbar = Snackbar.make(
                     binding.root,
                     R.string.no_connection_error,
-                    BaseTransientBottomBar.LENGTH_INDEFINITE
+                    BaseTransientBottomBar.LENGTH_LONG
                 )
                 snackbar.setAction(R.string.open_settings) { startActivity(Intents.wirelessSettings) }
                 snackbar.show()
             }
-            Failure.ServerError -> {
+            is Failure.ServerError -> {
                 val snackbar = Snackbar.make(
                     binding.root,
-                    R.string.server_error,
-                    BaseTransientBottomBar.LENGTH_INDEFINITE
+                    getString(R.string.server_error, it.error),
+                    BaseTransientBottomBar.LENGTH_LONG
+                )
+                snackbar.setAction(R.string.contact_us) { context?.openBrowser(Urls.SUPPORT) }
+                snackbar.show()
+            }
+            is Failure.CodeVerification -> {
+                val snackbar = Snackbar.make(
+                    binding.root,
+                    getString(R.string.code_verification_error, it.error),
+                    BaseTransientBottomBar.LENGTH_LONG
                 )
                 snackbar.setAction(R.string.contact_us) { context?.openBrowser(Urls.SUPPORT) }
                 snackbar.show()

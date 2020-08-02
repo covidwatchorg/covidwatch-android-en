@@ -13,5 +13,8 @@ interface PositiveDiagnosisReportDao : BaseDao<PositiveDiagnosisReport> {
     fun diagnoses(): LiveData<List<PositiveDiagnosisReport>>
 
     @Query("SELECT * FROM positive_diagnosis_report WHERE id = :id")
-    suspend fun report(id: String): PositiveDiagnosisReport
+    suspend fun report(id: String): PositiveDiagnosisReport?
+
+    @Query("SELECT * FROM positive_diagnosis_report WHERE verificationTestCode = :code")
+    suspend fun diagnosisByVerificationCode(code: String): PositiveDiagnosisReport?
 }

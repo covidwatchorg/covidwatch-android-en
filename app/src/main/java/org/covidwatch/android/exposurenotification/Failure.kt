@@ -6,7 +6,7 @@ import com.google.android.gms.nearby.exposurenotification.ExposureNotificationSt
 import java.io.IOException
 
 
-sealed class Failure(val code: Int) {
+sealed class Failure(val code: Int, val message: String? = null) {
     sealed class EnStatus {
         object Failed : Failure(FAILED)
         object AlreadyStarted : Failure(FAILED_ALREADY_STARTED)
@@ -22,11 +22,17 @@ sealed class Failure(val code: Int) {
     }
 
     object NetworkError : Failure(NETWORK_ERROR)
-    object ServerError : Failure(REMOTE_EXCEPTION)
-    object DeviceAttestation : Failure(FAILED_DEVICE_ATTESTATION)
+
+    data class ServerError(val error: String? = null) : Failure(SERVER_ERROR, error)
+    data class CodeVerification(val error: String? = null) :
+        Failure(FAILED_CODE_VERIFICATION, error)
+
+    data class Internal(val error: String? = null) : Failure(FAILED_INTERNAL, error)
 
     companion object {
-        const val FAILED_DEVICE_ATTESTATION = 444
+        const val FAILED_CODE_VERIFICATION = 111
+        const val FAILED_INTERNAL = 222
+        const val SERVER_ERROR = 333
 
         /**
          * Create [Failure] from [ApiException] when [ExposureNotificationClient] methods are called
@@ -58,12 +64,12 @@ sealed class Failure(val code: Int) {
                         invoke(statusCode)
                     }
                     NETWORK_ERROR -> NetworkError
-                    REMOTE_EXCEPTION -> ServerError
+                    REMOTE_EXCEPTION -> ServerError(exception.status.statusMessage)
                     else -> EnStatus.Failed
                 }
             }
             is NoConnectionException -> NetworkError
-            is ServerException -> ServerError
+            is ServerException -> ServerError(exception.error)
             else -> EnStatus.Failed
         }
 
@@ -74,7 +80,7 @@ sealed class Failure(val code: Int) {
         /**
          * Generate [Failure] from [ApiException.getStatusCode]
          * */
-        operator fun invoke(statusCode: Int?) = when (statusCode) {
+        operator fun invoke(statusCode: Int?, message: String? = null) = when (statusCode) {
             FAILED -> EnStatus.Failed
             FAILED_ALREADY_STARTED -> EnStatus.AlreadyStarted
             FAILED_NOT_SUPPORTED -> EnStatus.NotSupported
@@ -85,9 +91,11 @@ sealed class Failure(val code: Int) {
             FAILED_DISK_IO -> EnStatus.FailedDiskIO
             FAILED_UNAUTHORIZED -> EnStatus.Unauthorized
             FAILED_RATE_LIMITED -> EnStatus.RateLimited
-            FAILED_DEVICE_ATTESTATION -> DeviceAttestation
             NETWORK_ERROR -> NetworkError
-            REMOTE_EXCEPTION -> ServerError
+            SERVER_ERROR,
+            REMOTE_EXCEPTION -> ServerError(message)
+            FAILED_CODE_VERIFICATION -> CodeVerification(message)
+            FAILED_INTERNAL -> Internal(message)
             else -> EnStatus.Failed
         }
     }
@@ -96,4 +104,4 @@ sealed class Failure(val code: Int) {
 class NoConnectionException :
     IOException("No internet available, please check your WIFi or Data connections")
 
-class ServerException(error: String? = null) : IOException(error)
+data class ServerException(val error: String? = null) : IOException(error)

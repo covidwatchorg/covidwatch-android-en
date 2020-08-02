@@ -9,6 +9,7 @@ import org.covidwatch.android.data.Region
 import org.covidwatch.android.data.Regions
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.Failure
+import org.covidwatch.android.exposurenotification.ServerException
 import org.covidwatch.android.functional.Either
 import timber.log.Timber
 
@@ -24,11 +25,12 @@ class UpdateRegionsUseCase(
         try {
             val request = Request.Builder().url(BuildConfig.REGIONS_JSON).build()
 
-            val jsonResponse = httpClient.newCall(request).execute()
-            if (jsonResponse.code != 200) return Either.Left(Failure.ServerError)
+            val response = httpClient.newCall(request).execute()
+            if (!response.isSuccessful) throw ServerException(response.body?.string())
+
             val regionsType = object : TypeToken<List<Region?>?>() {}.type
 
-            val regions: List<Region> = gson.fromJson(jsonResponse.body?.charStream(), regionsType)
+            val regions: List<Region> = gson.fromJson(response.body?.charStream(), regionsType)
             preferences.regions = Regions(regions)
         } catch (e: Exception) {
             Timber.d("Failed to update regions data")

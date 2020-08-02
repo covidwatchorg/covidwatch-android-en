@@ -23,7 +23,6 @@ class PositiveDiagnosisRepository(
 
     fun diagnoses() = local.diagnoses()
 
-
     suspend fun diagnosisKeys() = withContext(dispatchers.io) {
         val regions = countryCodeRepository.exposureRelevantCountryCodes()
         val urls = uriManager.downloadUrls(regions)
@@ -49,6 +48,10 @@ class PositiveDiagnosisRepository(
         val bytes = ByteArray(8)
         random.nextBytes(bytes)
         return encoding.encode(bytes)
+    }
+
+    suspend fun diagnosisByVerificationCode(code: String) = withContext(dispatchers.io) {
+        local.diagnosisByVerificationCode(code)
     }
 
     suspend fun addPositiveDiagnosisReport(positiveDiagnosisItem: PositiveDiagnosisReport) =
