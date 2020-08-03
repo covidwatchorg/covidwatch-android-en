@@ -114,7 +114,7 @@ object DefaultRegions {
         nextStepsNoSignificantExposure = listOf(
             NextStep(
                 type = WEBSITE,
-                description = "Monitor yourself for COVID-19 symtoms.",
+                description = "Monitor yourself for COVID-19 symptoms.",
                 url = "https://covid19.arizona.edu/prevention-health/covid-19-symptoms?utm_source=covid_watch_app&utm_medium=referral&utm_campaign=covid_watch_covid19_symptoms_no_exposure"
             ),
             NextStep(
