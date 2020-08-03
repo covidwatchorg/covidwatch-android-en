@@ -11,6 +11,9 @@ import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.extension.send
 import org.covidwatch.android.ui.BaseViewModel
 import org.covidwatch.android.ui.event.Event
+import java.time.Instant
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.util.*
 
 class VerifyPositiveDiagnosisViewModel(
@@ -28,10 +31,15 @@ class VerifyPositiveDiagnosisViewModel(
             }
         }
 
+    private var positiveDiagnosisReport = PositiveDiagnosisReport()
+
     private val _showThankYou = MutableLiveData<Event<Unit>>()
     val showThankYou: LiveData<Event<Unit>> = _showThankYou
 
     val readyToSubmit: LiveData<Boolean> = diagnosisVerification.map { it?.readyToSubmit ?: false }
+
+    private val _uploading = MutableLiveData<Boolean>()
+    val uploading: LiveData<Boolean> = _uploading
 
     private var infectionDate: Date?
         get() = state[STATE_INFECTION_DATE]
@@ -52,7 +60,10 @@ class VerifyPositiveDiagnosisViewModel(
         }
 
     fun symptomDate(date: Long) {
-        symptomDate = Date(date)
+        symptomDate = Date(
+            ZonedDateTime.ofInstant(Instant.ofEpochMilli(date), ZoneId.of("UTC")).toInstant()
+                .toEpochMilli()
+        )
         setDiagnosisVerification(diagnosisVerification.value?.copy(symptomsStartDate = symptomDate))
     }
 
@@ -95,6 +106,8 @@ class VerifyPositiveDiagnosisViewModel(
 
     fun sharePositiveDiagnosis() {
         viewModelScope.launch {
+            _uploading.value = true
+
             val code = diagnosisVerification.value?.verificationTestCode ?: ""
 
             // Check if we have verified report with this code in order to reuse token
@@ -107,6 +120,7 @@ class VerifyPositiveDiagnosisViewModel(
             val hmacKey = verificationData?.hmacKey
 
             if (!token.isNullOrEmpty() && !testType.isNullOrEmpty()) {
+                positiveDiagnosisReport = diagnosis
                 setDiagnosisVerification(
                     diagnosisVerification.value?.copy(
                         testType = testType,
@@ -131,7 +145,7 @@ class VerifyPositiveDiagnosisViewModel(
 
                         // Save just verified code in order to reuse token
                         positiveDiagnosisRepository.addPositiveDiagnosisReport(
-                            PositiveDiagnosisReport(
+                            positiveDiagnosisReport.copy(
                                 verificationData = diagnosisVerification.value
                             )
                         )
@@ -139,7 +153,10 @@ class VerifyPositiveDiagnosisViewModel(
                         shareReportIfEnEnabled()
                     }
 
-                    failure { handleStatus(it) }
+                    failure {
+                        _uploading.value = false
+                        handleStatus(it)
+                    }
                 }
         }
     }
@@ -150,6 +167,7 @@ class VerifyPositiveDiagnosisViewModel(
                 if (enabled) {
                     shareReport()
                 } else {
+                    _uploading.value = false
                     withPermission(ExposureNotificationManager.PERMISSION_START_REQUEST_CODE) {
                         enManager.start().apply {
                             success { shareReport() }
@@ -159,29 +177,38 @@ class VerifyPositiveDiagnosisViewModel(
                 }
             }
 
-            failure { handleStatus(it) }
+            failure {
+                _uploading.value = false
+                handleStatus(it)
+            }
         }
     }
 
     private suspend fun shareReport() {
         withPermission(ExposureNotificationManager.PERMISSION_KEYS_REQUEST_CODE) {
             enManager.temporaryExposureKeyHistory().apply {
+                _uploading.value = false
+
                 success {
+                    _uploading.value = true
                     observeStatus(
                         startUploadDiagnosisKeysWorkUseCase,
                         StartUploadDiagnosisKeysWorkUseCase.Params(
                             it,
-                            PositiveDiagnosisReport(
+                            positiveDiagnosisReport.copy(
                                 verificationData = diagnosisVerification.value
                             )
                         )
                     ) { uploading ->
+                        _uploading.value = false
                         uploading.success {
                             _showThankYou.send()
                         }
                     }
                 }
-                failure { handleStatus(it) }
+                failure {
+                    handleStatus(it)
+                }
             }
         }
     }
