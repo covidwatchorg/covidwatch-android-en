@@ -14,5 +14,8 @@ class PositiveDiagnosisLocalSource(private val reportDao: PositiveDiagnosisRepor
 
     suspend fun report(id: String) = reportDao.report(id)
 
+    suspend fun diagnosisByVerificationCode(code: String) =
+        reportDao.diagnosisByVerificationCode(code)
+
     suspend fun delete(diagnosis: PositiveDiagnosisReport) = reportDao.delete(diagnosis)
 }

@@ -84,7 +84,11 @@ class VerifyPositiveDiagnosisFragment :
             observe(readyToSubmit) {
                 binding.btnFinishVerification.isVisible = it
             }
-
+            observe(uploading) {
+                binding.uploadProgress.isVisible = it
+                // Disable the button while we uploading
+                binding.btnFinishVerification.isEnabled = !it
+            }
             observeEvent(showThankYou) {
                 findNavController().navigate(R.id.thanksForReportingFragment)
             }

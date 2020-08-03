@@ -9,7 +9,6 @@ import org.covidwatch.android.domain.UploadDiagnosisKeysUseCase.Params
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.functional.Either
-import org.covidwatch.android.ui.util.DateFormatter
 import timber.log.Timber
 import java.security.SecureRandom
 
@@ -32,7 +31,11 @@ class UploadDiagnosisKeysUseCase(
     override suspend fun run(params: Params?): Either<Failure, Unit> {
         params ?: return Either.Left(Failure.EnStatus.Failed)
         val verificationData = params.report.verificationData ?: return Either.Left(
-            Failure.EnStatus.Failed
+            Failure.Internal("No verification data provided in params for ${javaClass.simpleName}")
+        )
+
+        val token = verificationData.token ?: return Either.Left(
+            Failure.Internal("Token is null. Can't certificate an upload of a diagnosis")
         )
 
         enManager.isEnabled().apply {
@@ -65,21 +68,33 @@ class UploadDiagnosisKeysUseCase(
             val regions = countryCodeRepository.exposureRelevantCountryCodes()
             val uploadEndpoints = uriManager.uploadUris(regions)
 
-            val codeVerification = verificationManager.verify(
-                diagnosisKeys,
-                verificationData.verificationTestCode
-            )
+            val certificate: String
+            val hmacKey: ByteArray
+            val verifiedDiagnosis: PositiveDiagnosisReport
 
-            val verifiedDiagnosis = params.report.copy(
-                verified = true,
-                verificationData = verificationData.copy(
-                    symptomsStartDate = DateFormatter.symptomDate(codeVerification.symptomDate),
-                    testType = codeVerification.testType,
-                    token = codeVerification.token,
-                    hmacKey = codeVerification.hmacKey,
-                    verificationCertificate = codeVerification.certificate
+            // Check if we certificated the token before and reuse certificate
+            if (verificationData.verificationCertificate != null && verificationData.hmacKey != null) {
+                certificate = verificationData.verificationCertificate
+                hmacKey = verificationData.hmacKey
+
+                verifiedDiagnosis = params.report.copy(verified = true)
+            } else { // otherwise certificate the token
+                val verificationCertificate = verificationManager.certificate(
+                    token,
+                    diagnosisKeys
                 )
-            )
+
+                verifiedDiagnosis = params.report.copy(
+                    verified = true,
+                    verificationData = verificationData.copy(
+                        hmacKey = verificationCertificate.hmacKey,
+                        verificationCertificate = verificationCertificate.certificate
+                    )
+                )
+
+                certificate = verificationCertificate.certificate
+                hmacKey = verificationCertificate.hmacKey
+            }
 
             diagnosisRepository.updatePositiveDiagnosisReport(verifiedDiagnosis)
 
@@ -87,8 +102,8 @@ class UploadDiagnosisKeysUseCase(
                 temporaryExposureKeys = diagnosisKeys,
                 regions = regions,
                 appPackageName = appPackageName,
-                verificationPayload = codeVerification.certificate,
-                hmacKey = encoding.encode(codeVerification.hmacKey),
+                verificationPayload = certificate,
+                hmacKey = encoding.encode(hmacKey),
                 padding = randomPadding()
             )
 

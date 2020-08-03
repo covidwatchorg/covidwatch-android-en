@@ -25,18 +25,22 @@ class ProvideDiagnosisKeysUseCase(
             downloadRequest = PeriodicWorkRequestBuilder<ProvideDiagnosisKeysWork>(
                 RECURRENCE_PERIOD,
                 TimeUnit.HOURS
-            ).setConstraints(
-                Constraints
-                    .Builder()
-                    .setRequiredNetworkType(NetworkType.CONNECTED)
-                    .setRequiresBatteryNotLow(true)
-                    .setRequiresStorageNotLow(true)
-                    .build()
-            ).setBackoffCriteria(
-                BackoffPolicy.LINEAR,
-                TimeUnit.HOURS.toMillis(3), // 3 hours and 6 hours between retries
-                TimeUnit.MILLISECONDS
-            ).build()
+            ).apply {
+                setConstraints(
+                    Constraints
+                        .Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .setRequiresBatteryNotLow(true)
+                        .setRequiresStorageNotLow(true)
+                        .build()
+                )
+                setInitialDelay(RECURRENCE_PERIOD, TimeUnit.HOURS)
+                setBackoffCriteria(
+                    BackoffPolicy.LINEAR,
+                    TimeUnit.HOURS.toMillis(3), // 3 hours and 6 hours between retries
+                    TimeUnit.MILLISECONDS
+                )
+            }.build()
 
             workManager.enqueueUniquePeriodicWork(
                 RECURRENT_WORK_NAME,

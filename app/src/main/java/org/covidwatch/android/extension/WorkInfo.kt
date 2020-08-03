@@ -12,13 +12,15 @@ import org.covidwatch.android.functional.Either
 import java.util.*
 
 const val FAILURE = "status"
+const val FAILURE_MESSAGE = "message"
 const val UNKNOWN_FAILURE = -1
 
 fun WorkInfo?.toResult() = when (this?.state) {
     WorkInfo.State.SUCCEEDED -> Either.Right(id)
     else -> {
         val code = this?.outputData?.getInt(FAILURE, UNKNOWN_FAILURE)
-        val status = code?.let { Failure(it) } ?: Failure.EnStatus.Failed
+        val message = this?.outputData?.getString(FAILURE_MESSAGE)
+        val status = code?.let { Failure(it, message) } ?: Failure.EnStatus.Failed
         Either.Left(status)
     }
 }
@@ -39,6 +41,6 @@ fun WorkManager.getFinalWorkInfoByIdLiveData(@NonNull id: UUID): LiveData<Either
     return result
 }
 
-fun failure(status: Failure) = ListenableWorker.Result.failure(
-    Data.Builder().putInt(FAILURE, status.code).build()
+fun failure(failure: Failure) = ListenableWorker.Result.failure(
+    Data.Builder().putInt(FAILURE, failure.code).putString(FAILURE_MESSAGE, failure.message).build()
 )
