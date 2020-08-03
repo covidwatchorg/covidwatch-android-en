@@ -11,7 +11,6 @@
         style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:elevation="@dimen/onboarding_footer_elevation"
         app:contentInsetStart="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,6 +71,7 @@
                 android:layout_weight="0.5"
                 android:background="?selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:contentDescription="@string/btn_previous_onboarding_screen_description"
                 android:focusable="true"
                 android:src="@drawable/ic_arrow_left" />
 
@@ -95,6 +95,7 @@
                 android:layout_weight=".5"
                 android:background="?selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:contentDescription="@string/btn_next_onboarding_screen_description"
                 android:focusable="true"
                 android:src="@drawable/ic_arrow_right" />
         </LinearLayout>

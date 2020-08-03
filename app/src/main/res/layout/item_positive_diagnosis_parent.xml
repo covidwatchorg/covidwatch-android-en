@@ -21,13 +21,6 @@
         app:layout_constraintVertical_bias="0.05"
         app:srcCompat="@drawable/ic_info_red" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="end"
-        app:constraint_referenced_ids="test_status_image"
-        tools:layout_editor_absoluteX="411dp" />
 
     <TextView
         android:id="@+id/test_status_text"
@@ -37,7 +30,7 @@
         android:textColor="@color/tangerine"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/submit_date"
-        app:layout_constraintStart_toEndOf="@id/barrier"
+        app:layout_constraintStart_toEndOf="@id/test_status_image"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/needs_verification" />
 
@@ -47,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/padding_normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/barrier"
+        app:layout_constraintStart_toEndOf="@+id/test_status_image"
         app:layout_constraintTop_toBottomOf="@+id/test_status_text"
         tools:text="Test Date: April 20, 2020" />
 

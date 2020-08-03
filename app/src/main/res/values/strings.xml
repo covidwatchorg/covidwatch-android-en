@@ -72,7 +72,7 @@
     <string name="stanford_university">Stanford University</string>
 
     <string name="bluetooth_explanation_subtext">Apps using Bluetooth® Low Energy (BLE) are required to have location access enabled.</string>
-    <string name="logo_image_content_descriptor">Logo image</string>
+    <string name="logo_image_content_descriptor">Covid Watch logo</string>
     <string name="menu_button_content_descriptor">Menu button</string>
     <string name="welcome_back_title">Welcome Back!</string>
     <string name="detected_thank_you_text">Thank you for helping your community stay safe, anonymously.</string>
@@ -310,6 +310,8 @@
     <!--REGION SELECTION-->
     <string name="privacy_select_region"><b>We value your privacy.</b> This application is always anonymous and your location is never collected or stored. Selecting a region will allow you to receive information on available healthcare resources in that region without ever having to share a location. Your region can be changed at any time.</string>
     <string name="select_region_label">Select Region</string>
+    <string name="btn_previous_onboarding_screen_description">Button previous onboarding screen</string>
+    <string name="btn_next_onboarding_screen_description">Button next onboarding screen</string>
 
 
 </resources>
