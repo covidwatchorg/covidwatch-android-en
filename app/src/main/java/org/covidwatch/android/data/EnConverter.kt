@@ -1,7 +1,6 @@
 package org.covidwatch.android.data
 
 import com.google.android.gms.nearby.exposurenotification.ExposureInformation
-import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import com.google.gson.annotations.SerializedName
 import java.time.Instant
@@ -9,7 +8,6 @@ import java.util.*
 
 // TODO: 20.07.2020 Rename and rework into ExposureRiskModeling interface similarly to iOS
 interface EnConverter {
-    fun covidExposureSummary(exposureSummary: ExposureSummary): CovidExposureSummary
     fun covidExposureInformation(exposureInformation: ExposureInformation): CovidExposureInformation
     fun diagnosisKey(
         key: TemporaryExposureKey,
@@ -91,16 +89,6 @@ open class RiskModelConfiguration(
 
 @Suppress("unused")
 class DefaultEnConverter : EnConverter {
-    override fun covidExposureSummary(exposureSummary: ExposureSummary) =
-        with(exposureSummary) {
-            CovidExposureSummary(
-                daysSinceLastExposure,
-                matchedKeyCount,
-                (maximumRiskScore * 8.0 / 4096).toInt(),
-                attenuationDurationsInMinutes,
-                (summationRiskScore * 8.0 / 4096).toInt()
-            )
-        }
 
     override fun covidExposureInformation(
         exposureInformation: ExposureInformation

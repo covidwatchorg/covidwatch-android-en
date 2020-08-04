@@ -1,7 +1,6 @@
 package org.covidwatch.android.data
 
 import com.google.android.gms.nearby.exposurenotification.ExposureInformation
-import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ExposureNotification
@@ -111,17 +110,6 @@ class ArizonaEnConverter(private val prefs: PreferenceStorage) : EnConverter {
     }
 
     private fun Double.within(min: Double, max: Double) = this >= min && this < max
-
-    override fun covidExposureSummary(exposureSummary: ExposureSummary) =
-        with(exposureSummary) {
-            CovidExposureSummary(
-                daysSinceLastExposure,
-                matchedKeyCount,
-                (maximumRiskScore * 8.0 / 4096).toInt(),
-                attenuationDurationsInMinutes,
-                (summationRiskScore * 8.0 / 4096).toInt()
-            )
-        }
 
     override fun diagnosisKey(
         key: TemporaryExposureKey,

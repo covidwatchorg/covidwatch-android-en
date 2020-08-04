@@ -134,7 +134,7 @@ open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuVie
                 lifecycleScope.launch {
                     exposureInformationRepository.reset()
                     keyFileRepository.reset()
-                    preferences.resetExposureSummary()
+                    preferences.lastCheckedForExposures = null
 
                     Toast.makeText(context, "Possible exposures were deleted", Toast.LENGTH_SHORT)
                         .show()

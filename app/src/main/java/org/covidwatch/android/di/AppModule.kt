@@ -32,7 +32,6 @@ import org.covidwatch.android.data.risklevel.RiskLevelRepository
 import org.covidwatch.android.domain.*
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.ui.Notifications
-import org.covidwatch.android.ui.exposurenotification.ExposureNotificationViewModel
 import org.covidwatch.android.ui.exposures.ExposuresViewModel
 import org.covidwatch.android.ui.home.HomeViewModel
 import org.covidwatch.android.ui.menu.MenuViewModel
@@ -65,17 +64,6 @@ val appModule = module {
     single {
         DiagnosisVerificationManager(
             verificationRepository = get()
-        )
-    }
-
-    viewModel {
-        ExposureNotificationViewModel(
-            enManager = get(),
-            uploadDiagnosisKeysUseCase = get(),
-            provideDiagnosisKeysUseCase = get(),
-            updateExposureInformationUseCase = get(),
-            exposureInformationRepository = get(),
-            preferenceStorage = get()
         )
     }
 

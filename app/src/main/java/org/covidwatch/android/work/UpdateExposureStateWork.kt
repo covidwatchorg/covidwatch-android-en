@@ -50,20 +50,7 @@ class UpdateExposureStateWork(
             // Update risk metrics
             preferenceStorage.riskMetrics = enConverter.riskMetrics(exposures, Instant.now())
 
-            // Update risk summary
-            val maxRiskScore = exposures.maxBy { it.totalRiskScore }?.totalRiskScore
-            val summationRiskScore = exposures.sumBy { it.totalRiskScore }
-
-            val covidExposureSummary = enConverter.covidExposureSummary(exposureSummary)
-            Timber.d("Exposure summary from EN: $covidExposureSummary")
-
-            preferenceStorage.exposureSummary = covidExposureSummary.copy(
-                matchedKeyCount = exposures.size,
-                maximumRiskScore = maxRiskScore ?: covidExposureSummary.maximumRiskScore,
-                summationRiskScore = summationRiskScore
-            )
             notifications.postExposureNotification()
-            Timber.d("Exposure summary to display: ${preferenceStorage.exposureSummary}")
         } else {
             Timber.d("No exposure for token: $token")
             diagnosisKeysTokenRepository.delete(token)

@@ -28,6 +28,7 @@ import org.covidwatch.android.ui.Urls
 import org.koin.java.KoinJavaComponent.inject
 import timber.log.Timber
 import java.security.SecureRandom
+import java.time.Instant
 
 class ProvideDiagnosisKeysWork(
     private val context: Context,
@@ -81,6 +82,8 @@ class ProvideDiagnosisKeysWork(
                 val token = randomToken()
                 val covidExposureConfiguration = preferences.exposureConfiguration
                 val exposureConfiguration = covidExposureConfiguration.asExposureConfiguration()
+
+                preferences.lastCheckedForExposures = Instant.now()
 
                 // Return success if no keys to provide
                 if (diagnosisKeys.all { it.keys.isEmpty() }) return@withContext Result.success()

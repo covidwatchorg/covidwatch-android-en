@@ -34,7 +34,7 @@ object DateFormatter {
         }
 
     private var fullDateTimeFormatter =
-        DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.MEDIUM)
+        DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT)
         get() {
             if (locale == Locale.getDefault()) {
                 return field

@@ -7,7 +7,20 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonSyntaxException
+import com.google.gson.TypeAdapter
+import com.google.gson.internal.JavaVersion
+import com.google.gson.internal.PreJava9DateFormatProvider
+import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonToken
+import com.google.gson.stream.JsonWriter
 import org.covidwatch.android.data.*
+import java.io.IOException
+import java.text.DateFormat
+import java.time.Instant
+import java.time.format.DateTimeParseException
+import java.util.*
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -19,9 +32,8 @@ interface PreferenceStorage {
     var onboardingFinished: Boolean
     var showOnboardingHomeAnimation: Boolean
 
-    var exposureSummary: CovidExposureSummary
-    val observableExposureSummary: LiveData<CovidExposureSummary>
-    fun resetExposureSummary()
+    var lastCheckedForExposures: Instant?
+    val observableLastCheckedForExposures: LiveData<Instant>
 
     var riskMetrics: RiskMetrics?
     val observableRiskMetrics: LiveData<RiskMetrics?>
@@ -34,25 +46,25 @@ interface PreferenceStorage {
 
     val riskModelConfiguration: RiskModelConfiguration
     val exposureConfiguration: CovidExposureConfiguration
+
+    /**
+     * Internal state version for the migration purposes
+     */
+    val version: Int
 }
 
 class SharedPreferenceStorage(context: Context) : PreferenceStorage {
+    private val gson: Gson
+
     private val prefs = context.applicationContext.getSharedPreferences(NAME, MODE_PRIVATE)
-    private val _exposureSummary = MutableLiveData<CovidExposureSummary>()
+    private val _lastCheckedForExposures = MutableLiveData<Instant>()
     private val _regions = MutableLiveData<Regions>()
     private val _riskMetrics = MutableLiveData<RiskMetrics?>()
     private val _region = MutableLiveData<Region>()
-    private val defaultExposureSummary = CovidExposureSummary(
-        daySinceLastExposure = 0,
-        matchedKeyCount = 0,
-        maximumRiskScore = 0,
-        attenuationDurationsInMinutes = intArrayOf(),
-        summationRiskScore = 0
-    )
 
     private val changeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         when (key) {
-            EXPOSURE_SUMMARY -> _exposureSummary.value = exposureSummary
+            LAST_CHECKED_FOR_EXPOSURES -> _lastCheckedForExposures.value = lastCheckedForExposures
             REGIONS -> {
                 _regions.value = regions
                 _region.value = region
@@ -65,7 +77,10 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
 
     init {
         prefs.registerOnSharedPreferenceChangeListener(changeListener)
+        gson = GsonBuilder().registerTypeAdapter(Instant::class.java, InstantTypeAdapter()).create()
     }
+
+    override val version: Int by Preference(prefs, "", -1)
 
     override var lastFetchDate by Preference(prefs, LAST_FETCH_DATE, 0L)
 
@@ -77,17 +92,21 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
         true
     )
 
-    override var exposureSummary: CovidExposureSummary by ObjectPreference(
+    override var lastCheckedForExposures: Instant? by NullableObjectPreference(
         prefs,
-        EXPOSURE_SUMMARY,
-        defaultExposureSummary,
-        CovidExposureSummary::class.java
+        LAST_CHECKED_FOR_EXPOSURES,
+        Instant::class.java,
+        gson = gson
     )
+
+    override val observableLastCheckedForExposures: LiveData<Instant>
+        get() = _lastCheckedForExposures.also { it.value = lastCheckedForExposures }
 
     override var riskMetrics: RiskMetrics? by NullableObjectPreference(
         prefs,
         RISK_METRICS,
-        RiskMetrics::class.java
+        RiskMetrics::class.java,
+        gson = gson
     )
 
     override val observableRiskMetrics: LiveData<RiskMetrics?>
@@ -114,20 +133,13 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
     override val observableRegion: LiveData<Region>
         get() = _region.also { it.value = region }
 
-    override fun resetExposureSummary() {
-        exposureSummary = defaultExposureSummary
-    }
-
     override val exposureConfiguration: CovidExposureConfiguration
         get() = region.exposureConfiguration.asCovidExposureConfiguration()
-
-    override val observableExposureSummary: LiveData<CovidExposureSummary>
-        get() = _exposureSummary.also { it.value = exposureSummary }
 
     companion object {
         private const val NAME = "ag_minimal_prefs"
         private const val LAST_FETCH_DATE = "last_fetch_date"
-        private const val EXPOSURE_SUMMARY = "next_steps"
+        private const val LAST_CHECKED_FOR_EXPOSURES = "last_checked_for_exposures"
         private const val RISK_METRICS = "risk_metrics"
         private const val REGIONS = "regions"
         private const val SELECTED_REGION = "selected_region"
@@ -228,4 +240,57 @@ fun <T> SharedPreferences.put(name: String, value: T) {
         is String -> editor.putString(name, value)
     }
     editor.apply()
+}
+
+class InstantTypeAdapter : TypeAdapter<Instant?>() {
+    private val dateFormats = mutableListOf<DateFormat>()
+
+    @Throws(IOException::class)
+    override fun read(jsonReader: JsonReader): Instant? {
+        return if (jsonReader.peek() == JsonToken.NULL) {
+            jsonReader.nextNull()
+            null
+        } else {
+            deserializeToDate(jsonReader.nextString())
+        }
+    }
+
+    @Synchronized
+    private fun deserializeToDate(json: String): Instant {
+        try {
+            return Instant.parse(json)
+        } catch (_: DateTimeParseException) {
+        }
+
+        return dateFormats.map { dateFormat ->
+            try {
+                dateFormat.parse(json)?.toInstant()
+            } catch (e: Exception) {
+                null
+            }
+        }.firstOrNull() ?: throw JsonSyntaxException(json)
+    }
+
+    @Synchronized
+    @Throws(IOException::class)
+    override fun write(
+        out: JsonWriter,
+        value: Instant?
+    ) {
+        if (value == null) {
+            out.nullValue()
+        } else {
+            out.value(value.toString())
+        }
+    }
+
+    init {
+        dateFormats.add(DateFormat.getDateTimeInstance(2, 2, Locale.US))
+        if (Locale.getDefault() != Locale.US) {
+            dateFormats.add(DateFormat.getDateTimeInstance(2, 2))
+        }
+        if (JavaVersion.isJava9OrLater()) {
+            dateFormats.add(PreJava9DateFormatProvider.getUSDateTimeFormat(2, 2))
+        }
+    }
 }

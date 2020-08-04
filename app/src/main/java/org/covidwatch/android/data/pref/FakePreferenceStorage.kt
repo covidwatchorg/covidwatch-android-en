@@ -1,13 +1,15 @@
 package org.covidwatch.android.data.pref
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
-import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import org.covidwatch.android.data.*
-import org.covidwatch.android.exposurenotification.RandomEnObjects
+import java.time.Instant
 
 @Suppress("UNUSED_PARAMETER", "unused")
-class FakePreferenceStorage : PreferenceStorage {
+class FakePreferenceStorage(
+    override var lastCheckedForExposures: Instant?,
+    override val observableLastCheckedForExposures: LiveData<Instant>,
+    override val version: Int
+) : PreferenceStorage {
     override var lastFetchDate: Long
         get() = 0
         set(value) {}
@@ -18,24 +20,12 @@ class FakePreferenceStorage : PreferenceStorage {
     override var showOnboardingHomeAnimation: Boolean
         get() = true
         set(value) {}
-    override var exposureSummary: CovidExposureSummary
-        get() = RandomEnObjects.exposureSummary.asCovidExposureSummary()
-        set(value) {}
 
     override var riskMetrics: RiskMetrics? = null
 
     override val observableRiskMetrics: LiveData<RiskMetrics?>
         get() = TODO("not implemented")
 
-    private fun ExposureSummary.asCovidExposureSummary() = CovidExposureSummary(
-        daysSinceLastExposure,
-        matchedKeyCount,
-        (maximumRiskScore * 8.0 / 4096).toInt(),
-        attenuationDurationsInMinutes,
-        (summationRiskScore * 8.0 / 4096).toInt()
-    )
-
-    override fun resetExposureSummary() {}
     override var regions: Regions
         get() = TODO("not implemented")
         set(value) {}
@@ -53,6 +43,4 @@ class FakePreferenceStorage : PreferenceStorage {
 
     override val exposureConfiguration: CovidExposureConfiguration
         get() = TODO("not implemented")
-    override val observableExposureSummary: LiveData<CovidExposureSummary>
-        get() = liveData { emit(exposureSummary) }
 }

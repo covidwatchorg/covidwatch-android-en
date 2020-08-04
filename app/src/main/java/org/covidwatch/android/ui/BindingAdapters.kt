@@ -7,26 +7,10 @@ import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
 import androidx.databinding.BindingAdapter
 import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureInformation
-import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.RiskLevel
 import org.covidwatch.android.data.RiskLevel.*
 import org.covidwatch.android.ui.util.DateFormatter
 import java.time.Instant
-
-@BindingAdapter("exposureSummary")
-fun TextView.setExposureSummary(exposureSummary: CovidExposureSummary?) {
-    exposureSummary?.let {
-        text = context.getString(
-            R.string.exposure_summary,
-            it.daySinceLastExposure,
-            it.matchedKeyCount,
-            it.maximumRiskScore
-        )
-    }
-    if (exposureSummary == null) {
-        text = context.getString(R.string.no_exposure)
-    }
-}
 
 @BindingAdapter("exposure_info")
 fun TextView.setExposureInfo(exposure: CovidExposureInformation?) {
