@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 import org.covidwatch.android.BuildConfig
 import org.covidwatch.android.R
 import org.covidwatch.android.data.PositiveDiagnosisReport
-import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.databinding.DialogRiskLevelsBinding
 import org.covidwatch.android.domain.ExportDiagnosisKeysAsFileUseCase
 import org.covidwatch.android.domain.StartUploadDiagnosisKeysWorkUseCase
@@ -30,7 +29,6 @@ import org.covidwatch.android.extension.send
 import org.covidwatch.android.ui.event.Event
 import java.io.File
 import java.net.URLConnection
-import java.util.*
 
 class NotifyOthersFragment : BaseNotifyOthersFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -202,7 +200,7 @@ class NotifyOthersViewModel(
                 startUploadDiagnosisKeysWorkUseCase,
                 StartUploadDiagnosisKeysWorkUseCase.Params(
                     keys,
-                    PositiveDiagnosisReport(verified = true, reportDate = Date())
+                    PositiveDiagnosisReport(verified = true)
                 )
             )
         }
