@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import org.covidwatch.android.data.converter.DateConverter
+import org.covidwatch.android.data.converter.InstantConverter
 import org.covidwatch.android.data.countrycode.CountryCodeDao
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenDao
@@ -23,7 +24,7 @@ import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisReportDao
     version = 1,
     exportSchema = false
 )
-@TypeConverters(DateConverter::class)
+@TypeConverters(value = [InstantConverter::class, DateConverter::class])
 abstract class AppDatabase : RoomDatabase() {
     abstract fun exposureInformationDao(): ExposureInformationDao
     abstract fun diagnosisKeysTokenDao(): DiagnosisKeysTokenDao

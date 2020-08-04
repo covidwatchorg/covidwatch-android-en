@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import java.time.Instant
 import java.util.*
 
 @Entity(tableName = "positive_diagnosis_report")
@@ -14,7 +15,7 @@ data class PositiveDiagnosisReport(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),
     val verified: Boolean = false,
     val uploaded: Boolean = false,
-    val reportDate: Date = Date(),
+    val reportDate: Instant = Instant.now(),
     @Embedded
     val verificationData: PositiveDiagnosisVerification? = null
 )

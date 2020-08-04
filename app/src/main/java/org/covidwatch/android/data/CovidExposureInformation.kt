@@ -10,13 +10,13 @@ import org.covidwatch.android.R
 import org.covidwatch.android.data.converter.AttenuationDurationsConverter
 import org.covidwatch.android.data.converter.ExposureConfigurationConverter
 import java.io.Serializable
-import java.util.*
+import java.time.Instant
 
 @Entity(tableName = "exposure_information")
 @TypeConverters(value = [AttenuationDurationsConverter::class, ExposureConfigurationConverter::class])
 data class CovidExposureInformation(
     @Expose
-    val date: Date,
+    val date: Instant,
     @Expose
     val duration: Int,
     @Expose

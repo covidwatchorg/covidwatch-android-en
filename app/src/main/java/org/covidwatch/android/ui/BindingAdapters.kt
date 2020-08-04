@@ -11,7 +11,7 @@ import org.covidwatch.android.data.CovidExposureSummary
 import org.covidwatch.android.data.RiskLevel
 import org.covidwatch.android.data.RiskLevel.*
 import org.covidwatch.android.ui.util.DateFormatter
-import java.util.*
+import java.time.Instant
 
 @BindingAdapter("exposureSummary")
 fun TextView.setExposureSummary(exposureSummary: CovidExposureSummary?) {
@@ -65,13 +65,13 @@ fun TextView.setTextFromTotalRisk(totalRiskScore: Int?) {
 }
 
 @BindingAdapter("date")
-fun TextView.setTextFromTime(time: Date?) {
+fun TextView.setTextFromTime(time: Instant?) {
     time ?: return
     text = DateFormatter.format(time)
 }
 
 @BindingAdapter("exposure_details_date")
-fun TextView.setExposureInfoDate(time: Date?) {
+fun TextView.setExposureInfoDate(time: Instant?) {
     time ?: return
     text = HtmlCompat.fromHtml(
         context.getString(
@@ -82,7 +82,7 @@ fun TextView.setExposureInfoDate(time: Date?) {
 }
 
 @BindingAdapter("last_exposure_time")
-fun TextView.setTextFromLastExposureTime(time: Date?) {
+fun TextView.setTextFromLastExposureTime(time: Instant?) {
     time ?: return
     text = HtmlCompat.fromHtml(
         context.getString(R.string.last_exposure_time, DateFormatter.formatDateAndTime(time)),

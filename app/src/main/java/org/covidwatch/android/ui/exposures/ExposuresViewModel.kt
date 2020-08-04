@@ -29,7 +29,7 @@ class ExposuresViewModel(
 
     val exposureInfo: LiveData<List<CovidExposureInformation>> =
         exposureInformationRepository.exposureInformation().map { exposures ->
-            exposures.sortedByDescending { it.date.time }
+            exposures.sortedByDescending { it.date.toEpochMilli() }
         }
 
     val lastExposureTime = preferenceStorage.observableExposureSummary.map { it.modifiedTime }

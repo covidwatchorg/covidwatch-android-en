@@ -1,6 +1,6 @@
 package org.covidwatch.android.data
 
-import java.util.*
+import java.time.Instant
 
 @Suppress("ArrayInDataClass")
 data class CovidExposureSummary(
@@ -10,5 +10,5 @@ data class CovidExposureSummary(
     val attenuationDurationsInMinutes: IntArray,
     // TODO: 09.06.2020 Check if summation risk score complies the same logic as all risk scores
     val summationRiskScore: RiskScore,
-    val modifiedTime: Date = Date()
+    val modifiedTime: Instant = Instant.now()
 )

@@ -4,6 +4,7 @@ import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import com.google.gson.annotations.SerializedName
+import java.time.Instant
 import java.util.*
 
 // TODO: 20.07.2020 Rename and rework into ExposureRiskModeling interface similarly to iOS
@@ -17,16 +18,16 @@ interface EnConverter {
         possibleInfectionDate: Date?
     ): DiagnosisKey
 
-    fun riskLevelValue(exposures: List<CovidExposureInformation>, computeDate: Date): Double
-    fun mostRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Date?
-    fun leastRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Date?
-    fun riskMetrics(exposures: List<CovidExposureInformation>, computeDate: Date): RiskMetrics
+    fun riskLevelValue(exposures: List<CovidExposureInformation>, computeDate: Instant): Double
+    fun mostRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Instant?
+    fun leastRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Instant?
+    fun riskMetrics(exposures: List<CovidExposureInformation>, computeDate: Instant): RiskMetrics
 }
 
 data class RiskMetrics(
     val riskLevel: Double,
-    val leastRecentSignificantExposureDate: Date?,
-    val mostRecentSignificantExposureDate: Date?
+    val leastRecentSignificantExposureDate: Instant?,
+    val mostRecentSignificantExposureDate: Instant?
 )
 
 open class RiskModelConfiguration(
@@ -106,7 +107,7 @@ class DefaultEnConverter : EnConverter {
     ) =
         with(exposureInformation) {
             CovidExposureInformation(
-                date = Date(dateMillisSinceEpoch),
+                date = Instant.ofEpochMilli(dateMillisSinceEpoch),
                 duration = durationMinutes,
                 attenuationValue = attenuationValue,
                 transmissionRiskLevel = transmissionRiskLevel,
@@ -126,22 +127,22 @@ class DefaultEnConverter : EnConverter {
 
     override fun riskLevelValue(
         exposures: List<CovidExposureInformation>,
-        computeDate: Date
+        computeDate: Instant
     ): Double {
         TODO("not implemented")
     }
 
-    override fun mostRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Date? {
+    override fun mostRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Instant? {
         TODO("not implemented")
     }
 
-    override fun leastRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Date? {
+    override fun leastRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Instant? {
         TODO("not implemented")
     }
 
     override fun riskMetrics(
         exposures: List<CovidExposureInformation>,
-        computeDate: Date
+        computeDate: Instant
     ): RiskMetrics {
         TODO("not implemented")
     }

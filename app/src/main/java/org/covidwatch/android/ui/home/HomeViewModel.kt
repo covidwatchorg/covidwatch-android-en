@@ -98,7 +98,7 @@ class HomeViewModel(
         val daysOffset = flags[1].toLongOrNull() ?: return ""
 
         var requestedDate = Date(
-            exposureDate.toInstant().plus(daysOffset, ChronoUnit.DAYS).toEpochMilli()
+            exposureDate.plus(daysOffset, ChronoUnit.DAYS).toEpochMilli()
         )
 
         if (flags[2] == "TRUE") {
