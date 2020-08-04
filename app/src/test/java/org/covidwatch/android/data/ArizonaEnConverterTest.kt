@@ -7,7 +7,8 @@ import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ExposureNotification
 import org.junit.jupiter.api.Assertions.assertArrayEquals
 import org.junit.jupiter.api.Test
-import java.util.*
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 import kotlin.random.Random
 import kotlin.test.assertEquals
 
@@ -26,9 +27,9 @@ class ArizonaEnConverterTest {
             .setTotalRiskScore(Random.nextInt(8))
             .setAttenuationDurations(intArrayOf(0, 30, 0))
 
-    private val Calendar.intervalNumber: Int
+    private val Instant.intervalNumber: Int
         get() {
-            return (timeInMillis / ExposureNotification.rollingInterval).toInt()
+            return (toEpochMilli() / ExposureNotification.rollingInterval).toInt()
         }
 
     private val keyData = ByteArray(42)
@@ -285,16 +286,16 @@ class ArizonaEnConverterTest {
     @Test
     fun `Key and symptoms dates are the same`() {
         //given
-        val daysBetweenKeyAndSymptoms = 0
-        val today = Calendar.getInstance()
-        val keyDate = Calendar.getInstance().apply { add(Calendar.DATE, daysBetweenKeyAndSymptoms) }
+        val daysBetweenKeyAndSymptoms = 0L
+        val today = Instant.now()
+        val keyDate = Instant.now().plus(daysBetweenKeyAndSymptoms, ChronoUnit.DAYS)
         val intervalNumber = keyDate.intervalNumber
         val key = keyBuilder
             .setRollingStartIntervalNumber(intervalNumber)
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -306,16 +307,16 @@ class ArizonaEnConverterTest {
     @Test
     fun `Key date is 2 days after symptoms date`() {
         //given
-        val daysBetweenKeyAndSymptoms = 2
-        val today = Calendar.getInstance()
-        val keyDate = Calendar.getInstance().apply { add(Calendar.DATE, daysBetweenKeyAndSymptoms) }
+        val daysBetweenKeyAndSymptoms = 2L
+        val today = Instant.now()
+        val keyDate = Instant.now().plus(daysBetweenKeyAndSymptoms, ChronoUnit.DAYS)
         val intervalNumber = keyDate.intervalNumber
         val key = keyBuilder
             .setRollingStartIntervalNumber(intervalNumber)
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -327,16 +328,16 @@ class ArizonaEnConverterTest {
     @Test
     fun `Key date is 3 days after symptoms date`() {
         //given
-        val daysBetweenKeyAndSymptoms = 3
-        val today = Calendar.getInstance()
-        val keyDate = Calendar.getInstance().apply { add(Calendar.DATE, daysBetweenKeyAndSymptoms) }
+        val daysBetweenKeyAndSymptoms = 3L
+        val today = Instant.now()
+        val keyDate = Instant.now().plus(daysBetweenKeyAndSymptoms, ChronoUnit.DAYS)
         val intervalNumber = keyDate.intervalNumber
         val key = keyBuilder
             .setRollingStartIntervalNumber(intervalNumber)
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -348,16 +349,16 @@ class ArizonaEnConverterTest {
     @Test
     fun `Key date is 4 days after symptoms date`() {
         //given
-        val daysBetweenKeyAndSymptoms = 4
-        val today = Calendar.getInstance()
-        val keyDate = Calendar.getInstance().apply { add(Calendar.DATE, daysBetweenKeyAndSymptoms) }
+        val daysBetweenKeyAndSymptoms = 4L
+        val today = Instant.now()
+        val keyDate = Instant.now().plus(daysBetweenKeyAndSymptoms, ChronoUnit.DAYS)
         val intervalNumber = keyDate.intervalNumber
         val key = keyBuilder
             .setRollingStartIntervalNumber(intervalNumber)
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -369,16 +370,16 @@ class ArizonaEnConverterTest {
     @Test
     fun `Key date is 5 days after symptoms date`() {
         //given
-        val daysBetweenKeyAndSymptoms = 5
-        val today = Calendar.getInstance()
-        val keyDate = Calendar.getInstance().apply { add(Calendar.DATE, daysBetweenKeyAndSymptoms) }
+        val daysBetweenKeyAndSymptoms = 5L
+        val today = Instant.now()
+        val keyDate = Instant.now().plus(daysBetweenKeyAndSymptoms, ChronoUnit.DAYS)
         val intervalNumber = keyDate.intervalNumber
         val key = keyBuilder
             .setRollingStartIntervalNumber(intervalNumber)
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -390,16 +391,16 @@ class ArizonaEnConverterTest {
     @Test
     fun `Key date is 6 days after symptoms date`() {
         //given
-        val daysBetweenKeyAndSymptoms = 6
-        val today = Calendar.getInstance()
-        val keyDate = Calendar.getInstance().apply { add(Calendar.DATE, daysBetweenKeyAndSymptoms) }
+        val daysBetweenKeyAndSymptoms = 6L
+        val today = Instant.now()
+        val keyDate = Instant.now().plus(daysBetweenKeyAndSymptoms, ChronoUnit.DAYS)
         val intervalNumber = keyDate.intervalNumber
         val key = keyBuilder
             .setRollingStartIntervalNumber(intervalNumber)
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -411,16 +412,16 @@ class ArizonaEnConverterTest {
     @Test
     fun `Key date is 18 days after symptoms date`() {
         //given
-        val daysBetweenKeyAndSymptoms = 18
-        val today = Calendar.getInstance()
-        val keyDate = Calendar.getInstance().apply { add(Calendar.DATE, daysBetweenKeyAndSymptoms) }
+        val daysBetweenKeyAndSymptoms = 18L
+        val today = Instant.now()
+        val keyDate = Instant.now().plus(daysBetweenKeyAndSymptoms, ChronoUnit.DAYS)
         val intervalNumber = keyDate.intervalNumber
         val key = keyBuilder
             .setRollingStartIntervalNumber(intervalNumber)
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -433,16 +434,16 @@ class ArizonaEnConverterTest {
     @Test
     fun `Key date is 2 days before symptoms date`() {
         //given
-        val daysBetweenKeyAndSymptoms = -2
-        val today = Calendar.getInstance()
-        val keyDate = Calendar.getInstance().apply { add(Calendar.DATE, daysBetweenKeyAndSymptoms) }
+        val daysBetweenKeyAndSymptoms = -2L
+        val today = Instant.now()
+        val keyDate = Instant.now().plus(daysBetweenKeyAndSymptoms, ChronoUnit.DAYS)
         val intervalNumber = keyDate.intervalNumber
         val key = keyBuilder
             .setRollingStartIntervalNumber(intervalNumber)
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -454,16 +455,16 @@ class ArizonaEnConverterTest {
     @Test
     fun `Key date is 3 days before symptoms date`() {
         //given
-        val daysBetweenKeyAndSymptoms = -3
-        val today = Calendar.getInstance()
-        val keyDate = Calendar.getInstance().apply { add(Calendar.DATE, daysBetweenKeyAndSymptoms) }
+        val daysBetweenKeyAndSymptoms = -3L
+        val today = Instant.now()
+        val keyDate = Instant.now().plus(daysBetweenKeyAndSymptoms, ChronoUnit.DAYS)
         val intervalNumber = keyDate.intervalNumber
         val key = keyBuilder
             .setRollingStartIntervalNumber(intervalNumber)
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -475,16 +476,16 @@ class ArizonaEnConverterTest {
     @Test
     fun `Key date is 4 days before symptoms date`() {
         //given
-        val daysBetweenKeyAndSymptoms = -4
-        val today = Calendar.getInstance()
-        val keyDate = Calendar.getInstance().apply { add(Calendar.DATE, daysBetweenKeyAndSymptoms) }
+        val daysBetweenKeyAndSymptoms = -4L
+        val today = Instant.now()
+        val keyDate = Instant.now().plus(daysBetweenKeyAndSymptoms, ChronoUnit.DAYS)
         val intervalNumber = keyDate.intervalNumber
         val key = keyBuilder
             .setRollingStartIntervalNumber(intervalNumber)
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -496,16 +497,16 @@ class ArizonaEnConverterTest {
     @Test
     fun `Key date is 5 days before symptoms date`() {
         //given
-        val daysBetweenKeyAndSymptoms = -5
-        val today = Calendar.getInstance()
-        val keyDate = Calendar.getInstance().apply { add(Calendar.DATE, daysBetweenKeyAndSymptoms) }
+        val daysBetweenKeyAndSymptoms = -5L
+        val today = Instant.now()
+        val keyDate = Instant.now().plus(daysBetweenKeyAndSymptoms, ChronoUnit.DAYS)
         val intervalNumber = keyDate.intervalNumber
         val key = keyBuilder
             .setRollingStartIntervalNumber(intervalNumber)
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -517,16 +518,16 @@ class ArizonaEnConverterTest {
     @Test
     fun `Key date is 18 days before symptoms date`() {
         //given
-        val daysBetweenKeyAndSymptoms = -18
-        val today = Calendar.getInstance()
-        val keyDate = Calendar.getInstance().apply { add(Calendar.DATE, daysBetweenKeyAndSymptoms) }
+        val daysBetweenKeyAndSymptoms = -18L
+        val today = Instant.now()
+        val keyDate = Instant.now().plus(daysBetweenKeyAndSymptoms, ChronoUnit.DAYS)
         val intervalNumber = keyDate.intervalNumber
         val key = keyBuilder
             .setRollingStartIntervalNumber(intervalNumber)
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today.time, today.time, today.time)
+        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)

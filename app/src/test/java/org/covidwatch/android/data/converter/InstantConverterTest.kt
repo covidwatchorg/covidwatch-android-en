@@ -4,15 +4,16 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import java.time.Instant
+import kotlin.test.assertNull
 
 internal class InstantConverterTest {
 
     private val instantConverter = InstantConverter()
 
     @Nested
-    inner class ToDate {
+    inner class ToInstant {
         @Test
-        fun `Convert Long to Date`() {
+        fun `Convert Long to Instant`() {
             assertThat(instantConverter.toInstant(205465402)).isEqualTo(
                 Instant.ofEpochMilli(
                     205465402
@@ -21,15 +22,15 @@ internal class InstantConverterTest {
         }
 
         @Test
-        fun `Convert Null to Date(Null)`() {
-            assertThat(instantConverter.toInstant(null)).isEqualTo(null)
+        fun `Convert Null to Instant(Null)`() {
+            assertNull(instantConverter.toInstant(null))
         }
     }
 
     @Nested
-    inner class FromDate {
+    inner class FromInstant {
         @Test
-        fun `Convert Date to Long`() {
+        fun `Convert Instant to Long`() {
             assertThat(instantConverter.fromInstant(Instant.ofEpochMilli(205465402))).isEqualTo(
                 205465402
             )
@@ -37,7 +38,7 @@ internal class InstantConverterTest {
 
         @Test
         fun `Convert Null to Long(Null)`() {
-            assertThat(instantConverter.fromInstant(null)).isEqualTo(null)
+            assertNull(instantConverter.fromInstant(null))
         }
     }
 

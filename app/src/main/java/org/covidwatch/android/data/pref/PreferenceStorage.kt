@@ -34,11 +34,6 @@ interface PreferenceStorage {
 
     val riskModelConfiguration: RiskModelConfiguration
     val exposureConfiguration: CovidExposureConfiguration
-
-    /**
-     * Internal state version for the migration purposes
-     */
-    val version: Int
 }
 
 class SharedPreferenceStorage(context: Context) : PreferenceStorage {
@@ -67,8 +62,6 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
         prefs.registerOnSharedPreferenceChangeListener(changeListener)
         gson = gsonWithInstantAdapter()
     }
-
-    override val version: Int by Preference(prefs, "", -1)
 
     override var lastFetchDate by Preference(prefs, LAST_FETCH_DATE, 0L)
 

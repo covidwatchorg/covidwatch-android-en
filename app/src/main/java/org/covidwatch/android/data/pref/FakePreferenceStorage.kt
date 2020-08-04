@@ -5,11 +5,7 @@ import org.covidwatch.android.data.*
 import java.time.Instant
 
 @Suppress("UNUSED_PARAMETER", "unused")
-class FakePreferenceStorage(
-    override var lastCheckedForExposures: Instant,
-    override val observableLastCheckedForExposures: LiveData<Instant>,
-    override val version: Int
-) : PreferenceStorage {
+class FakePreferenceStorage : PreferenceStorage {
     override var lastFetchDate: Long
         get() = 0
         set(value) {}
@@ -20,6 +16,11 @@ class FakePreferenceStorage(
     override var showOnboardingHomeAnimation: Boolean
         get() = true
         set(value) {}
+    override var lastCheckedForExposures: Instant
+        get() = TODO("not implemented")
+        set(value) {}
+    override val observableLastCheckedForExposures: LiveData<Instant>
+        get() = TODO("not implemented")
 
     override var riskMetrics: RiskMetrics? = null
 
