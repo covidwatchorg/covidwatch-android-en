@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import java.time.Instant
 import java.util.*
 
 @Entity(tableName = "positive_diagnosis_report")
@@ -14,7 +15,7 @@ data class PositiveDiagnosisReport(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),
     val verified: Boolean = false,
     val uploaded: Boolean = false,
-    val reportDate: Date = Date(),
+    val reportDate: Instant = Instant.now(),
     @Embedded
     val verificationData: PositiveDiagnosisVerification? = null
 )
@@ -55,10 +56,10 @@ fun TemporaryExposureKey.asDiagnosisKey() = DiagnosisKey(
 @Suppress("ArrayInDataClass")
 data class PositiveDiagnosisVerification(
     val verificationTestCode: String = "",
-    val symptomsStartDate: Date? = null,
+    val symptomsStartDate: Instant? = null,
     val noSymptoms: Boolean = false,
-    val testDate: Date? = null,
-    val possibleInfectionDate: Date? = null,
+    val testDate: Instant? = null,
+    val possibleInfectionDate: Instant? = null,
     val noInfectionDate: Boolean = false,
     val testType: String? = null,
     val token: String? = null,

@@ -8,7 +8,7 @@ import org.covidwatch.android.exposurenotification.ServerException
 import org.covidwatch.android.functional.Either
 import org.covidwatch.android.ui.util.DateFormatter
 import java.nio.charset.StandardCharsets
-import java.util.*
+import java.time.Instant
 import javax.crypto.KeyGenerator
 import javax.crypto.Mac
 import javax.crypto.SecretKey
@@ -82,6 +82,6 @@ class Certificate(
 
 data class Verification(
     val token: String,
-    val symptomDate: Date?,
+    val symptomDate: Instant?,
     val testType: String
 )

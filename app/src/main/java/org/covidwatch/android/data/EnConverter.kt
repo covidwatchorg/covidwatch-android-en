@@ -1,32 +1,30 @@
 package org.covidwatch.android.data
 
 import com.google.android.gms.nearby.exposurenotification.ExposureInformation
-import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import com.google.gson.annotations.SerializedName
-import java.util.*
+import java.time.Instant
 
 // TODO: 20.07.2020 Rename and rework into ExposureRiskModeling interface similarly to iOS
 interface EnConverter {
-    fun covidExposureSummary(exposureSummary: ExposureSummary): CovidExposureSummary
     fun covidExposureInformation(exposureInformation: ExposureInformation): CovidExposureInformation
     fun diagnosisKey(
         key: TemporaryExposureKey,
-        symptomsStartDate: Date?,
-        testDate: Date?,
-        possibleInfectionDate: Date?
+        symptomsStartDate: Instant?,
+        testDate: Instant?,
+        possibleInfectionDate: Instant?
     ): DiagnosisKey
 
-    fun riskLevelValue(exposures: List<CovidExposureInformation>, computeDate: Date): Double
-    fun mostRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Date?
-    fun leastRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Date?
-    fun riskMetrics(exposures: List<CovidExposureInformation>, computeDate: Date): RiskMetrics
+    fun riskLevelValue(exposures: List<CovidExposureInformation>, computeDate: Instant): Double
+    fun mostRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Instant?
+    fun leastRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Instant?
+    fun riskMetrics(exposures: List<CovidExposureInformation>, computeDate: Instant): RiskMetrics
 }
 
 data class RiskMetrics(
     val riskLevel: Double,
-    val leastRecentSignificantExposureDate: Date?,
-    val mostRecentSignificantExposureDate: Date?
+    val leastRecentSignificantExposureDate: Instant?,
+    val mostRecentSignificantExposureDate: Instant?
 )
 
 open class RiskModelConfiguration(
@@ -90,23 +88,13 @@ open class RiskModelConfiguration(
 
 @Suppress("unused")
 class DefaultEnConverter : EnConverter {
-    override fun covidExposureSummary(exposureSummary: ExposureSummary) =
-        with(exposureSummary) {
-            CovidExposureSummary(
-                daysSinceLastExposure,
-                matchedKeyCount,
-                (maximumRiskScore * 8.0 / 4096).toInt(),
-                attenuationDurationsInMinutes,
-                (summationRiskScore * 8.0 / 4096).toInt()
-            )
-        }
 
     override fun covidExposureInformation(
         exposureInformation: ExposureInformation
     ) =
         with(exposureInformation) {
             CovidExposureInformation(
-                date = Date(dateMillisSinceEpoch),
+                date = Instant.ofEpochMilli(dateMillisSinceEpoch),
                 duration = durationMinutes,
                 attenuationValue = attenuationValue,
                 transmissionRiskLevel = transmissionRiskLevel,
@@ -118,30 +106,30 @@ class DefaultEnConverter : EnConverter {
 
     override fun diagnosisKey(
         key: TemporaryExposureKey,
-        symptomsStartDate: Date?,
-        testDate: Date?,
-        possibleInfectionDate: Date?
+        symptomsStartDate: Instant?,
+        testDate: Instant?,
+        possibleInfectionDate: Instant?
     ): DiagnosisKey =
         key.asDiagnosisKey().copy(transmissionRisk = 6)
 
     override fun riskLevelValue(
         exposures: List<CovidExposureInformation>,
-        computeDate: Date
+        computeDate: Instant
     ): Double {
         TODO("not implemented")
     }
 
-    override fun mostRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Date? {
+    override fun mostRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Instant? {
         TODO("not implemented")
     }
 
-    override fun leastRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Date? {
+    override fun leastRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Instant? {
         TODO("not implemented")
     }
 
     override fun riskMetrics(
         exposures: List<CovidExposureInformation>,
-        computeDate: Date
+        computeDate: Instant
     ): RiskMetrics {
         TODO("not implemented")
     }

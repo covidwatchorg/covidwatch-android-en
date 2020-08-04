@@ -16,10 +16,9 @@ import org.covidwatch.android.databinding.FragmentVerifyPositiveDiagnosisBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseViewModelFragment
-import org.covidwatch.android.ui.util.DateFormatter
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
-import java.util.*
-import java.util.Calendar.DAY_OF_MONTH
+import java.time.LocalDate
+import java.time.ZoneId
 
 class VerifyPositiveDiagnosisFragment :
     BaseViewModelFragment<FragmentVerifyPositiveDiagnosisBinding, VerifyPositiveDiagnosisViewModel>() {
@@ -45,7 +44,7 @@ class VerifyPositiveDiagnosisFragment :
             }
 
             cbNoExposedDate.setOnCheckedChangeListener { _, noExposedDate ->
-                etExposedDate.isEnabled = !noExposedDate
+                etInfectionDate.isEnabled = !noExposedDate
                 viewModel.noInfectionDate(noExposedDate)
             }
 
@@ -57,22 +56,13 @@ class VerifyPositiveDiagnosisFragment :
             })
 
             etSymptomsDate.setOnClickListener {
-                showDatePicker {
-                    binding.etSymptomsDate.setText(DateFormatter.format(it))
-                    viewModel.symptomDate(it)
-                }
+                showDatePicker { viewModel.symptomDate(it) }
             }
             etTestedDate.setOnClickListener {
-                showDatePicker {
-                    binding.etTestedDate.setText(DateFormatter.format(it))
-                    viewModel.testDate(it)
-                }
+                showDatePicker { viewModel.testDate(it) }
             }
-            etExposedDate.setOnClickListener {
-                showDatePicker {
-                    binding.etExposedDate.setText(DateFormatter.format(it))
-                    viewModel.infectionDate(it)
-                }
+            etInfectionDate.setOnClickListener {
+                showDatePicker { viewModel.infectionDate(it) }
             }
 
             btnFinishVerification.setOnClickListener {
@@ -84,6 +74,11 @@ class VerifyPositiveDiagnosisFragment :
             observe(readyToSubmit) {
                 binding.btnFinishVerification.isVisible = it
             }
+
+            observe(infectionDateFormatted) { binding.etInfectionDate.setText(it) }
+            observe(testDateFormatted) { binding.etTestedDate.setText(it) }
+            observe(symptomDateDateFormatted) { binding.etSymptomsDate.setText(it) }
+
             observe(uploading) {
                 binding.uploadProgress.isVisible = it
                 // Disable the button while we uploading
@@ -99,13 +94,13 @@ class VerifyPositiveDiagnosisFragment :
         val builder = MaterialDatePicker.Builder.datePicker()
         val constraints = CalendarConstraints.Builder()
 
-        val twoWeeksAgo = Calendar.getInstance()
-        twoWeeksAgo.add(DAY_OF_MONTH, -14)
+        // 14 days back
+        val twoWeeksAgo =
+            LocalDate.now().plusDays(-14).atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli()
 
-        val now = Date().time
-        constraints.setValidator(
-            BaseDateValidator { it > twoWeeksAgo.timeInMillis && it < now }
-        )
+        val now = LocalDate.now().atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli()
+
+        constraints.setValidator(BaseDateValidator { it in twoWeeksAgo..now })
 
         val datePicker = builder
             .setCalendarConstraints(constraints.build())

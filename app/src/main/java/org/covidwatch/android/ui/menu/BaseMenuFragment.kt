@@ -34,7 +34,7 @@ import org.covidwatch.android.ui.BaseViewModelFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
-import java.util.*
+import java.time.Instant
 
 data class PossibleExposuresJson(
     @Expose
@@ -134,7 +134,6 @@ open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuVie
                 lifecycleScope.launch {
                     exposureInformationRepository.reset()
                     keyFileRepository.reset()
-                    preferences.resetExposureSummary()
 
                     Toast.makeText(context, "Possible exposures were deleted", Toast.LENGTH_SHORT)
                         .show()
@@ -183,7 +182,7 @@ open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuVie
 
             // Write Json to a file
             val fileName =
-                "${DeviceName.getDeviceName()}_${DateFormatter.format(Date())}_$testCaseName.json"
+                "${DeviceName.getDeviceName()}_${Instant.now()}_$testCaseName.json"
             val file = File(context.filesDir, fileName)
 
             json.byteInputStream().copyTo(file.outputStream())

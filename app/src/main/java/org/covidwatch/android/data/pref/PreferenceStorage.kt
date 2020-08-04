@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import org.covidwatch.android.data.*
+import java.time.Instant
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -19,9 +20,8 @@ interface PreferenceStorage {
     var onboardingFinished: Boolean
     var showOnboardingHomeAnimation: Boolean
 
-    var exposureSummary: CovidExposureSummary
-    val observableExposureSummary: LiveData<CovidExposureSummary>
-    fun resetExposureSummary()
+    var lastCheckedForExposures: Instant
+    val observableLastCheckedForExposures: LiveData<Instant>
 
     var riskMetrics: RiskMetrics?
     val observableRiskMetrics: LiveData<RiskMetrics?>
@@ -37,22 +37,17 @@ interface PreferenceStorage {
 }
 
 class SharedPreferenceStorage(context: Context) : PreferenceStorage {
+    private val gson: Gson
+
     private val prefs = context.applicationContext.getSharedPreferences(NAME, MODE_PRIVATE)
-    private val _exposureSummary = MutableLiveData<CovidExposureSummary>()
+    private val _lastCheckedForExposures = MutableLiveData<Instant>()
     private val _regions = MutableLiveData<Regions>()
     private val _riskMetrics = MutableLiveData<RiskMetrics?>()
     private val _region = MutableLiveData<Region>()
-    private val defaultExposureSummary = CovidExposureSummary(
-        daySinceLastExposure = 0,
-        matchedKeyCount = 0,
-        maximumRiskScore = 0,
-        attenuationDurationsInMinutes = intArrayOf(),
-        summationRiskScore = 0
-    )
 
     private val changeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         when (key) {
-            EXPOSURE_SUMMARY -> _exposureSummary.value = exposureSummary
+            LAST_CHECKED_FOR_EXPOSURES -> _lastCheckedForExposures.value = lastCheckedForExposures
             REGIONS -> {
                 _regions.value = regions
                 _region.value = region
@@ -65,6 +60,7 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
 
     init {
         prefs.registerOnSharedPreferenceChangeListener(changeListener)
+        gson = gsonWithInstantAdapter()
     }
 
     override var lastFetchDate by Preference(prefs, LAST_FETCH_DATE, 0L)
@@ -77,17 +73,22 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
         true
     )
 
-    override var exposureSummary: CovidExposureSummary by ObjectPreference(
+    override var lastCheckedForExposures: Instant by ObjectPreference(
         prefs,
-        EXPOSURE_SUMMARY,
-        defaultExposureSummary,
-        CovidExposureSummary::class.java
+        LAST_CHECKED_FOR_EXPOSURES,
+        Instant.now(),
+        Instant::class.java,
+        gson = gson
     )
+
+    override val observableLastCheckedForExposures: LiveData<Instant>
+        get() = _lastCheckedForExposures.also { it.value = lastCheckedForExposures }
 
     override var riskMetrics: RiskMetrics? by NullableObjectPreference(
         prefs,
         RISK_METRICS,
-        RiskMetrics::class.java
+        RiskMetrics::class.java,
+        gson = gson
     )
 
     override val observableRiskMetrics: LiveData<RiskMetrics?>
@@ -114,20 +115,13 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
     override val observableRegion: LiveData<Region>
         get() = _region.also { it.value = region }
 
-    override fun resetExposureSummary() {
-        exposureSummary = defaultExposureSummary
-    }
-
     override val exposureConfiguration: CovidExposureConfiguration
         get() = region.exposureConfiguration.asCovidExposureConfiguration()
-
-    override val observableExposureSummary: LiveData<CovidExposureSummary>
-        get() = _exposureSummary.also { it.value = exposureSummary }
 
     companion object {
         private const val NAME = "ag_minimal_prefs"
         private const val LAST_FETCH_DATE = "last_fetch_date"
-        private const val EXPOSURE_SUMMARY = "next_steps"
+        private const val LAST_CHECKED_FOR_EXPOSURES = "last_checked_for_exposures"
         private const val RISK_METRICS = "risk_metrics"
         private const val REGIONS = "regions"
         private const val SELECTED_REGION = "selected_region"

@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
-import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.covidwatch.android.domain.UploadDiagnosisKeysUseCase
@@ -24,9 +23,8 @@ class UploadDiagnosisKeysWork(
     override suspend fun doWork() = withContext(Dispatchers.IO) {
         Timber.d("Start ${javaClass.simpleName}")
 
-        val params = Gson().fromJson(
-            workerParams.inputData.getString(PARAMS),
-            UploadDiagnosisKeysUseCase.Params::class.java
+        val params = UploadDiagnosisKeysUseCase.Params.fromJson(
+            workerParams.inputData.getString(PARAMS)
         ) ?: return@withContext Result.failure()
 
         setForeground(

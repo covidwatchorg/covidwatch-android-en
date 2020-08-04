@@ -17,7 +17,7 @@ import org.covidwatch.android.ui.event.Event
 class ExposuresViewModel(
     private val enManager: ExposureNotificationManager,
     private val updateExposureInformationUseCase: UpdateExposureInformationUseCase,
-    preferenceStorage: PreferenceStorage,
+    private val preferenceStorage: PreferenceStorage,
     exposureInformationRepository: ExposureInformationRepository
 ) : BaseViewModel() {
 
@@ -29,10 +29,11 @@ class ExposuresViewModel(
 
     val exposureInfo: LiveData<List<CovidExposureInformation>> =
         exposureInformationRepository.exposureInformation().map { exposures ->
-            exposures.sortedByDescending { it.date.time }
+            exposures.sortedByDescending { it.date.toEpochMilli() }
         }
 
-    val lastExposureTime = preferenceStorage.observableExposureSummary.map { it.modifiedTime }
+    val lastExposureTime
+        get() = preferenceStorage.observableLastCheckedForExposures
 
     fun start() {
         viewModelScope.launch {

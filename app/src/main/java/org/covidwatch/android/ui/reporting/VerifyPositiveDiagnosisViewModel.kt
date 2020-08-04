@@ -11,10 +11,8 @@ import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.extension.send
 import org.covidwatch.android.ui.BaseViewModel
 import org.covidwatch.android.ui.event.Event
+import org.covidwatch.android.ui.util.DateFormatter
 import java.time.Instant
-import java.time.ZoneId
-import java.time.ZonedDateTime
-import java.util.*
 
 class VerifyPositiveDiagnosisViewModel(
     private val state: SavedStateHandle,
@@ -41,39 +39,48 @@ class VerifyPositiveDiagnosisViewModel(
     private val _uploading = MutableLiveData<Boolean>()
     val uploading: LiveData<Boolean> = _uploading
 
-    private var infectionDate: Date?
+    private val _infectionDateFormatted = MutableLiveData<String>()
+    val infectionDateFormatted: LiveData<String> = _infectionDateFormatted
+
+    private val _testDateFormatted = MutableLiveData<String>()
+    val testDateFormatted: LiveData<String> = _testDateFormatted
+
+    private val _symptomDateFormatted = MutableLiveData<String>()
+    val symptomDateDateFormatted: LiveData<String> = _symptomDateFormatted
+
+    private var infectionDate: Instant?
         get() = state[STATE_INFECTION_DATE]
         set(value) {
             state[STATE_INFECTION_DATE] = value
         }
 
-    private var testDate: Date?
+    private var testDate: Instant?
         get() = state[STATE_TEST_DATE]
         set(value) {
             state[STATE_TEST_DATE] = value
         }
 
-    private var symptomDate: Date?
+    private var symptomDate: Instant?
         get() = state[STATE_SYMPTOM_DATE]
         set(value) {
             state[STATE_SYMPTOM_DATE] = value
         }
 
     fun symptomDate(date: Long) {
-        symptomDate = Date(
-            ZonedDateTime.ofInstant(Instant.ofEpochMilli(date), ZoneId.of("UTC")).toInstant()
-                .toEpochMilli()
-        )
+        symptomDate = Instant.ofEpochMilli(date)
+        _symptomDateFormatted.value = DateFormatter.format(date)
         setDiagnosisVerification(diagnosisVerification.value?.copy(symptomsStartDate = symptomDate))
     }
 
     fun testDate(date: Long) {
-        testDate = Date(date)
+        testDate = Instant.ofEpochMilli(date)
+        _testDateFormatted.value = DateFormatter.format(date)
         setDiagnosisVerification(diagnosisVerification.value?.copy(testDate = testDate))
     }
 
     fun infectionDate(date: Long) {
-        infectionDate = Date(date)
+        infectionDate = Instant.ofEpochMilli(date)
+        _infectionDateFormatted.value = DateFormatter.format(date)
         setDiagnosisVerification(diagnosisVerification.value?.copy(possibleInfectionDate = infectionDate))
     }
 
@@ -121,10 +128,15 @@ class VerifyPositiveDiagnosisViewModel(
 
             if (!token.isNullOrEmpty() && !testType.isNullOrEmpty()) {
                 positiveDiagnosisReport = diagnosis
+
+                // Take first the server data then consider user input if no symptoms wasn't selected
+                val symptomsDate = symptomsStartDate
+                    ?: symptomDate.takeIf { diagnosisVerification.value?.noSymptoms == true }
+
                 setDiagnosisVerification(
                     diagnosisVerification.value?.copy(
                         testType = testType,
-                        symptomsStartDate = symptomsStartDate ?: symptomDate,
+                        symptomsStartDate = symptomsDate,
                         token = token,
                         verificationCertificate = certificate,
                         hmacKey = hmacKey

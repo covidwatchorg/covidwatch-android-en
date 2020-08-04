@@ -12,12 +12,12 @@ import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.extension.launchUseCase
 import org.covidwatch.android.extension.send
+import org.covidwatch.android.extension.toLocalDate
 import org.covidwatch.android.ui.BaseViewModel
 import org.covidwatch.android.ui.event.Event
 import org.covidwatch.android.ui.util.DateFormatter
-import java.time.temporal.ChronoUnit
-import java.util.*
-import java.util.Calendar.*
+import java.time.DayOfWeek
+import java.time.Instant
 
 class HomeViewModel(
     private val enManager: ExposureNotificationManager,
@@ -93,28 +93,24 @@ class HomeViewModel(
             "LATEST" -> preferences.riskMetrics?.mostRecentSignificantExposureDate
             "EARLIEST" -> preferences.riskMetrics?.leastRecentSignificantExposureDate
             else -> null
-        } ?: return ""
+        }?.toLocalDate() ?: return ""
 
         val daysOffset = flags[1].toLongOrNull() ?: return ""
 
-        var requestedDate = Date(
-            exposureDate.toInstant().plus(daysOffset, ChronoUnit.DAYS).toEpochMilli()
-        )
+        val requestedDate = exposureDate.plusDays(daysOffset)
 
-        if (flags[2] == "TRUE") {
-            val calendar = Calendar.getInstance().also { it.time = requestedDate }
-            val weekDay = calendar.get(Calendar.DAY_OF_WEEK)
+        return if (flags[2] == "TRUE") {
+            val localDate = Instant.from(requestedDate).toLocalDate()
+            val weekDay = localDate.dayOfWeek
 
-            if (weekDay == SATURDAY) {
-                calendar.add(DAY_OF_WEEK, -1)
-            } else if (weekDay == SUNDAY) {
-                calendar.add(DAY_OF_WEEK, 1)
-            }
-
-            requestedDate = calendar.time
-        }
-
-        return DateFormatter.format(exposureDate)
+            DateFormatter.format(
+                when (weekDay) {
+                    DayOfWeek.SATURDAY -> localDate.plusDays(-1)
+                    DayOfWeek.SUNDAY -> localDate.plusDays(1)
+                    else -> localDate
+                }
+            )
+        } else DateFormatter.format(requestedDate)
     }
 
     fun onStart() {

@@ -5,6 +5,7 @@ import com.google.common.io.BaseEncoding
 import org.covidwatch.android.data.*
 import org.covidwatch.android.data.countrycode.CountryCodeRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
+import org.covidwatch.android.data.pref.gsonWithInstantAdapter
 import org.covidwatch.android.domain.UploadDiagnosisKeysUseCase.Params
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.exposurenotification.Failure
@@ -137,5 +138,13 @@ class UploadDiagnosisKeysUseCase(
     data class Params(
         val keys: List<TemporaryExposureKey>,
         val report: PositiveDiagnosisReport
-    )
+    ) {
+
+        companion object {
+            fun fromJson(json: String?): Params? =
+                gsonWithInstantAdapter().fromJson(json, Params::class.java)
+        }
+    }
 }
+
+fun Params.toJson(): String = gsonWithInstantAdapter().toJson(this)
