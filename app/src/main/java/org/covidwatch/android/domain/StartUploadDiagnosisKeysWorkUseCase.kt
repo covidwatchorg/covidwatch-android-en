@@ -6,7 +6,6 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
-import com.google.gson.Gson
 import org.covidwatch.android.data.PositiveDiagnosisReport
 import org.covidwatch.android.domain.StartUploadDiagnosisKeysWorkUseCase.Params
 import org.covidwatch.android.exposurenotification.Failure
@@ -28,12 +27,11 @@ class StartUploadDiagnosisKeysWorkUseCase(
 
         val data = Data.Builder()
             .putString(
-                PARAMS, Gson().toJson(
-                    UploadDiagnosisKeysUseCase.Params(
-                        params.keys,
-                        params.positiveDiagnosisReport
-                    )
-                )
+                PARAMS,
+                UploadDiagnosisKeysUseCase.Params(
+                    params.keys,
+                    params.positiveDiagnosisReport
+                ).toJson()
             )
             .build()
 

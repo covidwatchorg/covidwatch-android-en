@@ -16,7 +16,6 @@ import org.covidwatch.android.databinding.FragmentVerifyPositiveDiagnosisBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseViewModelFragment
-import org.covidwatch.android.ui.util.DateFormatter
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import java.util.*
 import java.util.Calendar.DAY_OF_MONTH
@@ -45,7 +44,7 @@ class VerifyPositiveDiagnosisFragment :
             }
 
             cbNoExposedDate.setOnCheckedChangeListener { _, noExposedDate ->
-                etExposedDate.isEnabled = !noExposedDate
+                etInfectionDate.isEnabled = !noExposedDate
                 viewModel.noInfectionDate(noExposedDate)
             }
 
@@ -57,22 +56,13 @@ class VerifyPositiveDiagnosisFragment :
             })
 
             etSymptomsDate.setOnClickListener {
-                showDatePicker {
-                    binding.etSymptomsDate.setText(DateFormatter.format(it))
-                    viewModel.symptomDate(it)
-                }
+                showDatePicker { viewModel.symptomDate(it) }
             }
             etTestedDate.setOnClickListener {
-                showDatePicker {
-                    binding.etTestedDate.setText(DateFormatter.format(it))
-                    viewModel.testDate(it)
-                }
+                showDatePicker { viewModel.testDate(it) }
             }
-            etExposedDate.setOnClickListener {
-                showDatePicker {
-                    binding.etExposedDate.setText(DateFormatter.format(it))
-                    viewModel.infectionDate(it)
-                }
+            etInfectionDate.setOnClickListener {
+                showDatePicker { viewModel.infectionDate(it) }
             }
 
             btnFinishVerification.setOnClickListener {
@@ -84,6 +74,11 @@ class VerifyPositiveDiagnosisFragment :
             observe(readyToSubmit) {
                 binding.btnFinishVerification.isVisible = it
             }
+
+            observe(infectionDateFormatted) { binding.etInfectionDate.setText(it) }
+            observe(testDateFormatted) { binding.etTestedDate.setText(it) }
+            observe(symptomDateDateFormatted) { binding.etSymptomsDate.setText(it) }
+
             observe(uploading) {
                 binding.uploadProgress.isVisible = it
                 // Disable the button while we uploading

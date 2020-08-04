@@ -56,10 +56,10 @@ fun TemporaryExposureKey.asDiagnosisKey() = DiagnosisKey(
 @Suppress("ArrayInDataClass")
 data class PositiveDiagnosisVerification(
     val verificationTestCode: String = "",
-    val symptomsStartDate: Date? = null,
+    val symptomsStartDate: Instant? = null,
     val noSymptoms: Boolean = false,
-    val testDate: Date? = null,
-    val possibleInfectionDate: Date? = null,
+    val testDate: Instant? = null,
+    val possibleInfectionDate: Instant? = null,
     val noInfectionDate: Boolean = false,
     val testType: String? = null,
     val token: String? = null,

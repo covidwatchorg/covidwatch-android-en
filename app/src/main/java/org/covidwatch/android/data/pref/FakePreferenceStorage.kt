@@ -6,7 +6,7 @@ import java.time.Instant
 
 @Suppress("UNUSED_PARAMETER", "unused")
 class FakePreferenceStorage(
-    override var lastCheckedForExposures: Instant?,
+    override var lastCheckedForExposures: Instant,
     override val observableLastCheckedForExposures: LiveData<Instant>,
     override val version: Int
 ) : PreferenceStorage {

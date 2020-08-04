@@ -4,16 +4,15 @@ import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import com.google.gson.annotations.SerializedName
 import java.time.Instant
-import java.util.*
 
 // TODO: 20.07.2020 Rename and rework into ExposureRiskModeling interface similarly to iOS
 interface EnConverter {
     fun covidExposureInformation(exposureInformation: ExposureInformation): CovidExposureInformation
     fun diagnosisKey(
         key: TemporaryExposureKey,
-        symptomsStartDate: Date?,
-        testDate: Date?,
-        possibleInfectionDate: Date?
+        symptomsStartDate: Instant?,
+        testDate: Instant?,
+        possibleInfectionDate: Instant?
     ): DiagnosisKey
 
     fun riskLevelValue(exposures: List<CovidExposureInformation>, computeDate: Instant): Double
@@ -107,9 +106,9 @@ class DefaultEnConverter : EnConverter {
 
     override fun diagnosisKey(
         key: TemporaryExposureKey,
-        symptomsStartDate: Date?,
-        testDate: Date?,
-        possibleInfectionDate: Date?
+        symptomsStartDate: Instant?,
+        testDate: Instant?,
+        possibleInfectionDate: Instant?
     ): DiagnosisKey =
         key.asDiagnosisKey().copy(transmissionRisk = 6)
 
