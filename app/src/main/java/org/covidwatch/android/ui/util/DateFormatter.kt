@@ -13,7 +13,7 @@ object DateFormatter {
     private const val DATE_PATTERN = "MMM dd, yyyy"
     private var locale = Locale.getDefault()
 
-    private var dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_PATTERN, locale)
+    private var dateFormatter = DateTimeFormatter.ofPattern(DATE_PATTERN, locale)
         get() {
             if (locale == Locale.getDefault()) {
                 return field
@@ -22,7 +22,7 @@ object DateFormatter {
             return DateTimeFormatter.ofPattern(DATE_PATTERN, locale).also { field = it }
         }
 
-    private var fullDateTimeFormatter =
+    private var dateTimeFormatter =
         DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT)
         get() {
             if (locale == Locale.getDefault()) {
@@ -34,11 +34,15 @@ object DateFormatter {
 
     @JvmStatic
     fun format(time: Instant?): String =
-        time?.let { dateTimeFormatter.format(it.toLocalDate()) } ?: ""
+        time?.let { dateFormatter.format(it.toLocalDate()) } ?: ""
+
+    @JvmStatic
+    fun format(time: LocalDate?): String =
+        time?.let { dateFormatter.format(it) } ?: ""
 
     @JvmStatic
     fun format(time: Long?): String =
-        time?.let { dateTimeFormatter.format(Instant.ofEpochMilli(it).toLocalDate()) } ?: ""
+        time?.let { dateFormatter.format(Instant.ofEpochMilli(it).toLocalDate()) } ?: ""
 
     fun symptomDate(date: String?) =
         date?.takeIf { it.isNotEmpty() }
@@ -48,7 +52,7 @@ object DateFormatter {
     @JvmStatic
     fun formatDateAndTime(time: Instant?): String =
         time?.let {
-            fullDateTimeFormatter.format(
+            dateTimeFormatter.format(
                 ZonedDateTime.ofInstant(
                     it,
                     ZoneId.systemDefault()
