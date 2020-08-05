@@ -21,13 +21,11 @@ fun TextView.setExposureInfo(exposure: CovidExposureInformation?) {
         R.string.exposure_information_transmission_risk_text,
         exposure?.transmissionRiskLevel
     )
-    val totalRiskScore = exposure?.totalRiskScore
 
     text = context.getString(
         R.string.exposure_info,
         attenuationDurations,
-        riskLevel,
-        totalRiskScore
+        riskLevel
     )
 }
 
