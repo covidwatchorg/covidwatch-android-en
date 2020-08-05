@@ -33,7 +33,7 @@ class FinishedOnboardingFragment : BaseFragment<FragmentFinishedOnboardingBindin
         )
         binding.tvRegion.setOnClickListener { findNavController().navigate(R.id.selectRegionFragment) }
 
-        binding.seeExposureSummary.setOnClickListener {
+        binding.setupGetStarted.setOnClickListener {
             findNavController().popBackStack(R.id.homeFragment, false)
         }
     }

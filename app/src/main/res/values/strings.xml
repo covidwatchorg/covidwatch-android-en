@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Covid Watch</string>
+    <string name="app_name">Covid Watch Arizona</string>
     <string name="title_contact_events">Seen Tags</string>
     <string name="title_my_profile">Settings</string>
     <string name="title_notifications">Notifications</string>
@@ -72,7 +72,7 @@
     <string name="stanford_university">Stanford University</string>
 
     <string name="bluetooth_explanation_subtext">Apps using Bluetooth® Low Energy (BLE) are required to have location access enabled.</string>
-    <string name="logo_image_content_descriptor">Logo image</string>
+    <string name="logo_image_content_descriptor">Covid Watch logo</string>
     <string name="menu_button_content_descriptor">Menu button</string>
     <string name="welcome_back_title">Welcome Back!</string>
     <string name="detected_thank_you_text">Thank you for helping your community stay safe, anonymously.</string>
@@ -99,10 +99,6 @@
     <string name="pha_permission_number_dialog_title">Provide test confirmation number</string>
     <string name="reset_all_data">Clear data</string>
 
-    <string name="notification_title">Possible COVID-19 exposure</string>
-    <string name="notification_message">You were near someone who has shared a positive and verified diagnosis of COVID-19. The app has accessed the date, duration, and signal strength of this exposure.</string>
-    <string name="notification_channel_name">Exposure Notification</string>
-    <string name="notification_channel_description">Exposure notification alerts.</string>
     <string name="menu">Menu</string>
     <string name="powered_by">Powered by Covid Watch for</string>
     <string name="powered_by_logo_content_description">Arizona Department of Health Services</string>
@@ -120,6 +116,7 @@
     <string name="last_exposure_time">&lt;b>Last checked:&lt;/b> %s</string>
 
     <!-- RISK LEVEL -->
+    <string name="under_development_risk_name">Under Development</string>
     <string name="low_risk_name">No Significant Exposures</string>
     <string name="high_risk_name">Significant Exposure Detected</string>
     <string name="verified_positive_risk_name">Verified Positive Diagnosis</string>
@@ -152,12 +149,12 @@
     <string name="high_risk_title">High Risk</string>
     <string name="exposure_date_and_info">On &lt;b>%s&lt;/b> you were near someone who shared a &lt;b>positive&lt;/b> and &lt;b>verified&lt;/b> diagnosis of COVID-19.</string>
     <string name="exposure_data">Exposure Data</string>
-    <string name="exposure_info">&#8226; Attenuation Durations: %1$s\n\n&#8226; Transmission Risk Level: %2$s\n\n&#8226; Total Risk Score: %3$d</string>
-    <string name="btn_learn_more">Learn More</string>
+    <string name="exposure_info_attenuation">&lt;b>&#8226; Attenuation Durations:&lt;/b> %s</string>
+    <string name="exposure_info_transmission_risk">&lt;b>&#8226; Transmission Risk Level:&lt;/b> %s</string>
 
     <!--  Onboarding  -->
     <string name="splash_screen_header_content_description">State of California</string>
-    <string name="splash_screen_title">The power to stop COVID-19 in the palm of your hand.</string>
+    <string name="splash_screen_title">Together, we have the power to stop COVID-19.</string>
     <string name="get_started_button">Get Started</string>
     <string name="onboarding_welcome_title">Welcome to the {UCSF Health Covid Watch} App</string>
     <string name="onboarding_welcome_subtitle">Welcome Text. Aliquet urna feugiat donec dictum. Massa dignissim commodo ut et.  Massa dignissim commodo ut et.</string>
@@ -169,7 +166,7 @@
     <string name="how_it_works_text_3">Jane gets a notification saying she was near an <b>anonymous person</b> who tested positive. The app explains what to do next and how to find local resources.</string>
     <string name="how_it_works_title_4">Help Communities</string>
     <string name="how_it_works_text_4">By <b>enabling notifications</b> and staying home when at risk of exposing others, they help prevent the spread of COVID-19 within their communities.</string>
-    <string name="enable_exposure_notifications_title">Enable Exposure Notifications</string>
+    <string name="enable_exposure_notifications_title">Enable\nExposure Notifications</string>
     <string name="enable_exposure_notifications_subtitle">These notifications will let know if <b>you’ve been exposed</b> to a person who later reports themselves as having tested positive for COVID-19. It can be turned off at any time.</string>
     <string name="enable_button">Enable</string>
     <string name="not_now_button">Not now</string>
@@ -178,10 +175,10 @@
     <string name="how_it_works_explanation">Together, we have the power to stop the spread of COVID-19 with <b>safe</b>, <b>secure</b>, and <b>anonymous</b> exposure notifications.</string>
     <string name="onboarding_title" />
     <string name="welcome_to_the">Welcome to the</string>
-    <string name="full_app_name">Covid Watch Exposure Notification App</string>
+    <string name="full_app_name">Covid Watch Arizona Exposure Notification App</string>
     <string name="finished_onboarding_title">Setup Complete</string>
     <string name="finished_onboarding_subtitle">You can now…</string>
-    <string name="finished_onboarding_text"><ul>&#8226; Get exposure notifications\n</ul><ul>&#8226; Anonymously notify others\n</ul><ul>&#8226; Get COVID-19 exposure updates\n</ul><ul>&#8226; Get resources and recommendations\n</ul></string>
+    <string name="finished_onboarding_text"><ul>&#8226; Get exposure notifications\n</ul><ul>&#8226; Anonymously notify others\n</ul><ul>&#8226; Access local public health resources and recommendations</ul></string>
     <string name="see_exposure_summary">View Detected Exposures</string>
 
     <!-- Home Screen-->
@@ -206,8 +203,11 @@
     <!-- Reporting -->
     <string name="notify_others_title">How to Share a Positive Diagnosis</string>
     <string name="notify_others_subtitle"><b>1</b> \n<b>2</b> Answer brief questions\n<b>3</b> Anonymously share diagnosis to help stop the spread by letting other app users get notified of possible exposure if they were nearby.</string>
-    <string name="notify_others_step_1">Provide a <b>Diagnosis Verification Code</b></string>
-    <string name="notify_others_step_2">Answer brief questions</string>
+    <string name="notify_others_step_count_1">1.</string>
+    <string name="notify_others_step_count_2">2.</string>
+    <string name="notify_others_step_count_3">3.</string>
+    <string name="notify_others_step_1">Provide a <b>Diagnosis Verification Code</b>.</string>
+    <string name="notify_others_step_2">Answer brief questions.</string>
     <string name="notify_others_step_3">Anonymously share diagnosis to help stop the spread by letting other app users get notified of possible exposure if they were nearby.</string>
     <string name="test_verification_code_warning">Where is my code?</string>
     <string name="covid_19_positive">COVID-19 Positive</string>
@@ -219,7 +219,7 @@
     <string name="no_infection_date_report">Unknown</string>
     <string name="no_test_date_report">Unknown</string>
     <string name="verify_positive_diagnosis_title">Anonymously Share a Positive Diagnosis</string>
-    <string name="share_positive_diagnosis_button">Anonymously Share Diagnosis</string>
+    <string name="share_positive_diagnosis_button">Continue</string>
     <string name="past_positive_diagnoses">View Shared Positive Diagnoses</string>
     <string name="finish_code_verification_button">Anonymously Notify Others</string>
     <string name="verify_subtitle">To share a positive diagnosis, enter your Test Verification Code below.</string>
@@ -241,14 +241,12 @@
     <string name="test_verification_code_hint">12345678</string>
     <string name="symptoms_date_label">When did your symptoms start?</string>
     <string name="no_symptoms">I have no symptoms</string>
-    <string name="tested_date_label">When did get tested?</string>
+    <string name="tested_date_label">When did you get tested?</string>
     <string name="select_date_hint">Select Date</string>
     <string name="no_past_positive_diagnoses">No past positive diagnoses</string>
     <string name="diagnosis_shared_title">Diagnosis shared</string>
     <string name="diagnosis_shared_subtitle">Thank you for helping slow the spread of COVID-19 within your region.</string>
-    <string name="diagnosis_shared_next_steps_title">To continue to help others:</string>
-    <string name="diagnosis_shared_next_step_1">Please keep the app installed until the pandemic is over. </string>
-    <string name="diagnosis_shared_next_step_2">Share it with others so that they can help too. The more people use it, the more accurate everyone’s exposure notifications will be.</string>
+    <string name="diagnosis_shared_next_steps">To continue to help, keep the app installed until the pandemic is over and share it with friends and family so that they can help, too. </string>
     <string name="empty_past_diagnoses_list">No Past Diagnoses</string>
     <string name="exposed_date_label">When do you think you were exposed?</string>
     <string name="no_exposed_date">I do not know</string>
@@ -256,14 +254,27 @@
     <string name="btn_delete_diagnosis">Delete Diagnosis</string>
 
     <!-- Notifications -->
-    <string name="upload_report_notification_channel">Reporting</string>
-    <string name="upload_report_notification_channel_description">Upload positive diagnosis</string>
-    <string name="upload_report_notification_title">Uploading positive diagnosis</string>
+    <string name="upload_report_notification_channel">Anonymous Reporting</string>
+    <string name="upload_report_notification_channel_description">Shows notifications about the status of uploading anonymous positive diagnosis. Notifies about problems during the uploads.</string>
+    <string name="upload_report_notification_title">Uploading anonymously positive diagnosis</string>
 
     <!--TODO: Use correct wording-->
-    <string name="download_reports_notification_channel">Download reports</string>
-    <string name="download_reports_notification_channel_description">Download positive diagnosis</string>
-    <string name="download_reports_notification_title">Downloading positive diagnosis</string>
+    <string name="download_reports_notification_channel">Detect Exposures</string>
+    <string name="download_reports_notification_channel_description">Shows notifications about the status of downloading positive diagnosis for exposure matching. Notifies about problems during the downloads.</string>
+    <string name="download_reports_notification_title">Detecting exposures</string>
+    <string name="download_reports_failure_notification_title">Detecting exposures failure</string>
+    <string name="download_reports_failure_notification_settings_action">Open Settings</string>
+
+    <string name="notification_title">Possible COVID-19 exposure</string>
+    <string name="notification_message">You were near someone who tested positive for COVID-19. The app has accessed the date, duration, and signal strength of this exposure.</string>
+    <string name="notification_channel_name">Exposure Notification</string>
+    <string name="notification_channel_description">Exposure notification alerts.</string>
+
+    <string name="notification_en_not_supported">Exposure Notifications are not available on this device. Try to update Google Play services.</string>
+    <string name="notification_en_not_enabled">Exposure Notifications inactive. Go to the app to enable it.</string>
+    <string name="notification_app_unauthorized">The app is not authorized to use Exposure Notifications. Contact us through "Get Support" menu in the app or by tapping this notification.</string>
+    <string name="notification_server_problem">Could\'nt finish checking for exposures due to server issue: %s. If this repeats contact us through "Get Support" menu in the app or by tapping this notification.</string>
+    <string name="notification_general_problem">Could\'nt finish checking for exposures. If this repeats contact us through "Get Support" menu in the app or by tapping this notification.</string>
 
     <!-- Share app common action -->
     <string name="share_app_content">Become a Covid Watcher and help your community stay safe. https://www.covid-watch.org</string>
@@ -272,10 +283,20 @@
 
     <!-- ERROR MESSAGES -->
     <string name="unknown_error">Something went wrong</string>
-    <string name="server_error">A problem occurred on server</string>
+    <string name="server_error">A problem on server: %s</string>
     <string name="device_attestation_error">Failed to verify this device</string>
+    <string name="code_verification_error">Failed to verify the code: %s</string>
     <string name="no_connection_error">No internet available, please check your WIFi or Data connections</string>
     <string name="insufficient_storage">Insufficient storage to run Exposure Notification</string>
+    <string name="en_not_available_title">Exposure Notifications unavailable</string>
+    <string name="en_not_available_text">Try to update Google Play services to get Exposure Notifications on your device.</string>
+    <string name="app_unauthorized_title">Exposure Notifications cannot be used</string>
+    <string name="app_unauthorized_text">Covid Watch can\'t access Exposure Notifications at the moment.</string>
+
+    <!-- DIALOG BUTTONS-->
+    <string name="update">Update</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="open_settings">Open Settings</string>
 
     <!-- DIALOG TEST VERIFICATION CODE -->
     <string name="dialog_test_verification_code_title">Where is my code?</string>
@@ -287,10 +308,13 @@
     <string name="dialog_test_verification_code_expl_text">It is a string of numbers that is provided by an official COVID-19 testing source to verify a diagnosis. It can be used in the app to share a completely anonymous diagnosis with other people using the app.</string>
     <string name="dialog_test_verification_code_expl_more">Learn more</string>
     <string name="btn_call">Call</string>
+    <string name="btn_learn_more">Learn More</string>
 
     <!--REGION SELECTION-->
-    <string name="privacy_select_region"><b>We value your privacy.</b> This application is always anonymous and your location is never collected or stored. Selecting a region will allow you to receive information on available healthcare resources in that region without ever having to share a location. Your region can be changed at any time.</string>
+    <string name="privacy_select_region"><b>We value your privacy.</b>Select a region to see local healthcare resources without ever sharing your location or identity. You can change this selection at any time.</string>
     <string name="select_region_label">Select Region</string>
+    <string name="btn_previous_onboarding_screen_description">Button previous onboarding screen</string>
+    <string name="btn_next_onboarding_screen_description">Button next onboarding screen</string>
 
 
 </resources>

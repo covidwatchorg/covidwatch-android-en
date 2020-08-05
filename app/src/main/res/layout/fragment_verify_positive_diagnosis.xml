@@ -27,6 +27,17 @@
             android:text="@string/verify_positive_diagnosis_title"
             android:textSize="27sp" />
 
+        <com.google.android.material.progressindicator.ProgressIndicator
+            android:id="@+id/upload_progress"
+            style="@style/Widget.MaterialComponents.ProgressIndicator.Linear.Indeterminate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:growMode="bidirectional"
+            app:indicatorColor="?attr/colorPrimary"
+            app:inverse="true"
+            app:minHideDelay="500" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -140,7 +151,7 @@
                 app:hintEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_exposed_date"
+                    android:id="@+id/et_infection_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:cursorVisible="false"

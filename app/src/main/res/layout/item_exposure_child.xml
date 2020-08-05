@@ -15,7 +15,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="24dp"
+            android:layout_height="@dimen/expandable_item_inner_shadow"
             android:background="@drawable/shadow" />
 
         <LinearLayout
@@ -37,10 +37,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_normal"
                 android:textSize="12sp"
-                app:exposure_info="@{exposure}" />
+                app:exposure_info_attenuation="@{exposure}" />
 
             <TextView
-                android:id="@+id/btn_delete_diagnosis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                app:exposure_info_transmission_risk="@{exposure}" />
+
+            <TextView
+                android:id="@+id/btn_learn_more"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="?selectableItemBackground"
@@ -54,7 +60,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="24dp"
+            android:layout_height="@dimen/expandable_item_inner_shadow"
             android:layout_gravity="bottom"
             android:background="@drawable/down_shadow" />
     </FrameLayout>

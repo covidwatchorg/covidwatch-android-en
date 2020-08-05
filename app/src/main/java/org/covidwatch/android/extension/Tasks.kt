@@ -5,7 +5,7 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.covidwatch.android.exposurenotification.ENStatus
+import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.functional.Either
 import timber.log.Timber
 
@@ -20,22 +20,22 @@ suspend fun <T> Task<T>.await(): Either<ApiException?, T> = withContext(Dispatch
     }
 }
 
-suspend fun Task<Void>.awaitNoResult(): Either<ENStatus, Void?> = await().let {
+suspend fun Task<Void>.awaitNoResult(): Either<Failure, Void?> = await().let {
     val result = it.right
     val exception = it.left
     return if (exception != null) {
-        Either.Left(ENStatus(exception))
+        Either.Left(Failure(exception))
     } else {
         Either.Right(result)
     }
 }
 
-suspend fun <T> Task<T>.awaitWithStatus(): Either<ENStatus, T> = await().let {
+suspend fun <T> Task<T>.awaitWithStatus(): Either<Failure, T> = await().let {
     val result = it.right
     val exception = it.left
     return if (result != null) {
         Either.Right(result)
     } else {
-        Either.Left(ENStatus(exception))
+        Either.Left(Failure(exception))
     }
 }

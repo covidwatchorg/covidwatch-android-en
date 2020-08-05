@@ -44,13 +44,22 @@
     <ImageView
         android:id="@+id/art"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@drawable/gradient_how_it_works"
         android:contentDescription="@null"
+        app:layout_constraintBottom_toTopOf="@id/image_guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintVertical_weight="0"
         app:srcCompat="@drawable/how_it_works_art" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/image_guideline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
 
     <TextView
         android:id="@+id/welcome"
@@ -63,7 +72,7 @@
         app:layout_constraintBottom_toTopOf="@id/app_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/art"
+        app:layout_constraintTop_toBottomOf="@id/image_guideline"
         app:layout_constraintVertical_bias="0.1" />
 
     <TextView
@@ -87,7 +96,6 @@
         android:layout_height="wrap_content"
         android:lineSpacingExtra="2sp"
         android:paddingHorizontal="@dimen/padding_normal"
-        android:paddingBottom="@dimen/padding_normal"
         android:text="@string/how_it_works_explanation"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,10 +106,12 @@
         android:id="@+id/btn_how_it_works"
         style="@style/Button.Action"
         android:layout_marginHorizontal="@dimen/padding_normal"
+        android:layout_marginVertical="@dimen/padding_normal"
         android:text="@string/how_it_works"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/explanation" />
+        app:layout_constraintTop_toBottomOf="@id/explanation"
+        app:layout_constraintVertical_bias="1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

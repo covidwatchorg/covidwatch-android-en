@@ -10,7 +10,7 @@ import org.covidwatch.android.data.converter.ExposureConfigurationConverter
 @TypeConverters(ExposureConfigurationConverter::class)
 data class DiagnosisKeysToken(
     @PrimaryKey val token: String,
+    val exposureConfiguration: CovidExposureConfiguration,
     val providedTime: Long = System.currentTimeMillis(),
-    val potentialExposure: Boolean = false,
-    val exposureConfiguration: CovidExposureConfiguration
+    val potentialExposure: Boolean = false
 )

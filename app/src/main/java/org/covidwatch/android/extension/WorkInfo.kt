@@ -7,25 +7,27 @@ import androidx.work.Data
 import androidx.work.ListenableWorker
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import org.covidwatch.android.exposurenotification.ENStatus
+import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.functional.Either
 import java.util.*
 
 const val FAILURE = "status"
+const val FAILURE_MESSAGE = "message"
 const val UNKNOWN_FAILURE = -1
 
 fun WorkInfo?.toResult() = when (this?.state) {
     WorkInfo.State.SUCCEEDED -> Either.Right(id)
     else -> {
         val code = this?.outputData?.getInt(FAILURE, UNKNOWN_FAILURE)
-        val status = code?.let { ENStatus(it) } ?: ENStatus.Failed
+        val message = this?.outputData?.getString(FAILURE_MESSAGE)
+        val status = code?.let { Failure(it, message) } ?: Failure.EnStatus.Failed
         Either.Left(status)
     }
 }
 
-fun WorkManager.getFinalWorkInfoByIdLiveData(@NonNull id: UUID): LiveData<Either<ENStatus, UUID>> {
+fun WorkManager.getFinalWorkInfoByIdLiveData(@NonNull id: UUID): LiveData<Either<Failure, UUID>> {
     val work = getWorkInfoByIdLiveData(id)
-    val result = MediatorLiveData<Either<ENStatus, UUID>>()
+    val result = MediatorLiveData<Either<Failure, UUID>>()
     result.addSource(work) { workInfo ->
         @Suppress("NON_EXHAUSTIVE_WHEN")
         when (workInfo?.state) {
@@ -39,6 +41,6 @@ fun WorkManager.getFinalWorkInfoByIdLiveData(@NonNull id: UUID): LiveData<Either
     return result
 }
 
-fun failure(status: ENStatus) = ListenableWorker.Result.failure(
-    Data.Builder().putInt(FAILURE, status.code).build()
+fun failure(failure: Failure) = ListenableWorker.Result.failure(
+    Data.Builder().putInt(FAILURE, failure.code).putString(FAILURE_MESSAGE, failure.message).build()
 )

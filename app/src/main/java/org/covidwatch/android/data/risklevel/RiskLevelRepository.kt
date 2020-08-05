@@ -9,7 +9,7 @@ import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.domain.AppCoroutineDispatchers
 import org.covidwatch.android.extension.daysTo
-import java.util.*
+import java.time.Instant
 
 class RiskLevelRepository(
     val prefs: PreferenceStorage,
@@ -24,10 +24,11 @@ class RiskLevelRepository(
     ) { risk, diagnoses, region ->
         val recentExposureDate = risk?.mostRecentSignificantExposureDate
         when {
+            region.isDisabled -> RiskLevel.DISABLED
             diagnoses.any { it.verified && TestType.CONFIRMED == it.verificationData?.testType } ->
                 RiskLevel.VERIFIED_POSITIVE
 
-            recentExposureDate != null && recentExposureDate.daysTo(Date()) <= region.recentExposureDays ->
+            recentExposureDate != null && recentExposureDate.daysTo(Instant.now()) <= region.recentExposureDays ->
                 RiskLevel.HIGH
 
             else -> RiskLevel.LOW
@@ -42,6 +43,7 @@ class RiskLevelRepository(
             RiskLevel.VERIFIED_POSITIVE -> region.nextStepsVerifiedPositive
             RiskLevel.HIGH -> region.nextStepsSignificantExposure
             RiskLevel.LOW -> region.nextStepsNoSignificantExposure
+            RiskLevel.DISABLED -> region.nextStepsDisabled ?: emptyList()
         }
     }.flowOn(dispatchers.io)
 }

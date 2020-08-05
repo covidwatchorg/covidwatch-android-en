@@ -1,13 +1,14 @@
 package org.covidwatch.android.work
 
 import android.content.Context
+import android.content.Intent
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import com.google.common.io.BaseEncoding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.covidwatch.android.data.asCovidExposureConfiguration
+import org.covidwatch.android.R
 import org.covidwatch.android.data.asExposureConfiguration
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
@@ -16,17 +17,21 @@ import org.covidwatch.android.data.keyfile.KeyFileRepository
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.domain.UpdateRegionsUseCase
-import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.extension.failure
+import org.covidwatch.android.ui.Intents
+import org.covidwatch.android.ui.MainActivity
 import org.covidwatch.android.ui.Notifications
 import org.covidwatch.android.ui.Notifications.Companion.DOWNLOAD_REPORTS_NOTIFICATION_ID
+import org.covidwatch.android.ui.Urls
 import org.koin.java.KoinJavaComponent.inject
 import timber.log.Timber
 import java.security.SecureRandom
+import java.time.Instant
 
 class ProvideDiagnosisKeysWork(
-    context: Context,
+    private val context: Context,
     workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
 
@@ -40,6 +45,7 @@ class ProvideDiagnosisKeysWork(
 
     private val base64 = BaseEncoding.base64()
     private val randomTokenByteLength = 32
+    private val retries = 2
     private val secureRandom: SecureRandom = SecureRandom()
 
     private fun randomToken(): String {
@@ -49,6 +55,7 @@ class ProvideDiagnosisKeysWork(
     }
 
     override suspend fun doWork(): Result {
+        runAttemptCount
         setForeground(
             ForegroundInfo(
                 DOWNLOAD_REPORTS_NOTIFICATION_ID,
@@ -57,8 +64,15 @@ class ProvideDiagnosisKeysWork(
         )
         return withContext(Dispatchers.IO) {
             try {
-
+                if (enManager.isDisabled()) {
+                    notifications.downloadingReportsFailure(
+                        R.string.notification_en_not_enabled,
+                        Intent(context, MainActivity::class.java)
+                    )
+                    return@withContext failure(Failure.EnStatus.ServiceDisabled)
+                }
                 // Update regions data before we proceed because we need the latest exposure configuration
+
                 // If it fails we use default values
                 updateRegionsUseCase()
 
@@ -66,10 +80,17 @@ class ProvideDiagnosisKeysWork(
                 Timber.d("Adding ${diagnosisKeys.size} batches of diagnoses to EN framework")
 
                 val token = randomToken()
-                val exposureConfiguration =
-                    preferences.exposureConfiguration.asExposureConfiguration()
+                val covidExposureConfiguration = preferences.exposureConfiguration
+                val exposureConfiguration = covidExposureConfiguration.asExposureConfiguration()
+
+                preferences.lastCheckedForExposures = Instant.now()
+
+                // Return success if no keys to provide
+                if (diagnosisKeys.all { it.keys.isEmpty() }) return@withContext Result.success()
+
                 diagnosisKeys.filter { it.keys.isNotEmpty() }.forEach { fileBatch ->
                     val keys = fileBatch.keys
+
                     enManager.provideDiagnosisKeys(keys, token, exposureConfiguration).apply {
                         success {
                             Timber.d("Added keys to EN with token: $token")
@@ -87,6 +108,7 @@ class ProvideDiagnosisKeysWork(
                             }
                             dir?.delete()
                         }
+
                         failure {
                             val dir = keys[0].parentFile
                             keys.forEach { file -> file.delete() }
@@ -98,15 +120,35 @@ class ProvideDiagnosisKeysWork(
                 }
 
                 diagnosisKeysTokenRepository.insert(
-                    DiagnosisKeysToken(
-                        token,
-                        exposureConfiguration = exposureConfiguration.asCovidExposureConfiguration()
-                    )
+                    DiagnosisKeysToken(token, covidExposureConfiguration)
                 )
+
                 Result.success()
             } catch (e: Exception) {
                 Timber.e(e)
-                failure(ENStatus(e))
+                val failure = Failure(e)
+                when (failure) {
+                    Failure.EnStatus.Failed -> notifications.downloadingReportsFailure(
+                        R.string.notification_general_problem,
+                        Intents.browser(Urls.SUPPORT)
+                    )
+                    Failure.EnStatus.NotSupported -> notifications.downloadingReportsEnNotAvailable()
+                    Failure.EnStatus.ServiceDisabled -> notifications.downloadingReportsFailure(
+                        R.string.notification_en_not_enabled,
+                        Intent(context, MainActivity::class.java)
+                    )
+                    Failure.EnStatus.Unauthorized -> notifications.downloadingReportsFailure(
+                        R.string.notification_app_unauthorized,
+                        Intents.browser(Urls.SUPPORT)
+                    )
+                    Failure.NetworkError -> notifications.downloadingReportsNetworkFailure()
+                    // Retry 2 times and then show a error to users
+                    is Failure.ServerError -> if (runAttemptCount < retries) return@withContext Result.retry() else notifications.downloadingReportsFailure(
+                        context.getString(R.string.notification_server_problem, failure.error),
+                        Intents.browser(Urls.SUPPORT)
+                    )
+                }
+                failure(failure)
             }
         }
     }

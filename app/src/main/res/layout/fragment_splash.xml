@@ -5,13 +5,14 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@color/colorPrimary"
-    android:paddingHorizontal="25dp">
+    android:paddingHorizontal="@dimen/padding_large">
 
     <ImageView
         android:id="@+id/region_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_extra_large"
+        android:contentDescription="@string/logo_image_content_descriptor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,7 +24,7 @@
         android:layout_height="0dp"
         android:layout_marginVertical="@dimen/padding_extra_large"
         android:contentDescription="@null"
-        android:src="@drawable/ic_people_network"
+        android:src="@drawable/people_network_art"
         app:layout_constraintBottom_toTopOf="@id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +50,6 @@
         style="@style/Button.Action"
         android:layout_marginBottom="@dimen/padding_normal"
         android:backgroundTint="@color/white"
-        android:paddingVertical="@dimen/button_vertical_padding"
         android:text="@string/get_started_button"
         android:textColor="@color/bluejay"
         android:textSize="24sp"

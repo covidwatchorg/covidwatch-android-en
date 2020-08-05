@@ -23,7 +23,7 @@ class UriManager(
             .url(indexUrl(region))
             .build()
         val response = httpClient.newCall(request).execute()
-        if (response.code != 200) throw ServerException()
+        if (!response.isSuccessful) throw ServerException(response.body?.string())
         val indexFile = response.body?.string()
 
         val regionFiles = indexFile

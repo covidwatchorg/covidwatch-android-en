@@ -3,7 +3,7 @@ package org.covidwatch.android.domain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.covidwatch.android.exposurenotification.ENStatus
+import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.functional.Either
 
 /**
@@ -18,12 +18,12 @@ abstract class UseCase<Type, in Params>(
     protected val dispatchers: AppCoroutineDispatchers
 ) {
 
-    abstract suspend fun run(params: Params? = null): Either<ENStatus, Type>
+    abstract suspend fun run(params: Params? = null): Either<Failure, Type>
 
     operator fun invoke(
         scope: CoroutineScope,
         params: Params? = null,
-        onResult: suspend (Either<ENStatus, Type>) -> Unit = {}
+        onResult: suspend (Either<Failure, Type>) -> Unit = {}
     ) {
         val job = scope.async(dispatchers.io) { run(params) }
         scope.launch(dispatchers.main) { onResult(job.await()) }

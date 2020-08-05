@@ -1,13 +1,14 @@
 package org.covidwatch.android.domain
 
 import androidx.lifecycle.liveData
-import androidx.work.*
+import androidx.work.Data
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
-import com.google.gson.Gson
 import org.covidwatch.android.data.PositiveDiagnosisReport
-import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.domain.StartUploadDiagnosisKeysWorkUseCase.Params
-import org.covidwatch.android.exposurenotification.ENStatus
+import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.extension.getFinalWorkInfoByIdLiveData
 import org.covidwatch.android.functional.Either
 import org.covidwatch.android.work.UploadDiagnosisKeysWork
@@ -18,24 +19,19 @@ import java.util.*
 
 class StartUploadDiagnosisKeysWorkUseCase(
     private val workManager: WorkManager,
-    private val positiveDiagnosisRepository: PositiveDiagnosisRepository,
     dispatchers: AppCoroutineDispatchers
 ) : LiveDataUseCase<UUID, Params>(dispatchers) {
 
-    override suspend fun run(params: Params?): Either<ENStatus, UUID> {
-        params ?: return Either.Left(ENStatus.Failed)
-
-        val positiveDiagnosisReport = params.positiveDiagnosisReport
-        positiveDiagnosisRepository.addPositiveDiagnosisReport(positiveDiagnosisReport)
+    override suspend fun run(params: Params?): Either<Failure, UUID> {
+        params ?: return Either.Left(Failure.EnStatus.Failed)
 
         val data = Data.Builder()
             .putString(
-                PARAMS, Gson().toJson(
-                    UploadDiagnosisKeysUseCase.Params(
-                        params.keys,
-                        params.positiveDiagnosisReport
-                    )
-                )
+                PARAMS,
+                UploadDiagnosisKeysUseCase.Params(
+                    params.keys,
+                    params.positiveDiagnosisReport
+                ).toJson()
             )
             .build()
 

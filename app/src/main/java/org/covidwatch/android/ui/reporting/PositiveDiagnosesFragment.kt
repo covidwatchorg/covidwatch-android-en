@@ -40,6 +40,11 @@ class PositiveDiagnosesFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
+            val isModal = arguments?.getBoolean(MODAL) == true
+
+            closeButton.isVisible = !isModal
+            handler.isVisible = isModal
+
             closeButton.setOnClickListener {
                 if (findNavController().currentBackStackEntry?.destination?.id == R.id.positiveDiagnosesFragment)
                     findNavController().popBackStack()
@@ -68,6 +73,16 @@ class PositiveDiagnosesFragment : BottomSheetDialogFragment() {
                 }
                 binding.noPastPositiveDiagnoses.isVisible = it.isEmpty()
                 binding.pastPositiveDiagnosesList.isVisible = it.isNotEmpty()
+            }
+        }
+    }
+
+    companion object {
+        private val MODAL = "modal"
+
+        fun instance() = PositiveDiagnosesFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean(MODAL, true)
             }
         }
     }

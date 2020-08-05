@@ -1,6 +1,7 @@
 package org.covidwatch.android.di
 
 import android.content.Context
+import androidx.lifecycle.SavedStateHandle
 import androidx.room.Room
 import androidx.work.WorkManager
 import com.google.android.gms.nearby.Nearby
@@ -31,7 +32,6 @@ import org.covidwatch.android.data.risklevel.RiskLevelRepository
 import org.covidwatch.android.domain.*
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.ui.Notifications
-import org.covidwatch.android.ui.exposurenotification.ExposureNotificationViewModel
 import org.covidwatch.android.ui.exposures.ExposuresViewModel
 import org.covidwatch.android.ui.home.HomeViewModel
 import org.covidwatch.android.ui.menu.MenuViewModel
@@ -64,17 +64,6 @@ val appModule = module {
     single {
         DiagnosisVerificationManager(
             verificationRepository = get()
-        )
-    }
-
-    viewModel {
-        ExposureNotificationViewModel(
-            enManager = get(),
-            uploadDiagnosisKeysUseCase = get(),
-            provideDiagnosisKeysUseCase = get(),
-            updateExposureInformationUseCase = get(),
-            exposureInformationRepository = get(),
-            preferenceStorage = get()
         )
     }
 
@@ -217,8 +206,7 @@ val appModule = module {
     factory {
         StartUploadDiagnosisKeysWorkUseCase(
             workManager = get(),
-            dispatchers = get(),
-            positiveDiagnosisRepository = get()
+            dispatchers = get()
         )
     }
 
@@ -276,9 +264,10 @@ val appModule = module {
     viewModel {
         HomeViewModel(
             enManager = get(),
+            provideDiagnosisKeysUseCase = get(),
             userFlowRepository = get(),
-            riskLevelRepository = get(),
-            preferences = get()
+            preferences = get(),
+            riskLevelRepository = get()
         )
     }
 
@@ -291,16 +280,19 @@ val appModule = module {
     }
 
     viewModel {
-        MenuViewModel(exposureInformationRepository = get())
+        MenuViewModel(prefs = get(), exposureInformationRepository = get())
     }
 
     viewModel {
         PositiveDiagnosesViewModel(positiveDiagnosisRepository = get())
     }
 
-    viewModel {
+    viewModel { (state: SavedStateHandle) ->
         VerifyPositiveDiagnosisViewModel(
+            state = state,
             startUploadDiagnosisKeysWorkUseCase = get(),
+            verificationManager = get(),
+            positiveDiagnosisRepository = get(),
             enManager = get()
         )
     }

@@ -27,14 +27,14 @@ class DiagnosisVerificationRemoteSource(
             .url("$verificationServerEndpoint/api/verify").build()
 
         return httpClient.newCall(request).execute().let { response ->
-            if (response.code != 200) throw ServerException()
-
-            val tokenResponse =
+            val verifyCodeResponse = try {
                 gson.fromJson(response.body?.charStream(), VerifyCodeResponse::class.java)
+            } catch (e: Exception) {
+                throw ServerException(response.body?.string())
+            }
 
-            if (tokenResponse.token == null) throw ServerException(tokenResponse.error)
-
-            tokenResponse
+            if (verifyCodeResponse.token == null) throw ServerException(verifyCodeResponse.error)
+            verifyCodeResponse
         }
     }
 
@@ -48,12 +48,14 @@ class DiagnosisVerificationRemoteSource(
             .url("$verificationServerEndpoint/api/certificate").build()
 
         return httpClient.newCall(request).execute().let { response ->
-            if (response.code != 200) throw ServerException()
-
-            val certificateResponse = gson.fromJson(
-                response.body?.charStream(),
-                VerificationCertificateResponse::class.java
-            )
+            val certificateResponse = try {
+                gson.fromJson(
+                    response.body?.charStream(),
+                    VerificationCertificateResponse::class.java
+                )
+            } catch (e: Exception) {
+                throw ServerException(response.body?.string())
+            }
             certificateResponse.certificate ?: throw ServerException(certificateResponse.error)
         }
     }

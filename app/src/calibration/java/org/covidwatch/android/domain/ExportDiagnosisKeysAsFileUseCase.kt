@@ -4,8 +4,8 @@ import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import org.covidwatch.android.data.asDiagnosisKey
 import org.covidwatch.android.data.asTemporaryExposureKey
 import org.covidwatch.android.domain.ExportDiagnosisKeysAsFileUseCase.Params
-import org.covidwatch.android.exposurenotification.ENStatus
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.exposurenotification.KeyFileWriter
 import org.covidwatch.android.functional.Either
 import java.io.File
@@ -18,12 +18,12 @@ class ExportDiagnosisKeysAsFileUseCase(
     dispatchers: AppCoroutineDispatchers
 ) : UseCase<List<File>, Params>(dispatchers) {
 
-    override suspend fun run(params: Params?): Either<ENStatus, List<File>> {
-        params ?: return Either.Left(ENStatus.Failed)
+    override suspend fun run(params: Params?): Either<Failure, List<File>> {
+        params ?: return Either.Left(Failure.EnStatus.Failed)
 
         enManager.isEnabled().apply {
             success { enabled ->
-                if (!enabled) return Either.Left(ENStatus.FailedServiceDisabled)
+                if (!enabled) return Either.Left(Failure.EnStatus.ServiceDisabled)
             }
             failure { return Either.Left(it) }
         }

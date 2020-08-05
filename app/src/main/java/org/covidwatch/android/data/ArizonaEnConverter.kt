@@ -1,14 +1,13 @@
 package org.covidwatch.android.data
 
 import com.google.android.gms.nearby.exposurenotification.ExposureInformation
-import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ExposureNotification
 import org.covidwatch.android.extension.daysTo
 import org.covidwatch.android.extension.toLocalDate
+import java.time.Instant
 import java.time.Period
-import java.util.*
 import kotlin.math.exp
 
 class ArizonaEnConverter(private val prefs: PreferenceStorage) : EnConverter {
@@ -49,7 +48,7 @@ class ArizonaEnConverter(private val prefs: PreferenceStorage) : EnConverter {
 
     override fun riskLevelValue(
         exposures: List<CovidExposureInformation>,
-        computeDate: Date
+        computeDate: Instant
     ): Double {
         var infectedRisk = 0.0
         getDateExposureRisks(exposures).forEach { (date, transmissionRisk) ->
@@ -76,8 +75,8 @@ class ArizonaEnConverter(private val prefs: PreferenceStorage) : EnConverter {
             .minBy { it.key }
             ?.key
 
-    private fun getDateExposureRisks(exposures: List<CovidExposureInformation>): Map<Date, Double> {
-        val dateExposureRisks = hashMapOf<Date, Double>()
+    private fun getDateExposureRisks(exposures: List<CovidExposureInformation>): Map<Instant, Double> {
+        val dateExposureRisks = hashMapOf<Instant, Double>()
 
         exposures.forEach { exposure ->
             val date = exposure.date
@@ -111,25 +110,14 @@ class ArizonaEnConverter(private val prefs: PreferenceStorage) : EnConverter {
 
     private fun Double.within(min: Double, max: Double) = this >= min && this < max
 
-    override fun covidExposureSummary(exposureSummary: ExposureSummary) =
-        with(exposureSummary) {
-            CovidExposureSummary(
-                daysSinceLastExposure,
-                matchedKeyCount,
-                (maximumRiskScore * 8.0 / 4096).toInt(),
-                attenuationDurationsInMinutes,
-                (summationRiskScore * 8.0 / 4096).toInt()
-            )
-        }
-
     override fun diagnosisKey(
         key: TemporaryExposureKey,
-        symptomsStartDate: Date?,
-        testDate: Date?,
-        possibleInfectionDate: Date?
+        symptomsStartDate: Instant?,
+        testDate: Instant?,
+        possibleInfectionDate: Instant?
     ): DiagnosisKey {
         val keyDate =
-            Date(key.rollingStartIntervalNumber * ExposureNotification.rollingInterval)
+            Instant.ofEpochMilli(key.rollingStartIntervalNumber * ExposureNotification.rollingInterval)
 
         val transmissionRisk = when {
             symptomsStartDate != null -> {
@@ -156,7 +144,7 @@ class ArizonaEnConverter(private val prefs: PreferenceStorage) : EnConverter {
 
     override fun riskMetrics(
         exposures: List<CovidExposureInformation>,
-        computeDate: Date
+        computeDate: Instant
     ) = RiskMetrics(
         riskLevelValue(exposures, computeDate),
         leastRecentSignificantExposureDate(exposures),
@@ -167,7 +155,7 @@ class ArizonaEnConverter(private val prefs: PreferenceStorage) : EnConverter {
         exposureInformation: ExposureInformation
     ) = with(exposureInformation) {
         CovidExposureInformation(
-            date = Date(dateMillisSinceEpoch),
+            date = Instant.ofEpochMilli(dateMillisSinceEpoch),
             duration = durationMinutes,
             attenuationValue = attenuationValue,
             transmissionRiskLevel = transmissionRiskLevel,

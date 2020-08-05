@@ -3,15 +3,17 @@ package org.covidwatch.android.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import org.covidwatch.android.R
-import org.covidwatch.android.exposurenotification.ENStatus
+import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.extension.observeEvent
+import org.covidwatch.android.ui.Intents.openBrowser
+import org.covidwatch.android.ui.Intents.playStoreWithServices
 
 abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : BaseFragment<T>() {
 
@@ -38,44 +40,67 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
         }
     }
 
-    protected fun handleStatus(it: ENStatus) {
+    protected fun handleStatus(it: Failure) {
         when (it) {
-            ENStatus.FailedInsufficientStorage -> {
+            Failure.EnStatus.Failed -> {
                 val snackbar = Snackbar.make(
                     binding.root,
-                    R.string.insufficient_storage,
-                    BaseTransientBottomBar.LENGTH_INDEFINITE
+                    R.string.unknown_error,
+                    BaseTransientBottomBar.LENGTH_LONG
                 )
-                snackbar.setAction(R.string.ok) { snackbar.dismiss() }
+                snackbar.setAction(R.string.contact_us) { context?.openBrowser(Urls.SUPPORT) }
                 snackbar.show()
             }
-            ENStatus.Failed -> {
-                Toast.makeText(
-                    context,
-                    R.string.unknown_error,
-                    Toast.LENGTH_SHORT
-                ).show()
+            Failure.EnStatus.NotSupported -> {
+                context?.let { context ->
+                    MaterialAlertDialogBuilder(context)
+                        .setTitle(R.string.en_not_available_title)
+                        .setMessage(R.string.en_not_available_text)
+                        .setPositiveButton(R.string.update) { _, _ ->
+                            context.playStoreWithServices?.let { startActivity(it) }
+                        }
+                        .create()
+                        .show()
+                }
             }
-            ENStatus.NetworkError -> {
-                Toast.makeText(
-                    context,
+            Failure.EnStatus.Unauthorized -> {
+                context?.let { context ->
+                    MaterialAlertDialogBuilder(context)
+                        .setTitle(R.string.app_unauthorized_title)
+                        .setMessage(R.string.app_unauthorized_text)
+                        .setPositiveButton(R.string.contact_us) { _, _ ->
+                            context.openBrowser(Urls.SUPPORT)
+                        }
+                        .create()
+                        .show()
+                }
+            }
+            Failure.NetworkError -> {
+                val snackbar = Snackbar.make(
+                    binding.root,
                     R.string.no_connection_error,
-                    Toast.LENGTH_SHORT
-                ).show()
+                    BaseTransientBottomBar.LENGTH_LONG
+                )
+                snackbar.setAction(R.string.open_settings) { startActivity(Intents.wirelessSettings) }
+                snackbar.show()
             }
-            ENStatus.ServerError -> {
-                Toast.makeText(
-                    context,
-                    R.string.server_error,
-                    Toast.LENGTH_SHORT
-                ).show()
+            is Failure.ServerError -> {
+                val snackbar = Snackbar.make(
+                    binding.root,
+                    getString(R.string.server_error, it.error),
+                    BaseTransientBottomBar.LENGTH_LONG
+                )
+                snackbar.setAction(R.string.contact_us) { context?.openBrowser(Urls.SUPPORT) }
+                snackbar.show()
             }
-            ENStatus.FailedDeviceAttestation -> {
-                Toast.makeText(
-                    context,
-                    R.string.device_attestation_error,
-                    Toast.LENGTH_SHORT
-                ).show()
+            is Failure.CodeVerification -> {
+                val snackbar = Snackbar.make(
+                    binding.root,
+                    getString(R.string.code_verification_error, it.error),
+                    BaseTransientBottomBar.LENGTH_LONG
+                )
+                snackbar.setAction(R.string.contact_us) { context?.openBrowser(Urls.SUPPORT) }
+                snackbar.show()
             }
         }
     }

@@ -7,7 +7,9 @@ import org.covidwatch.android.data.RegionId.*
 data class Region(
     val id: RegionId?,
     val name: String,
+    val isDisabled: Boolean = false,
 
+    val nextStepsDisabled: List<NextStep>? = null,
     val nextStepsNoSignificantExposure: List<NextStep>,
     val nextStepsSignificantExposure: List<NextStep>,
 
@@ -73,7 +75,10 @@ enum class NextStepType {
     WEBSITE,
 
     @SerializedName("3")
-    SHARE
+    SHARE,
+
+    @SerializedName("4")
+    SELECT_REGION
 }
 
 data class Regions(val regions: List<Region>)
@@ -87,14 +92,26 @@ object DefaultRegions {
     )
 
     private val nextStepsVerificationCodeDefault = NextStep(
-        type = PHONE,
-        description = "For others in this region, please call Arizona Department of Health Services at (844) 542-8201 for assistance.",
-        url = "tel:1-844-542-8201"
+        type = WEBSITE,
+        description = "For all others, the app is currently under development to support other states and regions. Visit the Covid Watch website for more information.",
+        url = "https://covidwatch.org"
     )
 
-    private val default = Region(
+    private val stateOfArizona = Region(
         id = ARIZONA_STATE,
-        name = "The State of Arizona",
+        name = "State of Arizona",
+        isDisabled = true,
+        nextStepsDisabled = listOf(
+            NextStep(
+                type = WEBSITE,
+                description = "Visit the Arizona Department of Health Services website to share your thoughts on this app.",
+                url = "https://www.azdhs.gov"
+            ),
+            NextStep(
+                type = SELECT_REGION,
+                description = "Select an existing region."
+            )
+        ),
         nextStepsNoSignificantExposure = listOf(shareTheApp),
         nextStepsSignificantExposure = listOf(shareTheApp),
         nextStepsVerifiedPositive = listOf(shareTheApp),
@@ -114,7 +131,7 @@ object DefaultRegions {
         nextStepsNoSignificantExposure = listOf(
             NextStep(
                 type = WEBSITE,
-                description = "Monitor yourself for COVID-19 symtoms.",
+                description = "Monitor COVID-19 symptoms.",
                 url = "https://covid19.arizona.edu/prevention-health/covid-19-symptoms?utm_source=covid_watch_app&utm_medium=referral&utm_campaign=covid_watch_covid19_symptoms_no_exposure"
             ),
             NextStep(
@@ -168,9 +185,10 @@ object DefaultRegions {
         nextStepsVerificationCode = listOf(
             NextStep(
                 type = PHONE,
-                description = "If you are a student or staff at UArizona, please call Campus Health Services at 520-621-9202 to obtain one. If you were tested in a different region, have a copy of your results ready.",
+                description = "If you are a student or staff at UArizona, please call Campus Health Services at 520-621-9202 to obtain one. If you were tested elsewhere, please have your results ready.",
                 url = "tel:1-520-621-9202"
-            )
+            ),
+            nextStepsVerificationCodeDefault
         ),
         recentExposureDays = 14
     )
@@ -188,17 +206,73 @@ object DefaultRegions {
     private val northernArizonaUniversity = Region(
         id = NAU,
         name = "Northern Arizona University",
-        nextStepsNoSignificantExposure = listOf(shareTheApp),
-        nextStepsSignificantExposure = listOf(shareTheApp),
-        nextStepsVerifiedPositive = listOf(shareTheApp),
-        nextStepsVerificationCode = listOf(nextStepsVerificationCodeDefault),
+        nextStepsNoSignificantExposure = listOf(
+            NextStep(
+                type = WEBSITE,
+                description = "Learn how to protect myself and others.",
+                url = "https://in.nau.edu/campus-health-services/covid-19/"
+            ),
+            NextStep(
+                type = WEBSITE,
+                description = "Monitor COVID-19 symptoms.",
+                url = "https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html"
+            ),
+            NextStep(
+                type = PHONE,
+                description = "If you have COVID-19 symptoms, call Campus Health at (928) 523-2131.",
+                url = "tel:1-928-523-2131"
+            ),
+            shareTheApp
+        ),
+        nextStepsSignificantExposure = listOf(
+            NextStep(
+                type = WEBSITE,
+                description = "Monitor COVID-19 symptoms and get tested ASAP if symptoms appear.",
+                url = "https://in.nau.edu/campus-health-services/covid-testing/"
+            ),
+            NextStep(
+                type = WEBSITE,
+                description = "If you have symptoms follow the self-quaratine guidelines.",
+                url = "https://in.nau.edu/wp-content/uploads/sites/202/COVID-CHS-selfquarantine-7-16-20.pdf"
+            ),
+            NextStep(
+                type = PHONE,
+                description = "Call Campus Health at (928) 523-2131 or your health care provider for guidance.",
+                url = "tel:1-928-523-2131"
+            ),
+            shareTheApp
+        ),
+        nextStepsVerifiedPositive = listOf(
+            NextStep(
+                type = WEBSITE,
+                description = "Please stay at home and follow the self-isolation guidelines.",
+                url = "https://in.nau.edu/wp-content/uploads/sites/202/COVID-CHS-selfisolation-7-16-201.pdf"
+            ),
+            NextStep(
+                type = WEBSITE,
+                description = "Register with NAU’s Exposure Tracing team.",
+                url = "https://in.nau.edu/campus-health-services/exposure-tracing"
+            ),
+            NextStep(
+                type = PHONE,
+                description = "Follow up with Campus Health at (928) 523-2131 or your healthcare provider for more instructions.",
+                url = "tel:1-928-523-2131"
+            )
+        ),
+        nextStepsVerificationCode = listOf(
+            NextStep(
+                type = PHONE,
+                description = "If you are a student or staff at NAU, please call Campus Health at (928) 523-2131 to obtain one. If you were tested elsewhere, please have your results ready. ",
+                url = "tel:1-928-523-2131"
+            )
+        ),
         recentExposureDays = 14
     )
 
     val all = listOf(
-        default,
         universityOfArizona,
         arizonaStateUniversity,
-        northernArizonaUniversity
+        northernArizonaUniversity,
+        stateOfArizona
     )
 }
