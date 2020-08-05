@@ -63,7 +63,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         binding.actionLayoutTitle.isVisible = false
                         binding.actionLayoutInfo.isVisible = false
                         binding.actionLayoutBtn.isVisible = false
-                        binding.bottomSpace.isVisible = false
 
                         binding.riskInfo.text = getString(R.string.next_steps_title).fromHtml()
                     }
@@ -71,7 +70,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         binding.actionLayoutTitle.isVisible = true
                         binding.actionLayoutInfo.isVisible = true
                         binding.actionLayoutBtn.isVisible = true
-                        binding.bottomSpace.isVisible = true
 
                         binding.riskInfo.text = getString(R.string.next_steps_title).fromHtml()
                     }
@@ -79,7 +77,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         binding.actionLayoutTitle.isVisible = true
                         binding.actionLayoutInfo.isVisible = true
                         binding.actionLayoutBtn.isVisible = true
-                        binding.bottomSpace.isVisible = true
 
                         binding.riskInfo.text = getString(R.string.unknown_risk_title).fromHtml()
                     }
