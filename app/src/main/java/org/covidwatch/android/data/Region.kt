@@ -94,7 +94,7 @@ object DefaultRegions {
 
     private val default = Region(
         id = ARIZONA_STATE,
-        name = "The State of Arizona",
+        name = "State of Arizona",
         nextStepsNoSignificantExposure = listOf(shareTheApp),
         nextStepsSignificantExposure = listOf(shareTheApp),
         nextStepsVerifiedPositive = listOf(shareTheApp),
