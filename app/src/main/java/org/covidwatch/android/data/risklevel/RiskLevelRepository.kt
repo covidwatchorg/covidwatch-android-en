@@ -24,6 +24,7 @@ class RiskLevelRepository(
     ) { risk, diagnoses, region ->
         val recentExposureDate = risk?.mostRecentSignificantExposureDate
         when {
+            region.isDisabled -> RiskLevel.DISABLED
             diagnoses.any { it.verified && TestType.CONFIRMED == it.verificationData?.testType } ->
                 RiskLevel.VERIFIED_POSITIVE
 
@@ -42,6 +43,7 @@ class RiskLevelRepository(
             RiskLevel.VERIFIED_POSITIVE -> region.nextStepsVerifiedPositive
             RiskLevel.HIGH -> region.nextStepsSignificantExposure
             RiskLevel.LOW -> region.nextStepsNoSignificantExposure
+            RiskLevel.DISABLED -> region.nextStepsDisabled ?: emptyList()
         }
     }.flowOn(dispatchers.io)
 }

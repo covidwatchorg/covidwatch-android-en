@@ -86,6 +86,7 @@ fun TextView.setRiskLevelText(riskLevel: RiskLevel) {
             VERIFIED_POSITIVE -> R.string.high_risk_title
             HIGH -> R.string.high_risk_title
             LOW -> R.string.low_risk_title
+            else -> R.string.low_risk_title
         }
     )
 }
@@ -97,6 +98,7 @@ fun View.setBackgroundFromRiskLevel(riskLevel: RiskLevel) {
             VERIFIED_POSITIVE -> R.color.high_risk
             HIGH -> R.color.high_risk
             LOW -> R.color.unknown_risk
+            DISABLED -> R.color.unknown_risk
         }
     )
 }

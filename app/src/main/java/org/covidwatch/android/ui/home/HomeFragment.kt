@@ -169,6 +169,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         }
                         nextStepIcon.setImageResource(R.drawable.ic_next_step_share)
                     }
+                    NextStepType.SELECT_REGION -> {
+                        root.addCircleRipple()
+                        root.setOnClickListener {
+                            findNavController().navigate(R.id.selectRegionFragment)
+                        }
+                        nextStepIcon.setImageResource(R.drawable.ic_region)
+                    }
                 }
             }
         }

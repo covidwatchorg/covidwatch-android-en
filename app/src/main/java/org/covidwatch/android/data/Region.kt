@@ -251,7 +251,7 @@ object DefaultRegions {
             NextStep(
                 type = WEBSITE,
                 description = "Register with NAU’s Exposure Tracing team.",
-                url = "https://in.nau.edu/campus-health-services/covid-testing/"
+                url = "https://in.nau.edu/campus-health-services/exposure-tracing"
             ),
             NextStep(
                 type = PHONE,

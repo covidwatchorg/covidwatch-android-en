@@ -116,6 +116,7 @@
     <string name="last_exposure_time">&lt;b>Last checked:&lt;/b> %s</string>
 
     <!-- RISK LEVEL -->
+    <string name="under_development_risk_name">Under Development</string>
     <string name="low_risk_name">No Significant Exposures</string>
     <string name="high_risk_name">Significant Exposure Detected</string>
     <string name="verified_positive_risk_name">Verified Positive Diagnosis</string>
