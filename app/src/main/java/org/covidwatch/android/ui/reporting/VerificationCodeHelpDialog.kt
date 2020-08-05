@@ -1,12 +1,11 @@
 package org.covidwatch.android.ui.reporting
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.covidwatch.android.R
@@ -14,6 +13,8 @@ import org.covidwatch.android.data.NextStepType
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.databinding.DialogTestVerificationCodeInfoBinding
 import org.covidwatch.android.databinding.ItemVerificationCodeStepBinding
+import org.covidwatch.android.ui.Intents.dial
+import org.covidwatch.android.ui.Intents.openBrowser
 import org.koin.android.ext.android.inject
 
 class VerificationCodeHelpDialog : BottomSheetDialogFragment() {
@@ -48,24 +49,28 @@ class VerificationCodeHelpDialog : BottomSheetDialogFragment() {
 
             val layoutInflater = LayoutInflater.from(context)
             verificationCodeSteps.removeAllViews()
-            region.nextStepsVerificationCode.filter { it.type == NextStepType.PHONE }
-                .forEach { step ->
-                    val stepView = ItemVerificationCodeStepBinding.inflate(
-                        layoutInflater,
-                        verificationCodeSteps,
-                        true
-                    )
+            region.nextStepsVerificationCode.forEach { step ->
+                val stepView = ItemVerificationCodeStepBinding.inflate(
+                    layoutInflater,
+                    verificationCodeSteps,
+                    true
+                )
+                stepView.verificationCodeStep.text = step.description
 
-                    stepView.verificationCodeStep.text = step.description
-                    stepView.btnCall.setOnClickListener {
-                        val intent = Intent(Intent.ACTION_DIAL).apply {
-                            data = Uri.parse(step.url)
-                        }
-                        if (intent.resolveActivity(view.context.packageManager) != null) {
-                            startActivity(intent)
+                when (step.type) {
+                    NextStepType.PHONE -> {
+                        stepView.btnAction.setOnClickListener {
+                            context?.dial(step.url)
                         }
                     }
+                    NextStepType.WEBSITE -> {
+                        stepView.btnAction.setOnClickListener {
+                            context?.openBrowser(step.url)
+                        }
+                    }
+                    else -> stepView.btnAction.isVisible = false
                 }
+            }
 
             tvRegion.setOnClickListener { findNavController().navigate(R.id.selectRegionFragment) }
 
