@@ -15,7 +15,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="16dp"
+            android:layout_height="@dimen/expandable_item_inner_shadow"
             android:background="@drawable/shadow" />
 
         <LinearLayout
@@ -60,7 +60,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="16dp"
+            android:layout_height="@dimen/expandable_item_inner_shadow"
             android:layout_gravity="bottom"
             android:background="@drawable/down_shadow" />
     </FrameLayout>

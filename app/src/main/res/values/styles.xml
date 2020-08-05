@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textColor">@color/primaryText</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialog</item>
     </style>
 
     <style name="AppTheme.LauncherTheme">
@@ -28,6 +29,22 @@
         <item name="android:paddingBottom">@dimen/padding_normal</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+    </style>
+
+    <style name="BottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceBottomSheetDialog</item>
+    </style>
+
+    <style name="ShapeAppearanceBottomSheetDialog">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">@dimen/bottom_sheet_corner_radius</item>
+        <item name="cornerSizeTopLeft">@dimen/bottom_sheet_corner_radius</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
     <style name="ImageView" />

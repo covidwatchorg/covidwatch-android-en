@@ -29,7 +29,7 @@ class SharedDiagnosisFragment : BaseFragment<FragmentSharedDiagnosisBinding>() {
             shareAppButton.setOnClickListener { context?.shareApp() }
 
             btnViewPastPositiveDiagnoses.setOnClickListener {
-                PositiveDiagnosesFragment().show(childFragmentManager, null)
+                PositiveDiagnosesFragment.instance().show(childFragmentManager, null)
             }
         }
     }
