@@ -9,24 +9,31 @@ import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.RiskLevel
 import org.covidwatch.android.data.RiskLevel.*
+import org.covidwatch.android.extension.fromHtml
 import org.covidwatch.android.ui.util.DateFormatter
 import java.time.Instant
 
-@BindingAdapter("exposure_info")
-fun TextView.setExposureInfo(exposure: CovidExposureInformation?) {
+@BindingAdapter("exposure_info_attenuation")
+fun TextView.setExposureInfoAttenuation(exposure: CovidExposureInformation?) {
     val attenuationDurations =
         exposure?.attenuationDurations?.joinToString { if (it >= 30) "≥30m" else "${it}m" }
 
+    text = context.getString(
+        R.string.exposure_info_attenuation,
+        attenuationDurations
+    ).fromHtml()
+}
+
+@BindingAdapter("exposure_info_transmission_risk")
+fun TextView.setExposureInfoRisk(exposure: CovidExposureInformation?) {
     val riskLevel = context.getString(
         R.string.exposure_information_transmission_risk_text,
         exposure?.transmissionRiskLevel
     )
-
     text = context.getString(
-        R.string.exposure_info,
-        attenuationDurations,
+        R.string.exposure_info_transmission_risk,
         riskLevel
-    )
+    ).fromHtml()
 }
 
 @BindingAdapter("attenuation_durations")

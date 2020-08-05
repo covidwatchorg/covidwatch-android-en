@@ -148,7 +148,8 @@
     <string name="high_risk_title">High Risk</string>
     <string name="exposure_date_and_info">On &lt;b>%s&lt;/b> you were near someone who shared a &lt;b>positive&lt;/b> and &lt;b>verified&lt;/b> diagnosis of COVID-19.</string>
     <string name="exposure_data">Exposure Data</string>
-    <string name="exposure_info">&lt;b>&#8226; Attenuation Durations&lt;/b>\n%1$s\n\n&lt;b>&#8226; Transmission Risk Level&lt;/b>\n%2$s</string>
+    <string name="exposure_info_attenuation">&lt;b>&#8226; Attenuation Durations&lt;/b>&lt;p&gt;  %s</string>
+    <string name="exposure_info_transmission_risk">&lt;p>&lt;b>&#8226; Transmission Risk Level&lt;/b>&lt;/p>  %s</string>
     <string name="btn_learn_more">Learn More</string>
 
     <!--  Onboarding  -->
