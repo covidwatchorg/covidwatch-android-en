@@ -245,9 +245,7 @@
     <string name="no_past_positive_diagnoses">No past positive diagnoses</string>
     <string name="diagnosis_shared_title">Diagnosis shared</string>
     <string name="diagnosis_shared_subtitle">Thank you for helping slow the spread of COVID-19 within your region.</string>
-    <string name="diagnosis_shared_next_steps_title">To continue to help others:</string>
-    <string name="diagnosis_shared_next_step_1">Please keep the app installed until the pandemic is over. </string>
-    <string name="diagnosis_shared_next_step_2">Share it with others so that they can help too. The more people use it, the more accurate everyone’s exposure notifications will be.</string>
+    <string name="diagnosis_shared_next_steps">To continue to help, keep the app installed until the pandemic is over and share it with friends and family so that they can help, too. </string>
     <string name="empty_past_diagnoses_list">No Past Diagnoses</string>
     <string name="exposed_date_label">When do you think you were exposed?</string>
     <string name="no_exposed_date">I do not know</string>
