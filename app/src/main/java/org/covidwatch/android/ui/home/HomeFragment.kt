@@ -60,34 +60,34 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 // TODO: 22.07.2020 Make this logic more clear and separate for different view groups
                 when (it) {
                     RiskLevel.VERIFIED_POSITIVE -> {
-                        binding.actionLayoutTitle.setText(R.string.action_layout_share_title)
-                        binding.actionLayoutInfo.setText(R.string.action_layout_share_info)
-                        binding.actionLayoutBtn.setText(R.string.action_layout_share_btn)
-                        binding.actionLayoutBtn.setOnClickListener {
-                            context?.shareApp()
-                        }
+                        binding.actionLayoutTitle.isVisible = false
+                        binding.actionLayoutInfo.isVisible = false
+                        binding.actionLayoutBtn.isVisible = false
+                        binding.bottomSpace.isVisible = false
+
                         binding.riskInfo.text = getString(R.string.next_steps_title).fromHtml()
                     }
                     RiskLevel.HIGH -> {
-                        binding.actionLayoutTitle.setText(R.string.action_layout_share_title)
-                        binding.actionLayoutInfo.setText(R.string.action_layout_share_info)
-                        binding.actionLayoutBtn.setText(R.string.action_layout_share_btn)
-                        binding.actionLayoutBtn.setOnClickListener {
-                            findNavController().navigate(R.id.notifyOthersFragment)
-                        }
+                        binding.actionLayoutTitle.isVisible = true
+                        binding.actionLayoutInfo.isVisible = true
+                        binding.actionLayoutBtn.isVisible = true
+                        binding.bottomSpace.isVisible = true
+
                         binding.riskInfo.text = getString(R.string.next_steps_title).fromHtml()
                     }
                     RiskLevel.LOW -> {
-                        binding.actionLayoutTitle.setText(R.string.positive_diagnosis_question)
-                        binding.actionLayoutInfo.setText(R.string.positive_diagnosis_info)
-                        binding.actionLayoutBtn.setText(R.string.btn_how_to_share_diagnosis)
-                        binding.actionLayoutBtn.setOnClickListener {
-                            findNavController().navigate(R.id.notifyOthersFragment)
-                        }
+                        binding.actionLayoutTitle.isVisible = true
+                        binding.actionLayoutInfo.isVisible = true
+                        binding.actionLayoutBtn.isVisible = true
+                        binding.bottomSpace.isVisible = true
+
                         binding.riskInfo.text = getString(R.string.unknown_risk_title).fromHtml()
                     }
                 }
 
+                binding.actionLayoutBtn.setOnClickListener {
+                    findNavController().navigate(R.id.notifyOthersFragment)
+                }
                 binding.myRiskLevel.setBackgroundFromRiskLevel(it)
                 binding.myRiskLevel.text =
                     getString(R.string.my_risk_level, it.name(requireContext()))

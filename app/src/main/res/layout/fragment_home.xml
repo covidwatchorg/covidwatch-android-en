@@ -120,7 +120,8 @@
             <LinearLayout
                 android:id="@+id/next_steps"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:background="@color/lightGray"
                 android:orientation="vertical" />
 
@@ -149,7 +150,8 @@
                 android:layout_marginHorizontal="@dimen/padding_normal"
                 android:text="@string/btn_how_to_share_diagnosis" />
 
-            <View
+            <Space
+                android:id="@+id/bottom_space"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
