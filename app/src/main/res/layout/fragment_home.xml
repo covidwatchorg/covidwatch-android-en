@@ -113,7 +113,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/lightGray"
-                android:padding="@dimen/padding_normal"
+                android:paddingHorizontal="@dimen/padding_normal"
+                android:paddingTop="@dimen/padding_normal"
                 android:text="@string/unknown_risk_title"
                 android:textSize="14sp" />
 
@@ -122,7 +123,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/lightGray"
-                android:orientation="vertical" />
+                android:orientation="vertical"
+                android:paddingTop="@dimen/padding_normal" />
 
             <TextView
                 android:id="@+id/action_layout_title"

@@ -64,6 +64,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         binding.actionLayoutInfo.isVisible = false
                         binding.actionLayoutBtn.isVisible = false
 
+                        binding.riskInfo.isVisible = true
                         binding.riskInfo.text = getString(R.string.next_steps_title).fromHtml()
                     }
                     RiskLevel.HIGH -> {
@@ -71,14 +72,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         binding.actionLayoutInfo.isVisible = true
                         binding.actionLayoutBtn.isVisible = true
 
+                        binding.riskInfo.isVisible = true
                         binding.riskInfo.text = getString(R.string.next_steps_title).fromHtml()
                     }
                     RiskLevel.LOW -> {
+
                         binding.actionLayoutTitle.isVisible = true
                         binding.actionLayoutInfo.isVisible = true
                         binding.actionLayoutBtn.isVisible = true
 
+                        binding.riskInfo.isVisible = true
                         binding.riskInfo.text = getString(R.string.unknown_risk_title).fromHtml()
+                    }
+                    RiskLevel.DISABLED -> {
+                        binding.actionLayoutTitle.isVisible = false
+                        binding.actionLayoutInfo.isVisible = false
+                        binding.actionLayoutBtn.isVisible = false
+
+                        binding.riskInfo.isVisible = false
                     }
                 }
 

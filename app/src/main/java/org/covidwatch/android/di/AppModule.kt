@@ -280,7 +280,7 @@ val appModule = module {
     }
 
     viewModel {
-        MenuViewModel(exposureInformationRepository = get())
+        MenuViewModel(prefs = get(), exposureInformationRepository = get())
     }
 
     viewModel {
@@ -303,8 +303,6 @@ val appModule = module {
 
         OkHttpClient.Builder()
             .addInterceptor(logging)
-//            .followRedirects(false)
-//            .followSslRedirects(false)
             .addInterceptor(ConnectivityInterceptor(androidApplication()))
             .build()
     }
