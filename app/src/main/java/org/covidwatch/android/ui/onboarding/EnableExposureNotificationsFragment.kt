@@ -34,11 +34,13 @@ class EnableExposureNotificationsFragment :
 
         with(viewModel) {
             observeEvent(showHome) {
-                findNavController().popBackStack(R.id.homeFragment, false)
+                findNavController().popBackStack()
             }
             observeEvent(continueOnboarding) {
                 val args = Bundle()
                 args.putBoolean("onboarding", true)
+                findNavController().popBackStack(R.id.howItWorksFragment, true)
+                findNavController().navigate(R.id.homeFragment)
                 findNavController().navigate(R.id.selectRegionFragment, args)
             }
         }

@@ -177,7 +177,7 @@
     <string name="full_app_name">Covid Watch Arizona Exposure Notification App</string>
     <string name="finished_onboarding_title">Setup Complete</string>
     <string name="finished_onboarding_subtitle">You can now…</string>
-    <string name="finished_onboarding_text"><ul>&#8226; Get exposure notifications\n</ul><ul>&#8226; Anonymously notify others\n</ul><ul>&#8226; Get COVID-19 exposure updates\n</ul><ul>&#8226; Get resources and recommendations\n</ul></string>
+    <string name="finished_onboarding_text"><ul>&#8226; Get exposure notifications\n</ul><ul>&#8226; Anonymously notify others\n</ul><ul>&#8226; Access local public health resources and recommendations</ul></string>
     <string name="see_exposure_summary">View Detected Exposures</string>
 
     <!-- Home Screen-->

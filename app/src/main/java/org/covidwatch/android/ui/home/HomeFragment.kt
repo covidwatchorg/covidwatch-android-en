@@ -44,6 +44,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         with(viewModel) {
             onStart()
             observeEvent(navigateToOnboarding) {
+                findNavController().popBackStack()
                 findNavController().navigate(R.id.splashFragment)
             }
 

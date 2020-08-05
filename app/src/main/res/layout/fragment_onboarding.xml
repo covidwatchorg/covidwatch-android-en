@@ -59,14 +59,16 @@
         <ImageView
             android:id="@+id/btn_previous_onboarding_screen"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="0.5"
-            android:background="?selectableItemBackgroundBorderless"
+            android:background="?selectableItemBackground"
             android:clickable="true"
             android:contentDescription="@string/btn_previous_onboarding_screen_description"
             android:focusable="true"
-            android:src="@drawable/ic_arrow_left" />
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_arrow_left"
+            android:visibility="invisible" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
@@ -83,13 +85,14 @@
         <ImageView
             android:id="@+id/btn_next_onboarding_screen"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight=".5"
-            android:background="?selectableItemBackgroundBorderless"
+            android:background="?selectableItemBackground"
             android:clickable="true"
             android:contentDescription="@string/btn_next_onboarding_screen_description"
             android:focusable="true"
+            android:scaleType="centerInside"
             android:src="@drawable/ic_arrow_right" />
     </LinearLayout>
 
