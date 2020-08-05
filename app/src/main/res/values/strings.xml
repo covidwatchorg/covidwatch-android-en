@@ -153,7 +153,7 @@
 
     <!--  Onboarding  -->
     <string name="splash_screen_header_content_description">State of California</string>
-    <string name="splash_screen_title">Together, we have the power  to stop COVID-19.</string>
+    <string name="splash_screen_title">Together, we have the power to stop COVID-19.</string>
     <string name="get_started_button">Get Started</string>
     <string name="onboarding_welcome_title">Welcome to the {UCSF Health Covid Watch} App</string>
     <string name="onboarding_welcome_subtitle">Welcome Text. Aliquet urna feugiat donec dictum. Massa dignissim commodo ut et.  Massa dignissim commodo ut et.</string>
@@ -165,7 +165,7 @@
     <string name="how_it_works_text_3">Jane gets a notification saying she was near an <b>anonymous person</b> who tested positive. The app explains what to do next and how to find local resources.</string>
     <string name="how_it_works_title_4">Help Communities</string>
     <string name="how_it_works_text_4">By <b>enabling notifications</b> and staying home when at risk of exposing others, they help prevent the spread of COVID-19 within their communities.</string>
-    <string name="enable_exposure_notifications_title">Enable Exposure Notifications</string>
+    <string name="enable_exposure_notifications_title">Enable\nExposure Notifications</string>
     <string name="enable_exposure_notifications_subtitle">These notifications will let know if <b>you’ve been exposed</b> to a person who later reports themselves as having tested positive for COVID-19. It can be turned off at any time.</string>
     <string name="enable_button">Enable</string>
     <string name="not_now_button">Not now</string>
@@ -174,7 +174,7 @@
     <string name="how_it_works_explanation">Together, we have the power to stop the spread of COVID-19 with <b>safe</b>, <b>secure</b>, and <b>anonymous</b> exposure notifications.</string>
     <string name="onboarding_title" />
     <string name="welcome_to_the">Welcome to the</string>
-    <string name="full_app_name">Covid Watch Exposure Notification App</string>
+    <string name="full_app_name">Covid Watch Arizona Exposure Notification App</string>
     <string name="finished_onboarding_title">Setup Complete</string>
     <string name="finished_onboarding_subtitle">You can now…</string>
     <string name="finished_onboarding_text"><ul>&#8226; Get exposure notifications\n</ul><ul>&#8226; Anonymously notify others\n</ul><ul>&#8226; Get COVID-19 exposure updates\n</ul><ul>&#8226; Get resources and recommendations\n</ul></string>
@@ -312,7 +312,7 @@
     <string name="btn_learn_more">Learn More</string>
 
     <!--REGION SELECTION-->
-    <string name="privacy_select_region"><b>We value your privacy.</b> This application is always anonymous and your location is never collected or stored. Selecting a region will allow you to receive information on available healthcare resources in that region without ever having to share a location. Your region can be changed at any time.</string>
+    <string name="privacy_select_region"><b>We value your privacy.</b>Select a region to see local healthcare resources without ever sharing your location or identity. You can change this selection at any time.</string>
     <string name="select_region_label">Select Region</string>
     <string name="btn_previous_onboarding_screen_description">Button previous onboarding screen</string>
     <string name="btn_next_onboarding_screen_description">Button next onboarding screen</string>

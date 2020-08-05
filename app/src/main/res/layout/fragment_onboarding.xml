@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/padding_normal">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -53,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingVertical="@dimen/padding_normal">
+        android:paddingTop="@dimen/padding_normal">
 
         <ImageView
             android:id="@+id/btn_previous_onboarding_screen"
@@ -96,6 +97,7 @@
         android:id="@+id/continue_setup_button"
         style="@style/Button.Action"
         android:layout_marginHorizontal="@dimen/padding_normal"
+        android:layout_marginTop="@dimen/padding_normal"
         android:text="@string/continue_setup_button"
         android:visibility="gone" />
 </LinearLayout>
