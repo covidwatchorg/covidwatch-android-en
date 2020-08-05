@@ -153,7 +153,7 @@
 
     <!--  Onboarding  -->
     <string name="splash_screen_header_content_description">State of California</string>
-    <string name="splash_screen_title">The power to stop COVID-19 in the palm of your hand.</string>
+    <string name="splash_screen_title">Together, we have the power  to stop COVID-19.</string>
     <string name="get_started_button">Get Started</string>
     <string name="onboarding_welcome_title">Welcome to the {UCSF Health Covid Watch} App</string>
     <string name="onboarding_welcome_subtitle">Welcome Text. Aliquet urna feugiat donec dictum. Massa dignissim commodo ut et.  Massa dignissim commodo ut et.</string>
