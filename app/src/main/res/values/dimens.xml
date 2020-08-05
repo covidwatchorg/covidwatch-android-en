@@ -16,6 +16,7 @@
     <dimen name="tested_button_vertical_margin">10dp</dimen>
     <dimen name="tested_button_font_size">18dp</dimen>
     <dimen name="title_font_size">24sp</dimen>
+    <dimen name="title_font_size_big">27sp</dimen>
     <dimen name="subtitle_font_size">16sp</dimen>
     <dimen name="button_font_size">16sp</dimen>
     <dimen name="big_font_size">18sp</dimen>
@@ -28,4 +29,6 @@
     <dimen name="padding_micro">4dp</dimen>
     <dimen name="padding_large">24dp</dimen>
     <dimen name="padding_extra_large">32dp</dimen>
+    <dimen name="bottom_sheet_corner_radius">16dp</dimen>
+    <dimen name="expandable_item_inner_shadow">16dp</dimen>
 </resources>

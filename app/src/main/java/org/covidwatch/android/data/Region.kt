@@ -87,14 +87,14 @@ object DefaultRegions {
     )
 
     private val nextStepsVerificationCodeDefault = NextStep(
-        type = PHONE,
-        description = "For others in this region, please call Arizona Department of Health Services at (844) 542-8201 for assistance.",
-        url = "tel:1-844-542-8201"
+        type = WEBSITE,
+        description = "For all others, the app is currently under development to support other states and regions. Visit the Covid Watch website for more information.",
+        url = "https://covidwatch.org"
     )
 
     private val default = Region(
         id = ARIZONA_STATE,
-        name = "The State of Arizona",
+        name = "State of Arizona",
         nextStepsNoSignificantExposure = listOf(shareTheApp),
         nextStepsSignificantExposure = listOf(shareTheApp),
         nextStepsVerifiedPositive = listOf(shareTheApp),
@@ -168,9 +168,10 @@ object DefaultRegions {
         nextStepsVerificationCode = listOf(
             NextStep(
                 type = PHONE,
-                description = "If you are a student or staff at UArizona, please call Campus Health Services at 520-621-9202 to obtain one. If you were tested in a different region, have a copy of your results ready.",
+                description = "If you are a student or staff at UArizona, please call Campus Health Services at 520-621-9202 to obtain one. If you were tested elsewhere, please have your results ready.",
                 url = "tel:1-520-621-9202"
-            )
+            ),
+            nextStepsVerificationCodeDefault
         ),
         recentExposureDays = 14
     )

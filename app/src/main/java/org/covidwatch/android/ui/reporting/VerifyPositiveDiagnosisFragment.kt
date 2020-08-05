@@ -85,6 +85,7 @@ class VerifyPositiveDiagnosisFragment :
                 binding.btnFinishVerification.isEnabled = !it
             }
             observeEvent(showThankYou) {
+                findNavController().popBackStack(R.id.homeFragment, false)
                 findNavController().navigate(R.id.thanksForReportingFragment)
             }
         }

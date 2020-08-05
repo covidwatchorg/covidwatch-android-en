@@ -29,7 +29,16 @@ object Intents {
     val wirelessSettings: Intent
         get() = Intent(Settings.ACTION_WIRELESS_SETTINGS)
 
-    fun Context.openBrowser(url: String) {
-        startActivity(browser(url))
+    fun Context.openBrowser(url: String?) = url?.let {
+        startActivity(browser(it))
+    }
+
+    fun Context.dial(url: String?) = url?.let {
+        val intent = Intent(Intent.ACTION_DIAL).apply {
+            data = Uri.parse(it)
+        }
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        }
     }
 }

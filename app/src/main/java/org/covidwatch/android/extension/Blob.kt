@@ -13,4 +13,5 @@ fun Instant.toLocalDate(): LocalDate {
 fun Instant.daysTo(anotherDate: Instant) =
     Period.between(this.toLocalDate(), anotherDate.toLocalDate()).days
 
-fun String.fromHtml() = HtmlCompat.fromHtml(this, HtmlCompat.FROM_HTML_MODE_COMPACT)
+fun String.fromHtml(flags: Int = HtmlCompat.FROM_HTML_MODE_COMPACT) =
+    HtmlCompat.fromHtml(this, flags)

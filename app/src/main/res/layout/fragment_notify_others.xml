@@ -21,8 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
-            android:text="@string/notify_others_title"
-            android:textSize="27sp" />
+            android:text="@string/notify_others_title" />
 
         <include layout="@layout/notify_other_steps" />
 

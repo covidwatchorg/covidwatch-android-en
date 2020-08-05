@@ -21,7 +21,7 @@
             tools:text="The app is active. You can now receive  exposure notifications from others you were near who later report themselves as positive for COVID-19." />
 
         <Button
-            android:id="@+id/btn_call"
+            android:id="@+id/btn_action"
             style="@style/Button.Action"
             android:layout_width="wrap_content"
             android:layout_gravity="center"

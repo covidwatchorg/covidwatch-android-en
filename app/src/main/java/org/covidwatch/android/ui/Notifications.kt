@@ -10,6 +10,7 @@ import android.os.Build
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import org.covidwatch.android.R
 import org.covidwatch.android.ui.BaseMainActivity.Companion.POTENTIAL_EXPOSURE_NOTIFICATION
 import org.covidwatch.android.ui.Intents.playStoreWithServices
@@ -31,6 +32,7 @@ class Notifications(private val context: Context) {
         )
 
         val builder = NotificationCompat.Builder(context, EXPOSURE_NOTIFICATION_CHANNEL_ID)
+            .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.notification_title))
             .setContentText(context.getString(R.string.notification_message))

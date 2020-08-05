@@ -149,7 +149,7 @@
                 android:layout_marginHorizontal="@dimen/padding_normal"
                 android:text="@string/btn_how_to_share_diagnosis" />
 
-            <View
+            <Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
