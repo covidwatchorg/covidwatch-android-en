@@ -9,6 +9,7 @@ import org.covidwatch.android.ui.Urls
 open class BaseMenuAdapter(
     private val onClick: (menuItem: MenuItem) -> Unit
 ) : RecyclerView.Adapter<MenuItemViewHolder>() {
+    private val shareDiagnosisPosition = 1
 
     private val possibleExposuresMenuItem = MenuItem(
         R.string.menu_possible_exposures,
@@ -23,23 +24,7 @@ open class BaseMenuAdapter(
     )
 
     protected val items = mutableListOf(
-        MenuItem(
-            R.string.menu_reset_possible_exposures,
-            0,
-            Destination.None
-        ),
-        MenuItem(
-            R.string.menu_detect_exposures_from_server,
-            0,
-            Destination.None
-        ),
-        MenuItem(
-            R.string.menu_export_possible_exposures,
-            0,
-            Destination.None
-        ),
         possibleExposuresMenuItem,
-        MenuItem(R.string.menu_notify_others, 0, NotifyOthers),
         MenuItem(R.string.menu_past_diagnoses, 0, PastDiagnoses),
         MenuItem(R.string.menu_change_region, 0, ChangeRegion),
         MenuItem(R.string.menu_how_it_works, 0, HowItWorks),
@@ -61,7 +46,7 @@ open class BaseMenuAdapter(
         MenuItem(
             R.string.menu_terms_of_use,
             R.drawable.ic_exit_to_app,
-            Browser(Urls.PRIVACY)
+            Browser(Urls.TERMS)
         ),
         MenuItem(
             R.string.menu_support,
@@ -69,6 +54,17 @@ open class BaseMenuAdapter(
             Browser(Urls.SUPPORT)
         )
     )
+
+    fun showShareDiagnosis(show: Boolean) {
+        if (show) {
+            items.add(
+                shareDiagnosisPosition, MenuItem(R.string.menu_notify_others, 0, NotifyOthers)
+            )
+        } else {
+            items.removeAt(shareDiagnosisPosition)
+        }
+
+    }
 
     fun showHighRiskPossibleExposures() {
         replace(possibleExposuresMenuItem, possibleExposuresHighRiskMenuItem)
