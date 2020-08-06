@@ -24,8 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
-            android:text="@string/verify_positive_diagnosis_title"
-            android:textSize="27sp" />
+            android:text="@string/verify_positive_diagnosis_title" />
 
         <com.google.android.material.progressindicator.ProgressIndicator
             android:id="@+id/upload_progress"
