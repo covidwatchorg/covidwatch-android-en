@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import org.covidwatch.android.R
 import org.covidwatch.android.databinding.FragmentEnableExposureNotificationsBinding
@@ -37,11 +38,12 @@ class EnableExposureNotificationsFragment :
                 findNavController().popBackStack()
             }
             observeEvent(continueOnboarding) {
-                val args = Bundle()
-                args.putBoolean("onboarding", true)
                 findNavController().popBackStack(R.id.howItWorksFragment, true)
                 findNavController().navigate(R.id.homeFragment)
-                findNavController().navigate(R.id.selectRegionFragment, args)
+                findNavController().navigate(
+                    R.id.selectRegionFragment,
+                    bundleOf("onboarding" to true)
+                )
             }
         }
     }

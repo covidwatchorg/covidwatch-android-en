@@ -102,7 +102,9 @@ open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuVie
             is Browser -> openBrowser(menuItem.destination.url)
             PossibleExposures -> findNavController().navigate(R.id.exposuresFragment)
             NotifyOthers -> findNavController().navigate(R.id.notifyOthersFragment)
-            HowItWorks -> findNavController().navigate(R.id.onboardingFragment)
+            HowItWorks -> {
+                findNavController().navigate(MenuFragmentDirections.onboarding(false))
+            }
             PastDiagnoses -> findNavController().navigate(R.id.positiveDiagnosesFragment)
             ChangeRegion -> findNavController().navigate(R.id.selectRegionFragment)
         }

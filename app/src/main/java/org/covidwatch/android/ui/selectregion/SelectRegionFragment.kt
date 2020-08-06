@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import org.covidwatch.android.R
 import org.covidwatch.android.databinding.FragmentSelectRegionBinding
 import org.covidwatch.android.extension.observe
@@ -18,6 +19,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SelectRegionFragment : BaseFragment<FragmentSelectRegionBinding>() {
 
     private val viewModel: SelectRegionViewModel by viewModel()
+    private val args: SelectRegionFragmentArgs by navArgs()
 
     override fun bind(
         inflater: LayoutInflater,
@@ -28,7 +30,7 @@ class SelectRegionFragment : BaseFragment<FragmentSelectRegionBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(viewModel) {
-            setOnboarding(arguments?.getBoolean("onboarding"))
+            setOnboarding(args.onboarding)
             observe(regions) {
                 val adapter = ArrayAdapter(requireContext(), R.layout.item_region_name, it)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

@@ -61,7 +61,7 @@ class ExposuresFragment : BaseViewModelFragment<FragmentExposuresBinding, Exposu
             }
             observeEvent(showExposureDetails) {
                 val action =
-                    ExposuresFragmentDirections.actionExposuresFragmentToExposureDetailsFragment(it)
+                    ExposuresFragmentDirections.exposureDetails(it)
                 findNavController().navigate(action)
             }
         }

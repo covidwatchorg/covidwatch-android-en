@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import org.covidwatch.android.R
@@ -16,8 +17,9 @@ import org.covidwatch.android.ui.BaseFragment
 class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
 
     private lateinit var pagerAdapter: OnboardingPagerAdapter
-    var isFirstPage = true
-    var isLastPage = false
+    private var isFirstPage = true
+    private var isLastPage = false
+    private val args: OnboardingFragmentArgs by navArgs()
 
     private val onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
@@ -32,6 +34,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
     private fun updateActionLayout() {
         binding.btnPreviousOnboardingScreen.visibility =
             if (isFirstPage) View.INVISIBLE else View.VISIBLE
+
         binding.onboardingPageIndicator.isVisible = !isLastPage
         binding.continueSetupButton.isVisible = isLastPage
     }
@@ -47,6 +50,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
         updateActionLayout()
 
         with(binding) {
+
             viewPager.adapter = pagerAdapter
             viewPager.registerOnPageChangeCallback(onPageChangeCallback)
             TabLayoutMediator(tabLayout, viewPager) { _, _ -> }.attach()
@@ -59,10 +63,18 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
                 viewPager.currentItem = tabLayout.selectedTabPosition + 1
             }
 
-            continueSetupButton.setOnClickListener {
-                // Remove previous onboarding fragments from the stack so we can't go back.
-                findNavController().popBackStack(R.id.homeFragment, false)
-                findNavController().navigate(R.id.enableExposureNotificationsFragment)
+            if (args.onboarding) {
+                continueSetupButton.setText(R.string.continue_setup_button)
+                continueSetupButton.setOnClickListener {
+                    // Remove previous onboarding fragments from the stack so we can't go back.
+                    findNavController().popBackStack(R.id.homeFragment, false)
+                    findNavController().navigate(R.id.enableExposureNotificationsFragment)
+                }
+            } else {
+                continueSetupButton.setText(R.string.button_finish)
+                continueSetupButton.setOnClickListener {
+                    findNavController().popBackStack(R.id.homeFragment, false)
+                }
             }
         }
 

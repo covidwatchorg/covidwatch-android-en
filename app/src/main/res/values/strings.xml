@@ -180,6 +180,7 @@
     <string name="finished_onboarding_subtitle">You can now…</string>
     <string name="finished_onboarding_text"><b>1.</b> Get exposure notifications whenever the setting is enabled\n<b>2.</b> Anonymously notify others when you choose to\n<b>3.</b> Get resources and recommendations</string>
     <string name="see_exposure_summary">View Detected Exposures</string>
+    <string name="button_finish">Finish</string>
 
     <!-- Home Screen-->
     <string name="current_region">&lt;b>Region:&lt;/b> &lt;u>%s&lt;/u></string>
@@ -315,6 +316,5 @@
     <string name="select_region_label">Select Region</string>
     <string name="btn_previous_onboarding_screen_description">Button previous onboarding screen</string>
     <string name="btn_next_onboarding_screen_description">Button next onboarding screen</string>
-
 
 </resources>

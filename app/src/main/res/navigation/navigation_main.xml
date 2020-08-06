@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation_temp"
+    android:id="@+id/main_nav"
     app:startDestination="@id/homeFragment">
 
     <fragment
@@ -11,7 +11,7 @@
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
         <action
-            android:id="@+id/action_splashFragment_to_howItWorksFragment"
+            android:id="@+id/howItWorks"
             app:destination="@id/howItWorksFragment" />
     </fragment>
 
@@ -20,8 +20,12 @@
         android:name="org.covidwatch.android.ui.selectregion.SelectRegionFragment"
         android:label="SelectRegionFragment"
         tools:layout="@layout/fragment_select_region">
+        <argument
+            android:name="onboarding"
+            android:defaultValue="false"
+            app:argType="boolean" />
         <action
-            android:id="@+id/action_splashFragment_to_finishedOnboardingFragment"
+            android:id="@+id/finishedOnboarding"
             app:destination="@id/finishedOnboardingFragment" />
     </fragment>
 
@@ -61,7 +65,11 @@
         android:id="@+id/menuFragment"
         android:name="org.covidwatch.android.ui.menu.MenuFragment"
         android:label="MenuFragment"
-        tools:layout="@layout/fragment_menu" />
+        tools:layout="@layout/fragment_menu">
+        <action
+            android:id="@+id/onboarding"
+            app:destination="@id/onboardingFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/positiveDiagnosesFragment"
@@ -81,7 +89,7 @@
         android:label="Possible Exposures"
         tools:layout="@layout/fragment_exposures">
         <action
-            android:id="@+id/action_exposuresFragment_to_exposureDetailsFragment"
+            android:id="@+id/exposureDetails"
             app:destination="@id/exposureDetailsFragment" />
     </fragment>
 
@@ -102,8 +110,12 @@
         android:name="org.covidwatch.android.ui.onboarding.OnboardingFragment"
         android:label="OnboardingFragment"
         tools:layout="@layout/fragment_onboarding">
+        <argument
+            android:name="onboarding"
+            android:defaultValue="true"
+            app:argType="boolean" />
         <action
-            android:id="@+id/action_onboardingFragment_to_enableExposureNotificationsFragment"
+            android:id="@+id/enableExposureNotifications"
             app:destination="@id/enableExposureNotificationsFragment" />
     </fragment>
 
@@ -113,13 +125,8 @@
         android:label="EnableExposureNotificationsFragment"
         tools:layout="@layout/fragment_enable_exposure_notifications">
         <action
-            android:id="@+id/action_enableExposureNotificationsFragment_to_selectRegionFragment"
-            app:destination="@id/selectRegionFragment">
-            <argument
-                android:name="onboarding"
-                android:defaultValue="true"
-                app:argType="boolean" />
-        </action>
+            android:id="@+id/selectRegion"
+            app:destination="@id/selectRegionFragment" />
     </fragment>
 
     <fragment
@@ -128,7 +135,7 @@
         android:label="FinishedOnboardingFragment"
         tools:layout="@layout/fragment_finished_onboarding">
         <action
-            android:id="@+id/action_finishedOnboardingFragment_to_homeFragment"
+            android:id="@+id/home"
             app:destination="@id/homeFragment" />
     </fragment>
 
@@ -137,7 +144,7 @@
         android:name="org.covidwatch.android.ui.reporting.NotifyOthersFragment"
         android:label="NotifyOthersFragment">
         <action
-            android:id="@+id/action_notifyOthersFragment_to_verifyPositiveDiagnosisFragment"
+            android:id="@+id/verifyPositiveDiagnosis"
             app:destination="@id/verifyPositiveDiagnosisFragment" />
     </fragment>
     <fragment
@@ -146,11 +153,11 @@
         android:label="VerifyPositiveDiagnosisFragment"
         tools:layout="@layout/fragment_verify_positive_diagnosis">
         <action
-            android:id="@+id/action_verifyPositiveDiagnosisFragment_to_thanksForReportingFragment"
-            app:destination="@id/thanksForReportingFragment" />
+            android:id="@+id/sharedDiagnosis"
+            app:destination="@id/sharedDiagnosisFragment" />
     </fragment>
     <fragment
-        android:id="@+id/thanksForReportingFragment"
+        android:id="@+id/sharedDiagnosisFragment"
         android:name="org.covidwatch.android.ui.reporting.SharedDiagnosisFragment"
-        android:label="ThanksForReportingFragment" />
+        android:label="SharedDiagnosisFragment" />
 </navigation>
