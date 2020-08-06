@@ -167,7 +167,7 @@
     <string name="how_it_works_title_4">Help Communities</string>
     <string name="how_it_works_text_4">By <b>enabling notifications</b> and staying home when at risk of exposing others, they help prevent the spread of COVID-19 within their communities.</string>
     <string name="enable_exposure_notifications_title">Enable\nExposure Notifications</string>
-    <string name="enable_exposure_notifications_subtitle">These notifications will let know if <b>you’ve been exposed</b> to a person who later reports themselves as having tested positive for COVID-19. It can be turned off at any time.</string>
+    <string name="enable_exposure_notifications_subtitle">These notifications will let you know if <b>you’ve been exposed</b> to a person who later reports themselves as having tested positive for COVID-19. It can be turned off at any time.</string>
     <string name="enable_button">Enable</string>
     <string name="not_now_button">Not now</string>
     <string name="how_it_works">How it Works</string>
