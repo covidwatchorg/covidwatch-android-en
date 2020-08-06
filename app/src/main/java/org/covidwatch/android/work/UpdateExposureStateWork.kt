@@ -12,7 +12,6 @@ import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.domain.UpdateExposureInformationUseCase
 import org.covidwatch.android.domain.UpdateExposureInformationUseCase.Params
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
-import org.covidwatch.android.ui.Notifications
 import org.koin.java.KoinJavaComponent.inject
 import timber.log.Timber
 import java.time.Instant
@@ -25,15 +24,13 @@ class UpdateExposureStateWork(
     private val exposureNotification by inject(ExposureNotificationManager::class.java)
     private val diagnosisKeysTokenRepository by inject(DiagnosisKeysTokenRepository::class.java)
     private val exposureInformationRepository by inject(ExposureInformationRepository::class.java)
-    private val notifications by inject(Notifications::class.java)
 
     private val preferenceStorage by inject(PreferenceStorage::class.java)
     private val enConverter by inject(EnConverter::class.java)
     private val updateExposureInformationUseCase by inject(UpdateExposureInformationUseCase::class.java)
 
     override suspend fun doWork(): Result {
-        val token =
-            workerParams.inputData.getString(PARAM_TOKEN) ?: return failure(FAILED)
+        val token = workerParams.inputData.getString(PARAM_TOKEN) ?: return failure(FAILED)
         Timber.d("Start UpdateExposureStateWork for token: $token")
 
         val exposureSummaryResult = exposureNotification.getExposureSummary(token)
@@ -49,8 +46,6 @@ class UpdateExposureStateWork(
 
             // Update risk metrics
             preferenceStorage.riskMetrics = enConverter.riskMetrics(exposures, Instant.now())
-
-            notifications.postExposureNotification()
         } else {
             Timber.d("No exposure for token: $token")
             diagnosisKeysTokenRepository.delete(token)
