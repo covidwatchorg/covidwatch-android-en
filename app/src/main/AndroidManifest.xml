@@ -40,8 +40,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.exposurenotification.ExposureNotificationActivity" />
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
