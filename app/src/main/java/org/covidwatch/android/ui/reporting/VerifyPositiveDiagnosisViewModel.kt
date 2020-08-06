@@ -121,22 +121,19 @@ class VerifyPositiveDiagnosisViewModel(
             val diagnosis = positiveDiagnosisRepository.diagnosisByVerificationCode(code)
             val verificationData = diagnosis?.verificationData
             val token = verificationData?.token
-            val symptomsStartDate = verificationData?.symptomsStartDate
             val testType = verificationData?.testType
-            val certificate = verificationData?.verificationCertificate
-            val hmacKey = verificationData?.hmacKey
 
             if (!token.isNullOrEmpty() && !testType.isNullOrEmpty()) {
                 positiveDiagnosisReport = diagnosis
 
-                // Take first the server data then consider user input if no symptoms wasn't selected
-                val symptomsDate = symptomsStartDate
-                    ?: symptomDate.takeIf { diagnosisVerification.value?.noSymptoms == true }
+                val symptomsStartDate = verificationData.symptomsStartDate
+                val certificate = verificationData.verificationCertificate
+                val hmacKey = verificationData.hmacKey
 
                 setDiagnosisVerification(
                     diagnosisVerification.value?.copy(
                         testType = testType,
-                        symptomsStartDate = symptomsDate,
+                        symptomsStartDate = validSymptomsDate(symptomsStartDate),
                         token = token,
                         verificationCertificate = certificate,
                         hmacKey = hmacKey
@@ -147,10 +144,11 @@ class VerifyPositiveDiagnosisViewModel(
             } else // Verify the code remotely if there is no local report with this code
                 verificationManager.verify(code).apply {
                     success {
+
                         setDiagnosisVerification(
                             diagnosisVerification.value?.copy(
                                 testType = it.testType,
-                                symptomsStartDate = it.symptomDate ?: symptomDate,
+                                symptomsStartDate = validSymptomsDate(it.symptomDate),
                                 token = it.token
                             )
                         )
@@ -172,6 +170,12 @@ class VerifyPositiveDiagnosisViewModel(
                 }
         }
     }
+
+    /**
+     *  Take first the server data then consider user's input if "no symptoms" was not selected
+     */
+    private fun validSymptomsDate(serverSymptomDate: Instant?) = serverSymptomDate
+        ?: symptomDate.takeIf { diagnosisVerification.value?.noSymptoms == false }
 
     private suspend fun shareReportIfEnEnabled() {
         enManager.isEnabled().apply {
