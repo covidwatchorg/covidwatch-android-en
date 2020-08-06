@@ -115,7 +115,8 @@
                 android:paddingHorizontal="@dimen/padding_normal"
                 android:paddingVertical="@dimen/padding_normal"
                 android:text="@string/next_steps_title"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/next_steps"
