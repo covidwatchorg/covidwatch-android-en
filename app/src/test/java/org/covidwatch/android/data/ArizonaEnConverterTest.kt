@@ -6,14 +6,12 @@ import org.covidwatch.android.data.pref.FakePreferenceStorage
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ExposureNotification
 import org.junit.jupiter.api.Assertions.assertArrayEquals
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 import kotlin.random.Random
-import kotlin.test.assertEquals
 
-// TODO: 27.07.2020 CRITICAL: Update totalRiskScore calculation tests to the latest configuration
-// The expected values were just changed to the returned values from the function for the sake of CI
 class ArizonaEnConverterTest {
     private val prefs: PreferenceStorage = FakePreferenceStorage()
     private val enConverter = ArizonaEnConverter(prefs)
@@ -26,6 +24,68 @@ class ArizonaEnConverterTest {
             .setTransmissionRiskLevel(Random.nextInt(4))
             .setTotalRiskScore(Random.nextInt(8))
             .setAttenuationDurations(intArrayOf(0, 30, 0))
+
+    private val day0 = Instant.now()
+    private val day2 = day0.plus(2, ChronoUnit.DAYS)
+    private val day3 = day0.plus(3, ChronoUnit.DAYS)
+    private val day4 = day0.plus(4, ChronoUnit.DAYS)
+    private val day18 = day0.plus(18, ChronoUnit.DAYS)
+
+    private val day2Ago = day0.plus(-2, ChronoUnit.DAYS)
+    private val day3Ago = day0.plus(-3, ChronoUnit.DAYS)
+    private val day4Ago = day0.plus(-4, ChronoUnit.DAYS)
+    private val day18Ago = day0.plus(-18, ChronoUnit.DAYS)
+
+    private var exposures = listOf(
+        CovidExposureInformation(
+            attenuationDurations = listOf(5, 10, 5),
+            attenuationValue = 0,
+            date = day0,
+            duration = 0,
+            totalRiskScore = 0,
+            transmissionRiskLevel = 6,
+            id = 0
+        ),
+        CovidExposureInformation(
+            attenuationDurations = listOf(10, 0, 0),
+            attenuationValue = 0,
+            date = day3,
+            duration = 0,
+            totalRiskScore = 0,
+            transmissionRiskLevel = 6,
+            id = 0
+        )
+    )
+
+    private var exposures3daysAfter = listOf(
+        CovidExposureInformation(
+            attenuationDurations = listOf(0, 0, 25),
+            attenuationValue = 0,
+            date = day3,
+            duration = 0,
+            totalRiskScore = 0,
+            transmissionRiskLevel = 6,
+            id = 0
+        ),
+        CovidExposureInformation(
+            attenuationDurations = listOf(5, 20, 5),
+            attenuationValue = 0,
+            date = day3,
+            duration = 0,
+            totalRiskScore = 0,
+            transmissionRiskLevel = 6,
+            id = 0
+        ),
+        CovidExposureInformation(
+            attenuationDurations = listOf(5, 0, 0),
+            attenuationValue = 0,
+            date = day3,
+            duration = 0,
+            totalRiskScore = 0,
+            transmissionRiskLevel = 6,
+            id = 0
+        )
+    )
 
     private val Instant.intervalNumber: Int
         get() {
@@ -280,6 +340,74 @@ class ArizonaEnConverterTest {
         assertEquals(0, resultExposure.totalRiskScore)
     }
 
+    /* RISK LEVEL CALCULATION */
+
+    @Test
+    fun `Risk level between two exposures`() {
+        //given
+        val computeDate = day2
+        //when
+        val riskLevel = enConverter.riskLevelValue(exposures, computeDate)
+
+        //then
+        assertEquals(0.689657, riskLevel, 0.0001)
+    }
+
+    @Test
+    fun `Risk level at the last exposure`() {
+        //given
+        val computeDate = day3
+        //when
+        val riskLevel = enConverter.riskLevelValue(exposures, computeDate)
+
+        //then
+        assertEquals(1.395461, riskLevel, 0.0001)
+    }
+
+    @Test
+    fun `Risk level long after exposures`() {
+        //given
+        val computeDate = day18
+        //when
+        val riskLevel = enConverter.riskLevelValue(exposures, computeDate)
+
+        //then
+        assertEquals(0.436539, riskLevel, 0.0001)
+    }
+
+
+    @Test
+    fun `Risk level before any exposures`() {
+        //given
+        val computeDate = day2
+        //when
+        val riskLevel = enConverter.riskLevelValue(exposures3daysAfter, computeDate)
+
+        //then
+        assertEquals(0.0, riskLevel, 0.0001)
+    }
+
+    @Test
+    fun `Risk level one day after exposures`() {
+        //given
+        val computeDate = day4
+        //when
+        val riskLevel = enConverter.riskLevelValue(exposures3daysAfter, computeDate)
+
+        //then
+        assertEquals(1.527189, riskLevel, 0.0001)
+    }
+
+    @Test
+    fun `Risk level long after long exposures`() {
+        //given
+        val computeDate = day18
+        //when
+        val riskLevel = enConverter.riskLevelValue(exposures3daysAfter, computeDate)
+
+        //then
+        assertEquals(0.520678, riskLevel, 0.0001)
+    }
 
     /* DIAGNOSIS KEY CONVERSION */
 
@@ -295,7 +423,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
+        val diagnosisKey = enConverter.diagnosisKey(key, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -316,7 +444,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
+        val diagnosisKey = enConverter.diagnosisKey(key, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -337,7 +465,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
+        val diagnosisKey = enConverter.diagnosisKey(key, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -358,7 +486,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
+        val diagnosisKey = enConverter.diagnosisKey(key, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -443,7 +571,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
+        val diagnosisKey = enConverter.diagnosisKey(key, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -464,7 +592,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
+        val diagnosisKey = enConverter.diagnosisKey(key, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -485,7 +613,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
+        val diagnosisKey = enConverter.diagnosisKey(key, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -506,7 +634,7 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
+        val diagnosisKey = enConverter.diagnosisKey(key, today)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
@@ -527,7 +655,205 @@ class ArizonaEnConverterTest {
             .build()
 
         //when
-        val diagnosisKey = enConverter.diagnosisKey(key, today, today, today)
+        val diagnosisKey = enConverter.diagnosisKey(key, today)
+
+        //then
+        assertArrayEquals(keyData, diagnosisKey.key)
+        assertEquals(intervalNumber, diagnosisKey.rollingStartNumber)
+        assertEquals(0, diagnosisKey.transmissionRisk)
+        assertEquals(keyRollingPeriod, diagnosisKey.rollingPeriod)
+    }
+
+    /* Test date */
+    @Test
+    fun `Key and test dates are the same`() {
+        //given
+        val daysBetweenKeyAndSymptoms = 0L
+        val today = Instant.now()
+        val keyDate = Instant.now().plus(daysBetweenKeyAndSymptoms, ChronoUnit.DAYS)
+        val intervalNumber = keyDate.intervalNumber
+        val key = keyBuilder
+            .setRollingStartIntervalNumber(intervalNumber)
+            .build()
+
+        //when
+        val diagnosisKey = enConverter.diagnosisKey(key, testDate = today)
+
+        //then
+        assertArrayEquals(keyData, diagnosisKey.key)
+        assertEquals(intervalNumber, diagnosisKey.rollingStartNumber)
+        assertEquals(3, diagnosisKey.transmissionRisk)
+        assertEquals(keyRollingPeriod, diagnosisKey.rollingPeriod)
+    }
+
+    @Test
+    fun `Key date is 2 days before test date`() {
+        //given
+        val daysBetweenKeyAndSymptoms = -2L
+        val today = Instant.now()
+        val keyDate = Instant.now().plus(daysBetweenKeyAndSymptoms, ChronoUnit.DAYS)
+        val intervalNumber = keyDate.intervalNumber
+        val key = keyBuilder
+            .setRollingStartIntervalNumber(intervalNumber)
+            .build()
+
+        //when
+        val diagnosisKey = enConverter.diagnosisKey(key, testDate = today)
+
+        //then
+        assertArrayEquals(keyData, diagnosisKey.key)
+        assertEquals(intervalNumber, diagnosisKey.rollingStartNumber)
+        assertEquals(2, diagnosisKey.transmissionRisk)
+        assertEquals(keyRollingPeriod, diagnosisKey.rollingPeriod)
+    }
+
+    @Test
+    fun `Key date is 3 days before test date`() {
+        //given
+        val daysBetweenKeyAndSymptoms = -3L
+        val today = Instant.now()
+        val keyDate = Instant.now().plus(daysBetweenKeyAndSymptoms, ChronoUnit.DAYS)
+        val intervalNumber = keyDate.intervalNumber
+        val key = keyBuilder
+            .setRollingStartIntervalNumber(intervalNumber)
+            .build()
+
+        //when
+        val diagnosisKey = enConverter.diagnosisKey(key, testDate = today)
+
+        //then
+        assertArrayEquals(keyData, diagnosisKey.key)
+        assertEquals(intervalNumber, diagnosisKey.rollingStartNumber)
+        assertEquals(2, diagnosisKey.transmissionRisk)
+        assertEquals(keyRollingPeriod, diagnosisKey.rollingPeriod)
+    }
+
+    @Test
+    fun `Key date is 18 days before test date`() {
+        //given
+        val daysBetweenKeyAndSymptoms = -18L
+        val today = Instant.now()
+        val keyDate = Instant.now().plus(daysBetweenKeyAndSymptoms, ChronoUnit.DAYS)
+        val intervalNumber = keyDate.intervalNumber
+        val key = keyBuilder
+            .setRollingStartIntervalNumber(intervalNumber)
+            .build()
+
+        //when
+        val diagnosisKey = enConverter.diagnosisKey(key, testDate = today)
+
+        //then
+        assertArrayEquals(keyData, diagnosisKey.key)
+        assertEquals(intervalNumber, diagnosisKey.rollingStartNumber)
+        assertEquals(0, diagnosisKey.transmissionRisk)
+        assertEquals(keyRollingPeriod, diagnosisKey.rollingPeriod)
+    }
+
+    @Test
+    fun `Key and test dates same but infection date 3 day before key date`() {
+        //given
+        val intervalNumber = day0.intervalNumber
+        val key = keyBuilder
+            .setRollingStartIntervalNumber(intervalNumber)
+            .build()
+
+        //when
+        val diagnosisKey =
+            enConverter.diagnosisKey(key, testDate = day0, possibleInfectionDate = day3Ago)
+
+        //then
+        assertArrayEquals(keyData, diagnosisKey.key)
+        assertEquals(intervalNumber, diagnosisKey.rollingStartNumber)
+        assertEquals(3, diagnosisKey.transmissionRisk)
+        assertEquals(keyRollingPeriod, diagnosisKey.rollingPeriod)
+    }
+
+    @Test
+    fun `Key date 2 days before test date but infection date 4 day before key date`() {
+        //given
+        val intervalNumber = day0.intervalNumber
+        val key = keyBuilder
+            .setRollingStartIntervalNumber(intervalNumber)
+            .build()
+
+        //when
+        val diagnosisKey =
+            enConverter.diagnosisKey(key, testDate = day2, possibleInfectionDate = day4Ago)
+
+        //then
+        assertArrayEquals(keyData, diagnosisKey.key)
+        assertEquals(intervalNumber, diagnosisKey.rollingStartNumber)
+        assertEquals(2, diagnosisKey.transmissionRisk)
+        assertEquals(keyRollingPeriod, diagnosisKey.rollingPeriod)
+    }
+
+    @Test
+    fun `Key date 3 days before test date but infection date 18 day before key date`() {
+        //given
+        val intervalNumber = day0.intervalNumber
+        val key = keyBuilder
+            .setRollingStartIntervalNumber(intervalNumber)
+            .build()
+
+        //when
+        val diagnosisKey =
+            enConverter.diagnosisKey(key, testDate = day3, possibleInfectionDate = day18Ago)
+
+        //then
+        assertArrayEquals(keyData, diagnosisKey.key)
+        assertEquals(intervalNumber, diagnosisKey.rollingStartNumber)
+        assertEquals(2, diagnosisKey.transmissionRisk)
+        assertEquals(keyRollingPeriod, diagnosisKey.rollingPeriod)
+    }
+
+    @Test
+    fun `Key date 18 days before test date`() {
+        //given
+        val intervalNumber = day0.intervalNumber
+        val key = keyBuilder
+            .setRollingStartIntervalNumber(intervalNumber)
+            .build()
+
+        //when
+        val diagnosisKey = enConverter.diagnosisKey(key, testDate = day18Ago)
+
+        //then
+        assertArrayEquals(keyData, diagnosisKey.key)
+        assertEquals(intervalNumber, diagnosisKey.rollingStartNumber)
+        assertEquals(0, diagnosisKey.transmissionRisk)
+        assertEquals(keyRollingPeriod, diagnosisKey.rollingPeriod)
+    }
+
+    @Test
+    fun `Key date 3 days before test date and 1 day after infection date`() {
+        //given
+        val intervalNumber = day3Ago.intervalNumber
+        val key = keyBuilder
+            .setRollingStartIntervalNumber(intervalNumber)
+            .build()
+
+        //when
+        val diagnosisKey =
+            enConverter.diagnosisKey(key, testDate = day0, possibleInfectionDate = day4Ago)
+
+        //then
+        assertArrayEquals(keyData, diagnosisKey.key)
+        assertEquals(intervalNumber, diagnosisKey.rollingStartNumber)
+        assertEquals(0, diagnosisKey.transmissionRisk)
+        assertEquals(keyRollingPeriod, diagnosisKey.rollingPeriod)
+    }
+
+    @Test
+    fun `Key and infection dates same and 3 days before test date`() {
+        //given
+        val intervalNumber = day3Ago.intervalNumber
+        val key = keyBuilder
+            .setRollingStartIntervalNumber(intervalNumber)
+            .build()
+
+        //when
+        val diagnosisKey =
+            enConverter.diagnosisKey(key, testDate = day0, possibleInfectionDate = day3Ago)
 
         //then
         assertArrayEquals(keyData, diagnosisKey.key)

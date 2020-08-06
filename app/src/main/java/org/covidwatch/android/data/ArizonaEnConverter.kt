@@ -5,9 +5,7 @@ import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ExposureNotification
 import org.covidwatch.android.extension.daysTo
-import org.covidwatch.android.extension.toLocalDate
 import java.time.Instant
-import java.time.Period
 import kotlin.math.exp
 
 class ArizonaEnConverter(private val prefs: PreferenceStorage) : EnConverter {
@@ -52,8 +50,7 @@ class ArizonaEnConverter(private val prefs: PreferenceStorage) : EnConverter {
     ): Double {
         var infectedRisk = 0.0
         getDateExposureRisks(exposures).forEach { (date, transmissionRisk) ->
-            val days =
-                Period.between(date.toLocalDate(), computeDate.toLocalDate()).days
+            val days = date.daysTo(computeDate)
             if (days >= 0 && days < config.discountSchedule.size) {
                 val discountedRisk = transmissionRisk * config.discountSchedule[days]
                 infectedRisk = combineRisks(infectedRisk, discountedRisk)

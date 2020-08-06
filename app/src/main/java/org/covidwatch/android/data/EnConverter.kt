@@ -10,9 +10,9 @@ interface EnConverter {
     fun covidExposureInformation(exposureInformation: ExposureInformation): CovidExposureInformation
     fun diagnosisKey(
         key: TemporaryExposureKey,
-        symptomsStartDate: Instant?,
-        testDate: Instant?,
-        possibleInfectionDate: Instant?
+        symptomsStartDate: Instant? = null,
+        testDate: Instant? = null,
+        possibleInfectionDate: Instant? = null
     ): DiagnosisKey
 
     fun riskLevelValue(exposures: List<CovidExposureInformation>, computeDate: Instant): Double
