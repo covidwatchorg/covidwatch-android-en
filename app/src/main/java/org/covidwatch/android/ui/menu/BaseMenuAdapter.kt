@@ -44,11 +44,6 @@ open class BaseMenuAdapter(
             Browser(Urls.PRIVACY)
         ),
         MenuItem(
-            R.string.menu_terms_of_use,
-            R.drawable.ic_exit_to_app,
-            Browser(Urls.TERMS)
-        ),
-        MenuItem(
             R.string.menu_support,
             R.drawable.ic_exit_to_app,
             Browser(Urls.SUPPORT)
