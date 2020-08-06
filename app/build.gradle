@@ -51,27 +51,18 @@ android {
             testCoverageEnabled false
             buildConfigField("boolean", "FIREBASE_DEBUGGING", "false")
             signingConfig signingConfigs.debug
-
-            def localPropertiesFile = rootProject.file("release.properties")
-            def localProperties = new Properties()
-
-            if (localPropertiesFile.canRead()) {
-                localProperties.load(new FileInputStream(localPropertiesFile))
-            }
-
-            def verification_api_key = project.hasProperty('VERIFICATION_API_KEY') ? project.getProperty('VERIFICATION_API_KEY') : localProperties["VERIFICATION_API_KEY"]
-            def server_verification_endpoint = project.hasProperty('SERVER_VERIFICATION_ENDPOINT') ? project.getProperty('SERVER_VERIFICATION_ENDPOINT') : localProperties["SERVER_VERIFICATION_ENDPOINT"]
-            def server_upload_endpoint = project.hasProperty('SERVER_UPLOAD_ENDPOINT') ? project.getProperty('SERVER_UPLOAD_ENDPOINT') : localProperties["SERVER_UPLOAD_ENDPOINT"]
-            def server_download_endpoint = project.hasProperty('SERVER_DOWNLOAD_ENDPOINT') ? project.getProperty('SERVER_DOWNLOAD_ENDPOINT') : localProperties["SERVER_DOWNLOAD_ENDPOINT"]
-
-            resValue("string", "verification_api_key", verification_api_key)
-            resValue("string", "server_verification_endpoint", server_verification_endpoint)
-            resValue("string", "server_upload_endpoint", server_upload_endpoint)
-            resValue("string", "server_download_endpoint", server_download_endpoint)
         }
         debug {
             testCoverageEnabled project.hasProperty('coverage')
             buildConfigField "boolean", "FIREBASE_DEBUGGING", "true"
+        }
+    }
+
+    flavorDimensions "releaseChannel", "client"
+
+    productFlavors {
+        calibration {
+            dimension "releaseChannel"
 
             def localPropertiesFile = rootProject.file("debug.properties")
             def localProperties = new Properties()
@@ -90,16 +81,25 @@ android {
             resValue("string", "server_upload_endpoint", server_upload_endpoint)
             resValue("string", "server_download_endpoint", server_download_endpoint)
         }
-    }
-
-    flavorDimensions "releaseChannel", "client"
-
-    productFlavors {
-        calibration {
-            dimension "releaseChannel"
-        }
         production {
             dimension "releaseChannel"
+
+            def localPropertiesFile = rootProject.file("release.properties")
+            def localProperties = new Properties()
+
+            if (localPropertiesFile.canRead()) {
+                localProperties.load(new FileInputStream(localPropertiesFile))
+            }
+
+            def verification_api_key = project.hasProperty('VERIFICATION_API_KEY') ? project.getProperty('VERIFICATION_API_KEY') : localProperties["VERIFICATION_API_KEY"]
+            def server_verification_endpoint = project.hasProperty('SERVER_VERIFICATION_ENDPOINT') ? project.getProperty('SERVER_VERIFICATION_ENDPOINT') : localProperties["SERVER_VERIFICATION_ENDPOINT"]
+            def server_upload_endpoint = project.hasProperty('SERVER_UPLOAD_ENDPOINT') ? project.getProperty('SERVER_UPLOAD_ENDPOINT') : localProperties["SERVER_UPLOAD_ENDPOINT"]
+            def server_download_endpoint = project.hasProperty('SERVER_DOWNLOAD_ENDPOINT') ? project.getProperty('SERVER_DOWNLOAD_ENDPOINT') : localProperties["SERVER_DOWNLOAD_ENDPOINT"]
+
+            resValue("string", "verification_api_key", verification_api_key)
+            resValue("string", "server_verification_endpoint", server_verification_endpoint)
+            resValue("string", "server_upload_endpoint", server_upload_endpoint)
+            resValue("string", "server_download_endpoint", server_download_endpoint)
         }
         arizona {
             dimension "client"
