@@ -12,7 +12,7 @@ import org.covidwatch.android.ui.BaseViewModelFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-open class BaseNotifyOthersFragment :
+class NotifyOthersFragment :
     BaseViewModelFragment<FragmentNotifyOthersBinding, NotifyOthersViewModel>() {
 
     override val viewModel: NotifyOthersViewModel by viewModel()

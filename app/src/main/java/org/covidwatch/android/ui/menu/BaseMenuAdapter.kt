@@ -9,7 +9,8 @@ import org.covidwatch.android.ui.Urls
 open class BaseMenuAdapter(
     private val onClick: (menuItem: MenuItem) -> Unit
 ) : RecyclerView.Adapter<MenuItemViewHolder>() {
-    private val shareDiagnosisPosition = 1
+    // TODO: 07.08.2020 rework this a slightly barbarian solution
+    protected open val shareDiagnosisPosition = 1
 
     private val possibleExposuresMenuItem = MenuItem(
         R.string.menu_possible_exposures,

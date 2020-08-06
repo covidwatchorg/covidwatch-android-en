@@ -36,6 +36,7 @@ import org.covidwatch.android.ui.exposures.ExposuresViewModel
 import org.covidwatch.android.ui.home.HomeViewModel
 import org.covidwatch.android.ui.menu.MenuViewModel
 import org.covidwatch.android.ui.onboarding.EnableExposureNotificationsViewModel
+import org.covidwatch.android.ui.reporting.NotifyOthersViewModel
 import org.covidwatch.android.ui.reporting.PositiveDiagnosesViewModel
 import org.covidwatch.android.ui.reporting.VerifyPositiveDiagnosisViewModel
 import org.covidwatch.android.ui.selectregion.SelectRegionViewModel
@@ -259,6 +260,10 @@ val appModule = module {
             "org.covidwatch.android.PREFERENCE_FILE_KEY",
             Context.MODE_PRIVATE
         )
+    }
+
+    viewModel {
+        NotifyOthersViewModel()
     }
 
     viewModel {

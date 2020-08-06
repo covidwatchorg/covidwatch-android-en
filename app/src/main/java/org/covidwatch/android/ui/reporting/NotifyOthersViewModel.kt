@@ -6,12 +6,12 @@ import org.covidwatch.android.extension.send
 import org.covidwatch.android.ui.BaseViewModel
 import org.covidwatch.android.ui.event.Event
 
-open class BaseNotifyOthersViewModel : BaseViewModel() {
+class NotifyOthersViewModel : BaseViewModel() {
 
     private val _openVerificationScreen = MutableLiveData<Event<Unit>>()
     val openVerificationScreen: LiveData<Event<Unit>> = _openVerificationScreen
 
-    open fun sharePositiveDiagnosis() {
+    fun sharePositiveDiagnosis() {
         _openVerificationScreen.send()
     }
 }
