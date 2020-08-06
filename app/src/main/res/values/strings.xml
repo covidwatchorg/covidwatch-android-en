@@ -184,7 +184,7 @@
     <!-- Home Screen-->
     <string name="current_region">&lt;b>Region:&lt;/b> &lt;u>%s&lt;/u></string>
     <string name="unknown_risk_title">The app is active and will continue to detect and notify you of possible exposures.</string>
-    <string name="next_steps_title">Next steps based on your &lt;b>possible COVID-19 exposures&lt;/b> and selected &lt;b>region&lt;/b>:</string>
+    <string name="next_steps_title">Next steps:</string>
     <string name="home_days_since_last_exposure"><b>days</b>\nsince last exposure</string>
     <string name="home_possible_exposures"><b>possible exposures</b>\nin the last 14 days</string>
     <string name="home_total_risk_score"><b>total risk score</b> (1–8) scale</string>

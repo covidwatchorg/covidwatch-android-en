@@ -20,7 +20,6 @@ import org.covidwatch.android.data.NextStepType
 import org.covidwatch.android.data.RiskLevel
 import org.covidwatch.android.databinding.FragmentHomeBinding
 import org.covidwatch.android.databinding.ItemNextStepBinding
-import org.covidwatch.android.extension.fromHtml
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.extension.shareApp
@@ -57,39 +56,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
 
             observe(riskLevel) {
-                // TODO: 22.07.2020 Make this logic more clear and separate for different view groups
                 when (it) {
+                    RiskLevel.DISABLED,
                     RiskLevel.VERIFIED_POSITIVE -> {
                         binding.actionLayoutTitle.isVisible = false
                         binding.actionLayoutInfo.isVisible = false
                         binding.actionLayoutBtn.isVisible = false
-
-                        binding.riskInfo.isVisible = true
-                        binding.riskInfo.text = getString(R.string.next_steps_title).fromHtml()
                     }
-                    RiskLevel.HIGH -> {
-                        binding.actionLayoutTitle.isVisible = true
-                        binding.actionLayoutInfo.isVisible = true
-                        binding.actionLayoutBtn.isVisible = true
-
-                        binding.riskInfo.isVisible = true
-                        binding.riskInfo.text = getString(R.string.next_steps_title).fromHtml()
-                    }
+                    RiskLevel.HIGH,
                     RiskLevel.LOW -> {
-
                         binding.actionLayoutTitle.isVisible = true
                         binding.actionLayoutInfo.isVisible = true
                         binding.actionLayoutBtn.isVisible = true
-
-                        binding.riskInfo.isVisible = true
-                        binding.riskInfo.text = getString(R.string.unknown_risk_title).fromHtml()
-                    }
-                    RiskLevel.DISABLED -> {
-                        binding.actionLayoutTitle.isVisible = false
-                        binding.actionLayoutInfo.isVisible = false
-                        binding.actionLayoutBtn.isVisible = false
-
-                        binding.riskInfo.isVisible = false
                     }
                 }
 

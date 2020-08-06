@@ -109,13 +109,12 @@
                 tools:text="My Risk Today: Unknown" />
 
             <TextView
-                android:id="@+id/risk_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/lightGray"
                 android:paddingHorizontal="@dimen/padding_normal"
-                android:paddingTop="@dimen/padding_normal"
-                android:text="@string/unknown_risk_title"
+                android:paddingVertical="@dimen/padding_normal"
+                android:text="@string/next_steps_title"
                 android:textSize="14sp" />
 
             <LinearLayout
@@ -123,8 +122,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/lightGray"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/padding_normal" />
+                android:orientation="vertical" />
 
             <TextView
                 android:id="@+id/action_layout_title"
