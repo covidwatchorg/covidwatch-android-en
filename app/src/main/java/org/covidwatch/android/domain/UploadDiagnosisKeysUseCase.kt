@@ -64,6 +64,12 @@ class UploadDiagnosisKeysUseCase(
                 }
                 .filter { it.transmissionRisk != 0 }
 
+            // If no keys to submit just create a verified report localy and don't send it to the server
+            if (diagnosisKeys.isEmpty()) {
+                diagnosisRepository.updatePositiveDiagnosisReport(params.report.copy(verified = true))
+                return Either.Right(Unit)
+            }
+
             Timber.d("Diagnosis Keys ${diagnosisKeys.joinToString()}")
 
             val regions = countryCodeRepository.exposureRelevantCountryCodes()
