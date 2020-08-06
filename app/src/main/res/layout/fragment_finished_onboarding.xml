@@ -92,14 +92,15 @@
         app:layout_constraintTop_toBottomOf="@id/image" />
 
     <TextView
-        style="@style/TextView.ScreenSubtitle"
+        android:id="@+id/text_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/padding_normal"
+        android:layout_marginVertical="@dimen/padding_normal"
         android:lineSpacingExtra="15sp"
         android:paddingBottom="@dimen/padding_normal"
         android:text="@string/finished_onboarding_text"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@id/setup_get_started"
         app:layout_constraintTop_toBottomOf="@id/subtitle" />
 
