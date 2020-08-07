@@ -24,7 +24,6 @@
         <activity
             android:name=".ui.MainActivity"
             android:launchMode="singleInstance"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.LauncherTheme">
 
             <intent-filter>
