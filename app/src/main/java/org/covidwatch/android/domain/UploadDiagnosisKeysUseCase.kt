@@ -12,6 +12,7 @@ import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.functional.Either
 import timber.log.Timber
 import java.security.SecureRandom
+import java.time.Instant
 
 class UploadDiagnosisKeysUseCase(
     private val enManager: ExposureNotificationManager,
@@ -64,9 +65,18 @@ class UploadDiagnosisKeysUseCase(
                 }
                 .filter { it.transmissionRisk != 0 }
 
-            // If no keys to submit just create a verified report localy and don't send it to the server
+            // If no keys to submit just create a verified report locally and don't send it to the server
             if (diagnosisKeys.isEmpty()) {
-                diagnosisRepository.updatePositiveDiagnosisReport(params.report.copy(verified = true))
+                val report = params.report
+                diagnosisRepository.updatePositiveDiagnosisReport(
+                    report.copy(
+                        verified = true,
+                        verificationData = report.verificationData?.copy(
+                            verificationTestCode = "",
+                            token = null
+                        )
+                    )
+                )
                 return Either.Right(Unit)
             }
 
@@ -81,10 +91,10 @@ class UploadDiagnosisKeysUseCase(
 
             // Check if we certificated the token before and reuse certificate
             if (verificationData.verificationCertificate != null && verificationData.hmacKey != null) {
+                verifiedDiagnosis = params.report.copy(verified = true)
+
                 certificate = verificationData.verificationCertificate
                 hmacKey = verificationData.hmacKey
-
-                verifiedDiagnosis = params.report.copy(verified = true)
             } else { // otherwise certificate the token
                 val verificationCertificate = verificationManager.certificate(
                     token,
@@ -119,7 +129,16 @@ class UploadDiagnosisKeysUseCase(
                 diagnosisRepository.uploadDiagnosisKeys(url, positiveDiagnosis)
             }
 
-            diagnosisRepository.updatePositiveDiagnosisReport(verifiedDiagnosis.copy(uploaded = true))
+            diagnosisRepository.updatePositiveDiagnosisReport(
+                verifiedDiagnosis.copy(
+                    uploaded = true,
+                    reportDate = Instant.now(),
+                    verificationData = verifiedDiagnosis.verificationData?.copy(
+                        verificationTestCode = "",
+                        token = null
+                    )
+                )
+            )
             Timber.d("Uploaded positive diagnosis")
             return Either.Right(Unit)
         } catch (e: Exception) {

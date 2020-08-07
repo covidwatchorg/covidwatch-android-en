@@ -154,10 +154,11 @@ class VerifyPositiveDiagnosisViewModel(
                         )
 
                         // Save just verified code in order to reuse token
+                        positiveDiagnosisReport = positiveDiagnosisReport.copy(
+                            verificationData = diagnosisVerification.value
+                        )
                         positiveDiagnosisRepository.addPositiveDiagnosisReport(
-                            positiveDiagnosisReport.copy(
-                                verificationData = diagnosisVerification.value
-                            )
+                            positiveDiagnosisReport
                         )
 
                         shareReportIfEnEnabled()
