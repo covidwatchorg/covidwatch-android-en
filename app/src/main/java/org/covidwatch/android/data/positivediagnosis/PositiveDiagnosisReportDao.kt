@@ -17,4 +17,7 @@ interface PositiveDiagnosisReportDao : BaseDao<PositiveDiagnosisReport> {
 
     @Query("SELECT * FROM positive_diagnosis_report WHERE verificationTestCode = :code")
     suspend fun diagnosisByVerificationCode(code: String): PositiveDiagnosisReport?
+
+    @Query("DELETE FROM positive_diagnosis_report WHERE verified = 0 AND verificationTestCode IS NOT ''")
+    suspend fun deleteCachedForUpload()
 }

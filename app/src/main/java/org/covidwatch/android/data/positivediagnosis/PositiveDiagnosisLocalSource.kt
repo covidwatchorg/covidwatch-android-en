@@ -18,4 +18,6 @@ class PositiveDiagnosisLocalSource(private val reportDao: PositiveDiagnosisRepor
         reportDao.diagnosisByVerificationCode(code)
 
     suspend fun delete(diagnosis: PositiveDiagnosisReport) = reportDao.delete(diagnosis)
+
+    suspend fun deleteCachedForUpload() = reportDao.deleteCachedForUpload()
 }

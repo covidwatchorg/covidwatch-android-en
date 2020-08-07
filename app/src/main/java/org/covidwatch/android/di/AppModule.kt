@@ -211,7 +211,12 @@ val appModule = module {
         )
     }
 
-
+    factory {
+        RemoveUnverifiedReportsUseCase(
+            workManager = get(),
+            dispatchers = get()
+        )
+    }
 
     factory {
         UpdateExposureStateUseCase(
@@ -303,6 +308,7 @@ val appModule = module {
         VerifyPositiveDiagnosisViewModel(
             state = state,
             startUploadDiagnosisKeysWorkUseCase = get(),
+            removeUnverifiedReportsUseCase = get(),
             verificationManager = get(),
             positiveDiagnosisRepository = get(),
             enManager = get()

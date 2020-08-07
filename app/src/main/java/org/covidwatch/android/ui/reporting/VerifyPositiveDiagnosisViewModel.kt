@@ -1,13 +1,16 @@
 package org.covidwatch.android.ui.reporting
 
 import androidx.lifecycle.*
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.covidwatch.android.data.DiagnosisVerificationManager
 import org.covidwatch.android.data.PositiveDiagnosisReport
 import org.covidwatch.android.data.PositiveDiagnosisVerification
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
+import org.covidwatch.android.domain.RemoveUnverifiedReportsUseCase
 import org.covidwatch.android.domain.StartUploadDiagnosisKeysWorkUseCase
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.extension.launchUseCase
 import org.covidwatch.android.extension.send
 import org.covidwatch.android.ui.BaseViewModel
 import org.covidwatch.android.ui.event.Event
@@ -17,6 +20,7 @@ import java.time.Instant
 class VerifyPositiveDiagnosisViewModel(
     private val state: SavedStateHandle,
     private val startUploadDiagnosisKeysWorkUseCase: StartUploadDiagnosisKeysWorkUseCase,
+    private val removeUnverifiedReportsUseCase: RemoveUnverifiedReportsUseCase,
     private val verificationManager: DiagnosisVerificationManager,
     private val positiveDiagnosisRepository: PositiveDiagnosisRepository,
     private val enManager: ExposureNotificationManager
@@ -170,6 +174,11 @@ class VerifyPositiveDiagnosisViewModel(
                     }
                 }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        GlobalScope.launchUseCase(removeUnverifiedReportsUseCase)
     }
 
     /**

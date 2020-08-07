@@ -71,6 +71,7 @@ class UploadDiagnosisKeysUseCase(
                 diagnosisRepository.updatePositiveDiagnosisReport(
                     report.copy(
                         verified = true,
+                        reportDate = Instant.now(),
                         verificationData = report.verificationData?.copy(
                             verificationTestCode = "",
                             token = null

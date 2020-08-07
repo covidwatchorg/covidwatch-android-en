@@ -67,4 +67,8 @@ class PositiveDiagnosisRepository(
     suspend fun delete(diagnosis: PositiveDiagnosisReport) = withContext(dispatchers.io) {
         local.delete(diagnosis)
     }
+
+    suspend fun deleteCachedForUpload() = withContext(dispatchers.io) {
+        local.deleteCachedForUpload()
+    }
 }
