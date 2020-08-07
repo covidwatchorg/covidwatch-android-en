@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import kotlinx.coroutines.withContext
 import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.domain.AppCoroutineDispatchers
+import java.time.Instant
 
 
 class ExposureInformationRepository(
@@ -27,4 +28,7 @@ class ExposureInformationRepository(
     suspend fun reset() = withContext(dispatchers.io) {
         local.reset()
     }
+
+    suspend fun deleteOlderThan(date: Instant) =
+        withContext(dispatchers.io) { local.deleteOlderThan(date.toEpochMilli()) }
 }

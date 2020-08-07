@@ -14,4 +14,6 @@ class ExposureInformationLocalSource(private val dao: ExposureInformationDao) {
     suspend fun reset() {
         dao.reset()
     }
+
+    suspend fun deleteOlderThan(date: Long) = dao.deleteOlderThan(date)
 }

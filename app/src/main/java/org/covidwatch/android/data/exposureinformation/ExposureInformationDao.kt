@@ -21,4 +21,7 @@ interface ExposureInformationDao : BaseDao<CovidExposureInformation> {
 
     @Query("DELETE FROM exposure_information")
     suspend fun reset()
+
+    @Query("DELETE FROM exposure_information WHERE date < :date")
+    suspend fun deleteOlderThan(date: Long)
 }

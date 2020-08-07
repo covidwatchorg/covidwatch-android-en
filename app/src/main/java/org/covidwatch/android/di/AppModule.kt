@@ -239,6 +239,13 @@ val appModule = module {
         )
     }
 
+    factory {
+        RemoveOldExposuresUseCase(
+            workManager = get(),
+            dispatchers = get()
+        )
+    }
+
     single {
         UserFlowRepository(
             prefs = get()
