@@ -88,7 +88,7 @@ val appModule = module {
         val appDatabase: AppDatabase = get()
         appDatabase.positiveDiagnosisReportDao()
     }
-    single { PositiveDiagnosisLocalSource(reportDao = get()) }
+    single { PositiveDiagnosisLocalSource(dao = get()) }
     single {
         PositiveDiagnosisRepository(
             remote = get(),
@@ -240,7 +240,7 @@ val appModule = module {
     }
 
     factory {
-        RemoveOldExposuresUseCase(
+        RemoveOldDataUseCase(
             workManager = get(),
             dispatchers = get()
         )
@@ -283,7 +283,6 @@ val appModule = module {
     viewModel {
         HomeViewModel(
             enManager = get(),
-            provideDiagnosisKeysUseCase = get(),
             userFlowRepository = get(),
             preferences = get(),
             riskLevelRepository = get()
