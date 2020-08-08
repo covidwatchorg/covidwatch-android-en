@@ -86,7 +86,7 @@ class VerifyPositiveDiagnosisFragment :
             }
             observeEvent(showThankYou) {
                 findNavController().popBackStack(R.id.homeFragment, false)
-                findNavController().navigate(R.id.sharedDiagnosis)
+                findNavController().navigate(R.id.sharedDiagnosisFragment)
             }
         }
     }
