@@ -240,7 +240,7 @@ val appModule = module {
     }
 
     factory {
-        RemoveOldExposuresUseCase(
+        RemoveOldDataUseCase(
             workManager = get(),
             dispatchers = get()
         )

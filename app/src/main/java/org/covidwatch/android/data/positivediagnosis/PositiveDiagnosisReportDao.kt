@@ -20,4 +20,7 @@ interface PositiveDiagnosisReportDao : BaseDao<PositiveDiagnosisReport> {
 
     @Query("DELETE FROM positive_diagnosis_report WHERE verified = 0 AND verificationTestCode IS NOT ''")
     suspend fun deleteCachedForUpload()
+
+    @Query("DELETE FROM positive_diagnosis_report WHERE reportDate < :date")
+    suspend fun deleteOlderThan(date: Long)
 }

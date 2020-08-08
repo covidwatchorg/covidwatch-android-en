@@ -5,19 +5,19 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.functional.Either
-import org.covidwatch.android.work.RemoveOldExposuresWork
+import org.covidwatch.android.work.RemoveOldDataWork
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class RemoveOldExposuresUseCase(
+class RemoveOldDataUseCase(
     private val workManager: WorkManager,
     dispatchers: AppCoroutineDispatchers
 ) : UseCase<Unit, Unit>(dispatchers) {
     override suspend fun run(params: Unit?): Either<Failure, Unit> {
         Timber.d("Start ${javaClass.simpleName}")
 
-        val removeOldExposuresWork = OneTimeWorkRequestBuilder<RemoveOldExposuresWork>()
-            .setInitialDelay(DAYS_TO_KEEP_EXPOSURES, TimeUnit.DAYS)
+        val removeOldExposuresWork = OneTimeWorkRequestBuilder<RemoveOldDataWork>()
+            .setInitialDelay(DAYS_TO_KEEP_DATA, TimeUnit.DAYS)
             .build()
 
         workManager.enqueueUniqueWork(
@@ -30,6 +30,6 @@ class RemoveOldExposuresUseCase(
 
     companion object {
         private const val WORK_NAME = "Remove Old Exposures"
-        const val DAYS_TO_KEEP_EXPOSURES = 30L
+        const val DAYS_TO_KEEP_DATA = 30L
     }
 }
