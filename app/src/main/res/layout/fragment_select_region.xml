@@ -34,21 +34,6 @@
         app:layout_constraintTop_toBottomOf="@id/region_logo"
         app:layout_constraintVertical_bias="0.1" />
 
-    <TextView
-        android:id="@+id/select_regions_label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/padding_extra_large"
-        android:labelFor="@id/spinner_regions"
-        android:text="@string/select_region_label"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/spinner_regions"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView" />
-
     <Spinner
         android:id="@+id/spinner_regions"
         android:layout_width="match_parent"
@@ -59,7 +44,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/select_regions_label" />
+        app:layout_constraintTop_toBottomOf="@id/textView" />
 
     <TextView
         android:layout_width="match_parent"

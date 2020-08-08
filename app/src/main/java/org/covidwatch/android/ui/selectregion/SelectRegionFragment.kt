@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.covidwatch.android.R
@@ -32,6 +33,7 @@ class SelectRegionFragment : BaseFragment<FragmentSelectRegionBinding>() {
         with(viewModel) {
             setOnboarding(args.onboarding)
             observe(regions) {
+
                 val adapter = ArrayAdapter(requireContext(), R.layout.item_region_name, it)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
@@ -49,10 +51,11 @@ class SelectRegionFragment : BaseFragment<FragmentSelectRegionBinding>() {
                         ) = viewModel.selectedRegion(position)
                     }
             }
-            observeEvent(closeScreen) {
-                findNavController().popBackStack()
-            }
-            observeEvent(showRegionPreviewScreen) {
+
+            observe(showContinueButton) { binding.btnContinue.isVisible = it }
+            observeEvent(closeScreen) { findNavController().popBackStack() }
+
+            observeEvent(showSetupCompleteScreen) {
                 findNavController().navigate(R.id.finishedOnboardingFragment)
             }
         }
