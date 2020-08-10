@@ -55,7 +55,6 @@ class ProvideDiagnosisKeysWork(
     }
 
     override suspend fun doWork(): Result {
-        runAttemptCount
         setForeground(
             ForegroundInfo(
                 DOWNLOAD_REPORTS_NOTIFICATION_ID,
