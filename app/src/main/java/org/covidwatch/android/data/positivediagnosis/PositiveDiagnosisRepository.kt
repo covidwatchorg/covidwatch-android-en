@@ -9,6 +9,7 @@ import org.covidwatch.android.data.countrycode.CountryCodeRepository
 import org.covidwatch.android.data.keyfile.KeyFileRepository
 import org.covidwatch.android.domain.AppCoroutineDispatchers
 import java.security.SecureRandom
+import java.time.Instant
 
 class PositiveDiagnosisRepository(
     private val remote: PositiveDiagnosisRemoteSource,
@@ -71,4 +72,8 @@ class PositiveDiagnosisRepository(
     suspend fun deleteCachedForUpload() = withContext(dispatchers.io) {
         local.deleteCachedForUpload()
     }
+
+    suspend fun deleteOlderThan(date: Instant) =
+        withContext(dispatchers.io) { local.deleteOlderThan(date.toEpochMilli()) }
+
 }

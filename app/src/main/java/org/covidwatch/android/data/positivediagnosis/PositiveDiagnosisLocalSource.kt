@@ -2,22 +2,24 @@ package org.covidwatch.android.data.positivediagnosis
 
 import org.covidwatch.android.data.PositiveDiagnosisReport
 
-class PositiveDiagnosisLocalSource(private val reportDao: PositiveDiagnosisReportDao) {
+class PositiveDiagnosisLocalSource(private val dao: PositiveDiagnosisReportDao) {
 
-    fun diagnoses() = reportDao.diagnoses()
+    fun diagnoses() = dao.diagnoses()
 
     suspend fun addPositiveDiagnosisReport(report: PositiveDiagnosisReport) =
-        reportDao.insert(report)
+        dao.insert(report)
 
     suspend fun updatePositiveDiagnosisReport(report: PositiveDiagnosisReport) =
-        reportDao.update(report)
+        dao.update(report)
 
-    suspend fun report(id: String) = reportDao.report(id)
+    suspend fun report(id: String) = dao.report(id)
 
     suspend fun diagnosisByVerificationCode(code: String) =
-        reportDao.diagnosisByVerificationCode(code)
+        dao.diagnosisByVerificationCode(code)
 
-    suspend fun delete(diagnosis: PositiveDiagnosisReport) = reportDao.delete(diagnosis)
+    suspend fun delete(diagnosis: PositiveDiagnosisReport) = dao.delete(diagnosis)
 
-    suspend fun deleteCachedForUpload() = reportDao.deleteCachedForUpload()
+    suspend fun deleteCachedForUpload() = dao.deleteCachedForUpload()
+
+    suspend fun deleteOlderThan(date: Long) = dao.deleteOlderThan(date)
 }

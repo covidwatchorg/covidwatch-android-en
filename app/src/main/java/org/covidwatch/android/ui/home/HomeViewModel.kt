@@ -8,9 +8,7 @@ import org.covidwatch.android.data.NextStep
 import org.covidwatch.android.data.UserFlowRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.data.risklevel.RiskLevelRepository
-import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
-import org.covidwatch.android.extension.launchUseCase
 import org.covidwatch.android.extension.send
 import org.covidwatch.android.extension.toLocalDate
 import org.covidwatch.android.ui.BaseViewModel
@@ -21,7 +19,6 @@ import java.time.Instant
 
 class HomeViewModel(
     private val enManager: ExposureNotificationManager,
-    private val provideDiagnosisKeysUseCase: ProvideDiagnosisKeysUseCase,
     private val userFlowRepository: UserFlowRepository,
     private val preferences: PreferenceStorage,
     riskLevelRepository: RiskLevelRepository
@@ -125,11 +122,6 @@ class HomeViewModel(
         }
 
         viewModelScope.launch {
-            launchUseCase(
-                provideDiagnosisKeysUseCase,
-                ProvideDiagnosisKeysUseCase.Params(recurrent = true)
-            )
-
             _infoBannerState.value = if (enManager.isDisabled()) {
                 InfoBannerState.Visible(R.string.turn_on_exposure_notification_text)
             } else {

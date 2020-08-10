@@ -31,7 +31,9 @@ import org.covidwatch.android.data.pref.SharedPreferenceStorage
 import org.covidwatch.android.data.risklevel.RiskLevelRepository
 import org.covidwatch.android.domain.*
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.ui.IResourcesProvider
 import org.covidwatch.android.ui.Notifications
+import org.covidwatch.android.ui.ResourcesProvider
 import org.covidwatch.android.ui.exposures.ExposuresViewModel
 import org.covidwatch.android.ui.home.HomeViewModel
 import org.covidwatch.android.ui.menu.MenuViewModel
@@ -68,14 +70,7 @@ val appModule = module {
         )
     }
 
-    viewModel {
-        ExposuresViewModel(
-            enManager = get(),
-            updateExposureInformationUseCase = get(),
-            preferenceStorage = get(),
-            exposureInformationRepository = get()
-        )
-    }
+    single<IResourcesProvider> { ResourcesProvider(androidApplication()) }
 
     single { WorkManager.getInstance(androidApplication()) }
 
@@ -93,7 +88,7 @@ val appModule = module {
         val appDatabase: AppDatabase = get()
         appDatabase.positiveDiagnosisReportDao()
     }
-    single { PositiveDiagnosisLocalSource(reportDao = get()) }
+    single { PositiveDiagnosisLocalSource(dao = get()) }
     single {
         PositiveDiagnosisRepository(
             remote = get(),
@@ -245,7 +240,7 @@ val appModule = module {
     }
 
     factory {
-        RemoveOldExposuresUseCase(
+        RemoveOldDataUseCase(
             workManager = get(),
             dispatchers = get()
         )
@@ -277,11 +272,17 @@ val appModule = module {
     viewModel {
         NotifyOthersViewModel()
     }
-
+    viewModel {
+        ExposuresViewModel(
+            enManager = get(),
+            updateExposureInformationUseCase = get(),
+            preferenceStorage = get(),
+            exposureInformationRepository = get()
+        )
+    }
     viewModel {
         HomeViewModel(
             enManager = get(),
-            provideDiagnosisKeysUseCase = get(),
             userFlowRepository = get(),
             preferences = get(),
             riskLevelRepository = get()
@@ -293,7 +294,7 @@ val appModule = module {
     }
 
     viewModel {
-        SelectRegionViewModel(preferences = get())
+        SelectRegionViewModel(preferences = get(), resources = get())
     }
 
     viewModel {
