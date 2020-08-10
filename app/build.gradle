@@ -64,6 +64,8 @@ android {
         calibration {
             dimension "releaseChannel"
 
+            buildConfigField "long", "EXPOSURE_CHECKS_PERIOD", "1"
+
             def localPropertiesFile = rootProject.file("debug.properties")
             def localProperties = new Properties()
 
@@ -83,6 +85,7 @@ android {
         }
         production {
             dimension "releaseChannel"
+            buildConfigField "long", "EXPOSURE_CHECKS_PERIOD", "6"
 
             def localPropertiesFile = rootProject.file("release.properties")
             def localProperties = new Properties()

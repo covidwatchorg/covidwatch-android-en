@@ -3,6 +3,7 @@ package org.covidwatch.android.domain
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.work.*
+import org.covidwatch.android.BuildConfig
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase.Params
 import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.extension.getFinalWorkInfoByIdLiveData
@@ -23,7 +24,7 @@ class ProvideDiagnosisKeysUseCase(
         val downloadRequest: WorkRequest
         if (recurrent) {
             downloadRequest = PeriodicWorkRequestBuilder<ProvideDiagnosisKeysWork>(
-                RECURRENCE_PERIOD,
+                BuildConfig.EXPOSURE_CHECKS_PERIOD,
                 TimeUnit.HOURS
             ).apply {
                 setConstraints(
@@ -34,7 +35,7 @@ class ProvideDiagnosisKeysUseCase(
                         .setRequiresStorageNotLow(true)
                         .build()
                 )
-                setInitialDelay(RECURRENCE_PERIOD, TimeUnit.HOURS)
+                setInitialDelay(BuildConfig.EXPOSURE_CHECKS_PERIOD, TimeUnit.HOURS)
                 setBackoffCriteria(
                     BackoffPolicy.LINEAR,
                     TimeUnit.HOURS.toMillis(3), // 3 hours and 6 hours between retries
@@ -69,7 +70,6 @@ class ProvideDiagnosisKeysUseCase(
     data class Params(val recurrent: Boolean)
 
     companion object {
-        private const val RECURRENCE_PERIOD = 6L // Hours
         const val WORK_NAME = "provide_diagnosis_keys"
         const val RECURRENT_WORK_NAME = "provide_diagnosis_keys_daily"
     }
