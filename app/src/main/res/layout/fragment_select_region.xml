@@ -12,18 +12,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_extra_large"
-        app:srcCompat="@drawable/cw_big_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cw_big_logo" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/select_regions_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_large"
         android:layout_marginBottom="@dimen/padding_normal"
-        android:text="@string/splash_screen_title"
+        android:text="@string/select_region_label"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="19sp"
@@ -36,6 +36,7 @@
 
     <Spinner
         android:id="@+id/spinner_regions"
+        style="@style/Widget.AppCompat.Spinner.Underlined"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/padding_normal"
@@ -44,19 +45,22 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView" />
+        app:layout_constraintTop_toBottomOf="@id/select_regions_label" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/padding_normal"
+        android:ellipsize="end"
         android:lineSpacingExtra="3sp"
         android:text="@string/privacy_select_region"
         android:textColor="@color/white"
         android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/btn_continue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner_regions" />
+        app:layout_constraintTop_toBottomOf="@id/spinner_regions"
+        app:layout_constraintVertical_bias="0" />
 
     <Button
         android:id="@+id/btn_continue"

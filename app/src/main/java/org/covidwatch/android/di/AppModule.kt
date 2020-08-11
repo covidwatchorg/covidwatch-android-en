@@ -42,7 +42,6 @@ import org.covidwatch.android.ui.reporting.NotifyOthersViewModel
 import org.covidwatch.android.ui.reporting.PositiveDiagnosesViewModel
 import org.covidwatch.android.ui.reporting.VerifyPositiveDiagnosisViewModel
 import org.covidwatch.android.ui.selectregion.SelectRegionViewModel
-import org.covidwatch.android.ui.settings.SettingsViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -290,15 +289,11 @@ val appModule = module {
     }
 
     viewModel {
-        SettingsViewModel(androidApplication())
+        SelectRegionViewModel(preferences = get())
     }
 
     viewModel {
-        SelectRegionViewModel(preferences = get(), resources = get())
-    }
-
-    viewModel {
-        MenuViewModel(prefs = get(), exposureInformationRepository = get())
+        MenuViewModel(exposureInformationRepository = get())
     }
 
     viewModel {

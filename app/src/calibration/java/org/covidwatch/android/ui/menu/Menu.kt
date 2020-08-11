@@ -114,8 +114,6 @@ class MenuFragment : BaseMenuFragment() {
 
 class MenuAdapter(onClick: (menuItem: MenuItem) -> Unit) : BaseMenuAdapter(onClick) {
 
-    override val shareDiagnosisPosition = 3
-
     init {
         val debugItems = listOf(
             MenuItem(
