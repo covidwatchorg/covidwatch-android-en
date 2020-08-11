@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gradient_bottom_top_top"
-        android:drawableEnd="@drawable/doctor_with_heart"
+        app:drawableEndCompat="@drawable/doctor_with_heart"
         android:drawablePadding="@dimen/padding_normal"
         android:paddingHorizontal="@dimen/padding_normal"
         android:paddingTop="@dimen/padding_normal"

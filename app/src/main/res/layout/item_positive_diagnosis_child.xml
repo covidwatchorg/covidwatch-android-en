@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <View
@@ -22,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/padding_small"
-            android:drawableStart="@drawable/next_step_bullet_point"
+            app:drawableStartCompat="@drawable/next_step_bullet_point"
             android:drawablePadding="@dimen/padding_normal"
             tools:text="Symptom onset date: July 9, 2020" />
 
@@ -31,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/padding_small"
-            android:drawableStart="@drawable/next_step_bullet_point"
+            app:drawableStartCompat="@drawable/next_step_bullet_point"
             android:drawablePadding="@dimen/padding_normal"
             tools:text="Possible infection date: July 14, 2020" />
 
@@ -40,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/padding_small"
-            android:drawableStart="@drawable/next_step_bullet_point"
+            app:drawableStartCompat="@drawable/next_step_bullet_point"
             android:drawablePadding="@dimen/padding_normal"
             tools:text="Test date: July 10, 2020" />
 
