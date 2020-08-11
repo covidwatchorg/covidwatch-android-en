@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.covidwatch.android.R
@@ -52,9 +51,7 @@ class SelectRegionFragment : BaseFragment<FragmentSelectRegionBinding>() {
                     }
             }
 
-            observe(showContinueButton) { binding.btnContinue.isVisible = it }
             observeEvent(closeScreen) { findNavController().popBackStack() }
-
             observeEvent(showSetupCompleteScreen) {
                 findNavController().navigate(R.id.finishedOnboardingFragment)
             }

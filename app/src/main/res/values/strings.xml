@@ -312,7 +312,7 @@
     <string name="btn_learn_more">Learn More</string>
 
     <!--REGION SELECTION-->
-    <string name="privacy_select_region"><b>We value your privacy.</b>Select a region to see local healthcare resources without ever sharing your location or identity. You can change this selection at any time.</string>
+    <string name="privacy_select_region"><b>We value your privacy.</b> Select a region to see local healthcare resources without ever sharing your location or identity. You can change this selection at any time.</string>
     <string name="select_region_label">Select a Region</string>
     <string name="btn_previous_onboarding_screen_description">Button previous onboarding screen</string>
     <string name="btn_next_onboarding_screen_description">Button next onboarding screen</string>
