@@ -223,8 +223,6 @@ dependencies {
     // dependencies that use guava
     implementation "com.google.guava:guava:29.0-android"
 
-    implementation "pub.devrel:easypermissions:3.0.0"
-
     def koin_version = "2.1.5"
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
