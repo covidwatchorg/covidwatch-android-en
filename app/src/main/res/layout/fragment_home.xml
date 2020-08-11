@@ -42,7 +42,7 @@
                     android:clickable="true"
                     android:contentDescription="@string/menu"
                     android:focusable="true"
-                    android:src="@drawable/ic_menu" />
+                    app:srcCompat="@drawable/ic_menu" />
             </LinearLayout>
 
         </com.google.android.material.appbar.MaterialToolbar>

@@ -44,7 +44,7 @@
                 android:clickable="true"
                 android:contentDescription="@string/icon_exposure_risk_info"
                 android:focusable="true"
-                android:src="@drawable/ic_outline_info" />
+                app:srcCompat="@drawable/ic_outline_info" />
         </FrameLayout>
 
         <View style="@style/Divider.Horizontal" />

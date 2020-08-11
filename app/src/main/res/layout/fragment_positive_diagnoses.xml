@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="@dimen/padding_normal"
-        android:src="@drawable/ic_bottom_sheet_handler"
+        app:srcCompat="@drawable/ic_bottom_sheet_handler"
         android:visibility="gone"
         tools:ignore="ContentDescription" />
 

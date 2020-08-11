@@ -52,7 +52,7 @@
         android:layout_marginHorizontal="@dimen/padding_normal"
         android:layout_marginTop="@dimen/padding_normal"
         android:contentDescription="@null"
-        android:src="@drawable/diagnosis_shared_art"
+        app:srcCompat="@drawable/diagnosis_shared_art"
         app:layout_constraintBottom_toTopOf="@id/action_flow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

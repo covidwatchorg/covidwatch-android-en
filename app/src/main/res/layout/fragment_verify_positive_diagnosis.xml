@@ -62,7 +62,7 @@
                 android:clickable="true"
                 android:contentDescription="@string/test_verification_code_info"
                 android:focusable="true"
-                android:src="@drawable/ic_info_filled" />
+                app:srcCompat="@drawable/ic_info_filled" />
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -211,7 +211,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:scaleType="centerCrop"
-            android:src="@drawable/notify_others_art_1"
+            app:srcCompat="@drawable/notify_others_art_1"
             tools:ignore="ContentDescription" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
