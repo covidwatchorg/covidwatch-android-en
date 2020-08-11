@@ -2,6 +2,7 @@ package org.covidwatch.android.ui
 
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
 import androidx.databinding.BindingAdapter
@@ -93,12 +94,12 @@ fun TextView.setRiskLevelText(riskLevel: RiskLevel) {
 
 @BindingAdapter("background_risk_level")
 fun View.setBackgroundFromRiskLevel(riskLevel: RiskLevel) {
-    background = context.getDrawable(
+    background = ContextCompat.getDrawable(
+        context,
         when (riskLevel) {
             VERIFIED_POSITIVE -> R.color.high_risk
             HIGH -> R.color.high_risk
             LOW -> R.color.unknown_risk
-            DISABLED -> R.color.unknown_risk
         }
     )
 }

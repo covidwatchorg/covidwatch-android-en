@@ -53,27 +53,51 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     HtmlCompat.FROM_HTML_MODE_COMPACT
                 )
                 binding.toolbar.logo = ContextCompat.getDrawable(view.context, it.logo)
+
+                if (it.isDisabled) {
+                    binding.actionLayoutTitle.isVisible = false
+
+                    binding.actionLayoutInfo.setText(R.string.choose_another_region_info)
+                    binding.actionLayoutBtn.setText(R.string.choose_another_region)
+                    binding.actionLayoutBtn.setOnClickListener {
+                        findNavController().navigate(R.id.selectRegionFragment)
+                    }
+                } else {
+                    binding.actionLayoutTitle.isVisible = true
+
+                    binding.actionLayoutInfo.setText(R.string.positive_diagnosis_info)
+                    binding.actionLayoutBtn.setText(R.string.btn_how_to_share_diagnosis)
+                    binding.actionLayoutBtn.setOnClickListener {
+                        findNavController().navigate(R.id.notifyOthersFragment)
+                    }
+                }
             }
 
             observe(riskLevel) {
                 when (it) {
-                    RiskLevel.DISABLED,
                     RiskLevel.VERIFIED_POSITIVE -> {
-                        binding.actionLayoutTitle.isVisible = false
+                        binding.nextStepsMetaTitle.isVisible = false
+                        binding.nextStepsTitle.setText(R.string.next_steps_verified_positive)
+
                         binding.actionLayoutInfo.isVisible = false
                         binding.actionLayoutBtn.isVisible = false
                     }
-                    RiskLevel.HIGH,
+                    RiskLevel.HIGH -> {
+                        binding.nextStepsMetaTitle.isVisible = false
+                        binding.nextStepsTitle.setText(R.string.next_steps_exposures)
+
+                        binding.actionLayoutInfo.isVisible = true
+                        binding.actionLayoutBtn.isVisible = true
+                    }
                     RiskLevel.LOW -> {
-                        binding.actionLayoutTitle.isVisible = true
+                        binding.nextStepsMetaTitle.isVisible = true
+                        binding.nextStepsTitle.setText(R.string.next_steps_no_exposures)
+
                         binding.actionLayoutInfo.isVisible = true
                         binding.actionLayoutBtn.isVisible = true
                     }
                 }
 
-                binding.actionLayoutBtn.setOnClickListener {
-                    findNavController().navigate(R.id.notifyOthersFragment)
-                }
                 binding.myRiskLevel.setBackgroundFromRiskLevel(it)
                 binding.myRiskLevel.text =
                     getString(R.string.my_risk_level, it.name(requireContext()))
@@ -109,9 +133,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         with(binding) {
             menu.setOnClickListener {
                 findNavController().navigate(R.id.menuFragment)
-            }
-            myRiskLevel.setOnClickListener {
-                findNavController().navigate(R.id.exposuresFragment)
             }
             tvRegion.setOnClickListener { findNavController().navigate(R.id.selectRegionFragment) }
             infoBanner.setOnClickListener {

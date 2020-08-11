@@ -86,7 +86,6 @@ open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuVie
         }
 
         with(viewModel) {
-            observe(regionDisabled) { adapter.showShareDiagnosis(!it) }
             observe(highRiskExposure) {
                 if (it) {
                     adapter.showHighRiskPossibleExposures()

@@ -9,8 +9,6 @@ import org.covidwatch.android.ui.Urls
 open class BaseMenuAdapter(
     private val onClick: (menuItem: MenuItem) -> Unit
 ) : RecyclerView.Adapter<MenuItemViewHolder>() {
-    // TODO: 07.08.2020 rework this a slightly barbarian solution
-    protected open val shareDiagnosisPosition = 1
 
     private val possibleExposuresMenuItem = MenuItem(
         R.string.menu_possible_exposures,
@@ -26,6 +24,7 @@ open class BaseMenuAdapter(
 
     protected val items = mutableListOf(
         possibleExposuresMenuItem,
+        MenuItem(R.string.menu_notify_others, 0, NotifyOthers),
         MenuItem(R.string.menu_past_diagnoses, 0, PastDiagnoses),
         MenuItem(R.string.menu_change_region, 0, ChangeRegion),
         MenuItem(R.string.menu_how_it_works, 0, HowItWorks),
@@ -50,17 +49,6 @@ open class BaseMenuAdapter(
             Browser(Urls.SUPPORT)
         )
     )
-
-    fun showShareDiagnosis(show: Boolean) {
-        if (show) {
-            items.add(
-                shareDiagnosisPosition, MenuItem(R.string.menu_notify_others, 0, NotifyOthers)
-            )
-        } else {
-            items.removeAt(shareDiagnosisPosition)
-        }
-
-    }
 
     fun showHighRiskPossibleExposures() {
         replace(possibleExposuresMenuItem, possibleExposuresHighRiskMenuItem)

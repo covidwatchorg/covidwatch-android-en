@@ -3,11 +3,9 @@ package org.covidwatch.android.ui.menu
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
-import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.ui.BaseViewModel
 
 class MenuViewModel(
-    prefs: PreferenceStorage,
     exposureInformationRepository: ExposureInformationRepository
 ) :
     BaseViewModel() {
@@ -20,6 +18,6 @@ class MenuViewModel(
         maxRisk.highRisk
     }
 
-    val regionDisabled = prefs.observableRegion.map { it.isDisabled }
-    val highRiskExposure: LiveData<Boolean> = _highRiskExposure
+    val highRiskExposure: LiveData<Boolean>
+        get() = _highRiskExposure
 }

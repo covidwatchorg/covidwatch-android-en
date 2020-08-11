@@ -117,7 +117,7 @@
 
     <!-- RISK LEVEL -->
     <string name="under_development_risk_name">Under Development</string>
-    <string name="low_risk_name">No Significant Exposures</string>
+    <string name="no_exposures_risk_name">No Significant Exposures</string>
     <string name="high_risk_name">Significant Exposure Detected</string>
     <string name="verified_positive_risk_name">Verified Positive Diagnosis</string>
 
@@ -185,7 +185,9 @@
     <!-- Home Screen-->
     <string name="current_region">&lt;b>Region:&lt;/b> &lt;u>%s&lt;/u></string>
     <string name="unknown_risk_title">The app is active and will continue to detect and notify you of possible exposures.</string>
-    <string name="next_steps_title">Next steps:</string>
+    <string name="next_steps_no_exposures">Next steps:</string>
+    <string name="next_steps_exposures">Next steps based on your possible exposures and selected region:</string>
+    <string name="next_steps_verified_positive">Next steps based on selected region:</string>
     <string name="home_days_since_last_exposure"><b>days</b>\nsince last exposure</string>
     <string name="home_possible_exposures"><b>possible exposures</b>\nin the last 14 days</string>
     <string name="home_total_risk_score"><b>total risk score</b> (1–8) scale</string>
@@ -314,7 +316,10 @@
     <!--REGION SELECTION-->
     <string name="privacy_select_region"><b>We value your privacy.</b> Select a region to see local healthcare resources without ever sharing your location or identity. You can change this selection at any time.</string>
     <string name="select_region_label">Select a Region</string>
+    <string name="choose_another_region">Choose a Different Region</string>
     <string name="btn_previous_onboarding_screen_description">Button previous onboarding screen</string>
     <string name="btn_next_onboarding_screen_description">Button next onboarding screen</string>
+    <string name="choose_another_region_info">Statewide app support is currently under development. You will continue to get exposure notifications, but can only share an anonymous COVID-19 diagnosis if you are part of a region with full app support.</string>
+    <string name="next_steps_no_exposures_meta">When exposure notifications are enabled you will be notified of possible exposures to COVID-19.</string>
 
 </resources>

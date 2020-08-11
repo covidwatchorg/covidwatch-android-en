@@ -8,8 +8,7 @@ typealias RiskScore = Int
 enum class RiskLevel {
     VERIFIED_POSITIVE,
     HIGH,
-    LOW,
-    DISABLED
+    LOW
 }
 
 val RiskScore.level: RiskLevel

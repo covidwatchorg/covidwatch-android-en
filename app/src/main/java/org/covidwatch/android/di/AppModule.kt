@@ -293,7 +293,7 @@ val appModule = module {
     }
 
     viewModel {
-        MenuViewModel(prefs = get(), exposureInformationRepository = get())
+        MenuViewModel(exposureInformationRepository = get())
     }
 
     viewModel {

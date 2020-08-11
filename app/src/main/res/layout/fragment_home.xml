@@ -98,23 +98,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/darkGray"
-                android:clickable="true"
-                app:drawableStartCompat="@drawable/ic_unknown_risk"
                 android:drawablePadding="@dimen/padding_normal"
-                android:focusable="true"
-                android:foreground="?selectableItemBackground"
                 android:padding="@dimen/padding_normal"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 tools:text="My Risk Today: Unknown" />
 
             <TextView
+                android:id="@+id/next_steps_meta_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/lightGray"
+                android:paddingHorizontal="@dimen/padding_normal"
+                android:paddingTop="@dimen/padding_normal"
+                android:text="@string/next_steps_no_exposures_meta"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/next_steps_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/lightGray"
                 android:paddingHorizontal="@dimen/padding_normal"
                 android:paddingVertical="@dimen/padding_normal"
-                android:text="@string/next_steps_title"
+                android:text="@string/next_steps_no_exposures"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
