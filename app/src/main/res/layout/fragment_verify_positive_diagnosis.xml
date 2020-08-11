@@ -71,14 +71,14 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
             android:layout_marginBottom="@dimen/padding_normal"
-            android:hint="@string/test_verification_code_hint"
-            app:hintEnabled="true">
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_verification_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
+                android:hint="@string/test_verification_code_hint"
                 android:maxLength="8" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,18 +97,19 @@
             android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_symptoms_date"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_normal"
-            android:hint="@string/select_date_hint"
-            app:hintEnabled="true">
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_symptoms_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:cursorVisible="false"
+                android:hint="@string/select_date_hint"
                 android:focusable="false"
                 android:foreground="?selectableItemBackground" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -142,18 +143,19 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_infection_date"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/padding_normal"
-                android:hint="@string/select_date_hint"
-                app:hintEnabled="true">
+                app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_infection_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:cursorVisible="false"
+                    android:hint="@string/select_date_hint"
                     android:focusable="false"
                     android:foreground="?selectableItemBackground" />
             </com.google.android.material.textfield.TextInputLayout>
