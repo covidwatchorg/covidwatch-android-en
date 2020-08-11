@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/padding_normal"
-                android:src="@drawable/cw_logo"
+                app:srcCompat="@drawable/cw_logo"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -67,7 +67,7 @@
             android:contentDescription="@string/btn_previous_onboarding_screen_description"
             android:focusable="true"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_arrow_left"
+            app:srcCompat="@drawable/ic_arrow_left"
             android:visibility="invisible" />
 
         <com.google.android.material.tabs.TabLayout
@@ -93,7 +93,7 @@
             android:contentDescription="@string/btn_next_onboarding_screen_description"
             android:focusable="true"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_arrow_right" />
+            app:srcCompat="@drawable/ic_arrow_right" />
     </LinearLayout>
 
     <Button

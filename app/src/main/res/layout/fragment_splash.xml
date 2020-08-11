@@ -24,7 +24,7 @@
         android:layout_height="0dp"
         android:layout_marginVertical="@dimen/padding_extra_large"
         android:contentDescription="@null"
-        android:src="@drawable/people_network_art"
+        app:srcCompat="@drawable/people_network_art"
         app:layout_constraintBottom_toTopOf="@id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

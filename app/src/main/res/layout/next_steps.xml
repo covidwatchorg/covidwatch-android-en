@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:foreground="?selectableItemBackground"
     android:orientation="vertical"
     android:paddingHorizontal="@dimen/padding_normal"
@@ -43,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/padding_normal"
-            android:drawableEnd="@drawable/ic_keyboard_arrow_right_gray"
+            app:drawableEndCompat="@drawable/ic_keyboard_arrow_right_gray"
             android:text="@string/home_possible_exposures" />
     </LinearLayout>
 

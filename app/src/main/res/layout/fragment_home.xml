@@ -42,7 +42,7 @@
                     android:clickable="true"
                     android:contentDescription="@string/menu"
                     android:focusable="true"
-                    android:src="@drawable/ic_menu" />
+                    app:srcCompat="@drawable/ic_menu" />
             </LinearLayout>
 
         </com.google.android.material.appbar.MaterialToolbar>
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/darkGray"
                 android:clickable="true"
-                android:drawableStart="@drawable/ic_unknown_risk"
+                app:drawableStartCompat="@drawable/ic_unknown_risk"
                 android:drawablePadding="@dimen/padding_normal"
                 android:focusable="true"
                 android:foreground="?selectableItemBackground"

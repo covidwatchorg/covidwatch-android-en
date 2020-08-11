@@ -39,12 +39,14 @@ class VerifyPositiveDiagnosisFragment :
 
             cbNoSymptoms.setOnCheckedChangeListener { _, noSymptoms ->
                 etSymptomsDate.isEnabled = !noSymptoms
+                tilSymptomsDate.isEnabled = !noSymptoms
                 noSymptomsLayout.isVisible = noSymptoms
                 viewModel.noSymptoms(noSymptoms)
             }
 
             cbNoExposedDate.setOnCheckedChangeListener { _, noExposedDate ->
                 etInfectionDate.isEnabled = !noExposedDate
+                tilInfectionDate.isEnabled = !noExposedDate
                 viewModel.noInfectionDate(noExposedDate)
             }
 

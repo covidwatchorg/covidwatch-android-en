@@ -45,7 +45,7 @@
                     android:text="@string/title_exposures" />
 
                 <!--suppress AndroidUnknownAttribute -->
-                <Switch
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/enable_exposure_notification"
                     style="@style/Switch.EnableExposureNotification"
                     android:checked="@{viewModel.exposureNotificationEnabled}"
@@ -73,7 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/gradient_bottom_top_top"
-                    android:drawableEnd="@drawable/doctor_with_heart"
+                    app:drawableEndCompat="@drawable/doctor_with_heart"
                     android:drawablePadding="@dimen/padding_normal"
                     android:lineSpacingExtra="4dp"
                     android:paddingHorizontal="@dimen/padding_normal"
