@@ -2,10 +2,13 @@ package org.covidwatch.android.data
 
 import com.google.gson.annotations.SerializedName
 import org.covidwatch.android.data.NextStepType.*
-import org.covidwatch.android.data.RegionId.*
+import org.covidwatch.android.data.RegionId.ARIZONA_STATE
+import org.covidwatch.android.data.RegionId.ASU
+import org.covidwatch.android.data.RegionId.NAU
+import org.covidwatch.android.data.RegionId.UOA
 
 data class Region(
-    val id: RegionId?,
+    val id: Int,
     val name: String,
     val isDisabled: Boolean = false,
 
@@ -44,23 +47,16 @@ fun ExposureConfiguration.asCovidExposureConfiguration() = CovidExposureConfigur
 )
 
 data class NextStep(
-    val type: NextStepType,
+    val type: NextStepType?,
     val description: String,
     val url: String? = null
 )
 
-enum class RegionId {
-    @SerializedName("0")
-    ARIZONA_STATE,
-
-    @SerializedName("1")
-    UOA,
-
-    @SerializedName("2")
-    ASU,
-
-    @SerializedName("3")
-    NAU
+object RegionId {
+    const val ARIZONA_STATE = 0
+    const val UOA = 1
+    const val ASU = 2
+    const val NAU = 3
 }
 
 enum class NextStepType {
@@ -257,9 +253,8 @@ object DefaultRegions {
     )
 
     val all = listOf(
-        universityOfArizona,
-        arizonaStateUniversity,
+        stateOfArizona,
         northernArizonaUniversity,
-        stateOfArizona
+        universityOfArizona
     )
 }
