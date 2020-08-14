@@ -79,6 +79,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         binding.nextStepsMetaTitle.isVisible = false
                         binding.nextStepsTitle.setText(R.string.next_steps_verified_positive)
 
+                        // TODO: 14.08.2020 setting visibility fo actionLayoutTitle in different places is
+                        // a flawed solution as it depends on the order of the code execution of those places:
+                        // region first and riskLevel second
+                        binding.actionLayoutTitle.isVisible = false
+
                         binding.actionLayoutInfo.isVisible = false
                         binding.actionLayoutBtn.isVisible = false
                     }
