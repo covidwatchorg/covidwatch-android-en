@@ -316,7 +316,7 @@
     <!--REGION SELECTION-->
     <string name="privacy_select_region"><b>We value your privacy.</b> Select a region to see local healthcare resources without ever sharing your location or identity. You can change this selection at any time.</string>
     <string name="select_region_label">Select a Region</string>
-    <string name="choose_another_region">Choose a Different Region</string>
+    <string name="btn_choose_different_region">Choose a Different Region</string>
     <string name="btn_previous_onboarding_screen_description">Button previous onboarding screen</string>
     <string name="btn_next_onboarding_screen_description">Button next onboarding screen</string>
     <string name="choose_another_region_info">Statewide app support is currently under development. You will continue to get exposure notifications, but can only share an anonymous COVID-19 diagnosis if you are part of a region with full app support.</string>

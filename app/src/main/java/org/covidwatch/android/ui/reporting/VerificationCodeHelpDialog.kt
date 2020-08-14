@@ -59,13 +59,21 @@ class VerificationCodeHelpDialog : BottomSheetDialogFragment() {
 
                 when (step.type) {
                     NextStepType.PHONE -> {
+                        stepView.btnAction.setText(R.string.btn_call)
                         stepView.btnAction.setOnClickListener {
                             context?.dial(step.url)
                         }
                     }
                     NextStepType.WEBSITE -> {
+                        stepView.btnAction.setText(R.string.btn_learn_more)
                         stepView.btnAction.setOnClickListener {
                             context?.openBrowser(step.url)
+                        }
+                    }
+                    NextStepType.SELECT_REGION -> {
+                        stepView.btnAction.setText(R.string.btn_choose_different_region)
+                        stepView.btnAction.setOnClickListener {
+                            findNavController().navigate(R.id.selectRegionFragment)
                         }
                     }
                     else -> stepView.btnAction.isVisible = false

@@ -58,7 +58,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     binding.actionLayoutTitle.isVisible = false
 
                     binding.actionLayoutInfo.setText(R.string.choose_another_region_info)
-                    binding.actionLayoutBtn.setText(R.string.choose_another_region)
+                    binding.actionLayoutBtn.setText(R.string.btn_choose_different_region)
                     binding.actionLayoutBtn.setOnClickListener {
                         findNavController().navigate(R.id.selectRegionFragment)
                     }
