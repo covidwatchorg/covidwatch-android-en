@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import org.covidwatch.android.ui.event.Event
+import org.covidwatch.android.ui.event.NullableEvent
 
 fun <X> LiveData<X>.doOnNext(body: (X) -> Unit): LiveData<X> {
     val result = MediatorLiveData<X>()
@@ -33,4 +34,11 @@ fun MutableLiveData<Event<Unit>>.send() {
  * */
 fun <T> MutableLiveData<Event<T>>.send(value: T?) {
     this.value = value?.let { Event(value) }
+}
+
+/**
+ * Send an event with a value
+ * */
+fun <T> MutableLiveData<NullableEvent<T>>.sendNullable(value: T?) {
+    this.value = NullableEvent(value)
 }

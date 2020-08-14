@@ -6,15 +6,18 @@ import android.os.Parcel
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.textfield.TextInputLayout
 import org.covidwatch.android.R
 import org.covidwatch.android.databinding.FragmentVerifyPositiveDiagnosisBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
+import org.covidwatch.android.extension.observeNullableEvent
 import org.covidwatch.android.ui.BaseViewModelFragment
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import java.time.LocalDate
@@ -38,15 +41,14 @@ class VerifyPositiveDiagnosisFragment :
             closeButton.setOnClickListener { findNavController().popBackStack() }
 
             cbNoSymptoms.setOnCheckedChangeListener { _, noSymptoms ->
-                etSymptomsDate.isEnabled = !noSymptoms
-                tilSymptomsDate.isEnabled = !noSymptoms
+                disableInput(tilSymptomsDate, noSymptoms)
+
                 noSymptomsLayout.isVisible = noSymptoms
                 viewModel.noSymptoms(noSymptoms)
             }
 
             cbNoExposedDate.setOnCheckedChangeListener { _, noExposedDate ->
-                etInfectionDate.isEnabled = !noExposedDate
-                tilInfectionDate.isEnabled = !noExposedDate
+                disableInput(tilInfectionDate, noExposedDate)
                 viewModel.noInfectionDate(noExposedDate)
             }
 
@@ -57,24 +59,29 @@ class VerifyPositiveDiagnosisFragment :
                 viewModel.verificationCode(it.toString())
             })
 
-            etSymptomsDate.setOnClickListener {
-                showDatePicker { viewModel.symptomDate(it) }
-            }
-            etTestedDate.setOnClickListener {
-                showDatePicker { viewModel.testDate(it) }
-            }
-            etInfectionDate.setOnClickListener {
-                showDatePicker { viewModel.infectionDate(it) }
-            }
+            etSymptomsDate.setOnClickListener { viewModel.selectSymptomsDate() }
+            etTestedDate.setOnClickListener { viewModel.selectTestDate() }
+            etInfectionDate.setOnClickListener { viewModel.selectInfectionDate() }
 
-            btnFinishVerification.setOnClickListener {
-                viewModel.sharePositiveDiagnosis()
-            }
+            btnFinishVerification.setOnClickListener { viewModel.sharePositiveDiagnosis() }
         }
 
         with(viewModel) {
             observe(readyToSubmit) {
                 binding.btnFinishVerification.isVisible = it
+            }
+
+            observeNullableEvent(selectSymptomsDate) { currentSelection ->
+                showDatePicker(currentSelection) { viewModel.symptomDate(it) }
+            }
+            observeNullableEvent(selectInfectionDate) { currentSelection ->
+                showDatePicker(currentSelection) { viewModel.infectionDate(it) }
+            }
+            observeEvent(selectTestDate) { currentSelection ->
+                showDatePicker(
+                    currentSelection.first,
+                    currentSelection.second
+                ) { viewModel.testDate(it) }
             }
 
             observe(infectionDateFormatted) { binding.etInfectionDate.setText(it) }
@@ -93,19 +100,37 @@ class VerifyPositiveDiagnosisFragment :
         }
     }
 
-    private fun showDatePicker(selectedDate: (Long) -> Unit) {
+    private fun disableInput(
+        textInputLayout: TextInputLayout,
+        disable: Boolean
+    ) {
+        textInputLayout.isEnabled = !disable
+        textInputLayout.boxBackgroundColor = if (disable) ContextCompat.getColor(
+            requireContext(),
+            R.color.transparentGray
+        ) else -1
+    }
+
+    private fun showDatePicker(
+        selection: Long?,
+        dayInPast: Long? = null,
+        selectedDate: (Long) -> Unit
+    ) {
         val builder = MaterialDatePicker.Builder.datePicker()
         val constraints = CalendarConstraints.Builder()
 
-        // 14 days back
-        val twoWeeksAgo =
-            LocalDate.now().plusDays(-14).atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli()
+        val twoWeeksAgo = LocalDate.now().plusDays(-14).atStartOfDay(ZoneId.of("UTC")).toInstant()
+            .toEpochMilli()
 
-        val now = LocalDate.now().atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli()
+        // Day in the past or 14 days back
+        val fromWhen = dayInPast ?: twoWeeksAgo
 
-        constraints.setValidator(BaseDateValidator { it in twoWeeksAgo..now })
+        val untilNow = LocalDate.now().atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli()
+
+        constraints.setValidator(BaseDateValidator { it in fromWhen..untilNow })
 
         val datePicker = builder
+            .setSelection(selection)
             .setCalendarConstraints(constraints.build())
             .build()
 

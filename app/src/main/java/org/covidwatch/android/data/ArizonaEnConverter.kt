@@ -2,6 +2,7 @@ package org.covidwatch.android.data
 
 import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
+import org.covidwatch.android.data.EnConverter.Companion.DEFAULT_ROLLING_PERIOD
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ExposureNotification
 import org.covidwatch.android.extension.daysTo
@@ -136,7 +137,10 @@ class ArizonaEnConverter(private val prefs: PreferenceStorage) : EnConverter {
             else -> 0
         }
 
-        return key.asDiagnosisKey().copy(transmissionRisk = transmissionRisk)
+        return key.asDiagnosisKey().copy(
+            transmissionRisk = transmissionRisk,
+            rollingPeriod = if (key.rollingPeriod == 0) DEFAULT_ROLLING_PERIOD else key.rollingPeriod
+        )
     }
 
     override fun riskMetrics(
