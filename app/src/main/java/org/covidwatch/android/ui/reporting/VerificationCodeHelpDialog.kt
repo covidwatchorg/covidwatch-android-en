@@ -78,8 +78,6 @@ class VerificationCodeHelpDialog : BottomSheetDialogFragment() {
             }
 
             tvRegion.setOnClickListener { findNavController().navigate(R.id.selectRegionFragment) }
-
-            closeButton.setOnClickListener { dismiss() }
         }
     }
 }
