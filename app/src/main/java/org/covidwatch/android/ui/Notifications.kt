@@ -119,20 +119,27 @@ class Notifications(private val context: Context) {
     fun downloadingReportsNetworkFailure() {
         createDownloadReportChannel()
 
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            0,
+            Intents.wirelessSettings,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
         val builder = NotificationCompat.Builder(context, DOWNLOAD_REPORTS_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.download_reports_failure_notification_title))
             .setContentText(context.getString(R.string.no_connection_error))
+            .setContentIntent(pendingIntent)
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText(context.getString(R.string.no_connection_error))
+            )
             .addAction(
                 R.drawable.ic_settings_white_24dp,
                 context.getString(R.string.open_settings),
-                PendingIntent.getActivity(
-                    context,
-                    0,
-                    Intents.wirelessSettings,
-                    PendingIntent.FLAG_UPDATE_CURRENT
-                )
+                pendingIntent
             )
+            .setAutoCancel(true)
 
         notificationManager.notify(DOWNLOAD_REPORTS_ERROR_NOTIFICATION_ID, builder.build())
     }
@@ -140,20 +147,27 @@ class Notifications(private val context: Context) {
     fun downloadingReportsEnNotAvailable() {
         createDownloadReportChannel()
 
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            0,
+            context.playStoreWithServices,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
         val builder = NotificationCompat.Builder(context, DOWNLOAD_REPORTS_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.download_reports_failure_notification_title))
             .setContentText(context.getString(R.string.notification_en_not_supported))
+            .setContentIntent(pendingIntent)
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText(context.getString(R.string.notification_en_not_supported))
+            )
             .addAction(
                 R.drawable.ic_external_link,
                 context.getString(R.string.update),
-                PendingIntent.getActivity(
-                    context,
-                    0,
-                    context.playStoreWithServices,
-                    PendingIntent.FLAG_UPDATE_CURRENT
-                )
+                pendingIntent
             )
+            .setAutoCancel(true)
 
         notificationManager.notify(DOWNLOAD_REPORTS_ERROR_NOTIFICATION_ID, builder.build())
     }
@@ -165,6 +179,7 @@ class Notifications(private val context: Context) {
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.download_reports_failure_notification_title))
             .setContentText(message)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(message))
             .setContentIntent(
                 PendingIntent.getActivity(
                     context,
@@ -187,7 +202,7 @@ class Notifications(private val context: Context) {
             val channel = NotificationChannel(
                 DOWNLOAD_REPORTS_CHANNEL_ID,
                 context.getString(R.string.download_reports_notification_channel),
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_MIN
             )
             channel.description =
                 context.getString(R.string.download_reports_notification_channel_description)
