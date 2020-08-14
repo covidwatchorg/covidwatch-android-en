@@ -77,8 +77,8 @@
                 android:id="@+id/et_verification_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
                 android:hint="@string/test_verification_code_hint"
+                android:inputType="number"
                 android:maxLength="8" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -109,9 +109,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:cursorVisible="false"
-                android:hint="@string/select_date_hint"
                 android:focusable="false"
-                android:foreground="?selectableItemBackground" />
+                android:foreground="?selectableItemBackground"
+                android:hint="@string/select_date_hint" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <CheckBox
@@ -155,9 +155,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:cursorVisible="false"
-                    android:hint="@string/select_date_hint"
                     android:focusable="false"
-                    android:foreground="?selectableItemBackground" />
+                    android:foreground="?selectableItemBackground"
+                    android:hint="@string/select_date_hint" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <CheckBox

@@ -6,11 +6,13 @@ import android.os.Parcel
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.textfield.TextInputLayout
 import org.covidwatch.android.R
 import org.covidwatch.android.databinding.FragmentVerifyPositiveDiagnosisBinding
 import org.covidwatch.android.extension.observe
@@ -39,15 +41,14 @@ class VerifyPositiveDiagnosisFragment :
             closeButton.setOnClickListener { findNavController().popBackStack() }
 
             cbNoSymptoms.setOnCheckedChangeListener { _, noSymptoms ->
-                etSymptomsDate.isEnabled = !noSymptoms
-                tilSymptomsDate.isEnabled = !noSymptoms
+                disableInput(tilSymptomsDate, noSymptoms)
+
                 noSymptomsLayout.isVisible = noSymptoms
                 viewModel.noSymptoms(noSymptoms)
             }
 
             cbNoExposedDate.setOnCheckedChangeListener { _, noExposedDate ->
-                etInfectionDate.isEnabled = !noExposedDate
-                tilInfectionDate.isEnabled = !noExposedDate
+                disableInput(tilInfectionDate, noExposedDate)
                 viewModel.noInfectionDate(noExposedDate)
             }
 
@@ -97,6 +98,17 @@ class VerifyPositiveDiagnosisFragment :
                 findNavController().navigate(R.id.sharedDiagnosisFragment)
             }
         }
+    }
+
+    private fun disableInput(
+        textInputLayout: TextInputLayout,
+        disable: Boolean
+    ) {
+        textInputLayout.isEnabled = !disable
+        textInputLayout.boxBackgroundColor = if (disable) ContextCompat.getColor(
+            requireContext(),
+            R.color.transparentGray
+        ) else -1
     }
 
     private fun showDatePicker(
