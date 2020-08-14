@@ -15,6 +15,7 @@ import org.covidwatch.android.R
 import org.covidwatch.android.databinding.FragmentVerifyPositiveDiagnosisBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
+import org.covidwatch.android.extension.observeNullableEvent
 import org.covidwatch.android.ui.BaseViewModelFragment
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import java.time.LocalDate
@@ -57,24 +58,26 @@ class VerifyPositiveDiagnosisFragment :
                 viewModel.verificationCode(it.toString())
             })
 
-            etSymptomsDate.setOnClickListener {
-                showDatePicker { viewModel.symptomDate(it) }
-            }
-            etTestedDate.setOnClickListener {
-                showDatePicker { viewModel.testDate(it) }
-            }
-            etInfectionDate.setOnClickListener {
-                showDatePicker { viewModel.infectionDate(it) }
-            }
+            etSymptomsDate.setOnClickListener { viewModel.selectSymptomsDate() }
+            etTestedDate.setOnClickListener { viewModel.selectTestDate() }
+            etInfectionDate.setOnClickListener { viewModel.selectInfectionDate() }
 
-            btnFinishVerification.setOnClickListener {
-                viewModel.sharePositiveDiagnosis()
-            }
+            btnFinishVerification.setOnClickListener { viewModel.sharePositiveDiagnosis() }
         }
 
         with(viewModel) {
             observe(readyToSubmit) {
                 binding.btnFinishVerification.isVisible = it
+            }
+
+            observeNullableEvent(selectSymptomsDate) { currentSelection ->
+                showDatePicker(currentSelection) { viewModel.symptomDate(it) }
+            }
+            observeNullableEvent(selectInfectionDate) { currentSelection ->
+                showDatePicker(currentSelection) { viewModel.infectionDate(it) }
+            }
+            observeNullableEvent(selectTestDate) { currentSelection ->
+                showDatePicker(currentSelection) { viewModel.testDate(it) }
             }
 
             observe(infectionDateFormatted) { binding.etInfectionDate.setText(it) }
@@ -93,7 +96,7 @@ class VerifyPositiveDiagnosisFragment :
         }
     }
 
-    private fun showDatePicker(selectedDate: (Long) -> Unit) {
+    private fun showDatePicker(selection: Long?, selectedDate: (Long) -> Unit) {
         val builder = MaterialDatePicker.Builder.datePicker()
         val constraints = CalendarConstraints.Builder()
 
@@ -106,6 +109,7 @@ class VerifyPositiveDiagnosisFragment :
         constraints.setValidator(BaseDateValidator { it in twoWeeksAgo..now })
 
         val datePicker = builder
+            .setSelection(selection)
             .setCalendarConstraints(constraints.build())
             .build()
 
