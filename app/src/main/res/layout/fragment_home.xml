@@ -56,7 +56,6 @@
             android:focusable="true"
             android:paddingHorizontal="@dimen/padding_normal"
             android:paddingVertical="@dimen/padding_small"
-            android:textColor="@color/secondaryText"
             android:textSize="12sp"
             tools:text="Region: Arizona" />
     </com.google.android.material.appbar.AppBarLayout>
