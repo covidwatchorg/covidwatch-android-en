@@ -37,7 +37,6 @@ class SelectRegionFragment : BaseFragment<FragmentSelectRegionBinding>() {
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
                 binding.spinnerRegions.adapter = adapter
-                binding.spinnerRegions.setSelection(viewModel.selectedRegion)
                 binding.spinnerRegions.onItemSelectedListener =
                     object : AdapterView.OnItemSelectedListener {
                         override fun onNothingSelected(parent: AdapterView<*>?) = Unit
@@ -51,6 +50,7 @@ class SelectRegionFragment : BaseFragment<FragmentSelectRegionBinding>() {
                     }
             }
 
+            observe(selectedRegion, binding.spinnerRegions::setSelection)
             observeEvent(closeScreen) { findNavController().popBackStack() }
             observeEvent(showSetupCompleteScreen) {
                 findNavController().navigate(R.id.finishedOnboardingFragment)

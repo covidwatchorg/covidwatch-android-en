@@ -105,7 +105,7 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
         get() = _regions.also { it.value = regions }
 
     override val region: Region
-        get() = regions.regions[selectedRegion]
+        get() = regions.regions.find { selectedRegion == it.id } ?: regions.regions.first()
 
     override val riskModelConfiguration: RiskModelConfiguration
         get() = region.riskModelConfiguration

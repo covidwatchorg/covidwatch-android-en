@@ -27,6 +27,10 @@ class FakeExposureNotification : ExposureNotificationClient {
         }
     }
 
+    override fun getCalibrationConfidence(): Task<Int> {
+        TODO("not implemented")
+    }
+
     override fun isEnabled(): Task<Boolean> = Tasks.call { started }
 
     override fun getTemporaryExposureKeyHistory(): Task<List<TemporaryExposureKey>> =
@@ -40,6 +44,10 @@ class FakeExposureNotification : ExposureNotificationClient {
         token: String
     ): Task<Void> = Tasks.call { null }
 
+    override fun provideDiagnosisKeys(p0: MutableList<File>?): Task<Void> {
+        TODO("not implemented")
+    }
+
     override fun getExposureSummary(token: String): Task<ExposureSummary> =
         Tasks.call { RandomEnObjects.exposureSummary }
 
@@ -52,7 +60,31 @@ class FakeExposureNotification : ExposureNotificationClient {
         TODO("not implemented")
     }
 
+    override fun getVersion(): Task<Long> {
+        TODO("not implemented")
+    }
+
+    override fun getDailySummaries(p0: DailySummariesConfig?): Task<MutableList<DailySummary>> {
+        TODO("not implemented")
+    }
+
+    override fun deviceSupportsLocationlessScanning(): Boolean {
+        TODO("not implemented")
+    }
+
+    override fun setDiagnosisKeysDataMapping(p0: DiagnosisKeysDataMapping?): Task<Void> {
+        TODO("not implemented")
+    }
+
+    override fun getDiagnosisKeysDataMapping(): Task<DiagnosisKeysDataMapping> {
+        TODO("not implemented")
+    }
+
     override fun getExposureWindows(p0: String?): Task<MutableList<ExposureWindow>> {
+        TODO("not implemented")
+    }
+
+    override fun getExposureWindows(): Task<MutableList<ExposureWindow>> {
         TODO("not implemented")
     }
 }

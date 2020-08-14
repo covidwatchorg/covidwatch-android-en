@@ -19,6 +19,10 @@ interface EnConverter {
     fun mostRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Instant?
     fun leastRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Instant?
     fun riskMetrics(exposures: List<CovidExposureInformation>, computeDate: Instant): RiskMetrics
+
+    companion object {
+        const val DEFAULT_ROLLING_PERIOD = 144
+    }
 }
 
 data class RiskMetrics(

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -15,6 +14,7 @@ import org.covidwatch.android.databinding.DialogTestVerificationCodeInfoBinding
 import org.covidwatch.android.databinding.ItemVerificationCodeStepBinding
 import org.covidwatch.android.ui.Intents.dial
 import org.covidwatch.android.ui.Intents.openBrowser
+import org.covidwatch.android.ui.setRegion
 import org.koin.android.ext.android.inject
 
 class VerificationCodeHelpDialog : BottomSheetDialogFragment() {
@@ -42,10 +42,7 @@ class VerificationCodeHelpDialog : BottomSheetDialogFragment() {
 
         val region = prefs.region
         with(binding) {
-            tvRegion.text = HtmlCompat.fromHtml(
-                getString(R.string.current_region, region.name),
-                HtmlCompat.FROM_HTML_MODE_COMPACT
-            )
+            tvRegion.setRegion(region)
 
             val layoutInflater = LayoutInflater.from(context)
             verificationCodeSteps.removeAllViews()
@@ -59,13 +56,21 @@ class VerificationCodeHelpDialog : BottomSheetDialogFragment() {
 
                 when (step.type) {
                     NextStepType.PHONE -> {
+                        stepView.btnAction.setText(R.string.btn_call)
                         stepView.btnAction.setOnClickListener {
                             context?.dial(step.url)
                         }
                     }
                     NextStepType.WEBSITE -> {
+                        stepView.btnAction.setText(R.string.btn_learn_more)
                         stepView.btnAction.setOnClickListener {
                             context?.openBrowser(step.url)
+                        }
+                    }
+                    NextStepType.SELECT_REGION -> {
+                        stepView.btnAction.setText(R.string.btn_choose_different_region)
+                        stepView.btnAction.setOnClickListener {
+                            findNavController().navigate(R.id.selectRegionFragment)
                         }
                     }
                     else -> stepView.btnAction.isVisible = false
@@ -73,8 +78,6 @@ class VerificationCodeHelpDialog : BottomSheetDialogFragment() {
             }
 
             tvRegion.setOnClickListener { findNavController().navigate(R.id.selectRegionFragment) }
-
-            closeButton.setOnClickListener { dismiss() }
         }
     }
 }

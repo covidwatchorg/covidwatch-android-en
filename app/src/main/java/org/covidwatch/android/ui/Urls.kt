@@ -8,4 +8,5 @@ object Urls {
         "https://azdhs.gov/documents/privacy-policy/covid-watch-application-privacy-policy.pdf"
 
     const val SUPPORT = "https://www.covidwatch.org/get_support"
+    const val FAQ = "https://www.covidwatch.org/faq"
 }

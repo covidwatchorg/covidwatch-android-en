@@ -12,8 +12,10 @@ import org.covidwatch.android.domain.StartUploadDiagnosisKeysWorkUseCase
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.extension.launchUseCase
 import org.covidwatch.android.extension.send
+import org.covidwatch.android.extension.sendNullable
 import org.covidwatch.android.ui.BaseViewModel
 import org.covidwatch.android.ui.event.Event
+import org.covidwatch.android.ui.event.NullableEvent
 import org.covidwatch.android.ui.util.DateFormatter
 import java.time.Instant
 
@@ -52,6 +54,15 @@ class VerifyPositiveDiagnosisViewModel(
     private val _symptomDateFormatted = MutableLiveData<String>()
     val symptomDateDateFormatted: LiveData<String> = _symptomDateFormatted
 
+    private val _selectSymptomsDate = MutableLiveData<NullableEvent<Long?>>()
+    val selectSymptomsDate: LiveData<NullableEvent<Long?>> = _selectSymptomsDate
+
+    private val _selectInfectionDate = MutableLiveData<NullableEvent<Long?>>()
+    val selectInfectionDate: LiveData<NullableEvent<Long?>> = _selectInfectionDate
+
+    private val _selectTestDate = MutableLiveData<Event<Pair<Long?, Long?>>>()
+    val selectTestDate: LiveData<Event<Pair<Long?, Long?>>> = _selectTestDate
+
     private var infectionDate: Instant?
         get() = state[STATE_INFECTION_DATE]
         set(value) {
@@ -70,6 +81,19 @@ class VerifyPositiveDiagnosisViewModel(
             state[STATE_SYMPTOM_DATE] = value
         }
 
+    fun selectSymptomsDate() = _selectSymptomsDate.sendNullable(symptomDate?.toEpochMilli())
+
+    fun selectInfectionDate() = _selectInfectionDate.sendNullable(infectionDate?.toEpochMilli())
+
+    fun selectTestDate() = _selectTestDate.send(
+        Pair(
+            testDate?.toEpochMilli(),
+            infectionDate?.toEpochMilli()?.takeIf {
+                diagnosisVerification.value?.noInfectionDate == false
+            }
+        )
+    )
+
     fun symptomDate(date: Long) {
         symptomDate = Instant.ofEpochMilli(date)
         _symptomDateFormatted.value = DateFormatter.format(date)
@@ -84,6 +108,14 @@ class VerifyPositiveDiagnosisViewModel(
 
     fun infectionDate(date: Long) {
         infectionDate = Instant.ofEpochMilli(date)
+
+        // Change test date
+        if (diagnosisVerification.value?.noInfectionDate == false &&
+            testDate?.let { infectionDate?.isAfter(it) } == true
+        ) {
+            testDate(date)
+        }
+
         _infectionDateFormatted.value = DateFormatter.format(date)
         setDiagnosisVerification(diagnosisVerification.value?.copy(possibleInfectionDate = infectionDate))
     }

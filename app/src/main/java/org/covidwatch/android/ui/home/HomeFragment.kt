@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -23,10 +22,7 @@ import org.covidwatch.android.databinding.ItemNextStepBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.extension.shareApp
-import org.covidwatch.android.ui.BaseFragment
-import org.covidwatch.android.ui.logo
-import org.covidwatch.android.ui.name
-import org.covidwatch.android.ui.setBackgroundFromRiskLevel
+import org.covidwatch.android.ui.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -48,17 +44,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
 
             observe(region) {
-                binding.tvRegion.text = HtmlCompat.fromHtml(
-                    getString(R.string.current_region, it.name),
-                    HtmlCompat.FROM_HTML_MODE_COMPACT
-                )
+                binding.tvRegion.setRegion(it)
                 binding.toolbar.logo = ContextCompat.getDrawable(view.context, it.logo)
 
                 if (it.isDisabled) {
                     binding.actionLayoutTitle.isVisible = false
 
                     binding.actionLayoutInfo.setText(R.string.choose_another_region_info)
-                    binding.actionLayoutBtn.setText(R.string.choose_another_region)
+                    binding.actionLayoutBtn.setText(R.string.btn_choose_different_region)
                     binding.actionLayoutBtn.setOnClickListener {
                         findNavController().navigate(R.id.selectRegionFragment)
                     }
@@ -78,6 +71,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     RiskLevel.VERIFIED_POSITIVE -> {
                         binding.nextStepsMetaTitle.isVisible = false
                         binding.nextStepsTitle.setText(R.string.next_steps_verified_positive)
+
+                        // TODO: 14.08.2020 setting visibility fo actionLayoutTitle in different places is
+                        // a flawed solution as it depends on the order of the code execution of those places:
+                        // region first and riskLevel second
+                        binding.actionLayoutTitle.isVisible = false
 
                         binding.actionLayoutInfo.isVisible = false
                         binding.actionLayoutBtn.isVisible = false

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.xwray.groupie.ExpandableGroup
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import org.covidwatch.android.R
 import org.covidwatch.android.databinding.FragmentExposuresBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
@@ -58,6 +59,13 @@ class ExposuresFragment : BaseViewModelFragment<FragmentExposuresBinding, Exposu
                 }
 
                 if (exposures.isNotEmpty()) adapter.add(FooterItem())
+            }
+            observe(exposureNotificationEnabled) { enabled ->
+                if (enabled) {
+                    binding.exposureNotificationsSubtitle.setText(R.string.exposures_notifications_on_subtitle)
+                } else {
+                    binding.exposureNotificationsSubtitle.setText(R.string.exposures_notifications_off_subtitle)
+                }
             }
             observeEvent(showExposureDetails) {
                 val action =

@@ -1,18 +1,42 @@
 package org.covidwatch.android.ui
 
+import android.text.Spannable
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
+import androidx.core.text.toSpannable
 import androidx.databinding.BindingAdapter
 import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureInformation
+import org.covidwatch.android.data.Region
 import org.covidwatch.android.data.RiskLevel
 import org.covidwatch.android.data.RiskLevel.*
 import org.covidwatch.android.extension.fromHtml
 import org.covidwatch.android.ui.util.DateFormatter
 import java.time.Instant
+
+@BindingAdapter("region")
+fun TextView.setRegion(region: Region) {
+    val text = context.getString(R.string.current_region, region.name).fromHtml()
+    setText(
+        text.toSpannable().apply {
+            setSpan(
+                ForegroundColorSpan(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.colorPrimary
+                    )
+                ),
+                text.count() - region.name.length, text.count(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        },
+        TextView.BufferType.SPANNABLE
+    )
+}
 
 @BindingAdapter("exposure_info_attenuation")
 fun TextView.setExposureInfoAttenuation(exposure: CovidExposureInformation?) {
