@@ -49,6 +49,7 @@
                     android:id="@+id/enable_exposure_notification"
                     style="@style/Switch.EnableExposureNotification"
                     android:checked="@{viewModel.exposureNotificationEnabled}"
+                    android:fontFamily="@font/montserrat"
                     android:onCheckedChanged="@{(switch, on) -> viewModel.enableExposureNotification(on)}"
                     android:paddingHorizontal="@dimen/padding_normal" />
 
