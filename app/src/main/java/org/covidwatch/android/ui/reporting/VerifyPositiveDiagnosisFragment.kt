@@ -76,8 +76,11 @@ class VerifyPositiveDiagnosisFragment :
             observeNullableEvent(selectInfectionDate) { currentSelection ->
                 showDatePicker(currentSelection) { viewModel.infectionDate(it) }
             }
-            observeNullableEvent(selectTestDate) { currentSelection ->
-                showDatePicker(currentSelection) { viewModel.testDate(it) }
+            observeEvent(selectTestDate) { currentSelection ->
+                showDatePicker(
+                    currentSelection.first,
+                    currentSelection.second
+                ) { viewModel.testDate(it) }
             }
 
             observe(infectionDateFormatted) { binding.etInfectionDate.setText(it) }
@@ -96,17 +99,23 @@ class VerifyPositiveDiagnosisFragment :
         }
     }
 
-    private fun showDatePicker(selection: Long?, selectedDate: (Long) -> Unit) {
+    private fun showDatePicker(
+        selection: Long?,
+        dayInPast: Long? = null,
+        selectedDate: (Long) -> Unit
+    ) {
         val builder = MaterialDatePicker.Builder.datePicker()
         val constraints = CalendarConstraints.Builder()
 
-        // 14 days back
-        val twoWeeksAgo =
-            LocalDate.now().plusDays(-14).atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli()
+        val twoWeeksAgo = LocalDate.now().plusDays(-14).atStartOfDay(ZoneId.of("UTC")).toInstant()
+            .toEpochMilli()
 
-        val now = LocalDate.now().atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli()
+        // Day in the past or 14 days back
+        val fromWhen = dayInPast ?: twoWeeksAgo
 
-        constraints.setValidator(BaseDateValidator { it in twoWeeksAgo..now })
+        val untilNow = LocalDate.now().atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli()
+
+        constraints.setValidator(BaseDateValidator { it in fromWhen..untilNow })
 
         val datePicker = builder
             .setSelection(selection)

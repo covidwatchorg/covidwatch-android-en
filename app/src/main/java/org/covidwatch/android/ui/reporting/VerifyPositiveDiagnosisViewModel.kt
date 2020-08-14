@@ -60,8 +60,8 @@ class VerifyPositiveDiagnosisViewModel(
     private val _selectInfectionDate = MutableLiveData<NullableEvent<Long?>>()
     val selectInfectionDate: LiveData<NullableEvent<Long?>> = _selectInfectionDate
 
-    private val _selectTestDate = MutableLiveData<NullableEvent<Long?>>()
-    val selectTestDate: LiveData<NullableEvent<Long?>> = _selectTestDate
+    private val _selectTestDate = MutableLiveData<Event<Pair<Long?, Long?>>>()
+    val selectTestDate: LiveData<Event<Pair<Long?, Long?>>> = _selectTestDate
 
     private var infectionDate: Instant?
         get() = state[STATE_INFECTION_DATE]
@@ -85,7 +85,14 @@ class VerifyPositiveDiagnosisViewModel(
 
     fun selectInfectionDate() = _selectInfectionDate.sendNullable(infectionDate?.toEpochMilli())
 
-    fun selectTestDate() = _selectTestDate.sendNullable(testDate?.toEpochMilli())
+    fun selectTestDate() = _selectTestDate.send(
+        Pair(
+            testDate?.toEpochMilli(),
+            infectionDate?.toEpochMilli()?.takeIf {
+                diagnosisVerification.value?.noInfectionDate == false
+            }
+        )
+    )
 
     fun symptomDate(date: Long) {
         symptomDate = Instant.ofEpochMilli(date)
@@ -101,6 +108,14 @@ class VerifyPositiveDiagnosisViewModel(
 
     fun infectionDate(date: Long) {
         infectionDate = Instant.ofEpochMilli(date)
+
+        // Change test date
+        if (diagnosisVerification.value?.noInfectionDate == false &&
+            testDate?.let { infectionDate?.isAfter(it) } == true
+        ) {
+            testDate(date)
+        }
+
         _infectionDateFormatted.value = DateFormatter.format(date)
         setDiagnosisVerification(diagnosisVerification.value?.copy(possibleInfectionDate = infectionDate))
     }
