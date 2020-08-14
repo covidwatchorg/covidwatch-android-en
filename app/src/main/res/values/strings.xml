@@ -163,7 +163,7 @@
     <string name="how_it_works_text_1">While Sam and Jane chat, their phones note each others’ <b>Bluetooth signals</b> and the app lists them securely as random numbers. Their personal information and location are <b>never recorded</b>.</string>
     <string name="how_it_works_title_2">Notify Others</string>
     <string name="how_it_works_text_2">Days later, Sam is positively diagnosed with COVID-19. He <b>shares his diagnosis</b> with the app, which then notifies others who were nearby of possible exposure.</string>
-    <string name="how_it_works_title_3">Receive Notifications</string>
+    <string name="how_it_works_title_3">Get Notifications</string>
     <string name="how_it_works_text_3">Jane gets a notification saying she was near an <b>anonymous person</b> who tested positive. The app explains what to do next and how to find local resources.</string>
     <string name="how_it_works_title_4">Help Communities</string>
     <string name="how_it_works_text_4">By <b>enabling notifications</b> and staying home when at risk of exposing others, they help prevent the spread of COVID-19 within their communities.</string>
@@ -223,7 +223,7 @@
     <string name="no_infection_date_report">Unknown</string>
     <string name="no_test_date_report">Unknown</string>
     <string name="verify_positive_diagnosis_title">Anonymously Share a Positive Diagnosis</string>
-    <string name="share_positive_diagnosis_button">Continue</string>
+    <string name="share_positive_diagnosis_button">Anonymously Share Diagnosis</string>
     <string name="past_positive_diagnoses">View Shared Positive Diagnoses</string>
     <string name="finish_code_verification_button">Anonymously Notify Others</string>
     <string name="verify_subtitle">To share a positive diagnosis, enter your Test Verification Code below.</string>
@@ -242,7 +242,7 @@
     <string name="choose_sharing_method_dialog_btn_other">Others…</string>
     <string name="test_verification_code_info">Test verification codes information</string>
     <string name="test_verification_code_label">What is your Verification Code?</string>
-    <string name="test_verification_code_hint">12345678</string>
+    <string name="test_verification_code_hint">Enter Code</string>
     <string name="symptoms_date_label">When did your symptoms start?</string>
     <string name="no_symptoms">I have no symptoms</string>
     <string name="tested_date_label">When did you get tested?</string>
