@@ -105,7 +105,8 @@
 
     <!-- POSSIBLE EXPOSURES-->
     <string name="title_exposures">Possible Exposures</string>
-    <string name="exposures_subtitle">You will be notified of possible exposures to COVID-19. We recommend that this setting <b>remain on</b> until the pandemic is over.</string>
+    <string name="exposures_notifications_on_subtitle">You will be notified of possible exposures to COVID-19. We recommend that this setting <b>remain on</b> until the pandemic is over.</string>
+    <string name="exposures_notifications_off_subtitle">You will <b>not</b> be notified of possible exposures to COVID-19. This must be turned on for the app to work properly.</string>
     <string name="switch_exposure_notifications">Exposure Notifications</string>
     <string name="exposure_risk_icon_description">High risk of exposure</string>
     <string name="exposure_info_explanation">Each exposure notification is saved in this app and will be automatically deleted after 30 days.</string>
