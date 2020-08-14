@@ -6,6 +6,6 @@ class CovidWatchApplication : BaseCovidWatchApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        if (BuildConfig.DEBUG) Timber.plant(CrashlyticsTree())
+        Timber.plant(CrashlyticsTree())
     }
 }
