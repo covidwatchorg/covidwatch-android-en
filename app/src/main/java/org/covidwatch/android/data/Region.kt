@@ -88,17 +88,48 @@ object DefaultRegions {
 
     private val nextStepsVerificationCodeDefault = NextStep(
         type = WEBSITE,
-        description = "For all others, the app is currently under development to support other states and regions. Visit the Covid Watch website for more information.",
-        url = "https://covidwatch.org"
+        description = "Statewide app support is currently under development. You will continue to get exposure notifications, but can only share an anonymous COVID-19 diagnosis if you are part of a region with full app support.",
+        url = "https://azdhs.gov"
     )
 
     private val stateOfArizona = Region(
         id = ARIZONA_STATE,
-        name = "State of Arizona",
+        name = "The State of Arizona",
         isDisabled = true,
-        nextStepsNoSignificantExposure = listOf(shareTheApp),
-        nextStepsSignificantExposure = listOf(shareTheApp),
-        nextStepsVerifiedPositive = listOf(shareTheApp),
+        nextStepsNoSignificantExposure = listOf(
+            NextStep(
+                type = WEBSITE,
+                description = "Visit the Arizona Department of Health Services website to share your thoughts about the app.",
+                url = "https://www.azdhs.gov"
+            ),
+            shareTheApp
+        ),
+        nextStepsSignificantExposure = listOf(
+            NextStep(
+                type = WEBSITE,
+                description = "Learn how to protect myself and others.",
+                url = "https://azdhs.gov/preparedness/epidemiology-disease-control/infectious-disease-epidemiology/index.php#novel-coronavirus-what-everyone-needs"
+            ),
+            NextStep(
+                type = WEBSITE,
+                description = "Find a test site if symptoms appear.",
+                url = "https://azdhs.gov/preparedness/epidemiology-disease-control/infectious-disease-epidemiology/index.php#novel-coronavirus-testing"
+            ),
+            shareTheApp
+        ),
+        nextStepsVerifiedPositive = listOf(
+            NextStep(
+                type = WEBSITE,
+                description = "Learn how to protect myself and others.",
+                url = "https://azdhs.gov/preparedness/epidemiology-disease-control/infectious-disease-epidemiology/index.php#novel-coronavirus-what-everyone-needs"
+            ),
+            NextStep(
+                type = WEBSITE,
+                description = "Find a test site if symptoms appear.",
+                url = "https://azdhs.gov/preparedness/epidemiology-disease-control/infectious-disease-epidemiology/index.php#novel-coronavirus-testing"
+            ),
+            shareTheApp
+        ),
         nextStepsVerificationCode = listOf(
             NextStep(
                 type = SELECT_REGION,
@@ -124,7 +155,7 @@ object DefaultRegions {
             ),
             NextStep(
                 type = WEBSITE,
-                description = "Protect yourself and others.",
+                description = "Learn how to protect yourself and others.",
                 url = "http://covid19.arizona.edu/prevention-health/protect-yourself-others?utm_source=covid_watch_app&utm_medium=referral&utm_campaign=covid_watch_protect_yourself"
             ),
             shareTheApp
