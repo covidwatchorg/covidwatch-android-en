@@ -9,7 +9,6 @@ data class Region(
     val name: String,
     val isDisabled: Boolean = false,
 
-    val nextStepsDisabled: List<NextStep>? = null,
     val nextStepsNoSignificantExposure: List<NextStep>,
     val nextStepsSignificantExposure: List<NextStep>,
 
@@ -101,25 +100,13 @@ object DefaultRegions {
         id = ARIZONA_STATE,
         name = "State of Arizona",
         isDisabled = true,
-        nextStepsDisabled = listOf(
-            NextStep(
-                type = WEBSITE,
-                description = "Visit the Arizona Department of Health Services website to share your thoughts on this app.",
-                url = "https://www.azdhs.gov"
-            ),
-            NextStep(
-                type = SELECT_REGION,
-                description = "Select an existing region."
-            )
-        ),
         nextStepsNoSignificantExposure = listOf(shareTheApp),
         nextStepsSignificantExposure = listOf(shareTheApp),
         nextStepsVerifiedPositive = listOf(shareTheApp),
         nextStepsVerificationCode = listOf(
             NextStep(
-                type = PHONE,
-                description = "Please call Arizona Department of Health Services at (844) 542-8201 for assistance.",
-                url = "tel:1-844-542-8201"
+                type = SELECT_REGION,
+                description = "Statewide app support is currently under development. You will continue to get exposure notifications, but can only share an anonymous COVID-19 diagnosis if you are part of a region with full app support."
             )
         ),
         recentExposureDays = 14
