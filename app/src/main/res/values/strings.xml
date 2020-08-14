@@ -176,9 +176,9 @@
     <string name="onboarding_title" />
     <string name="welcome_to_the">Welcome to the</string>
     <string name="full_app_name">Covid Watch Arizona Exposure Notifications App</string>
-    <string name="finished_onboarding_title">Setup Complete</string>
-    <string name="finished_onboarding_subtitle">You can now…</string>
-    <string name="finished_onboarding_text"><b>1.</b> Get exposure notifications whenever the setting is enabled\n<b>2.</b> Anonymously notify others when you choose to\n<b>3.</b> Get resources and recommendations</string>
+    <string name="finished_onboarding_title">That’s it. Setup Complete.</string>
+    <string name="finished_onboarding_subtitle">When exposure notifications are\nenabled, the app will detect exposures as you go about your day.\n\n<b>You can now…</b></string>
+    <string name="finished_onboarding_text"><b>&#8226;</b> Get exposure notifications\n<b>&#8226;</b> Anonymously notify others\n<b>&#8226;</b> Access local public health resources and recommendations</string>
     <string name="see_exposure_summary">View Detected Exposures</string>
     <string name="button_finish">Finish</string>
 
@@ -276,8 +276,8 @@
     <string name="notification_en_not_supported">Exposure Notifications are not available on this device. Try to update Google Play services.</string>
     <string name="notification_en_not_enabled">Exposure Notifications inactive. Go to the app to enable it.</string>
     <string name="notification_app_unauthorized">The app is not authorized to use Exposure Notifications. Contact us through "Get Support" menu in the app or by tapping this notification.</string>
-    <string name="notification_server_problem">Could\'nt finish checking for exposures due to server issue: %s. If this repeats contact us through "Get Support" menu in the app or by tapping this notification.</string>
-    <string name="notification_general_problem">Could\'nt finish checking for exposures. If this repeats contact us through "Get Support" menu in the app or by tapping this notification.</string>
+    <string name="notification_server_problem">Couldn\'t finish checking for exposures due to server issue: %s. If this repeats contact us through "Get Support" menu in the app or by tapping this notification.</string>
+    <string name="notification_general_problem">Couldn\'t finish checking for exposures. If this repeats contact us through "Get Support" menu in the app or by tapping this notification.</string>
 
     <!-- Share app common action -->
     <string name="share_app_content">Become a Covid Watcher and help your community stay safe. https://www.covid-watch.org</string>
