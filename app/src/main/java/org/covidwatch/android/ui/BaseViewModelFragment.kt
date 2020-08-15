@@ -3,6 +3,7 @@ package org.covidwatch.android.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -19,8 +20,16 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
 
     protected abstract val viewModel: VM
 
+    private var snackbar: Snackbar? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.setOnTouchListener { v, _ ->
+            if (snackbar?.duration == BaseTransientBottomBar.LENGTH_INDEFINITE) {
+                snackbar?.dismiss()
+            }
+            v.performClick()
+        }
         with(viewModel) {
             observeEvent(status) {
                 handleStatus(it)
@@ -40,16 +49,22 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        snackbar?.dismiss()
+        snackbar = null
+    }
+
     protected fun handleStatus(it: Failure) {
         when (it) {
             Failure.EnStatus.Failed -> {
-                val snackbar = Snackbar.make(
+                snackbar = Snackbar.make(
                     binding.root,
                     R.string.unknown_error,
                     BaseTransientBottomBar.LENGTH_LONG
                 )
-                snackbar.setAction(R.string.contact_us) { context?.openBrowser(Urls.SUPPORT) }
-                snackbar.show()
+                snackbar?.setAction(R.string.contact_us) { context?.openBrowser(Urls.SUPPORT) }
+                snackbar?.showBigText()
             }
             Failure.EnStatus.NotSupported -> {
                 context?.let { context ->
@@ -76,32 +91,39 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
                 }
             }
             Failure.NetworkError -> {
-                val snackbar = Snackbar.make(
+                snackbar = Snackbar.make(
                     binding.root,
                     R.string.no_connection_error,
                     BaseTransientBottomBar.LENGTH_LONG
                 )
-                snackbar.setAction(R.string.open_settings) { startActivity(Intents.wirelessSettings) }
-                snackbar.show()
+                snackbar?.setAction(R.string.open_settings) { startActivity(Intents.wirelessSettings) }
+                snackbar?.showBigText()
             }
             is Failure.ServerError -> {
-                val snackbar = Snackbar.make(
+                snackbar = Snackbar.make(
                     binding.root,
                     getString(R.string.server_error, it.error),
-                    BaseTransientBottomBar.LENGTH_LONG
+                    BaseTransientBottomBar.LENGTH_INDEFINITE
                 )
-                snackbar.setAction(R.string.contact_us) { context?.openBrowser(Urls.SUPPORT) }
-                snackbar.show()
+                snackbar?.setAction(R.string.contact_us) { context?.openBrowser(Urls.SUPPORT) }
+                snackbar?.showBigText()
             }
             is Failure.CodeVerification -> {
-                val snackbar = Snackbar.make(
+                snackbar = Snackbar.make(
                     binding.root,
                     getString(R.string.code_verification_error, it.error),
                     BaseTransientBottomBar.LENGTH_LONG
                 )
-                snackbar.setAction(R.string.contact_us) { context?.openBrowser(Urls.SUPPORT) }
-                snackbar.show()
+                snackbar?.setAction(R.string.contact_us) { context?.openBrowser(Urls.SUPPORT) }
+                snackbar?.showBigText()
             }
         }
+    }
+
+    private fun Snackbar?.showBigText() {
+        val text =
+            this?.view?.findViewById<TextView?>(com.google.android.material.R.id.snackbar_text)
+        text?.maxLines = 6
+        this?.show()
     }
 }
