@@ -20,7 +20,7 @@ class HomeViewModel(
     private val enManager: ExposureNotificationManager,
     private val userFlowRepository: UserFlowRepository,
     private val preferences: PreferenceStorage,
-    private val riskLevelRepository: RiskLevelRepository
+    riskLevelRepository: RiskLevelRepository
 ) : BaseViewModel() {
 
     private val _showOnboardingAnimation = MutableLiveData<Event<Boolean>>()
@@ -32,16 +32,13 @@ class HomeViewModel(
     private val _navigateToOnboardingEvent = MutableLiveData<Event<Unit>>()
     val navigateToOnboarding: LiveData<Event<Unit>> get() = _navigateToOnboardingEvent
 
-    val region
-        get() = preferences.observableRegion
+    val region = preferences.observableRegion
 
-    val riskLevel
-        get() = riskLevelRepository.riskLevel.asLiveData()
+    val riskLevel = riskLevelRepository.riskLevel.asLiveData()
 
-    val nextSteps
-        get() = riskLevelRepository.riskLevelNextSteps
-            .asLiveData()
-            .map { it.map(this::replaceDateFlags) }
+    val nextSteps = riskLevelRepository.riskLevelNextSteps
+        .asLiveData()
+        .map { it.map(this::replaceDateFlags) }
 
     /**
      * Searches the input string and replaces the first substring matching this format:
