@@ -136,6 +136,7 @@ android {
     }
 
     testOptions {
+        unitTests.returnDefaultValues = true
         animationsDisabled = true
         unitTests.all {
             useJUnitPlatform()
@@ -270,4 +271,8 @@ dependencies {
     def fragment_testing_version = "1.2.5"
     debugImplementation "androidx.fragment:fragment-testing:$fragment_testing_version"
 
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+    testImplementation "io.mockk:mockk:1.10.0"
+    // Koin
+    testImplementation "org.koin:koin-test:$koin_version"
 }
