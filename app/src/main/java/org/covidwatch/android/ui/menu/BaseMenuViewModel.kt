@@ -1,22 +1,18 @@
 package org.covidwatch.android.ui.menu
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
-import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
+import org.covidwatch.android.data.RiskLevel
+import org.covidwatch.android.data.risklevel.RiskLevelRepository
 import org.covidwatch.android.ui.BaseViewModel
 
 class MenuViewModel(
-    exposureInformationRepository: ExposureInformationRepository
-) :
-    BaseViewModel() {
+    riskLevelRepository: RiskLevelRepository
+) : BaseViewModel() {
 
-    private val _highRiskExposure = exposureInformationRepository.exposureInformation().map {
-        val maxRisk = it.maxBy { exposure ->
-            exposure.totalRiskScore
-        } ?: return@map false
-
-        maxRisk.highRisk
-    }
+    private val _highRiskExposure =
+        riskLevelRepository.riskLevel.asLiveData().map { it == RiskLevel.HIGH }
 
     val highRiskExposure: LiveData<Boolean>
         get() = _highRiskExposure

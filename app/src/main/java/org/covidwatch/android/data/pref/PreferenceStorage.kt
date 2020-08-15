@@ -52,9 +52,8 @@ class SharedPreferenceStorage(context: Context) : PreferenceStorage {
                 _regions.value = regions
                 _region.value = region
             }
-            SELECTED_REGION -> {
-                _region.value = region
-            }
+            SELECTED_REGION -> _region.value = region
+            RISK_METRICS -> _riskMetrics.value = riskMetrics
         }
     }
 

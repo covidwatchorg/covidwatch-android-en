@@ -34,7 +34,7 @@ class SelectRegionFragment : BaseFragment<FragmentSelectRegionBinding>() {
             observe(regions) {
 
                 val adapter = ArrayAdapter(requireContext(), R.layout.item_region_name, it)
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                adapter.setDropDownViewResource(R.layout.item_region_name_dropdown)
 
                 binding.spinnerRegions.adapter = adapter
                 binding.spinnerRegions.onItemSelectedListener =
