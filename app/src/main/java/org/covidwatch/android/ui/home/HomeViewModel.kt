@@ -32,13 +32,15 @@ class HomeViewModel(
     private val _navigateToOnboardingEvent = MutableLiveData<Event<Unit>>()
     val navigateToOnboarding: LiveData<Event<Unit>> get() = _navigateToOnboardingEvent
 
-    val region = preferences.observableRegion
+    val region by lazy { preferences.observableRegion }
 
-    val riskLevel = riskLevelRepository.riskLevel.asLiveData()
+    val riskLevel by lazy { riskLevelRepository.riskLevel.asLiveData() }
 
-    val nextSteps = riskLevelRepository.riskLevelNextSteps
-        .asLiveData()
-        .map { it.map(this::replaceDateFlags) }
+    val nextSteps by lazy {
+        riskLevelRepository.riskLevelNextSteps
+            .asLiveData()
+            .map { it.map(this::replaceDateFlags) }
+    }
 
     /**
      * Searches the input string and replaces the first substring matching this format:
