@@ -7,6 +7,7 @@ import androidx.work.WorkManager
 import com.google.android.gms.nearby.Nearby
 import com.google.common.io.BaseEncoding
 import com.google.gson.Gson
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
@@ -47,6 +48,7 @@ import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import java.io.File
 import java.security.SecureRandom
 
 val appModule = module {
@@ -317,6 +319,12 @@ val appModule = module {
         logging.setLevel(if (BuildConfig.DEBUG) BODY else NONE)
 
         OkHttpClient.Builder()
+            .cache(
+                Cache(
+                    directory = File(androidApplication().cacheDir, "http_cache"),
+                    maxSize = 50L * 1024L * 1024L // 10 MiB
+                )
+            )
             .addInterceptor(logging)
             .addInterceptor(ConnectivityInterceptor(androidApplication()))
             .build()

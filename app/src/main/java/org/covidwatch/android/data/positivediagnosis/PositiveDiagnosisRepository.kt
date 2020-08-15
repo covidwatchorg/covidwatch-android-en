@@ -30,15 +30,31 @@ class PositiveDiagnosisRepository(
         val dir = randomDirName()
 
         // We convert to file id in oder to be safe from change in the endpoint
-        val checkedFiles = keyFileRepository.providedKeys().map { it.url.fileId }
+        val localKeys = keyFileRepository.providedKeys()
 
         urls.map { keyFileBatch ->
-            val filteredUrls = keyFileBatch.urls
-                .filterNot { checkedFiles.contains(it.fileId) }
+            val localBatchKeys = localKeys
+                .filter { it.batch == keyFileBatch.batch }
+                .map { it.url.fileId }
 
-            val files = filteredUrls.mapNotNull { remote.diagnosisKey(dir, it) }
+            // Convert server urls to ids
+            val serverKeys = keyFileBatch.urls.map { it.fileId }
 
-            keyFileBatch.copy(keys = files, urls = filteredUrls)
+            val commonKeys = serverKeys.intersect(localBatchKeys).toList()
+
+            // Keep only ids that intersect with local ids
+            val keysToKeep = serverKeys.subtract(commonKeys).toList()
+
+            // Remove ids that are not present in the ids to keep
+            val keysToDelete = localBatchKeys.subtract(commonKeys).toList()
+            keyFileRepository.remove(keysToDelete)
+
+            // Convert keys to keep to urls
+            val keysToDownload = keyFileBatch.urls.filter { keysToKeep.contains(it.fileId) }
+
+            val files = keysToDownload.mapNotNull { remote.diagnosisKey(dir, it) }
+
+            keyFileBatch.copy(keys = files, urls = keysToDownload)
         }
     }
 

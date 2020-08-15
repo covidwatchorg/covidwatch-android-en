@@ -17,4 +17,7 @@ interface KeyFileDao : BaseDao<KeyFile> {
 
     @Query("DELETE FROM key_file")
     suspend fun reset()
+
+    @Query("DELETE FROM key_file WHERE id IN (:ids)")
+    suspend fun remove(ids: List<String>)
 }

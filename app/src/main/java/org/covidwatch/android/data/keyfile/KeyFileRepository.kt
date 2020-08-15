@@ -13,4 +13,6 @@ class KeyFileRepository(
     suspend fun providedKeys(): List<KeyFile> = withContext(dispatchers.io) { local.keyFiles() }
 
     suspend fun reset() = withContext(dispatchers.io) { local.reset() }
+
+    suspend fun remove(ids: List<String>) = withContext(dispatchers.io) { local.remove(ids) }
 }
