@@ -296,7 +296,7 @@ val appModule = module {
     }
 
     viewModel {
-        MenuViewModel(exposureInformationRepository = get())
+        MenuViewModel(riskLevelRepository = get())
     }
 
     viewModel {
