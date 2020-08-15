@@ -34,21 +34,13 @@ class NullableEvent<out T>(private val content: T?) {
     /**
      * Returns the content and prevents its use again.
      */
-    fun getContentIfNotHandled(): T? {
-        return if (handled) {
-            null
-        } else {
+    fun getContentIfNotHandled(notify: (T?) -> Unit) {
+        if (!handled) {
             handled = true
-            content
+            notify(content)
         }
     }
-
-    /**
-     * Returns the content, even if it's already been handled.
-     */
-    fun peekContent(): T? = content
 }
-
 
 /**
  * An [Observer] for [NullableEvent]s, simplifying the pattern of checking if the [NullableEvent]'s content has
@@ -59,7 +51,9 @@ class NullableEvent<out T>(private val content: T?) {
 class NullableEventObserver<T>(private val onEventUnhandledContent: (T?) -> Unit) :
     Observer<NullableEvent<T?>> {
     override fun onChanged(event: NullableEvent<T?>) {
-        onEventUnhandledContent(event.getContentIfNotHandled())
+        event.getContentIfNotHandled { content ->
+            onEventUnhandledContent(content)
+        }
     }
 }
 
