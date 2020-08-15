@@ -94,7 +94,7 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
                 snackbar = Snackbar.make(
                     binding.root,
                     R.string.no_connection_error,
-                    BaseTransientBottomBar.LENGTH_LONG
+                    BaseTransientBottomBar.LENGTH_INDEFINITE
                 )
                 snackbar?.setAction(R.string.open_settings) { startActivity(Intents.wirelessSettings) }
                 snackbar?.showBigText()
@@ -102,20 +102,21 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
             is Failure.ServerError -> {
                 snackbar = Snackbar.make(
                     binding.root,
-                    getString(R.string.server_error, it.error),
-                    BaseTransientBottomBar.LENGTH_INDEFINITE
+                    getString(R.string.server_error),
+                    BaseTransientBottomBar.LENGTH_LONG
                 )
                 snackbar?.setAction(R.string.contact_us) { context?.openBrowser(Urls.SUPPORT) }
                 snackbar?.showBigText()
             }
             is Failure.CodeVerification -> {
-                snackbar = Snackbar.make(
-                    binding.root,
-                    getString(R.string.code_verification_error, it.error),
-                    BaseTransientBottomBar.LENGTH_LONG
-                )
-                snackbar?.setAction(R.string.contact_us) { context?.openBrowser(Urls.SUPPORT) }
-                snackbar?.showBigText()
+                context?.let { context ->
+                    MaterialAlertDialogBuilder(context)
+                        .setTitle(R.string.code_verification_error_title)
+                        .setMessage(R.string.code_verification_error)
+                        .setPositiveButton(R.string.ok, null)
+                        .create()
+                        .show()
+                }
             }
         }
     }
