@@ -7,6 +7,7 @@ import androidx.work.WorkManager
 import com.google.android.gms.nearby.Nearby
 import com.google.common.io.BaseEncoding
 import com.google.gson.Gson
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
@@ -28,6 +29,7 @@ import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRemoteSour
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.data.pref.SharedPreferenceStorage
+import org.covidwatch.android.data.risklevel.DefaultRiskLevelRepository
 import org.covidwatch.android.data.risklevel.RiskLevelRepository
 import org.covidwatch.android.domain.*
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
@@ -46,6 +48,7 @@ import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import java.io.File
 import java.security.SecureRandom
 
 val appModule = module {
@@ -251,8 +254,8 @@ val appModule = module {
         )
     }
 
-    single {
-        RiskLevelRepository(
+    single<RiskLevelRepository> {
+        DefaultRiskLevelRepository(
             prefs = get(),
             positiveDiagnosisRepository = get(),
             dispatchers = get()
@@ -293,7 +296,7 @@ val appModule = module {
     }
 
     viewModel {
-        MenuViewModel(exposureInformationRepository = get())
+        MenuViewModel(riskLevelRepository = get())
     }
 
     viewModel {
@@ -316,6 +319,12 @@ val appModule = module {
         logging.setLevel(if (BuildConfig.DEBUG) BODY else NONE)
 
         OkHttpClient.Builder()
+            .cache(
+                Cache(
+                    directory = File(androidApplication().cacheDir, "http_cache"),
+                    maxSize = 50L * 1024L * 1024L // 10 MiB
+                )
+            )
             .addInterceptor(logging)
             .addInterceptor(ConnectivityInterceptor(androidApplication()))
             .build()

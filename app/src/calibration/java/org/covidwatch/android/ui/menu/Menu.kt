@@ -38,6 +38,7 @@ class MenuFragment : BaseMenuFragment() {
                 lifecycleScope.launch {
                     exposureInformationRepository.reset()
                     keyFileRepository.reset()
+                    preferences.riskMetrics = null
 
                     Toast.makeText(context, "Possible exposures were deleted", Toast.LENGTH_SHORT)
                         .show()

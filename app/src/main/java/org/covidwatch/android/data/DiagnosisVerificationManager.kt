@@ -4,6 +4,7 @@ import com.google.common.base.Joiner
 import com.google.common.io.BaseEncoding
 import org.covidwatch.android.data.diagnosisverification.DiagnosisVerificationRepository
 import org.covidwatch.android.exposurenotification.Failure
+import org.covidwatch.android.exposurenotification.NoConnectionException
 import org.covidwatch.android.exposurenotification.ServerException
 import org.covidwatch.android.functional.Either
 import org.covidwatch.android.ui.util.DateFormatter
@@ -46,7 +47,11 @@ class DiagnosisVerificationManager(
                 )
             )
         } catch (e: Exception) {
-            return Either.Left(Failure.CodeVerification(e.message))
+            return if (e is NoConnectionException) {
+                Either.Left(Failure.NetworkError)
+            } else {
+                Either.Left(Failure.CodeVerification(e.message))
+            }
         }
     }
 

@@ -15,7 +15,6 @@ import org.covidwatch.android.ui.BaseViewModel
 import org.covidwatch.android.ui.event.Event
 import org.covidwatch.android.ui.util.DateFormatter
 import java.time.DayOfWeek
-import java.time.Instant
 
 class HomeViewModel(
     private val enManager: ExposureNotificationManager,
@@ -25,7 +24,7 @@ class HomeViewModel(
 ) : BaseViewModel() {
 
     private val _showOnboardingAnimation = MutableLiveData<Event<Boolean>>()
-    val showOnboardingAnimation: LiveData<Event<Boolean>> = _showOnboardingAnimation
+    val showOnboardingAnimation: LiveData<Event<Boolean>> get() = _showOnboardingAnimation
 
     private val _infoBannerState = MutableLiveData<InfoBannerState>()
     val infoBannerState: LiveData<InfoBannerState> get() = _infoBannerState
@@ -33,13 +32,15 @@ class HomeViewModel(
     private val _navigateToOnboardingEvent = MutableLiveData<Event<Unit>>()
     val navigateToOnboarding: LiveData<Event<Unit>> get() = _navigateToOnboardingEvent
 
-    val region = preferences.observableRegion
+    val region by lazy { preferences.observableRegion }
 
-    val riskLevel = riskLevelRepository.riskLevel.asLiveData()
+    val riskLevel by lazy { riskLevelRepository.riskLevel.asLiveData() }
 
-    val nextSteps = riskLevelRepository.riskLevelNextSteps
-        .asLiveData()
-        .map { it.map(this::replaceDateFlags) }
+    val nextSteps by lazy {
+        riskLevelRepository.riskLevelNextSteps
+            .asLiveData()
+            .map { it.map(this::replaceDateFlags) }
+    }
 
     /**
      * Searches the input string and replaces the first substring matching this format:
@@ -97,14 +98,13 @@ class HomeViewModel(
         val requestedDate = exposureDate.plusDays(daysOffset)
 
         return if (flags[2] == "TRUE") {
-            val localDate = Instant.from(requestedDate).toLocalDate()
-            val weekDay = localDate.dayOfWeek
+            val weekDay = requestedDate.dayOfWeek
 
             DateFormatter.format(
                 when (weekDay) {
-                    DayOfWeek.SATURDAY -> localDate.plusDays(-1)
-                    DayOfWeek.SUNDAY -> localDate.plusDays(1)
-                    else -> localDate
+                    DayOfWeek.SATURDAY -> requestedDate.plusDays(-1)
+                    DayOfWeek.SUNDAY -> requestedDate.plusDays(1)
+                    else -> requestedDate
                 }
             )
         } else DateFormatter.format(requestedDate)

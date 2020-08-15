@@ -287,9 +287,10 @@
 
     <!-- ERROR MESSAGES -->
     <string name="unknown_error">Something went wrong</string>
-    <string name="server_error">A problem on server: %s</string>
+    <string name="server_error">A problem on server occurred</string>
     <string name="device_attestation_error">Failed to verify this device</string>
-    <string name="code_verification_error">Failed to verify the code: %s</string>
+    <string name="code_verification_error_title">Unable to Confirm Positive Diagnosis</string>
+    <string name="code_verification_error">We are unable to confirm your positive test. This may happen if the verification code was entered incorrectly. Please re-enter your verification code</string>
     <string name="no_connection_error">No internet available, please check your WIFi or Data connections</string>
     <string name="insufficient_storage">Insufficient storage to run Exposure Notification</string>
     <string name="en_not_available_title">Exposure Notifications unavailable</string>
