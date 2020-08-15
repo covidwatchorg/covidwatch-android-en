@@ -21,6 +21,7 @@ sealed class Failure(val code: Int, val message: String? = null) {
         class NeedsResolution(val exception: ApiException? = null) : Failure(RESOLUTION_REQUIRED)
     }
 
+    // TODO: 15.08.2020 Replace the code from Play Services to internal code
     object NetworkError : Failure(NETWORK_ERROR)
 
     data class ServerError(val error: String? = null) : Failure(SERVER_ERROR, error)
