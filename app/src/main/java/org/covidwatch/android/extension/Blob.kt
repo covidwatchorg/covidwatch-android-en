@@ -10,6 +10,8 @@ fun Instant.toLocalDate(): LocalDate {
     return atZone(ZoneId.of("UTC")).toLocalDate()
 }
 
+fun LocalDate.toInstant(): Instant = atStartOfDay(ZoneId.of("UTC")).toInstant()
+
 fun Instant.daysTo(anotherDate: Instant) =
     Period.between(this.toLocalDate(), anotherDate.toLocalDate()).days
 
