@@ -3,7 +3,7 @@
     style="?spinnerDropDownItemStyle"
     android:layout_width="match_parent"
     android:layout_height="?android:listPreferredItemHeight"
-    android:background="@color/item_region"
+    android:background="@drawable/bg_item_region"
     android:ellipsize="marquee"
     android:foreground="?selectableItemBackground"
     android:singleLine="true" />
