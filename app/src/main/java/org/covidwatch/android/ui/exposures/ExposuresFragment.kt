@@ -60,7 +60,7 @@ class ExposuresFragment : BaseViewModelFragment<FragmentExposuresBinding, Exposu
 
                 if (exposures.isNotEmpty()) adapter.add(FooterItem())
             }
-            observe(exposureNotificationEnabled) { enabled ->
+            observe(enEnabled) { enabled ->
                 if (enabled) {
                     binding.exposureNotificationsSubtitle.setText(R.string.exposures_notifications_on_subtitle)
                 } else {

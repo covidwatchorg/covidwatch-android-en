@@ -18,10 +18,10 @@ import org.covidwatch.android.databinding.FragmentVerifyPositiveDiagnosisBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.extension.observeNullableEvent
+import org.covidwatch.android.extension.toInstant
 import org.covidwatch.android.ui.BaseViewModelFragment
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import java.time.LocalDate
-import java.time.ZoneId
 
 class VerifyPositiveDiagnosisFragment :
     BaseViewModelFragment<FragmentVerifyPositiveDiagnosisBinding, VerifyPositiveDiagnosisViewModel>() {
@@ -119,13 +119,13 @@ class VerifyPositiveDiagnosisFragment :
         val builder = MaterialDatePicker.Builder.datePicker()
         val constraints = CalendarConstraints.Builder()
 
-        val twoWeeksAgo = LocalDate.now().plusDays(-14).atStartOfDay(ZoneId.of("UTC")).toInstant()
+        val twoWeeksAgo = LocalDate.now().plusDays(-14).toInstant()
             .toEpochMilli()
 
         // Day in the past or 14 days back
         val fromWhen = dayInPast ?: twoWeeksAgo
 
-        val untilNow = LocalDate.now().atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli()
+        val untilNow = LocalDate.now().toInstant().toEpochMilli()
 
         constraints.setValidator(BaseDateValidator { it in fromWhen..untilNow })
 

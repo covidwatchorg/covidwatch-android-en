@@ -71,6 +71,7 @@ class UploadDiagnosisKeysUseCase(
                 diagnosisRepository.updatePositiveDiagnosisReport(
                     report.copy(
                         verified = true,
+                        uploaded = true, // Fake uploaded to show it in the list of the submitted diagnoses
                         reportDate = Instant.now(),
                         verificationData = report.verificationData?.copy(
                             verificationTestCode = "",
@@ -92,7 +93,7 @@ class UploadDiagnosisKeysUseCase(
 
             // Check if we certificated the token before and reuse certificate
             if (verificationData.verificationCertificate != null && verificationData.hmacKey != null) {
-                verifiedDiagnosis = params.report.copy(verified = true)
+                verifiedDiagnosis = params.report
 
                 certificate = verificationData.verificationCertificate
                 hmacKey = verificationData.hmacKey
@@ -103,7 +104,6 @@ class UploadDiagnosisKeysUseCase(
                 )
 
                 verifiedDiagnosis = params.report.copy(
-                    verified = true,
                     verificationData = verificationData.copy(
                         hmacKey = verificationCertificate.hmacKey,
                         verificationCertificate = verificationCertificate.certificate
@@ -132,6 +132,7 @@ class UploadDiagnosisKeysUseCase(
 
             diagnosisRepository.updatePositiveDiagnosisReport(
                 verifiedDiagnosis.copy(
+                    verified = true,
                     uploaded = true,
                     reportDate = Instant.now(),
                     verificationData = verifiedDiagnosis.verificationData?.copy(

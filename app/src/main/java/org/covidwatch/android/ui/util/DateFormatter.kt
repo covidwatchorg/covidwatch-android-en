@@ -1,5 +1,6 @@
 package org.covidwatch.android.ui.util
 
+import org.covidwatch.android.extension.toInstant
 import org.covidwatch.android.extension.toLocalDate
 import java.time.Instant
 import java.time.LocalDate
@@ -46,8 +47,7 @@ object DateFormatter {
 
     fun symptomDate(date: String?) =
         date?.takeIf { it.isNotEmpty() }
-            ?.let { LocalDate.parse(date).atStartOfDay(ZoneId.of("UTC")) }
-            ?.toInstant()
+            ?.let { LocalDate.parse(date).toInstant() }
 
     @JvmStatic
     fun formatDateAndTime(time: Instant?): String =
