@@ -49,12 +49,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             testCoverageEnabled false
-            buildConfigField("boolean", "FIREBASE_DEBUGGING", "false")
             signingConfig signingConfigs.debug
         }
         debug {
             testCoverageEnabled project.hasProperty('coverage')
-            buildConfigField "boolean", "FIREBASE_DEBUGGING", "true"
         }
     }
 
@@ -107,6 +105,13 @@ android {
         arizona {
             dimension "client"
             applicationId "gov.azdhs.covidwatch.android"
+        }
+    }
+
+    applicationVariants.all { variant ->
+        if (variant.getName().startsWith("calibrationArizona")) {
+            buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/dev-covid-watch-arizona-regions/arizona-v3.json"'
+        } else if(variant.getName().startsWith("productionArizona")) {
             buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/covid-watch-arizona-regions/arizona-v3.json"'
         }
     }
