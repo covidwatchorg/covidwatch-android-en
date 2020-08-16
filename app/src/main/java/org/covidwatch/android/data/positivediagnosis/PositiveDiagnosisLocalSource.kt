@@ -12,8 +12,6 @@ class PositiveDiagnosisLocalSource(private val dao: PositiveDiagnosisReportDao) 
     suspend fun updatePositiveDiagnosisReport(report: PositiveDiagnosisReport) =
         dao.update(report)
 
-    suspend fun report(id: String) = dao.report(id)
-
     suspend fun diagnosisByVerificationCode(code: String) =
         dao.diagnosisByVerificationCode(code)
 
