@@ -443,33 +443,37 @@ internal class PositiveDiagnosisRepositoryTest {
                 )
             )
             val keys = diagnosisKeys(serverKeysBatches, localKeyFiles)
-            assertEquals(
-                listOf(
-                    KeyFileBatch(
-                        region = "",
-                        batch = 1,
-                        urls = listOf(
-                            "dummy/1596389760-1596389840-00001.zip"
-                        )
-                    ),
-                    KeyFileBatch(
-                        region = "",
-                        batch = 2,
-                        urls = listOf(
-                            "dummy/1596389760-1596389830-00002.zip",
-                            "dummy/1596389760-1596389840-00002.zip"
-                        )
-                    ),
-                    KeyFileBatch(
-                        region = "",
-                        batch = 3,
-                        urls = listOf(
-                            "dummy/1596389760-1596389830-00003.zip",
-                            "dummy/1596389760-1596389840-00003.zip"
-                        )
+            val expectedKeys = listOf(
+                KeyFileBatch(
+                    region = "",
+                    batch = 1,
+                    urls = listOf(
+                        "dummy/1596389760-1596389840-00001.zip"
                     )
-                ), keys
+                ),
+                KeyFileBatch(
+                    region = "",
+                    batch = 2,
+                    urls = listOf(
+                        "dummy/1596389760-1596389830-00002.zip",
+                        "dummy/1596389760-1596389840-00002.zip"
+                    )
+                ),
+                KeyFileBatch(
+                    region = "",
+                    batch = 3,
+                    urls = listOf(
+                        "dummy/1596389760-1596389830-00003.zip",
+                        "dummy/1596389760-1596389840-00003.zip"
+                    )
+                )
             )
+            assertEquals(
+                expectedKeys, keys
+            )
+            expectedKeys.map { it.urls }.flatten().forEach {
+                coVerify { remote.diagnosisKey(allAny(), it) }
+            }
             coVerify { keyFileRepository.remove(listOf("1596389760-1596389820-00001")) }
         }
 
