@@ -128,6 +128,8 @@ class VerifyPositiveDiagnosisViewModel(
         setDiagnosisVerification(
             diagnosisVerification.value?.copy(
                 symptomsStartDate = if (noSymptoms) null else symptomDate,
+                possibleInfectionDate = if (!noSymptoms) null else diagnosisVerification.value?.possibleInfectionDate,
+                testDate = if (!noSymptoms) null else diagnosisVerification.value?.testDate,
                 noSymptoms = noSymptoms
             )
         )
