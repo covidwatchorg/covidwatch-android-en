@@ -110,9 +110,9 @@ android {
 
     applicationVariants.all { variant ->
         if (variant.getName().startsWith("calibrationArizona")) {
-            buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/dev-covid-watch-arizona-regions/arizona-v3.json"'
+            buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/dev-covid-watch-arizona-regions/arizona-v4.json"'
         } else if(variant.getName().startsWith("productionArizona")) {
-            buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/covid-watch-arizona-regions/arizona-v3.json"'
+            buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/covid-watch-arizona-regions/arizona-v4.json"'
         }
     }
 
