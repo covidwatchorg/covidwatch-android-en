@@ -20,26 +20,31 @@ class OnboardingPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment
             0 -> OnboardingPageParameters(
                 R.string.how_it_works_title_1,
                 R.drawable.how_it_works_1,
+                R.string.how_it_works_1_content_description,
                 R.string.how_it_works_text_1
             )
             1 -> OnboardingPageParameters(
                 R.string.how_it_works_title_2,
                 R.drawable.how_it_works_2,
+                R.string.how_it_works_2_content_description,
                 R.string.how_it_works_text_2
             )
             2 -> OnboardingPageParameters(
                 R.string.how_it_works_title_3,
                 R.drawable.how_it_works_3,
+                R.string.how_it_works_3_content_description,
                 R.string.how_it_works_text_3
             )
             3 -> OnboardingPageParameters(
                 R.string.how_it_works_title_4,
                 R.drawable.how_it_works_4,
+                R.string.how_it_works_4_content_description,
                 R.string.how_it_works_text_4
             )
             else -> OnboardingPageParameters(
                 R.string.how_it_works_title_1,
                 R.drawable.how_it_works_1,
+                R.string.how_it_works_1_content_description,
                 R.string.how_it_works_text_1
             )
         }

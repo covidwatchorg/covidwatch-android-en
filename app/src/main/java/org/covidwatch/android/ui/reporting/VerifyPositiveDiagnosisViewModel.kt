@@ -35,7 +35,7 @@ class VerifyPositiveDiagnosisViewModel(
             }
         }
 
-    private var positiveDiagnosisReport = PositiveDiagnosisReport()
+    private lateinit var positiveDiagnosisReport: PositiveDiagnosisReport
 
     private val _showThankYou = MutableLiveData<Event<Unit>>()
     val showThankYou: LiveData<Event<Unit>> = _showThankYou
@@ -191,8 +191,8 @@ class VerifyPositiveDiagnosisViewModel(
                             )
                         )
 
-                        // Save just verified code in order to reuse token
-                        positiveDiagnosisReport = positiveDiagnosisReport.copy(
+                        // Save a new instance of PositiveDiagnosisReport with just verified code in order to reuse token
+                        positiveDiagnosisReport = PositiveDiagnosisReport(
                             verificationData = diagnosisVerification.value
                         )
                         positiveDiagnosisRepository.addPositiveDiagnosisReport(
@@ -255,9 +255,7 @@ class VerifyPositiveDiagnosisViewModel(
                         startUploadDiagnosisKeysWorkUseCase,
                         StartUploadDiagnosisKeysWorkUseCase.Params(
                             it,
-                            positiveDiagnosisReport.copy(
-                                verificationData = diagnosisVerification.value
-                            )
+                            positiveDiagnosisReport.copy(verificationData = diagnosisVerification.value)
                         )
                     ) { uploading ->
                         _uploading.value = false

@@ -9,5 +9,6 @@ import kotlinx.android.parcel.Parcelize
 data class OnboardingPageParameters(
     @StringRes val title: Int,
     @DrawableRes val image: Int,
+    @StringRes val imageDescription: Int,
     @StringRes val subtitle: Int
 ) : Parcelable

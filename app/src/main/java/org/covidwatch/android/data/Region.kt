@@ -94,7 +94,7 @@ object DefaultRegions {
 
     private val stateOfArizona = Region(
         id = ARIZONA_STATE,
-        name = "The State of Arizona",
+        name = "State of Arizona",
         isDisabled = true,
         nextStepsNoSignificantExposure = listOf(
             NextStep(

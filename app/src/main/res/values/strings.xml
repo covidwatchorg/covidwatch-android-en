@@ -102,6 +102,7 @@
     <string name="menu">Menu</string>
     <string name="powered_by">Powered by Covid Watch for</string>
     <string name="powered_by_logo_content_description">Arizona Department of Health Services</string>
+    <string name="powered_by_content_description">Powered by Covid Watch for ADHS</string>
 
     <!-- POSSIBLE EXPOSURES-->
     <string name="title_exposures">Possible Exposures</string>
@@ -182,6 +183,13 @@
     <string name="finished_onboarding_text"><b>&#8226;</b> Get exposure notifications\n<b>&#8226;</b> Anonymously notify others\n<b>&#8226;</b> Access local public health resources and recommendations</string>
     <string name="see_exposure_summary">View Detected Exposures</string>
     <string name="button_finish">Finish</string>
+    <string name="people_network_art_content_description">People Network</string>
+    <string name="how_it_works_1_content_description">Sam and Jane Chat</string>
+    <string name="how_it_works_2_content_description">Sam Tests Positive</string>
+    <string name="how_it_works_3_content_description">Jane\'s Phone Gets a Notification</string>
+    <string name="how_it_works_4_content_description">Jane and Sam Help Keep Their Communities Safe</string>
+    <string name="enabled_notifications_art_content_description">A woman enables Exposures Notifications on a smartphone</string>
+    <string name="setup_complete_art_content_description">Setup complete</string>
 
     <!-- Home Screen-->
     <string name="current_region">&lt;b>Region:&lt;/b> &lt;u>%s&lt;/u></string>
@@ -202,6 +210,13 @@
     <string name="contact_alert_text">Possible COVID-19 exposure.\nTap for more information.</string>
     <string name="reported_alert_text">You reported that you tested positive for COVID-19</string>
     <string name="turn_on_exposure_notification_text">Exposure notifications must be enabled for the app to work. Tap to review your app settings.</string>
+    <string name="cw_logo_content_description">Cool-looking Covid Watch Logo</string>
+    <string name="generic_logo_content_description">Public Health Authority Logo</string>
+    <string name="az_logo_content_description">State of Arizona Logo</string>
+    <string name="uoa_logo_content_description">University of Arizona Logo</string>
+    <string name="nau_logo_content_description">Northern Arizona University Logo</string>
+    <string name="asu_logo_content_description">Arizona State University Logo</string>
+    <string name="home_art_content_description">Students on grass</string>
 
 
     <!-- Reporting -->
@@ -256,6 +271,8 @@
     <string name="no_exposed_date">I do not know</string>
     <string name="past_positive_diagnoses_title">My Past Positive Diagnoses</string>
     <string name="btn_delete_diagnosis">Delete Diagnosis</string>
+    <string name="diagnosis_shared_art_content_description">Earth in a shape of heart</string>
+    <string name="notify_others_art_1_content_description">Two smartphones show exposure notifications</string>
 
     <!-- Notifications -->
     <string name="upload_report_notification_channel">Anonymous Reporting</string>
@@ -289,8 +306,8 @@
     <string name="unknown_error">Something went wrong</string>
     <string name="server_error">A problem on server occurred</string>
     <string name="device_attestation_error">Failed to verify this device</string>
-    <string name="code_verification_error_title">Unable to Confirm Positive Diagnosis</string>
-    <string name="code_verification_error">We are unable to confirm your positive test. This may happen if the verification code was entered incorrectly. Please re-enter your verification code</string>
+    <string name="code_verification_error_title">Unable to Confirm Diagnosis</string>
+    <string name="code_verification_error">This may happen if the verification code was entered incorrectly. Please re-enter your verification code.</string>
     <string name="no_connection_error">No internet available, please check your WIFi or Data connections</string>
     <string name="insufficient_storage">Insufficient storage to run Exposure Notification</string>
     <string name="en_not_available_title">Exposure Notifications unavailable</string>

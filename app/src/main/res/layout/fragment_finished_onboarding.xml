@@ -27,8 +27,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/padding_normal"
-                app:srcCompat="@drawable/cw_logo"
-                tools:ignore="ContentDescription" />
+                android:contentDescription="@string/logo_image_content_descriptor"
+                app:srcCompat="@drawable/cw_logo" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -72,12 +72,12 @@
         android:layout_height="0dp"
         android:layout_marginHorizontal="@dimen/padding_normal"
         android:layout_marginTop="@dimen/padding_normal"
+        android:contentDescription="@string/setup_complete_art_content_description"
         app:layout_constraintBottom_toTopOf="@id/subtitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title"
-        app:srcCompat="@drawable/setup_complete_art"
-        tools:ignore="ContentDescription" />
+        app:srcCompat="@drawable/setup_complete_art" />
 
     <TextView
         android:id="@+id/subtitle"

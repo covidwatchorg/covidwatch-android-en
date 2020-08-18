@@ -46,6 +46,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             observe(region) {
                 binding.tvRegion.setRegion(it)
                 binding.toolbar.logo = ContextCompat.getDrawable(view.context, it.logo)
+                binding.toolbar.logoDescription = getString(it.logoDescription)
 
                 if (it.isDisabled) {
                     binding.actionLayoutTitle.isVisible = false

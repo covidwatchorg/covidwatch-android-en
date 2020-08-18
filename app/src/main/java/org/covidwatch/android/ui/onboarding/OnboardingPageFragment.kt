@@ -24,6 +24,7 @@ class OnboardingPageFragment : BaseFragment<FragmentOnboardingPageBinding>() {
 
         binding.title.setText(parameters.title)
         binding.image.setImageResource(parameters.image)
+        binding.image.contentDescription = getString(parameters.imageDescription)
         binding.subtitle.setText(parameters.subtitle)
     }
 }

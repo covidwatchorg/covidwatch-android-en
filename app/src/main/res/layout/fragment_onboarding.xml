@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
@@ -27,8 +26,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/padding_normal"
-                app:srcCompat="@drawable/cw_logo"
-                tools:ignore="ContentDescription" />
+                android:contentDescription="@string/cw_logo_content_description"
+                app:srcCompat="@drawable/cw_logo" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -67,8 +66,8 @@
             android:contentDescription="@string/btn_previous_onboarding_screen_description"
             android:focusable="true"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_arrow_left"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_arrow_left" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"

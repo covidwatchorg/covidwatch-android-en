@@ -2,6 +2,7 @@ package org.covidwatch.android.ui
 
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import org.covidwatch.android.R
 import org.covidwatch.android.data.Region
 import org.covidwatch.android.data.RegionId.ARIZONA_STATE
@@ -29,10 +30,22 @@ val Region.logo
         else -> R.drawable.cw_logo
     }
 
+val Region.logoDescription
+    @StringRes
+    get() = when (id) {
+        ARIZONA_STATE -> R.string.az_logo_content_description
+        UOA -> R.string.uoa_logo_content_description
+        ASU -> R.string.asu_logo_content_description
+        NAU -> R.string.nau_logo_content_description
+        else -> R.string.generic_logo_content_description
+    }
+
 fun ImageView.setBigLogo(region: Region) {
     setImageResource(region.bigLogo)
+    contentDescription = context.getString(region.logoDescription)
 }
 
 fun ImageView.setLogo(region: Region) {
     setImageResource(region.logo)
+    contentDescription = context.getString(region.logoDescription)
 }
