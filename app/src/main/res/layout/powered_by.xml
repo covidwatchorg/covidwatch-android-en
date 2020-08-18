@@ -12,6 +12,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/padding_micro"
             app:drawableEndCompat="@drawable/adhs_logo"
+            android:contentDescription="@string/powered_by_content_description"
             android:drawablePadding="@dimen/padding_small"
             android:gravity="center"
             android:paddingVertical="@dimen/padding_normal"
