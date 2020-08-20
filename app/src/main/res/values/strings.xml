@@ -273,6 +273,7 @@
     <string name="btn_delete_diagnosis">Delete Diagnosis</string>
     <string name="diagnosis_shared_art_content_description">Earth in a shape of heart</string>
     <string name="notify_others_art_1_content_description">Two smartphones show exposure notifications</string>
+    <string name="contact_pha_for_code">Contact</string>
 
     <!-- Notifications -->
     <string name="upload_report_notification_channel">Anonymous Reporting</string>
@@ -294,7 +295,7 @@
     <string name="notification_en_not_supported">Exposure Notifications are not available on this device. Try to update Google Play services.</string>
     <string name="notification_en_not_enabled">Exposure Notifications inactive. Go to the app to enable it.</string>
     <string name="notification_app_unauthorized">The app is not authorized to use Exposure Notifications. Contact us through "Get Support" menu in the app or by tapping this notification.</string>
-    <string name="notification_server_problem">Couldn\'t finish checking for exposures due to server issue: %s. If this repeats contact us through "Get Support" menu in the app or by tapping this notification.</string>
+    <string name="notification_server_problem">Couldn\'t finish checking for exposures due to server issue. If this repeats contact us through "Get Support" menu in the app or by tapping this notification.</string>
     <string name="notification_general_problem">Couldn\'t finish checking for exposures. If this repeats contact us through "Get Support" menu in the app or by tapping this notification.</string>
 
     <!-- Share app common action -->
@@ -304,10 +305,12 @@
 
     <!-- ERROR MESSAGES -->
     <string name="unknown_error">Something went wrong</string>
-    <string name="server_error">A problem on server occurred</string>
+    <string name="server_error">A problem on server occurred. Try again or contact us.</string>
     <string name="device_attestation_error">Failed to verify this device</string>
     <string name="code_verification_error_title">Unable to Confirm Diagnosis</string>
     <string name="code_verification_error">This may happen if the verification code was entered incorrectly. Please re-enter your verification code.</string>
+    <string name="code_verification_error_used">The verification code is not valid anymore. Contact your public health authority to get a new code.</string>
+    <string name="code_verification_error_expired">The verification code is expired. Contact your public health authority to get a new code.</string>
     <string name="no_connection_error">No internet available, please check your WIFi or Data connections</string>
     <string name="insufficient_storage">Insufficient storage to run Exposure Notification</string>
     <string name="en_not_available_title">Exposure Notifications unavailable</string>

@@ -28,10 +28,15 @@ sealed class Failure(val code: Int, val message: String? = null) {
     data class CodeVerification(val error: String? = null) :
         Failure(FAILED_CODE_VERIFICATION, error)
 
+    object VerificationCodeUsed : Failure(FAILED_CODE_VERIFICATION_USED)
+    object VerificationCodeExpired : Failure(FAILED_CODE_VERIFICATION_EXPIRED)
+
     data class Internal(val error: String? = null) : Failure(FAILED_INTERNAL, error)
 
     companion object {
         const val FAILED_CODE_VERIFICATION = 111
+        const val FAILED_CODE_VERIFICATION_USED = 112
+        const val FAILED_CODE_VERIFICATION_EXPIRED = 113
         const val FAILED_INTERNAL = 222
         const val SERVER_ERROR = 333
 
@@ -96,6 +101,8 @@ sealed class Failure(val code: Int, val message: String? = null) {
             SERVER_ERROR,
             REMOTE_EXCEPTION -> ServerError(message)
             FAILED_CODE_VERIFICATION -> CodeVerification(message)
+            FAILED_CODE_VERIFICATION_USED -> VerificationCodeUsed
+            FAILED_CODE_VERIFICATION_EXPIRED -> VerificationCodeExpired
             FAILED_INTERNAL -> Internal(message)
             else -> EnStatus.Failed
         }

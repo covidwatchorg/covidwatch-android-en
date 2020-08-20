@@ -179,7 +179,7 @@ class VerifyPositiveDiagnosisViewModel(
                 )
 
                 shareReportIfEnEnabled()
-            } else // Verify the code remotely if there is no local report with this code
+            } else { // Verify the code remotely if there is no local report with this code
                 verificationManager.verify(code).apply {
                     success {
 
@@ -207,6 +207,7 @@ class VerifyPositiveDiagnosisViewModel(
                         handleStatus(it)
                     }
                 }
+            }
         }
     }
 

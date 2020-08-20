@@ -143,7 +143,7 @@ class ProvideDiagnosisKeysWork(
                     Failure.NetworkError -> notifications.downloadingReportsNetworkFailure()
                     // Retry 2 times and then show a error to users
                     is Failure.ServerError -> if (runAttemptCount < retries) return@withContext Result.retry() else notifications.downloadingReportsFailure(
-                        context.getString(R.string.notification_server_problem, failure.error),
+                        context.getString(R.string.notification_server_problem),
                         Intents.browser(Urls.SUPPORT)
                     )
                 }

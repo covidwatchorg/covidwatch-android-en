@@ -47,10 +47,19 @@ class DiagnosisVerificationManager(
                 )
             )
         } catch (e: Exception) {
-            return if (e is NoConnectionException) {
-                Either.Left(Failure.NetworkError)
-            } else {
-                Either.Left(Failure.CodeVerification(e.message))
+            return when {
+                e is NoConnectionException -> {
+                    Either.Left(Failure.NetworkError)
+                }
+                e.message?.contains("verification code used") == true -> {
+                    Either.Left(Failure.VerificationCodeUsed)
+                }
+                e.message?.contains("expired") == true -> {
+                    Either.Left(Failure.VerificationCodeExpired)
+                }
+                else -> {
+                    Either.Left(Failure.CodeVerification(e.message))
+                }
             }
         }
     }

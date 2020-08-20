@@ -15,6 +15,7 @@ import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.Intents.openBrowser
 import org.covidwatch.android.ui.Intents.playStoreWithServices
+import org.covidwatch.android.ui.reporting.VerificationCodeHelpDialog
 
 abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : BaseFragment<T>() {
 
@@ -113,6 +114,32 @@ abstract class BaseViewModelFragment<T : ViewBinding, VM : BaseViewModel> : Base
                     MaterialAlertDialogBuilder(context)
                         .setTitle(R.string.code_verification_error_title)
                         .setMessage(R.string.code_verification_error)
+                        .setPositiveButton(R.string.ok, null)
+                        .create()
+                        .show()
+                }
+            }
+            Failure.VerificationCodeUsed -> {
+                context?.let { context ->
+                    MaterialAlertDialogBuilder(context)
+                        .setTitle(R.string.code_verification_error_title)
+                        .setMessage(R.string.code_verification_error_used)
+                        .setNeutralButton(R.string.contact_pha_for_code) { _, _ ->
+                            VerificationCodeHelpDialog().show(childFragmentManager, null)
+                        }
+                        .setPositiveButton(R.string.ok, null)
+                        .create()
+                        .show()
+                }
+            }
+            Failure.VerificationCodeExpired -> {
+                context?.let { context ->
+                    MaterialAlertDialogBuilder(context)
+                        .setTitle(R.string.code_verification_error_title)
+                        .setMessage(R.string.code_verification_error_expired)
+                        .setNeutralButton(R.string.contact_pha_for_code) { _, _ ->
+                            VerificationCodeHelpDialog().show(childFragmentManager, null)
+                        }
                         .setPositiveButton(R.string.ok, null)
                         .create()
                         .show()
