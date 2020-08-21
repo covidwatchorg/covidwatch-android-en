@@ -172,17 +172,17 @@ class ArizonaEnConverter(private val prefs: PreferenceStorage) : EnConverter {
 
 class ArizonaRiskModelConfiguration : RiskModelConfiguration(
     excludeInfectedDays = listOf(0, 1),
-    doseResponseLambda = 0.00000271,
+    doseResponseLambda = 0.0000031,
     attenuationDurationWeights = doubleArrayOf(
-        2.7459983, // High attenuation: D < 0.5m
-        1.0607454, // Medium attenuation: 0.5m < D < 2m
-        0.2704947 // Low attenuation: 2m < D
+        2.39, // Low attenuation / close proximity
+        0.6,  // Medium attenuation / medium proximity
+        0.06  // high attenuation / far proximity
     ),
-    significantRiskLevelValueThreshold = 0.011,
+    significantRiskLevelValueThreshold = 0.01,
     riskLevelsSymptomsDate = mapOf(
         Pair(-5, 1),
-        Pair(-4, 2),
-        Pair(-3, 3),
+        Pair(-4, 3),
+        Pair(-3, 4),
         Pair(-2, 5),
         Pair(-1, 6),
         Pair(0, 6),
@@ -192,11 +192,9 @@ class ArizonaRiskModelConfiguration : RiskModelConfiguration(
         Pair(4, 4),
         Pair(5, 3),
         Pair(6, 2),
-        Pair(7, 1),
+        Pair(7, 2),
         Pair(8, 1),
-        Pair(9, 1),
-        Pair(10, 1),
-        Pair(11, 1)
+        Pair(9, 1)
     ),
     transmissionRiskValuesForLevels = doubleArrayOf(
         0.0, // Level 0

@@ -88,8 +88,8 @@ object DefaultRegions {
 
     private val nextStepsVerificationCodeDefault = NextStep(
         type = WEBSITE,
-        description = "Statewide app support is currently under development. You will continue to get exposure notifications, but can only share an anonymous COVID-19 diagnosis if you are part of a region with full app support.",
-        url = "https://azdhs.gov"
+        description = "For others in Arizona, the statewide app is under development. Visit the Covid Watch website to let us know your thoughts on the app.",
+        url = "https://www.covidwatch.org/partners/adhs-feedback"
     )
 
     private val stateOfArizona = Region(
@@ -99,8 +99,8 @@ object DefaultRegions {
         nextStepsNoSignificantExposure = listOf(
             NextStep(
                 type = WEBSITE,
-                description = "Visit the Arizona Department of Health Services website to share your thoughts about the app.",
-                url = "https://www.azdhs.gov"
+                description = "Visit the Covid Watch website to share your feedback on the app.",
+                url = "https://www.covidwatch.org/partners/adhs-feedback"
             ),
             shareTheApp
         ),
@@ -146,7 +146,7 @@ object DefaultRegions {
             NextStep(
                 type = WEBSITE,
                 description = "Monitor COVID-19 symptoms.",
-                url = "https://covid19.arizona.edu/prevention-health/covid-19-symptoms?utm_source=covid_watch_app&utm_medium=referral&utm_campaign=covid_watch_covid19_symptoms_no_exposure"
+                url = "https://covid19.arizona.edu/prevention-health/covid-19-symptoms-prevention?utm_source=covid_watch_app&utm_medium=referral&utm_campaign=covid_watch_covid19_symptoms_no_exposure"
             ),
             NextStep(
                 type = PHONE,
@@ -156,7 +156,7 @@ object DefaultRegions {
             NextStep(
                 type = WEBSITE,
                 description = "Learn how to protect yourself and others.",
-                url = "http://covid19.arizona.edu/prevention-health/protect-yourself-others?utm_source=covid_watch_app&utm_medium=referral&utm_campaign=covid_watch_protect_yourself"
+                url = "https://covid19.arizona.edu/face-coverings?utm_source=covid_watch_app&utm_medium=referral&utm_campaign=covid_watch_protect_yourself"
             ),
             shareTheApp
         ),
@@ -174,7 +174,7 @@ object DefaultRegions {
             NextStep(
                 type = WEBSITE,
                 description = "Monitor COVID-19 symptoms and get tested ASAP if symptoms appear.",
-                url = "https://covid19.arizona.edu/prevention-health/covid-19-symptoms?utm_source=covid_watch_app&utm_medium=referral&utm_campaign=covid_watch_covid19_symptoms"
+                url = "https://covid19.arizona.edu/prevention-health/covid-19-symptoms-prevention?utm_source=covid_watch_app&utm_medium=referral&utm_campaign=covid_watch_covid19_symptoms"
             ),
             NextStep(
                 type = WEBSITE,
@@ -199,7 +199,7 @@ object DefaultRegions {
         nextStepsVerificationCode = listOf(
             NextStep(
                 type = PHONE,
-                description = "If you are a student or staff at UArizona, please call Campus Health Services at 520-621-9202 to obtain one. If you were tested elsewhere, please have your results ready.",
+                description = "If you are a student, faculty, or staff member at University of Arizona, please call Campus Health Services at 520-621-9202 to obtain one. If you were tested elsewhere, please have your results ready.",
                 url = "tel:1-520-621-9202"
             ),
             nextStepsVerificationCodeDefault
@@ -233,7 +233,7 @@ object DefaultRegions {
             ),
             NextStep(
                 type = PHONE,
-                description = "If you have COVID-19 symptoms, call Campus Health at (928) 523-2131.",
+                description = "If you are a student, faculty, or staff at NAU, please call Campus Health Services at (928) 523-2131 to obtain one. If you were tested elsewhere, have a copy of your results ready.",
                 url = "tel:1-928-523-2131"
             ),
             shareTheApp
@@ -276,7 +276,7 @@ object DefaultRegions {
         nextStepsVerificationCode = listOf(
             NextStep(
                 type = PHONE,
-                description = "If you are a student or staff at NAU, please call Campus Health at (928) 523-2131 to obtain one. If you were tested elsewhere, please have your results ready. ",
+                description = "If you are a student, faculty, or staff at NAU, please call Campus Health Services at (928) 523-2131 to obtain one. If you were tested elsewhere, have a copy of your results ready.",
                 url = "tel:1-928-523-2131"
             )
         ),

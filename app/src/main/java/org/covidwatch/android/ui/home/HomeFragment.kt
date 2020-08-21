@@ -23,6 +23,7 @@ import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.extension.shareApp
 import org.covidwatch.android.ui.*
+import org.covidwatch.android.ui.Intents.openBrowser
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -165,10 +166,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     }
                     NextStepType.WEBSITE -> {
                         root.addCircleRipple()
-                        root.setOnClickListener {
-                            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(nextStep.url))
-                            startActivity(browserIntent)
-                        }
+                        root.setOnClickListener { context?.openBrowser(nextStep.url) }
                         nextStepIcon.setImageResource(R.drawable.ic_next_step_web)
                     }
                     NextStepType.SHARE -> {
