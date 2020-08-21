@@ -1,4 +1,4 @@
-name: Develop Branch Pull Request CI
+name: Test push to ian-datatheorem-upload branch CI
 
 
 on:
