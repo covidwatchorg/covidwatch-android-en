@@ -60,8 +60,6 @@ jobs:
   apk:
       name: Generate APK
       runs-on: ubuntu-latest
-      env:
-        ARTIFACT_PATH: app/build/outputs/apk/productionArizona/debug/app-production-arizona-debug.apk
 
       steps:
         - name: Checkout repo
@@ -88,9 +86,9 @@ jobs:
           uses: actions/upload-artifact@v1
           with:
             name: app
-            path: $ARTIFACT_PATH
+            path: app/build/outputs/apk/productionArizona/debug/app-production-arizona-debug.apk
         - name: Upload APK to Data Theorem
           env:
             DT_UPLOAD_API_KEY: ${{ secrets.DATA_THEOREM_API_UPLOAD_KEY }}
-            SIGNED_BINARY_PATH: $ARTIFACT_PATH
+            SIGNED_BINARY_PATH: app/build/outputs/apk/productionArizona/debug/app-production-arizona-debug.apk
           run: ./ci-scripts/datatheorem-upload.sh
