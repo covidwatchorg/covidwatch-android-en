@@ -1,0 +1,96 @@
+name: Develop Branch Pull Request CI
+
+
+on:
+  push:
+    branches:
+      - ian-datatheorem-upload
+
+jobs:
+
+  test:
+
+    name: CI Testing
+    runs-on: ubuntu-latest
+
+    steps:
+#    - name: Get PR number
+#      uses: actions/github-script@0.3.0
+#      with:
+#        github-token: ${{github.token}}
+#        script: |
+#          const core = require('@actions/core')
+#          const prNumber = context.payload.number;
+#          core.exportVariable('PULL_NUMBER', prNumber);
+    - name: Checkout repo
+      uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+    - name: Fetch all branches
+      run: |
+        git fetch --prune --unshallow --tags
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Decode google-services.json
+      env:
+        FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
+      run: echo $FIREBASE_SECRET > app/google-services.json
+    - name: Decode debug.keystore
+      env:
+        DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE }}
+      run: echo "$DEBUG_KEYSTORE" | base64 --decode > debug.keystore
+    - name: Clean, Build
+      env:
+        VERIFICATION_API_KEY: ${{ secrets.VERIFICATION_API_KEY }}
+        SERVER_VERIFICATION_ENDPOINT: ${{ secrets.SERVER_VERIFICATION_ENDPOINT }}
+        SERVER_UPLOAD_ENDPOINT: ${{ secrets.SERVER_UPLOAD_ENDPOINT }}
+        SERVER_DOWNLOAD_ENDPOINT: ${{ secrets.SERVER_DOWNLOAD_ENDPOINT }}
+      run: bash ./gradlew clean assemble -PVERIFICATION_API_KEY=$VERIFICATION_API_KEY -PSERVER_VERIFICATION_ENDPOINT=$SERVER_VERIFICATION_ENDPOINT -PSERVER_UPLOAD_ENDPOINT=$SERVER_UPLOAD_ENDPOINT -PSERVER_DOWNLOAD_ENDPOINT=$SERVER_DOWNLOAD_ENDPOINT --stacktrace
+#    - name: Lint
+#      run: bash ./gradlew lint -PVERIFICATION_API_KEY=$VERIFICATION_API_KEY -PSERVER_VERIFICATION_ENDPOINT=$SERVER_VERIFICATION_ENDPOINT -PSERVER_UPLOAD_ENDPOINT=$SERVER_UPLOAD_ENDPOINT -PSERVER_DOWNLOAD_ENDPOINT=$SERVER_DOWNLOAD_ENDPOINT
+#    - name: Test
+#      run: bash ./gradlew app:test -Pcoverage -PVERIFICATION_API_KEY=$VERIFICATION_API_KEY -PSERVER_VERIFICATION_ENDPOINT=$SERVER_VERIFICATION_ENDPOINT -PSERVER_UPLOAD_ENDPOINT=$SERVER_UPLOAD_ENDPOINT -PSERVER_DOWNLOAD_ENDPOINT=$SERVER_DOWNLOAD_ENDPOINT
+#    - name: Update SonarQube
+#      env:
+#        LOGIN_KEY: ${{ secrets.SONARCLOUD_LOGIN_KEY }}
+#        PR_BRANCH: github.event.pull_request.head.ref
+#      run: bash ./gradlew sonarqube -Dsonar.login=$LOGIN_KEY -Dsonar.pullrequest.branch=$PR_BRANCH -Dsonar.pullrequest.base=develop -Dsonar.pullrequest.key=$PULL_NUMBER -PVERIFICATION_API_KEY=$VERIFICATION_API_KEY -PSERVER_VERIFICATION_ENDPOINT=$SERVER_VERIFICATION_ENDPOINT -PSERVER_UPLOAD_ENDPOINT=$SERVER_UPLOAD_ENDPOINT -PSERVER_DOWNLOAD_ENDPOINT=$SERVER_DOWNLOAD_ENDPOINT
+#  apk:
+      name: Generate APK
+      runs-on: ubuntu-latest
+      env:
+        ARTIFACT_PATH: app/build/outputs/apk/productionArizona/debug/app-production-arizona-debug.apk
+
+      steps:
+        - name: Checkout repo
+          uses: actions/checkout@v2
+          with:
+            submodules: 'recursive'
+        - name: Fetch tags
+          run: git fetch --prune --unshallow --tags
+        - name: set up JDK 1.8
+          uses: actions/setup-java@v1
+          with:
+            java-version: 1.8
+        - name: Decode google-services.json
+          env:
+            FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
+          run: echo $FIREBASE_SECRET > app/google-services.json
+        - name: Decode debug.keystore
+          env:
+            DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE }}
+          run: echo "$DEBUG_KEYSTORE" | base64 --decode > debug.keystore
+        - name: Build debug APK
+          run: bash ./gradlew assembleProductionArizonaDebug -PVERIFICATION_API_KEY=$VERIFICATION_API_KEY -PSERVER_VERIFICATION_ENDPOINT=$SERVER_VERIFICATION_ENDPOINT -PSERVER_UPLOAD_ENDPOINT=$SERVER_UPLOAD_ENDPOINT -PSERVER_DOWNLOAD_ENDPOINT=$SERVER_DOWNLOAD_ENDPOINT --stacktrace
+        - name: Upload APK
+          uses: actions/upload-artifact@v1
+          with:
+            name: app
+            path: $ARTIFACT_PATH
+        - name: Upload APK to Data Theorem
+          env:
+            DT_UPLOAD_API_KEY: ${{ secrets.DATA_THEOREM_API_UPLOAD_KEY }}
+            SIGNED_BINARY_PATH: $ARTIFACT_PATH
+          run: ./ci-scripts/datatheorem-upload.sh
