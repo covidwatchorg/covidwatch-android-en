@@ -262,7 +262,7 @@ class ArizonaEnConverterTest {
         val resultExposure = enConverter.covidExposureInformation(testExposure)
 
         //then
-        assertEquals(5, resultExposure.totalRiskScore)
+        assertEquals(4, resultExposure.totalRiskScore)
     }
 
     @Test
@@ -292,7 +292,7 @@ class ArizonaEnConverterTest {
         val resultExposure = enConverter.covidExposureInformation(testExposure)
 
         //then
-        assertEquals(2, resultExposure.totalRiskScore)
+        assertEquals(1, resultExposure.totalRiskScore)
     }
 
     @Test
@@ -350,7 +350,7 @@ class ArizonaEnConverterTest {
         val riskLevel = enConverter.riskLevelValue(exposures, computeDate)
 
         //then
-        assertEquals(0.689657, riskLevel, 0.0001)
+        assertEquals(0.560801, riskLevel, 0.0001)
     }
 
     @Test
@@ -361,7 +361,7 @@ class ArizonaEnConverterTest {
         val riskLevel = enConverter.riskLevelValue(exposures, computeDate)
 
         //then
-        assertEquals(1.395461, riskLevel, 0.0001)
+        assertEquals(1.270032, riskLevel, 0.0001)
     }
 
     @Test
@@ -372,7 +372,7 @@ class ArizonaEnConverterTest {
         val riskLevel = enConverter.riskLevelValue(exposures, computeDate)
 
         //then
-        assertEquals(0.436539, riskLevel, 0.0001)
+        assertEquals(0.401100, riskLevel, 0.0001)
     }
 
 
@@ -395,7 +395,7 @@ class ArizonaEnConverterTest {
         val riskLevel = enConverter.riskLevelValue(exposures3daysAfter, computeDate)
 
         //then
-        assertEquals(1.527189, riskLevel, 0.0001)
+        assertEquals(1.161873, riskLevel, 0.0001)
     }
 
     @Test
@@ -406,7 +406,7 @@ class ArizonaEnConverterTest {
         val riskLevel = enConverter.riskLevelValue(exposures3daysAfter, computeDate)
 
         //then
-        assertEquals(0.520678, riskLevel, 0.0001)
+        assertEquals(0.396128, riskLevel, 0.0001)
     }
 
     /* DIAGNOSIS KEY CONVERSION */
@@ -597,7 +597,7 @@ class ArizonaEnConverterTest {
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
         assertEquals(intervalNumber, diagnosisKey.rollingStartNumber)
-        assertEquals(3, diagnosisKey.transmissionRisk)
+        assertEquals(4, diagnosisKey.transmissionRisk)
         assertEquals(keyRollingPeriod, diagnosisKey.rollingPeriod)
     }
 
@@ -618,7 +618,7 @@ class ArizonaEnConverterTest {
         //then
         assertArrayEquals(keyData, diagnosisKey.key)
         assertEquals(intervalNumber, diagnosisKey.rollingStartNumber)
-        assertEquals(2, diagnosisKey.transmissionRisk)
+        assertEquals(3, diagnosisKey.transmissionRisk)
         assertEquals(keyRollingPeriod, diagnosisKey.rollingPeriod)
     }
 
