@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - develop
+#    If we want to only push to Data Theorem on tagged version builds, we can add this "tags" filter
+#      and create a duplicate workflow with same filters defined as "tags-ignore", and which
+#      removes the "Upload APK to Data Theorem" step at the end
+#    tags:
+#      - [0-9]+.**
+#      - v[0-9]+.**
 
 jobs:
 
@@ -72,3 +78,8 @@ jobs:
           with:
             name: app
             path: app/build/outputs/apk/productionArizona/debug/app-production-arizona-debug.apk
+        - name: Upload APK to Data Theorem
+          env:
+            DT_UPLOAD_API_KEY: ${{ secrets.DATA_THEOREM_API_UPLOAD_KEY }}
+            SIGNED_BINARY_PATH: app/build/outputs/apk/productionArizona/debug/app-production-arizona-debug.apk
+          run: ./ci-scripts/datatheorem-upload.sh
