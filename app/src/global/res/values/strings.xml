@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="powered_by">Powered by</string>
+    <string name="powered_by_content_description">Powered by Covid Watch</string>
+</resources>

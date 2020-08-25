@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?><!--It's data binding layout in order to be compatible with layouts that use data binding-->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/padding_micro"
+            android:contentDescription="@string/powered_by_content_description"
+            android:drawablePadding="@dimen/padding_small"
+            android:gravity="center"
+            android:paddingVertical="@dimen/padding_normal"
+            android:text="@string/powered_by"
+            android:textSize="12sp"
+            app:drawableEndCompat="@drawable/covid_watch_logo" />
+    </LinearLayout>
+</layout>
