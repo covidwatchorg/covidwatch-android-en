@@ -11,7 +11,6 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'com.google.protobuf'
 apply plugin: 'com.gladed.androidgitversion'
 
-apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 androidGitVersion {
@@ -106,6 +105,10 @@ android {
             dimension "client"
             applicationId "gov.azdhs.covidwatch.android"
         }
+        global {
+            dimension "client"
+            applicationId "org.covidwatch.main.android"
+        }
     }
 
     applicationVariants.all { variant ->
@@ -113,6 +116,11 @@ android {
             buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/dev-covid-watch-arizona-regions/arizona-v4.json"'
         } else if(variant.getName().startsWith("productionArizona")) {
             buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/covid-watch-arizona-regions/arizona-v4.json"'
+        }
+        if (variant.getName().startsWith("calibrationGlobal")) {
+            buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/dev-covid-watch-arizona-regions/main-v4.json"'
+        } else if(variant.getName().startsWith("productionGlobal")) {
+            buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/covid-watch-arizona-regions/main-v4.json"'
         }
     }
 
@@ -281,3 +289,5 @@ dependencies {
     // Koin
     testImplementation "org.koin:koin-test:$koin_version"
 }
+
+apply plugin: 'com.google.gms.google-services'
