@@ -38,10 +38,7 @@ jobs:
         FIREBASE_JSON_ARIZONA: ${{ secrets.FIREBASE_JSON_ARIZONA }}
         FIREBASE_JSON_MAIN: ${{ secrets.FIREBASE_JSON_MAIN }}
         FIREBASE_JSON_FAKE: ${{ secrets.FIREBASE_JSON_FAKE}}
-      run: |
-        echo $FIREBASE_SECRET > app/src/calibrationArizona/google-services.json |
-        echo $FIREBASE_JSON_MAIN > app/src/calibrationGlobal/google-services.json |
-        echo $FIREBASE_JSON_FAKE > app/src/production/google-services.json
+      run: echo $FIREBASE_SECRET > app/src/calibrationArizona/google-services.json | echo $FIREBASE_JSON_MAIN > app/src/calibrationGlobal/google-services.json | echo $FIREBASE_JSON_FAKE > app/src/production/google-services.json
     - name: Decode debug.keystore
       env:
         DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE }}
@@ -82,18 +79,15 @@ jobs:
             FIREBASE_JSON_ARIZONA: ${{ secrets.FIREBASE_JSON_ARIZONA }}
             FIREBASE_JSON_MAIN: ${{ secrets.FIREBASE_JSON_MAIN }}
             FIREBASE_JSON_FAKE: ${{ secrets.FIREBASE_JSON_FAKE}}
-          run: |
-            echo $FIREBASE_SECRET > app/src/calibrationArizona/google-services.json |
-            echo $FIREBASE_JSON_MAIN > app/src/calibrationGlobal/google-services.json |
-            echo $FIREBASE_JSON_FAKE > app/src/production/google-services.json
-          - name: Decode debug.keystore
-            env:
-              DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE }}
-            run: echo "$DEBUG_KEYSTORE" | base64 --decode > debug.keystore
-          - name: Build debug APK
-            run: bash ./gradlew assembleProductionArizonaDebug -PVERIFICATION_API_KEY=$VERIFICATION_API_KEY -PSERVER_VERIFICATION_ENDPOINT=$SERVER_VERIFICATION_ENDPOINT -PSERVER_UPLOAD_ENDPOINT=$SERVER_UPLOAD_ENDPOINT -PSERVER_DOWNLOAD_ENDPOINT=$SERVER_DOWNLOAD_ENDPOINT --stacktrace
-          - name: Upload APK
-            uses: actions/upload-artifact@v1
-            with:
-              name: app
-            path: app/build/outputs/apk/productionArizona/debug/app-production-arizona-debug.apk
+          run: echo $FIREBASE_SECRET > app/src/calibrationArizona/google-services.json | echo $FIREBASE_JSON_MAIN > app/src/calibrationGlobal/google-services.json | echo $FIREBASE_JSON_FAKE > app/src/production/google-services.json
+        - name: Decode debug.keystore
+          env:
+            DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE }}
+          run: echo "$DEBUG_KEYSTORE" | base64 --decode > debug.keystore
+        - name: Build debug APK
+          run: bash ./gradlew assembleProductionArizonaDebug -PVERIFICATION_API_KEY=$VERIFICATION_API_KEY -PSERVER_VERIFICATION_ENDPOINT=$SERVER_VERIFICATION_ENDPOINT -PSERVER_UPLOAD_ENDPOINT=$SERVER_UPLOAD_ENDPOINT -PSERVER_DOWNLOAD_ENDPOINT=$SERVER_DOWNLOAD_ENDPOINT --stacktrace
+        - name: Upload APK
+          uses: actions/upload-artifact@v1
+          with:
+            name: app
+          path: app/build/outputs/apk/productionArizona/debug/app-production-arizona-debug.apk
