@@ -174,7 +174,6 @@
     <string name="how_it_works_explanation">Together, we have the power to stop the spread of COVID-19 with <b>safe</b>, <b>secure</b>, and <b>anonymous</b> exposure notifications.</string>
     <string name="onboarding_title" />
     <string name="welcome_to_the">Welcome to the</string>
-    <string name="full_app_name">Covid Watch Arizona Exposure Notifications App</string>
     <string name="finished_onboarding_title">That’s it. Setup Complete.</string>
     <string name="finished_onboarding_subtitle">When exposure notifications are\nenabled, the app will detect exposures as you go about your day.\n\n<b>You can now…</b></string>
     <string name="finished_onboarding_text"><b>&#8226;</b> Get exposure notifications\n<b>&#8226;</b> Anonymously notify others\n<b>&#8226;</b> Access local public health resources and recommendations</string>
