@@ -4,7 +4,7 @@ import org.covidwatch.android.data.NextStepType.*
 import org.covidwatch.android.data.RegionId.BERMUDA
 
 object RegionId {
-    const val BERMUDA = 0
+    const val BERMUDA = 4
 }
 
 object DefaultRegions {
