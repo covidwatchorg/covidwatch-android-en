@@ -90,4 +90,4 @@ jobs:
           uses: actions/upload-artifact@v1
           with:
             name: app
-          path: app/build/outputs/apk/productionArizona/debug/app-production-arizona-debug.apk
+            path: app/build/outputs/apk/productionArizona/debug/app-production-arizona-debug.apk
