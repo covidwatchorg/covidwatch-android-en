@@ -118,9 +118,9 @@ android {
             buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/covid-watch-arizona-regions/arizona-v4.json"'
         }
         if (variant.getName().startsWith("calibrationGlobal")) {
-            buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/dev-covid-watch-arizona-regions/main-v4.json"'
+            buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/dev-covid-watch-main-regions/main-v4.json"'
         } else if(variant.getName().startsWith("productionGlobal")) {
-            buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/covid-watch-arizona-regions/main-v4.json"'
+            buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/dev-covid-watch-main-regions/main-v4.json"'
         }
     }
 
