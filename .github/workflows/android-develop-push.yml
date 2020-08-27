@@ -25,8 +25,14 @@ jobs:
         java-version: 1.8
     - name: Decode google-services.json
       env:
-        FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
-      run: echo $FIREBASE_SECRET > app/google-services.json
+        FIREBASE_JSON_ARIZONA: ${{ secrets.FIREBASE_JSON_ARIZONA }}
+        FIREBASE_JSON_MAIN: ${{ secrets.FIREBASE_JSON_MAIN }}
+        FIREBASE_JSON_FAKE: ${{ secrets.FIREBASE_JSON_FAKE}}
+      run: |
+        mkdir -p app/src/calibrationArizona
+        echo $FIREBASE_JSON_ARIZONA > app/src/calibrationArizona/google-services.json
+        echo $FIREBASE_JSON_MAIN > app/src/calibrationGlobal/google-services.json
+        echo $FIREBASE_JSON_FAKE > app/src/production/google-services.json
     - name: Decode debug.keystore
       env:
         DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE }}
@@ -59,8 +65,14 @@ jobs:
             java-version: 1.8
         - name: Decode google-services.json
           env:
-            FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
-          run: echo $FIREBASE_SECRET > app/google-services.json
+            FIREBASE_JSON_ARIZONA: ${{ secrets.FIREBASE_JSON_ARIZONA }}
+            FIREBASE_JSON_MAIN: ${{ secrets.FIREBASE_JSON_MAIN }}
+            FIREBASE_JSON_FAKE: ${{ secrets.FIREBASE_JSON_FAKE}}
+          run: |
+            mkdir -p app/src/calibrationArizona
+            echo $FIREBASE_JSON_ARIZONA > app/src/calibrationArizona/google-services.json
+            echo $FIREBASE_JSON_MAIN > app/src/calibrationGlobal/google-services.json
+            echo $FIREBASE_JSON_FAKE > app/src/production/google-services.json
         - name: Decode debug.keystore
           env:
             DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE }}
