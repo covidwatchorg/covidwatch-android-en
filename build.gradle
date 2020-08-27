@@ -36,8 +36,8 @@ task clean(type: Delete) {
 
 sonarqube {
     properties {
-        property "sonar.projectKey", "covid19risk_covidwatch-android-en"
-        property "sonar.organization", "covid19risk"
+        property "sonar.projectKey", "covidwatchorg_covidwatch-android-en"
+        property "sonar.organization", "covidwatchorg"
         property "sonar.host.url", "https://sonarcloud.io"
     }
 }
