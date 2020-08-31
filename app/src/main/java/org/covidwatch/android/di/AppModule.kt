@@ -16,6 +16,7 @@ import org.covidwatch.android.BuildConfig
 import org.covidwatch.android.R
 import org.covidwatch.android.data.*
 import org.covidwatch.android.data.countrycode.CountryCodeRepository
+import org.covidwatch.android.data.countrycode.DefaultCountryCodeRepository
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenLocalSource
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.diagnosisverification.DiagnosisVerificationRemoteSource
@@ -164,8 +165,9 @@ val appModule = module {
         val appDatabase: AppDatabase = get()
         appDatabase.countryCodeDao()
     }
-    single {
-        CountryCodeRepository(
+
+    single<CountryCodeRepository> {
+        DefaultCountryCodeRepository(
             local = get(),
             dispatchers = get()
         )
