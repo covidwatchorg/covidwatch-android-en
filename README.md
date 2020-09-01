@@ -1,5 +1,5 @@
-![](https://github.com/covid19risk/covidwatch-android/workflows/Develop%20Branch%20CI/badge.svg)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=covid19risk_covidwatch-android-en&metric=alert_status)](https://sonarcloud.io/dashboard?id=covid19risk_covidwatch-android-en)
+![](https://github.com/covidwatchorg/covidwatch-android/workflows/Develop%20Branch%20CI/badge.svg)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=covidwatchorg_covidwatch-android-en&metric=alert_status)](https://sonarcloud.io/dashboard?id=covidwatchorg_covidwatch-android-en)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 # CovidWatch Android POC
@@ -18,7 +18,7 @@ This repository is focused on the implementation of the Android version of the C
 
 Clone this repo from the `develop` branch:
 
-`git clone git@github.com:covid19risk/covidwatch-android-en.git`
+`git clone git@github.com:covidwatchorg/covidwatch-android-en.git`
 
 Open the project in Android Studio. Install onto a phone of yours with the `app` configuration, and you're free to explore the app! Its optimal to install on 2 phones as much of the behavior of the app depends on 2 phones interacting.
 
@@ -27,7 +27,7 @@ Open the project in Android Studio. Install onto a phone of yours with the `app`
 ## Looking to contribute?
 
 - Run on your own device to explore the UX. Look at the [Figma](https://www.figma.com/file/I4OOjT4VhsSberDIAZTkcH/Covid-Watch---App-v2-(dev)?node-id=0%3A1) for what the UX should look like. If you have any feedback/find any problems, create an issue!
-- Look at https://github.com/orgs/covid19risk/projects/1 for existing issues. If you see something you want to work on, assign yourself to it, set it to in progress, and make a PR to the `develop` branch.
+- Look at https://github.com/orgs/covidwatchorg/projects/1 for existing issues. If you see something you want to work on, assign yourself to it, set it to in progress, and make a PR to the `develop` branch.
 
 ## FAQ
 
@@ -35,7 +35,7 @@ What is the anonymous protocol for communication between phones? How does it wor
 
 Covid Watch uses Google/Android Exposure Notification, a decentralized, privacy-first contact tracing API implemented in Google and Apple phone operation systems. You can read more about it in the Google design document at https://www.google.com/covid19/exposurenotifications/
 
-What's this repository vs the other repositories in the covid19risk Organization?
+What's this repository vs the other repositories in the covidwatchorg Organization?
 
 This is the repository for development of the front-facing Android mobile app for Covid Watch, including the UX, and backend services. 
 

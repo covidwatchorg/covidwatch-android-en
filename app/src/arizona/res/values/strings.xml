@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="full_app_name">Covid Watch Arizona Exposure Notifications App</string>
+
+    <string name="powered_by">Powered by Covid Watch for</string>
+    <string name="powered_by_content_description">Powered by Covid Watch for ADHS</string>
+</resources>
