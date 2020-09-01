@@ -1,109 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <ImageView
-        android:id="@+id/close_button"
-        style="@style/ImageView.BtnClose"
-        android:contentDescription="@string/close_button_content_descriptor"
-        android:paddingHorizontal="@dimen/padding_normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.helper.widget.Flow
-        android:id="@+id/toolbar_flow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/padding_normal"
-        android:paddingEnd="@dimen/padding_normal"
-        app:constraint_referenced_ids="title, subtitle"
-        app:flow_wrapMode="chain"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/close_button" />
-
-    <TextView
-        android:id="@+id/title"
-        style="@style/TextView.ScreenTitle"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/diagnosis_shared_title"
-        android:textSize="@dimen/title_font_size_big"
-        tools:ignore="MissingConstraints" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/subtitle"
-        style="@style/TextView.ScreenSubtitle"
-        android:gravity="center"
-        android:paddingTop="@dimen/padding_normal"
-        android:text="@string/diagnosis_shared_subtitle"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints" />
+        <ImageView
+            android:id="@+id/close_button"
+            style="@style/ImageView.BtnClose"
+            android:contentDescription="@string/close_button_content_descriptor"
+            android:paddingHorizontal="@dimen/padding_normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/art"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="@dimen/padding_normal"
-        android:layout_marginTop="@dimen/padding_normal"
-        android:contentDescription="@string/diagnosis_shared_art_content_description"
-        app:srcCompat="@drawable/diagnosis_shared_art"
-        app:layout_constraintBottom_toTopOf="@id/action_flow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_flow" />
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/toolbar_flow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/padding_normal"
+            android:paddingEnd="@dimen/padding_normal"
+            app:constraint_referenced_ids="title, subtitle"
+            app:flow_wrapMode="chain"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/close_button" />
 
-    <androidx.constraintlayout.helper.widget.Flow
-        android:id="@+id/action_flow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/padding_normal"
-        android:paddingEnd="@dimen/padding_normal"
-        app:constraint_referenced_ids=" share_info, share_app_button, btn_view_past_positive_diagnoses, powered_by"
-        app:flow_wrapMode="chain"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/art" />
+        <TextView
+            android:id="@+id/title"
+            style="@style/TextView.ScreenTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/diagnosis_shared_title"
+            android:textSize="@dimen/title_font_size_big"
+            tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/share_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/padding_normal"
-        android:text="@string/diagnosis_shared_next_steps"
-        android:textSize="16sp"
-        tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/subtitle"
+            style="@style/TextView.ScreenSubtitle"
+            android:gravity="center"
+            android:paddingTop="@dimen/padding_normal"
+            android:text="@string/diagnosis_shared_subtitle"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints" />
 
-    <Button
-        android:id="@+id/share_app_button"
-        style="@style/Button.Action"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/padding_normal"
-        android:layout_marginTop="@dimen/padding_normal"
-        android:text="@string/share_app_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
+        <ImageView
+            android:id="@+id/art"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginTop="@dimen/padding_normal"
+            android:contentDescription="@string/diagnosis_shared_art_content_description"
+            app:srcCompat="@drawable/diagnosis_shared_art"
+            app:layout_constraintBottom_toTopOf="@id/action_flow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_flow" />
 
-    <Button
-        android:id="@+id/btn_view_past_positive_diagnoses"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/past_positive_diagnoses"
-        android:textAllCaps="false"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/subtitle_font_size"
-        tools:ignore="MissingConstraints" />
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/action_flow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/padding_normal"
+            android:paddingEnd="@dimen/padding_normal"
+            app:constraint_referenced_ids=" share_info, share_app_button, btn_view_past_positive_diagnoses, powered_by"
+            app:flow_wrapMode="chain"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/art" />
 
-    <include
-        android:id="@+id/powered_by"
-        layout="@layout/powered_by" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/share_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/padding_normal"
+            android:text="@string/diagnosis_shared_next_steps"
+            android:textSize="16sp"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/share_app_button"
+            style="@style/Button.Action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_normal"
+            android:layout_marginTop="@dimen/padding_normal"
+            android:text="@string/share_app_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/btn_view_past_positive_diagnoses"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/past_positive_diagnoses"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/subtitle_font_size"
+            tools:ignore="MissingConstraints" />
+
+        <include
+            android:id="@+id/powered_by"
+            layout="@layout/powered_by" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
