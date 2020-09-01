@@ -55,7 +55,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_normal"
             android:ellipsize="end"
             android:lineSpacingExtra="3sp"
