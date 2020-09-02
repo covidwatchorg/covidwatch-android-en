@@ -288,6 +288,10 @@ dependencies {
     testImplementation "io.mockk:mockk:1.10.0"
     // Koin
     testImplementation "org.koin:koin-test:$koin_version"
+
+    // Kronos ntp clock
+    def kronos_latest_version = "0.0.1-alpha09"
+    implementation "com.lyft.kronos:kronos-android:$kronos_latest_version"
 }
 
 apply plugin: 'com.google.gms.google-services'
