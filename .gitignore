@@ -88,3 +88,4 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 keystore/
+.idea/misc.xml
