@@ -1,7 +1,6 @@
 package org.covidwatch.android
 
 import android.app.Application
-import android.content.Context
 import kotlinx.coroutines.GlobalScope
 import org.covidwatch.android.di.appModule
 import org.covidwatch.android.di.flavorSpecificModule
@@ -37,12 +36,5 @@ open class BaseCovidWatchApplication : Application() {
             launchUseCase(removeOldExposuresUseCase)
             launchUseCase(updateRegionsUseCase)
         }
-
-        appContext = applicationContext
-    }
-
-    // convenience object to get the applicationContext from anywhere
-    companion object {
-        lateinit var appContext : Context
     }
 }
