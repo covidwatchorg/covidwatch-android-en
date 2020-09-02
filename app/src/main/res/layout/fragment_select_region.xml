@@ -1,77 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:background="@color/colorPrimary"
-    android:paddingHorizontal="25dp">
+    android:fillViewport="true">
 
-    <ImageView
-        android:id="@+id/region_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/padding_extra_large"
-        android:contentDescription="@string/cw_logo_content_description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cw_big_logo" />
-
-    <TextView
-        android:id="@+id/select_regions_label"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/padding_large"
-        android:layout_marginBottom="@dimen/padding_normal"
-        android:text="@string/select_region_label"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="19sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/spinner_regions"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/region_logo"
-        app:layout_constraintVertical_bias="0.1" />
-
-    <Spinner
-        android:id="@+id/spinner_regions"
-        style="@style/Widget.AppCompat.Spinner.Underlined"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/padding_normal"
-        android:backgroundTint="@color/white"
-        android:paddingVertical="@dimen/padding_normal"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/select_regions_label" />
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        android:paddingHorizontal="25dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/padding_normal"
-        android:ellipsize="end"
-        android:lineSpacingExtra="3sp"
-        android:text="@string/privacy_select_region"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@id/btn_continue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner_regions"
-        app:layout_constraintVertical_bias="0" />
+        <ImageView
+            android:id="@+id/region_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_extra_large"
+            android:contentDescription="@string/cw_logo_content_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/cw_big_logo" />
 
-    <Button
-        android:id="@+id/btn_continue"
-        style="@style/Button.Action"
-        android:layout_marginBottom="@dimen/padding_normal"
-        android:backgroundTint="@color/white"
-        android:text="@string/btn_continue"
-        android:textColor="@color/bluejay"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/select_regions_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_large"
+            android:layout_marginBottom="@dimen/padding_normal"
+            android:text="@string/select_region_label"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/spinner_regions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/region_logo"
+            app:layout_constraintVertical_bias="0.1" />
+
+        <Spinner
+            android:id="@+id/spinner_regions"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/padding_normal"
+            android:backgroundTint="@color/white"
+            android:paddingVertical="@dimen/padding_normal"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/select_regions_label" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_normal"
+            android:ellipsize="end"
+            android:lineSpacingExtra="3sp"
+            android:text="@string/privacy_select_region"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/btn_continue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinner_regions"
+            app:layout_constraintVertical_bias="0" />
+
+        <Button
+            android:id="@+id/btn_continue"
+            style="@style/Button.Action"
+            android:layout_marginBottom="@dimen/padding_normal"
+            android:backgroundTint="@color/white"
+            android:text="@string/btn_continue"
+            android:textColor="@color/bluejay"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

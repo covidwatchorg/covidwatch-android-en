@@ -16,84 +16,91 @@
             type="org.covidwatch.android.ui.exposures.ExposuresViewModel" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            app:liftOnScroll="true">
+            android:layout_height="match_parent">
 
-            <!--TODO: Fix scroll when the list is empty-->
-            <!-- app:layout_scrollFlags="scroll|enterAlways" -->
-            <LinearLayout
+            <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:liftOnScroll="true">
 
-                <ImageView
-                    android:id="@+id/btn_close"
-                    style="@style/ImageView.BtnClose"
-                    android:contentDescription="@string/close_button_content_descriptor"
-                    android:paddingHorizontal="@dimen/padding_normal" />
-
-                <TextView
-                    style="@style/TextView.ScreenTitle"
-                    android:paddingHorizontal="@dimen/padding_normal"
-                    android:text="@string/title_exposures" />
-
-                <!--suppress AndroidUnknownAttribute -->
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/enable_exposure_notification"
-                    style="@style/Switch.EnableExposureNotification"
-                    android:checked="@{viewModel.exposureNotificationEnabled}"
-                    android:fontFamily="@font/montserrat"
-                    android:onCheckedChanged="@{(switch, on) -> viewModel.enableExposureNotification(on)}"
-                    android:paddingHorizontal="@dimen/padding_normal" />
-
-                <TextView
-                    android:id="@+id/exposureNotificationsSubtitle"
-                    style="@style/TextView.ScreenSubtitle"
-                    android:paddingHorizontal="@dimen/padding_normal"
-                    android:text="@string/exposures_notifications_off_subtitle"
-                    android:textSize="13sp" />
-
-                <TextView
-                    style="@style/TextView.ScreenSubtitle"
-                    android:layout_marginTop="@dimen/padding_normal"
-                    android:background="@color/darkGray"
-                    android:paddingHorizontal="@dimen/padding_normal"
-                    android:paddingVertical="@dimen/padding_normal"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    app:last_exposure_time="@{viewModel.lastExposureTime}"
-                    tools:text="Exposure last checked today at 3:15pm" />
-
-                <TextView
+                <!--TODO: Fix scroll when the list is empty-->
+                <!-- app:layout_scrollFlags="scroll|enterAlways" -->
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/gradient_bottom_top_top"
-                    android:drawablePadding="@dimen/padding_normal"
-                    android:lineSpacingExtra="4dp"
-                    android:paddingHorizontal="@dimen/padding_normal"
-                    android:paddingTop="@dimen/padding_normal"
-                    android:text="@string/empty_exposures_list"
-                    android:textSize="13sp"
-                    android:visibility="@{viewModel.exposureInfo.empty ? View.VISIBLE : View.GONE }"
-                    app:drawableEndCompat="@drawable/doctor_with_heart"
-                    tools:visibility="gone" />
-            </LinearLayout>
-        </com.google.android.material.appbar.AppBarLayout>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/exposure_info_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:listitem="@layout/item_exposure_parent" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                    <ImageView
+                        android:id="@+id/btn_close"
+                        style="@style/ImageView.BtnClose"
+                        android:contentDescription="@string/close_button_content_descriptor"
+                        android:paddingHorizontal="@dimen/padding_normal" />
+
+                    <TextView
+                        style="@style/TextView.ScreenTitle"
+                        android:paddingHorizontal="@dimen/padding_normal"
+                        android:text="@string/title_exposures" />
+
+                    <!--suppress AndroidUnknownAttribute -->
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/enable_exposure_notification"
+                        style="@style/Switch.EnableExposureNotification"
+                        android:checked="@{viewModel.exposureNotificationEnabled}"
+                        android:fontFamily="@font/montserrat"
+                        android:onCheckedChanged="@{(switch, on) -> viewModel.enableExposureNotification(on)}"
+                        android:paddingHorizontal="@dimen/padding_normal" />
+
+                    <TextView
+                        android:id="@+id/exposureNotificationsSubtitle"
+                        style="@style/TextView.ScreenSubtitle"
+                        android:paddingHorizontal="@dimen/padding_normal"
+                        android:text="@string/exposures_notifications_off_subtitle"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        style="@style/TextView.ScreenSubtitle"
+                        android:layout_marginTop="@dimen/padding_normal"
+                        android:background="@color/darkGray"
+                        android:paddingHorizontal="@dimen/padding_normal"
+                        android:paddingVertical="@dimen/padding_normal"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:last_exposure_time="@{viewModel.lastExposureTime}"
+                        tools:text="Exposure last checked today at 3:15pm" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/gradient_bottom_top_top"
+                        android:drawablePadding="@dimen/padding_normal"
+                        android:lineSpacingExtra="4dp"
+                        android:paddingHorizontal="@dimen/padding_normal"
+                        android:paddingTop="@dimen/padding_normal"
+                        android:text="@string/empty_exposures_list"
+                        android:textSize="13sp"
+                        android:visibility="@{viewModel.exposureInfo.empty ? View.VISIBLE : View.GONE }"
+                        app:drawableEndCompat="@drawable/doctor_with_heart"
+                        tools:visibility="gone" />
+                </LinearLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/exposure_info_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:listitem="@layout/item_exposure_parent" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
