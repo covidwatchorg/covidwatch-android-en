@@ -1,7 +1,6 @@
 package org.covidwatch.android.di
 
 import android.content.Context
-import android.content.ContextWrapper
 import androidx.lifecycle.SavedStateHandle
 import androidx.room.Room
 import androidx.work.WorkManager
