@@ -182,6 +182,10 @@ val appModule = module {
         )
     }
 
+    single {
+        NtpTime(androidApplication())
+    }
+
     factory {
         ProvideDiagnosisKeysUseCase(
             workManager = get(),
@@ -330,10 +334,6 @@ val appModule = module {
             .addInterceptor(logging)
             .addInterceptor(ConnectivityInterceptor(androidApplication()))
             .build()
-    }
-
-    single {
-        AppContext(androidContext())
     }
 
     // Onboarding start

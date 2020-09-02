@@ -14,19 +14,21 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
 import org.covidwatch.android.R
+import org.covidwatch.android.data.NtpTime
 import org.covidwatch.android.databinding.FragmentVerifyPositiveDiagnosisBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.extension.observeNullableEvent
 import org.covidwatch.android.extension.toInstant
 import org.covidwatch.android.ui.BaseViewModelFragment
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
-import java.time.LocalDate
 
 class VerifyPositiveDiagnosisFragment :
     BaseViewModelFragment<FragmentVerifyPositiveDiagnosisBinding, VerifyPositiveDiagnosisViewModel>() {
 
     override val viewModel: VerifyPositiveDiagnosisViewModel by stateViewModel()
+    private val ntpTime: NtpTime by inject()
 
     override fun bind(
         inflater: LayoutInflater,
@@ -119,13 +121,13 @@ class VerifyPositiveDiagnosisFragment :
         val builder = MaterialDatePicker.Builder.datePicker()
         val constraints = CalendarConstraints.Builder()
 
-        val twoWeeksAgo = LocalDate.now().plusDays(-14).toInstant()
+        val twoWeeksAgo = ntpTime.nowAsLocalDate().plusDays(-14).toInstant()
             .toEpochMilli()
 
         // Day in the past or 14 days back
         val fromWhen = dayInPast ?: twoWeeksAgo
 
-        val untilNow = LocalDate.now().toInstant().toEpochMilli()
+        val untilNow = ntpTime.nowAsLocalDate().toInstant().toEpochMilli()
 
         constraints.setValidator(BaseDateValidator { it in fromWhen..untilNow })
 

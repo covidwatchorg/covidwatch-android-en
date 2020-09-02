@@ -2,6 +2,7 @@ package org.covidwatch.android
 
 import android.app.Application
 import kotlinx.coroutines.GlobalScope
+import org.covidwatch.android.data.NtpTime
 import org.covidwatch.android.di.appModule
 import org.covidwatch.android.di.flavorSpecificModule
 import org.covidwatch.android.domain.ProvideDiagnosisKeysUseCase
@@ -18,6 +19,7 @@ open class BaseCovidWatchApplication : Application() {
     private val updateRegionsUseCase: UpdateRegionsUseCase by inject()
     private val removeOldExposuresUseCase: RemoveOldDataUseCase by inject()
     private val provideDiagnosisKeysUseCase: ProvideDiagnosisKeysUseCase by inject()
+    private val ntpTime: NtpTime by inject()
 
     override fun onCreate() {
         super.onCreate()
@@ -36,5 +38,7 @@ open class BaseCovidWatchApplication : Application() {
             launchUseCase(removeOldExposuresUseCase)
             launchUseCase(updateRegionsUseCase)
         }
+
+        ntpTime.syncInBackground()
     }
 }
