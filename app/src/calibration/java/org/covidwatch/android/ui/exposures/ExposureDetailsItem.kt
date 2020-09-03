@@ -6,7 +6,6 @@ import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.databinding.ItemExposureChildBinding
 import org.covidwatch.android.ui.Intents.openBrowser
-import org.covidwatch.android.ui.Urls
 
 class ExposureDetailsItem(val exposure: CovidExposureInformation) :
     BindableItem<ItemExposureChildBinding>() {
@@ -15,7 +14,9 @@ class ExposureDetailsItem(val exposure: CovidExposureInformation) :
 
     override fun bind(viewBinding: ItemExposureChildBinding, position: Int) {
         viewBinding.exposure = exposure
-        viewBinding.btnLearnMore.setOnClickListener { viewBinding.root.context.openBrowser(Urls.FAQ) }
+        viewBinding.btnLearnMore.setOnClickListener {
+            viewBinding.root.context.openBrowser("https://covidwatch.zendesk.com/hc/en-us/articles/360053063574-What-do-the-fields-on-the-Possible-Exposures-page-mean-")
+        }
     }
 
     override fun initializeViewBinding(view: View) = ItemExposureChildBinding.bind(view)
