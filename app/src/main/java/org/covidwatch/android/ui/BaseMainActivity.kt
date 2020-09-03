@@ -2,6 +2,7 @@ package org.covidwatch.android.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.WindowManager.LayoutParams.FLAG_SECURE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -15,6 +16,9 @@ open class BaseMainActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        // Prevent external apps to take screenshots and recording video of our app
+        window.setFlags(FLAG_SECURE, FLAG_SECURE)
+
         handleIntent(intent)
     }
 
