@@ -6,20 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.xwray.groupie.ExpandableGroup
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import org.covidwatch.android.R
+import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.databinding.FragmentExposuresBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
 import org.covidwatch.android.ui.BaseViewModelFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ExposuresFragment : BaseViewModelFragment<FragmentExposuresBinding, ExposuresViewModel>() {
+abstract class BaseExposuresFragment :
+    BaseViewModelFragment<FragmentExposuresBinding, ExposuresViewModel>() {
 
     override val viewModel: ExposuresViewModel by viewModel()
-    private val adapter = GroupAdapter<GroupieViewHolder>()
+    protected val adapter = GroupAdapter<GroupieViewHolder>()
 
     override fun bind(
         inflater: LayoutInflater,
@@ -31,8 +32,8 @@ class ExposuresFragment : BaseViewModelFragment<FragmentExposuresBinding, Exposu
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            lifecycleOwner = this@ExposuresFragment
-            viewModel = this@ExposuresFragment.viewModel
+            lifecycleOwner = this@BaseExposuresFragment
+            viewModel = this@BaseExposuresFragment.viewModel
             executePendingBindings()
 
             exposureInfoList.adapter = adapter
@@ -47,19 +48,8 @@ class ExposuresFragment : BaseViewModelFragment<FragmentExposuresBinding, Exposu
             }
         }
         with(viewModel) {
-            observe(exposureInfo) { exposures ->
-                if (exposures.isNotEmpty()) adapter.clear()
+            observe(exposureInfo, this@BaseExposuresFragment::exposuresLoaded)
 
-                exposures.forEach { exposure ->
-                    adapter.add(
-                        ExpandableGroup(ExposureItem(exposure)).apply {
-                            add(ExposureDetailsItem(exposure))
-                        }
-                    )
-                }
-
-                if (exposures.isNotEmpty()) adapter.add(FooterItem())
-            }
             observe(enEnabled) { enabled ->
                 if (enabled) {
                     binding.exposureNotificationsSubtitle.setText(R.string.exposures_notifications_on_subtitle)
@@ -74,6 +64,8 @@ class ExposuresFragment : BaseViewModelFragment<FragmentExposuresBinding, Exposu
             }
         }
     }
+
+    abstract fun exposuresLoaded(exposures: List<CovidExposureInformation>)
 
     override fun onResume() {
         super.onResume()

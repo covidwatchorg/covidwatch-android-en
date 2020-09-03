@@ -4,7 +4,6 @@ import android.animation.LayoutTransition
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +20,7 @@ import org.covidwatch.android.databinding.FragmentHomeBinding
 import org.covidwatch.android.databinding.ItemNextStepBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent
+import org.covidwatch.android.extension.setRippleBackground
 import org.covidwatch.android.extension.shareApp
 import org.covidwatch.android.ui.*
 import org.covidwatch.android.ui.Intents.openBrowser
@@ -154,7 +154,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     }
                     NextStepType.PHONE -> {
                         nextStepIcon.setImageResource(R.drawable.ic_next_step_phone)
-                        root.addCircleRipple()
+                        root.setRippleBackground()
                         root.setOnClickListener {
                             val intent = Intent(Intent.ACTION_DIAL).apply {
                                 data = Uri.parse(nextStep.url)
@@ -165,19 +165,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         }
                     }
                     NextStepType.WEBSITE -> {
-                        root.addCircleRipple()
+                        root.setRippleBackground()
                         root.setOnClickListener { context?.openBrowser(nextStep.url) }
                         nextStepIcon.setImageResource(R.drawable.ic_next_step_web)
                     }
                     NextStepType.SHARE -> {
-                        root.addCircleRipple()
+                        root.setRippleBackground()
                         root.setOnClickListener {
                             context?.shareApp()
                         }
                         nextStepIcon.setImageResource(R.drawable.ic_next_step_share)
                     }
                     NextStepType.SELECT_REGION -> {
-                        root.addCircleRipple()
+                        root.setRippleBackground()
                         root.setOnClickListener {
                             findNavController().navigate(R.id.selectRegionFragment)
                         }
@@ -186,14 +186,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 }
             }
         }
-    }
-
-    private fun View.addCircleRipple() = with(TypedValue()) {
-        context.theme.resolveAttribute(
-            android.R.attr.selectableItemBackgroundBorderless,
-            this,
-            true
-        )
-        foreground = ContextCompat.getDrawable(requireContext(), resourceId)
     }
 }
