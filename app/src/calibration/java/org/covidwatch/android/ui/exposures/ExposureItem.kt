@@ -8,6 +8,7 @@ import com.xwray.groupie.viewbinding.BindableItem
 import org.covidwatch.android.R
 import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.databinding.ItemExposureParentBinding
+import org.covidwatch.android.extension.setRippleBackground
 import org.covidwatch.android.ui.util.DateFormatter
 
 class ExposureItem(val exposure: CovidExposureInformation) :
@@ -23,6 +24,13 @@ class ExposureItem(val exposure: CovidExposureInformation) :
     override fun bind(viewBinding: ItemExposureParentBinding, position: Int) {
         viewBinding.text.text = DateFormatter.format(exposure.date)
 
+        viewBinding.text.setRippleBackground()
+        viewBinding.text.setCompoundDrawablesRelativeWithIntrinsicBounds(
+            0,
+            0,
+            if (expandableGroup!!.isExpanded) R.drawable.collapse else R.drawable.expand,
+            0
+        )
         viewBinding.root.setOnClickListener {
             expandableGroup!!.onToggleExpanded()
             bindIcon(viewBinding)
