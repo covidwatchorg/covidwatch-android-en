@@ -128,7 +128,9 @@ class VerifyPositiveDiagnosisFragment :
 
         val untilNow = ntpTime.nowAsInstant().toEpochMilli()
 
-        constraints.setValidator(BaseDateValidator { it in fromWhen..untilNow })
+        constraints
+            .setValidator(BaseDateValidator { it in fromWhen..untilNow })
+            .setOpenAt(untilNow)
 
         val datePicker = builder
             .setSelection(selection)
