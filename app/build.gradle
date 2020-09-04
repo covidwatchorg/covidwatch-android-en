@@ -43,8 +43,7 @@ android {
 
     buildTypes {
         release {
-            //TODO: Use proguard
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             testCoverageEnabled false
             signingConfig signingConfigs.debug
