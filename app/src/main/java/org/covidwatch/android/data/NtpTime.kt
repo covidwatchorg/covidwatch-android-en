@@ -5,6 +5,7 @@ import com.lyft.kronos.AndroidClockFactory
 import com.lyft.kronos.KronosClock
 import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.ZoneId
 
 class NtpTime (context : Context) {
@@ -14,6 +15,6 @@ class NtpTime (context : Context) {
 
     fun syncInBackground() = kronosClock.syncInBackground()
 
-    fun nowAsLocalDate() : LocalDate =
-        Instant.ofEpochMilli(currentTimeMillis()).atZone(ZoneId.systemDefault()).toLocalDate()
+    fun nowAsInstant() : Instant =
+        Instant.ofEpochMilli(currentTimeMillis())
 }
