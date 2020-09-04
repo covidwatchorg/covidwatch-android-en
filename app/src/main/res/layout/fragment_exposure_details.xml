@@ -5,8 +5,6 @@
 
     <data>
 
-        <import type="org.covidwatch.android.ui.ItemBindings" />
-
         <variable
             name="exposure"
             type="org.covidwatch.android.data.CovidExposureInformation" />
