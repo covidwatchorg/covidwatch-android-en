@@ -1,7 +1,7 @@
 package org.covidwatch.android.ui.exposures
 
 import com.xwray.groupie.ExpandableGroup
-import org.covidwatch.android.data.CovidExposureInformation
+import org.covidwatch.android.data.model.CovidExposureInformation
 
 class ExposuresFragment : BaseExposuresFragment() {
     override fun exposuresLoaded(exposures: List<CovidExposureInformation>) {

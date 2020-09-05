@@ -3,6 +3,7 @@ package org.covidwatch.android.data
 import com.google.common.base.Joiner
 import com.google.common.io.BaseEncoding
 import org.covidwatch.android.data.diagnosisverification.DiagnosisVerificationRepository
+import org.covidwatch.android.data.model.DiagnosisKey
 import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.exposurenotification.NoConnectionException
 import org.covidwatch.android.exposurenotification.ServerException

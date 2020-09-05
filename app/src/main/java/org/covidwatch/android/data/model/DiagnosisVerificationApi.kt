@@ -1,4 +1,4 @@
-package org.covidwatch.android.data.diagnosisverification
+package org.covidwatch.android.data.model
 
 import com.google.gson.annotations.SerializedName
 

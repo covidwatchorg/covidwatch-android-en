@@ -4,11 +4,11 @@ import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import org.covidwatch.android.R
-import org.covidwatch.android.data.Region
 import org.covidwatch.android.data.RegionId.ARIZONA_STATE
 import org.covidwatch.android.data.RegionId.ASU
 import org.covidwatch.android.data.RegionId.NAU
 import org.covidwatch.android.data.RegionId.UOA
+import org.covidwatch.android.data.model.Region
 
 val Region.bigLogo
     @DrawableRes

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import org.covidwatch.android.R
-import org.covidwatch.android.data.CovidExposureInformation
+import org.covidwatch.android.data.model.CovidExposureInformation
 import org.covidwatch.android.databinding.FragmentExposuresBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.extension.observeEvent

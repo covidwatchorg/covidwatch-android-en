@@ -9,11 +9,11 @@ import com.google.common.io.BaseEncoding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.covidwatch.android.R
-import org.covidwatch.android.data.asExposureConfiguration
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
 import org.covidwatch.android.data.keyfile.KeyFile
 import org.covidwatch.android.data.keyfile.KeyFileRepository
+import org.covidwatch.android.data.model.asExposureConfiguration
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.domain.UpdateRegionsUseCase

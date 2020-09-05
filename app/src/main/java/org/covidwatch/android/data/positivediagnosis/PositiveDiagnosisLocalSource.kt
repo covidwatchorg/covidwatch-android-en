@@ -1,6 +1,6 @@
 package org.covidwatch.android.data.positivediagnosis
 
-import org.covidwatch.android.data.PositiveDiagnosisReport
+import org.covidwatch.android.data.model.PositiveDiagnosisReport
 
 class PositiveDiagnosisLocalSource(private val dao: PositiveDiagnosisReportDao) {
 

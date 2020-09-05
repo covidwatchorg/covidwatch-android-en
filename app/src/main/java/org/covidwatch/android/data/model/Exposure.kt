@@ -1,7 +1,7 @@
-package org.covidwatch.android.data
+package org.covidwatch.android.data.model
 
-import org.covidwatch.android.data.RiskLevel.HIGH
-import org.covidwatch.android.data.RiskLevel.LOW
+import org.covidwatch.android.data.model.RiskLevel.HIGH
+import org.covidwatch.android.data.model.RiskLevel.LOW
 
 typealias RiskScore = Int
 

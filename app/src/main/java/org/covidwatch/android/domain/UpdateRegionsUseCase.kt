@@ -5,8 +5,8 @@ import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.covidwatch.android.BuildConfig
-import org.covidwatch.android.data.Region
-import org.covidwatch.android.data.Regions
+import org.covidwatch.android.data.model.Region
+import org.covidwatch.android.data.model.Regions
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.exposurenotification.ServerException
@@ -31,7 +31,8 @@ class UpdateRegionsUseCase(
             val regionsType = object : TypeToken<List<Region?>?>() {}.type
 
             val regions: List<Region> = gson.fromJson(response.body?.charStream(), regionsType)
-            preferences.regions = Regions(regions)
+            preferences.regions =
+                Regions(regions)
         } catch (e: Exception) {
             Timber.d("Failed to update regions data")
             Timber.e(e)

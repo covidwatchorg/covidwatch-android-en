@@ -1,8 +1,8 @@
 package org.covidwatch.android.domain
 
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
-import org.covidwatch.android.data.asDiagnosisKey
-import org.covidwatch.android.data.asTemporaryExposureKey
+import org.covidwatch.android.data.model.asDiagnosisKey
+import org.covidwatch.android.data.model.asTemporaryExposureKey
 import org.covidwatch.android.domain.ExportDiagnosisKeysAsFileUseCase.Params
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.exposurenotification.Failure

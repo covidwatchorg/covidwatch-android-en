@@ -2,11 +2,11 @@ package org.covidwatch.android.data.positivediagnosis
 
 import com.google.common.io.BaseEncoding
 import kotlinx.coroutines.withContext
-import org.covidwatch.android.data.PositiveDiagnosis
-import org.covidwatch.android.data.PositiveDiagnosisReport
 import org.covidwatch.android.data.UriManager
 import org.covidwatch.android.data.countrycode.CountryCodeRepository
 import org.covidwatch.android.data.keyfile.KeyFileRepository
+import org.covidwatch.android.data.model.PositiveDiagnosis
+import org.covidwatch.android.data.model.PositiveDiagnosisReport
 import org.covidwatch.android.domain.AppCoroutineDispatchers
 import java.security.SecureRandom
 import java.time.Instant

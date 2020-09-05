@@ -3,9 +3,9 @@ package org.covidwatch.android.ui.home
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import org.covidwatch.android.R
-import org.covidwatch.android.data.FirstTimeUser
-import org.covidwatch.android.data.NextStep
 import org.covidwatch.android.data.UserFlowRepository
+import org.covidwatch.android.data.model.FirstTimeUser
+import org.covidwatch.android.data.model.NextStep
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.data.risklevel.RiskLevelRepository
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager

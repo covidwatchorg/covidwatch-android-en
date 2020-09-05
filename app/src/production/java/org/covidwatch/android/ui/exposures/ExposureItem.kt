@@ -6,7 +6,7 @@ import com.xwray.groupie.ExpandableGroup
 import com.xwray.groupie.ExpandableItem
 import com.xwray.groupie.viewbinding.BindableItem
 import org.covidwatch.android.R
-import org.covidwatch.android.data.CovidExposureInformation
+import org.covidwatch.android.data.model.CovidExposureInformation
 import org.covidwatch.android.databinding.ItemExposureParentBinding
 import org.covidwatch.android.ui.util.DateFormatter
 

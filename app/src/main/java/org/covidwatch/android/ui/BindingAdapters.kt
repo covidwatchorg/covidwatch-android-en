@@ -10,10 +10,10 @@ import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
 import androidx.core.text.toSpannable
 import androidx.databinding.BindingAdapter
 import org.covidwatch.android.R
-import org.covidwatch.android.data.CovidExposureInformation
-import org.covidwatch.android.data.Region
-import org.covidwatch.android.data.RiskLevel
-import org.covidwatch.android.data.RiskLevel.*
+import org.covidwatch.android.data.model.CovidExposureInformation
+import org.covidwatch.android.data.model.Region
+import org.covidwatch.android.data.model.RiskLevel
+import org.covidwatch.android.data.model.RiskLevel.*
 import org.covidwatch.android.extension.fromHtml
 import org.covidwatch.android.ui.util.DateFormatter
 import java.time.Instant

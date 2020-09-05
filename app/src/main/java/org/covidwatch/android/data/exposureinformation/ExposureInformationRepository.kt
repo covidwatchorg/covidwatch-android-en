@@ -2,7 +2,7 @@ package org.covidwatch.android.data.exposureinformation
 
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.withContext
-import org.covidwatch.android.data.CovidExposureInformation
+import org.covidwatch.android.data.model.CovidExposureInformation
 import org.covidwatch.android.domain.AppCoroutineDispatchers
 import java.time.Instant
 

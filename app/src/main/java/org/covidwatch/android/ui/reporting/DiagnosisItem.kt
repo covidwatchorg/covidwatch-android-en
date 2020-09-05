@@ -8,7 +8,7 @@ import com.xwray.groupie.ExpandableGroup
 import com.xwray.groupie.ExpandableItem
 import com.xwray.groupie.viewbinding.BindableItem
 import org.covidwatch.android.R
-import org.covidwatch.android.data.PositiveDiagnosisReport
+import org.covidwatch.android.data.model.PositiveDiagnosisReport
 import org.covidwatch.android.databinding.ItemPositiveDiagnosisParentBinding
 import org.covidwatch.android.extension.fromHtml
 import org.covidwatch.android.ui.util.DateFormatter

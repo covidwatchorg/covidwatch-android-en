@@ -6,7 +6,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
-import org.covidwatch.android.data.PositiveDiagnosisReport
+import org.covidwatch.android.data.model.PositiveDiagnosisReport
 import org.covidwatch.android.domain.StartUploadDiagnosisKeysWorkUseCase.Params
 import org.covidwatch.android.exposurenotification.Failure
 import org.covidwatch.android.extension.getFinalWorkInfoByIdLiveData

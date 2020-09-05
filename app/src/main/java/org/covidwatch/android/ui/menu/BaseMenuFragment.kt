@@ -8,60 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.google.gson.annotations.Expose
 import org.covidwatch.android.R
-import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.databinding.FragmentMenuBinding
 import org.covidwatch.android.extension.observe
 import org.covidwatch.android.ui.BaseViewModelFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
-data class PossibleExposuresJson(
-    @Expose
-    val exposureConfiguration: CovidExposureConfiguration,
-    @Expose
-    val exposures: List<CovidExposureInformation>
-)
-
-@Suppress("ArrayInDataClass")
-data class CovidExposureConfiguration(
-    @Expose
-    val minimumRiskScore: Int,
-    @Expose
-    val attenuationScores: IntArray,
-    @Expose
-    val attenuationWeight: Int?,
-    @Expose
-    val daysSinceLastExposureScores: IntArray,
-    @Expose
-    val daysSinceLastExposureWeight: Int?,
-    @Expose
-    val durationScores: IntArray,
-    @Expose
-    val durationWeight: Int?,
-    @Expose
-    val transmissionRiskScores: IntArray,
-    @Expose
-    val transmissionRiskWeight: Int?,
-    @Expose
-    val attenuationDurationThresholds: IntArray,
-    @Expose
-    val attenuationDurationThresholdList: List<IntArray>? = null
-)
-
-fun org.covidwatch.android.data.CovidExposureConfiguration.asCovidExposureConfiguration() =
-    CovidExposureConfiguration(
-        minimumRiskScore,
-        attenuationScores,
-        attenuationWeight,
-        daysSinceLastExposureScores,
-        daysSinceLastExposureWeight,
-        durationScores,
-        durationWeight,
-        transmissionRiskScores,
-        transmissionRiskWeight,
-        durationAtAttenuationThresholds
-    )
 
 open class BaseMenuFragment : BaseViewModelFragment<FragmentMenuBinding, MenuViewModel>() {
     override val viewModel: MenuViewModel by viewModel()

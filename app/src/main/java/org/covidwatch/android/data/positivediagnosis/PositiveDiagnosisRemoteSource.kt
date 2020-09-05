@@ -10,7 +10,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import okio.IOException
-import org.covidwatch.android.data.PositiveDiagnosis
+import org.covidwatch.android.data.model.PositiveDiagnosis
 import org.covidwatch.android.exposurenotification.ServerException
 import timber.log.Timber
 import java.io.File

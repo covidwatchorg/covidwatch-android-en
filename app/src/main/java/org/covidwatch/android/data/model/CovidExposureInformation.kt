@@ -1,4 +1,4 @@
-package org.covidwatch.android.data
+package org.covidwatch.android.data.model
 
 import androidx.annotation.StringRes
 import androidx.room.Entity

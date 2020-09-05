@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
-import org.covidwatch.android.data.Region
+import org.covidwatch.android.data.model.Region
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.extension.send
 import org.covidwatch.android.ui.event.Event

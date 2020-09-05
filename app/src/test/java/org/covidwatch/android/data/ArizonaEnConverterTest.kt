@@ -2,6 +2,7 @@ package org.covidwatch.android.data
 
 import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
+import org.covidwatch.android.data.model.CovidExposureInformation
 import org.covidwatch.android.data.pref.FakePreferenceStorage
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ExposureNotification

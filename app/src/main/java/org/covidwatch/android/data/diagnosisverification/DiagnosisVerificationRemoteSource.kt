@@ -7,6 +7,10 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.covidwatch.android.data.model.VerificationCertificateRequest
+import org.covidwatch.android.data.model.VerificationCertificateResponse
+import org.covidwatch.android.data.model.VerifyCodeRequest
+import org.covidwatch.android.data.model.VerifyCodeResponse
 import org.covidwatch.android.exposurenotification.ServerException
 
 class DiagnosisVerificationRemoteSource(

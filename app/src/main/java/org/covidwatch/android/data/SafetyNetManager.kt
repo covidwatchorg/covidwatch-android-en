@@ -3,6 +3,7 @@ package org.covidwatch.android.data
 import com.google.android.gms.safetynet.SafetyNetClient
 import com.google.common.base.Joiner
 import com.google.common.io.BaseEncoding
+import org.covidwatch.android.data.model.DiagnosisKey
 import org.covidwatch.android.extension.await
 import timber.log.Timber
 import java.nio.charset.StandardCharsets

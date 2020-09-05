@@ -44,6 +44,8 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
+
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             testCoverageEnabled false
             signingConfig signingConfigs.debug
@@ -77,6 +79,10 @@ android {
             resValue("string", "server_verification_endpoint", server_verification_endpoint)
             resValue("string", "server_upload_endpoint", server_upload_endpoint)
             resValue("string", "server_download_endpoint", server_download_endpoint)
+
+            firebaseCrashlytics {
+                mappingFileUploadEnabled true
+            }
         }
         production {
             dimension "releaseChannel"
@@ -98,6 +104,10 @@ android {
             resValue("string", "server_verification_endpoint", server_verification_endpoint)
             resValue("string", "server_upload_endpoint", server_upload_endpoint)
             resValue("string", "server_download_endpoint", server_download_endpoint)
+
+            firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }
         }
         arizona {
             dimension "client"
