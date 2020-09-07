@@ -1,7 +1,9 @@
 package org.covidwatch.android.data
 
-import org.covidwatch.android.data.NextStepType.*
+import org.covidwatch.android.data.model.NextStepType.*
 import org.covidwatch.android.data.RegionId.BERMUDA
+import org.covidwatch.android.data.model.NextStep
+import org.covidwatch.android.data.model.Region
 
 object RegionId {
     const val BERMUDA = 4
