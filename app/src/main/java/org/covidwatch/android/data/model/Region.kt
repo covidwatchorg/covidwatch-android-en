@@ -1,6 +1,7 @@
-package org.covidwatch.android.data
+package org.covidwatch.android.data.model
 
 import com.google.gson.annotations.SerializedName
+import org.covidwatch.android.data.ArizonaRiskModelConfiguration
 
 data class Region(
     val id: Int,
@@ -32,14 +33,15 @@ class ExposureConfiguration(
     val transmissionRiskLevelValues: IntArray = intArrayOf(1, 1, 1, 1, 1, 1, 1, 1)
 )
 
-fun ExposureConfiguration.asCovidExposureConfiguration() = CovidExposureConfiguration(
-    if (minimumRiskScore == 0) 1 else minimumRiskScore,
-    attenuationLevelValues,
-    daysSinceLastExposureLevelValues,
-    durationLevelValues,
-    transmissionRiskLevelValues,
-    attenuationDurationThresholds
-)
+fun ExposureConfiguration.asCovidExposureConfiguration() =
+    CovidExposureConfiguration(
+        if (minimumRiskScore == 0) 1 else minimumRiskScore,
+        attenuationLevelValues,
+        daysSinceLastExposureLevelValues,
+        durationLevelValues,
+        transmissionRiskLevelValues,
+        attenuationDurationThresholds
+    )
 
 data class NextStep(
     val type: NextStepType?,

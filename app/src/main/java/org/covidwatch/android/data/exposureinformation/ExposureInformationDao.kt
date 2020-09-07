@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import org.covidwatch.android.data.BaseDao
-import org.covidwatch.android.data.CovidExposureInformation
+import org.covidwatch.android.data.model.CovidExposureInformation
 
 @Dao
 interface ExposureInformationDao : BaseDao<CovidExposureInformation> {

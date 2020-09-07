@@ -1,6 +1,6 @@
 package org.covidwatch.android.data.exposureinformation
 
-import org.covidwatch.android.data.CovidExposureInformation
+import org.covidwatch.android.data.model.CovidExposureInformation
 
 class ExposureInformationLocalSource(private val dao: ExposureInformationDao) {
     suspend fun saveExposureInformation(exposureInformation: List<CovidExposureInformation>) {

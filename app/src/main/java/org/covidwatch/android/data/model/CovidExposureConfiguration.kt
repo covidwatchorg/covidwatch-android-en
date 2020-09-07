@@ -1,4 +1,4 @@
-package org.covidwatch.android.data
+package org.covidwatch.android.data.model
 
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 
@@ -16,19 +16,20 @@ class CovidExposureConfiguration(
     val transmissionRiskWeight: Int? = null
 )
 
-fun ExposureConfiguration.asCovidExposureConfiguration() = CovidExposureConfiguration(
-    minimumRiskScore,
-    attenuationScores,
-    daysSinceLastExposureScores,
-    durationScores,
-    transmissionRiskScores,
-    durationAtAttenuationThresholds,
+fun ExposureConfiguration.asCovidExposureConfiguration() =
+    CovidExposureConfiguration(
+        minimumRiskScore,
+        attenuationScores,
+        daysSinceLastExposureScores,
+        durationScores,
+        transmissionRiskScores,
+        durationAtAttenuationThresholds,
 
-    attenuationWeight,
-    daysSinceLastExposureWeight,
-    durationWeight,
-    transmissionRiskWeight
-)
+        attenuationWeight,
+        daysSinceLastExposureWeight,
+        durationWeight,
+        transmissionRiskWeight
+    )
 
 fun CovidExposureConfiguration.asExposureConfiguration(): ExposureConfiguration =
     ExposureConfiguration.ExposureConfigurationBuilder().let { builder ->

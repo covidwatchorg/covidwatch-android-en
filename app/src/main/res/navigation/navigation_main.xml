@@ -101,7 +101,7 @@
         <argument
             android:name="exposure_information"
             android:defaultValue="@null"
-            app:argType="org.covidwatch.android.data.CovidExposureInformation"
+            app:argType="org.covidwatch.android.data.model.CovidExposureInformation"
             app:nullable="true" />
     </fragment>
 

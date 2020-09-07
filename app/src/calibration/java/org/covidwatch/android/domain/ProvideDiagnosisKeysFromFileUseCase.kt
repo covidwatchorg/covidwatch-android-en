@@ -5,9 +5,9 @@ import android.net.Uri
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.common.io.BaseEncoding
 import org.covidwatch.android.attenuationDurationThresholds
-import org.covidwatch.android.data.asCovidExposureConfiguration
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysToken
 import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenRepository
+import org.covidwatch.android.data.model.asCovidExposureConfiguration
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.domain.ProvideDiagnosisKeysFromFileUseCase.Params
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager

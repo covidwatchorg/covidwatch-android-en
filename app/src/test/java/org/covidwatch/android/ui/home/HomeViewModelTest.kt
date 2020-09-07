@@ -6,7 +6,11 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import org.covidwatch.android.InstantExecutorExtension
-import org.covidwatch.android.data.*
+import org.covidwatch.android.data.UserFlowRepository
+import org.covidwatch.android.data.model.NextStep
+import org.covidwatch.android.data.model.NextStepType
+import org.covidwatch.android.data.model.RiskLevel
+import org.covidwatch.android.data.model.RiskMetrics
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.data.risklevel.RiskLevelRepository
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager

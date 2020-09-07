@@ -3,7 +3,7 @@ package org.covidwatch.android.ui.menu
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
-import org.covidwatch.android.data.RiskLevel
+import org.covidwatch.android.data.model.RiskLevel
 import org.covidwatch.android.data.risklevel.RiskLevelRepository
 import org.covidwatch.android.ui.BaseViewModel
 

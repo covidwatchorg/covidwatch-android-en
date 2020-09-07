@@ -2,8 +2,12 @@ package org.covidwatch.android.domain
 
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import com.google.common.io.BaseEncoding
-import org.covidwatch.android.data.*
+import org.covidwatch.android.data.DiagnosisVerificationManager
+import org.covidwatch.android.data.EnConverter
+import org.covidwatch.android.data.UriManager
 import org.covidwatch.android.data.countrycode.CountryCodeRepository
+import org.covidwatch.android.data.model.PositiveDiagnosis
+import org.covidwatch.android.data.model.PositiveDiagnosisReport
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.data.pref.gsonWithInstantAdapter
 import org.covidwatch.android.domain.UploadDiagnosisKeysUseCase.Params
@@ -116,14 +120,15 @@ class UploadDiagnosisKeysUseCase(
 
             diagnosisRepository.updatePositiveDiagnosisReport(verifiedDiagnosis)
 
-            val positiveDiagnosis = PositiveDiagnosis(
-                temporaryExposureKeys = diagnosisKeys,
-                regions = regions,
-                appPackageName = appPackageName,
-                verificationPayload = certificate,
-                hmacKey = encoding.encode(hmacKey),
-                padding = randomPadding()
-            )
+            val positiveDiagnosis =
+                PositiveDiagnosis(
+                    temporaryExposureKeys = diagnosisKeys,
+                    regions = regions,
+                    appPackageName = appPackageName,
+                    verificationPayload = certificate,
+                    hmacKey = encoding.encode(hmacKey),
+                    padding = randomPadding()
+                )
 
             Timber.d("Upload positive diagnosis: $positiveDiagnosis")
             uploadEndpoints.forEach { url ->

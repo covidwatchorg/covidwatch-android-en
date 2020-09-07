@@ -2,7 +2,7 @@ package org.covidwatch.android.data.converter
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
-import org.covidwatch.android.data.CovidExposureConfiguration
+import org.covidwatch.android.data.model.CovidExposureConfiguration
 
 class ExposureConfigurationConverter {
     private val gson = Gson()

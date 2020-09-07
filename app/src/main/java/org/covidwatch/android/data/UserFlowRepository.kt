@@ -1,5 +1,7 @@
 package org.covidwatch.android.data
 
+import org.covidwatch.android.data.model.FirstTimeUser
+import org.covidwatch.android.data.model.ReturnUser
 import org.covidwatch.android.data.pref.PreferenceStorage
 
 

@@ -4,9 +4,9 @@ import androidx.lifecycle.asFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
-import org.covidwatch.android.data.NextStep
-import org.covidwatch.android.data.RiskLevel
-import org.covidwatch.android.data.diagnosisverification.TestType
+import org.covidwatch.android.data.model.NextStep
+import org.covidwatch.android.data.model.RiskLevel
+import org.covidwatch.android.data.model.TestType
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.domain.AppCoroutineDispatchers

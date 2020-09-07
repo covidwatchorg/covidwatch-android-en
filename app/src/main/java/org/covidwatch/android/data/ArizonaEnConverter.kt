@@ -3,6 +3,7 @@ package org.covidwatch.android.data
 import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import org.covidwatch.android.data.EnConverter.Companion.DEFAULT_ROLLING_PERIOD
+import org.covidwatch.android.data.model.*
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ExposureNotification
 import org.covidwatch.android.extension.daysTo

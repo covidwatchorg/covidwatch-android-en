@@ -1,7 +1,8 @@
 package org.covidwatch.android.data.pref
 
 import androidx.lifecycle.LiveData
-import org.covidwatch.android.data.*
+import org.covidwatch.android.data.ArizonaRiskModelConfiguration
+import org.covidwatch.android.data.model.*
 import java.time.Instant
 
 @Suppress("UNUSED_PARAMETER", "unused")

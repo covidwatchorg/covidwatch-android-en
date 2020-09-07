@@ -3,7 +3,7 @@ package org.covidwatch.android.ui.reporting
 import android.view.View
 import com.xwray.groupie.viewbinding.BindableItem
 import org.covidwatch.android.R
-import org.covidwatch.android.data.PositiveDiagnosisReport
+import org.covidwatch.android.data.model.PositiveDiagnosisReport
 import org.covidwatch.android.databinding.ItemPositiveDiagnosisChildBinding
 import org.covidwatch.android.extension.fromHtml
 import org.covidwatch.android.ui.util.DateFormatter

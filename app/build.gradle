@@ -23,7 +23,6 @@ android {
 
     defaultConfig {
         applicationId "org.covidwatch.android"
-        // TODO: Check if we really need 23 because of Exposure Notification
         minSdkVersion 23
         targetSdkVersion 29
         versionCode androidGitVersion.code()
@@ -44,8 +43,9 @@ android {
 
     buildTypes {
         release {
-            //TODO: Use proguard
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
+
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             testCoverageEnabled false
             signingConfig signingConfigs.debug
@@ -80,6 +80,7 @@ android {
             resValue("string", "server_upload_endpoint", server_upload_endpoint)
             resValue("string", "server_download_endpoint", server_download_endpoint)
         }
+
         production {
             dimension "releaseChannel"
             buildConfigField "long", "EXPOSURE_CHECKS_PERIOD", "6"
@@ -101,10 +102,12 @@ android {
             resValue("string", "server_upload_endpoint", server_upload_endpoint)
             resValue("string", "server_download_endpoint", server_download_endpoint)
         }
+
         arizona {
             dimension "client"
             applicationId "gov.azdhs.covidwatch.android"
         }
+
         global {
             dimension "client"
             applicationId "org.covidwatch.main.android"
@@ -112,14 +115,27 @@ android {
     }
 
     applicationVariants.all { variant ->
-        if (variant.getName().startsWith("calibrationArizona")) {
+        def variantName = variant.getName()
+        // Upload mapping only with calibration release builds
+        if (variantName.startsWith("calibration") && variantName.endsWith("Release")) {
+            firebaseCrashlytics {
+                mappingFileUploadEnabled true
+            }
+        } else {
+            firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }
+        }
+
+        if (variantName.startsWith("calibrationArizona")) {
             buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/dev-covid-watch-arizona-regions/arizona-v4.json"'
-        } else if(variant.getName().startsWith("productionArizona")) {
+        } else if (variantName.startsWith("productionArizona")) {
             buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/covid-watch-arizona-regions/arizona-v4.json"'
         }
-        if (variant.getName().startsWith("calibrationGlobal")) {
+
+        if (variantName.startsWith("calibrationGlobal")) {
             buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/dev-covid-watch-main-regions/main-v4.json"'
-        } else if(variant.getName().startsWith("productionGlobal")) {
+        } else if (variantName.startsWith("productionGlobal")) {
             buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/dev-covid-watch-main-regions/main-v4.json"'
         }
     }
@@ -191,22 +207,20 @@ dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.10'
 
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-    implementation 'com.google.android.gms:play-services-tasks:17.1.0'
-    implementation 'com.google.android.gms:play-services-base:17.3.0'
-    implementation 'com.google.android.gms:play-services-basement:17.3.0'
+    implementation 'com.google.android.gms:play-services-tasks:17.2.0'
+    implementation 'com.google.android.gms:play-services-base:17.4.0'
+    implementation 'com.google.android.gms:play-services-basement:17.4.0'
     implementation 'com.google.android.gms:play-services-safetynet:17.0.0'
 
     calibrationImplementation 'com.google.protobuf:protobuf-java:3.12.2'
     calibrationImplementation 'com.jaredrummler:android-device-names:2.0.0'
-    calibrationImplementation 'com.google.firebase:firebase-crashlytics:17.1.1'
+    calibrationImplementation 'com.google.firebase:firebase-crashlytics:17.2.1'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     implementation "androidx.appcompat:appcompat:1.2.0"
     implementation "androidx.core:core-ktx:1.3.1"
-    implementation "androidx.constraintlayout:constraintlayout:2.0.0-rc1"
-    implementation "androidx.paging:paging-runtime-ktx:2.1.2"
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation "androidx.constraintlayout:constraintlayout:2.0.1"
     implementation "androidx.fragment:fragment-ktx:1.2.5"
     implementation "androidx.work:work-runtime-ktx:2.4.0"
 
@@ -216,7 +230,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-    def lifecycle_version = "2.3.0-alpha06"
+    def lifecycle_version = "2.3.0-alpha07"
     implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
@@ -233,8 +247,6 @@ dependencies {
 
     implementation "com.google.android.material:material:1.3.0-alpha02"
 
-    // TODO: Get rid of guava? Unless this is a dependency that fixes conflict between other
-    // dependencies that use guava
     implementation "com.google.guava:guava:29.0-android"
 
     def koin_version = "2.1.5"
@@ -243,8 +255,6 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.jakewharton.timber:timber:4.7.1'
-    implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:4.0.0'
-    implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:4.0.0'
 
     def groupie_version = "2.8.0"
     implementation "com.github.lisawray.groupie:groupie:$groupie_version"
@@ -266,23 +276,23 @@ dependencies {
     testImplementation "org.assertj:assertj-core:3.11.1"
 
     // AndroidX Testing Core library
-    androidTestImplementation "androidx.test:core:1.2.0"
+    androidTestImplementation "androidx.test:core:1.3.0"
 
     // AndroidJUnitRunner and JUnit Rules
-    androidTestImplementation "androidx.test:runner:1.2.0"
-    androidTestImplementation "androidx.test:rules:1.2.0"
+    androidTestImplementation "androidx.test:runner:1.3.0"
+    androidTestImplementation "androidx.test:rules:1.3.0"
 
     // Assertions
-    androidTestImplementation "androidx.test.ext:junit:1.1.1"
-    androidTestImplementation "androidx.test.ext:truth:1.2.0"
+    androidTestImplementation "androidx.test.ext:junit:1.1.2"
+    androidTestImplementation "androidx.test.ext:truth:1.3.0"
     androidTestImplementation "com.google.truth:truth:1.0.1"
 
     // Espresso dependencies
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
 
     // Fragment testing
     def fragment_testing_version = "1.2.5"
-    debugImplementation "androidx.fragment:fragment-testing:$fragment_testing_version"
+    testImplementation "androidx.fragment:fragment-testing:$fragment_testing_version"
 
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
     testImplementation "io.mockk:mockk:1.10.0"

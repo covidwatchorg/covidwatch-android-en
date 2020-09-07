@@ -1,4 +1,4 @@
-package org.covidwatch.android.data
+package org.covidwatch.android.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
@@ -46,12 +46,13 @@ fun DiagnosisKey.asTemporaryExposureKey(): TemporaryExposureKey =
         .setTransmissionRiskLevel(transmissionRisk)
         .build()
 
-fun TemporaryExposureKey.asDiagnosisKey() = DiagnosisKey(
-    keyData,
-    rollingStartIntervalNumber,
-    transmissionRiskLevel,
-    rollingPeriod
-)
+fun TemporaryExposureKey.asDiagnosisKey() =
+    DiagnosisKey(
+        keyData,
+        rollingStartIntervalNumber,
+        transmissionRiskLevel,
+        rollingPeriod
+    )
 
 @Suppress("ArrayInDataClass")
 data class PositiveDiagnosisVerification(

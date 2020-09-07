@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import org.covidwatch.android.data.BaseDao
-import org.covidwatch.android.data.PositiveDiagnosisReport
+import org.covidwatch.android.data.model.PositiveDiagnosisReport
 
 @Dao
 interface PositiveDiagnosisReportDao : BaseDao<PositiveDiagnosisReport> {

@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import org.covidwatch.android.data.CovidExposureInformation
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
+import org.covidwatch.android.data.model.CovidExposureInformation
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager.Companion.PERMISSION_START_REQUEST_CODE

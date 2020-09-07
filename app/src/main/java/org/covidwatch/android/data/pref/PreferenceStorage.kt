@@ -7,7 +7,8 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
-import org.covidwatch.android.data.*
+import org.covidwatch.android.data.DefaultRegions
+import org.covidwatch.android.data.model.*
 import java.time.Instant
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty

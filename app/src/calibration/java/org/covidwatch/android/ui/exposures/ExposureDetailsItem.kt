@@ -3,7 +3,7 @@ package org.covidwatch.android.ui.exposures
 import android.view.View
 import com.xwray.groupie.viewbinding.BindableItem
 import org.covidwatch.android.R
-import org.covidwatch.android.data.CovidExposureInformation
+import org.covidwatch.android.data.model.CovidExposureInformation
 import org.covidwatch.android.databinding.ItemExposureChildBinding
 import org.covidwatch.android.ui.Intents.openBrowser
 

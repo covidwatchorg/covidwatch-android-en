@@ -5,11 +5,9 @@
 
     <data>
 
-        <import type="org.covidwatch.android.ui.ItemBindings" />
-
         <variable
             name="exposure"
-            type="org.covidwatch.android.data.CovidExposureInformation" />
+            type="org.covidwatch.android.data.model.CovidExposureInformation" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

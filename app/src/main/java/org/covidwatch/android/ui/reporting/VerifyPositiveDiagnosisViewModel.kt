@@ -4,8 +4,8 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.covidwatch.android.data.DiagnosisVerificationManager
-import org.covidwatch.android.data.PositiveDiagnosisReport
-import org.covidwatch.android.data.PositiveDiagnosisVerification
+import org.covidwatch.android.data.model.PositiveDiagnosisReport
+import org.covidwatch.android.data.model.PositiveDiagnosisVerification
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisRepository
 import org.covidwatch.android.domain.RemoveUnverifiedReportsUseCase
 import org.covidwatch.android.domain.StartUploadDiagnosisKeysWorkUseCase
@@ -31,7 +31,8 @@ class VerifyPositiveDiagnosisViewModel(
     private val diagnosisVerification =
         state.getLiveData<PositiveDiagnosisVerification>(STATE_DIAGNOSIS_VERIFICATION).also {
             if (it.value == null) {
-                it.value = PositiveDiagnosisVerification()
+                it.value =
+                    PositiveDiagnosisVerification()
             }
         }
 
@@ -192,9 +193,10 @@ class VerifyPositiveDiagnosisViewModel(
                         )
 
                         // Save a new instance of PositiveDiagnosisReport with just verified code in order to reuse token
-                        positiveDiagnosisReport = PositiveDiagnosisReport(
-                            verificationData = diagnosisVerification.value
-                        )
+                        positiveDiagnosisReport =
+                            PositiveDiagnosisReport(
+                                verificationData = diagnosisVerification.value
+                            )
                         positiveDiagnosisRepository.addPositiveDiagnosisReport(
                             positiveDiagnosisReport
                         )

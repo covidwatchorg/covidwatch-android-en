@@ -2,7 +2,7 @@ package org.covidwatch.android.ui
 
 import android.content.Context
 import org.covidwatch.android.R
-import org.covidwatch.android.data.RiskLevel
+import org.covidwatch.android.data.model.RiskLevel
 
 fun RiskLevel.name(context: Context) = when (this) {
     RiskLevel.VERIFIED_POSITIVE -> context.getString(R.string.verified_positive_risk_name)

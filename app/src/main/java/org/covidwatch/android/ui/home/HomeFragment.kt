@@ -13,9 +13,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.delay
 import org.covidwatch.android.R
-import org.covidwatch.android.data.NextStep
-import org.covidwatch.android.data.NextStepType
-import org.covidwatch.android.data.RiskLevel
+import org.covidwatch.android.data.model.NextStep
+import org.covidwatch.android.data.model.NextStepType
+import org.covidwatch.android.data.model.RiskLevel
 import org.covidwatch.android.databinding.FragmentHomeBinding
 import org.covidwatch.android.databinding.ItemNextStepBinding
 import org.covidwatch.android.extension.observe

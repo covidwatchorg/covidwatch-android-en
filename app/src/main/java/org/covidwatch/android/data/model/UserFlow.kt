@@ -1,4 +1,4 @@
-package org.covidwatch.android.data
+package org.covidwatch.android.data.model
 
 sealed class UserFlow
 

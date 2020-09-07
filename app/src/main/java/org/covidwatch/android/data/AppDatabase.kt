@@ -10,6 +10,9 @@ import org.covidwatch.android.data.diagnosiskeystoken.DiagnosisKeysTokenDao
 import org.covidwatch.android.data.exposureinformation.ExposureInformationDao
 import org.covidwatch.android.data.keyfile.KeyFile
 import org.covidwatch.android.data.keyfile.KeyFileDao
+import org.covidwatch.android.data.model.CountryCode
+import org.covidwatch.android.data.model.CovidExposureInformation
+import org.covidwatch.android.data.model.PositiveDiagnosisReport
 import org.covidwatch.android.data.positivediagnosis.PositiveDiagnosisReportDao
 
 @Database(

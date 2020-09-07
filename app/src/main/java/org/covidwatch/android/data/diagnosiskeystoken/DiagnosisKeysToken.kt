@@ -3,8 +3,8 @@ package org.covidwatch.android.data.diagnosiskeystoken
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import org.covidwatch.android.data.CovidExposureConfiguration
 import org.covidwatch.android.data.converter.ExposureConfigurationConverter
+import org.covidwatch.android.data.model.CovidExposureConfiguration
 
 @Entity(tableName = "diagnosis_keys_token")
 @TypeConverters(ExposureConfigurationConverter::class)

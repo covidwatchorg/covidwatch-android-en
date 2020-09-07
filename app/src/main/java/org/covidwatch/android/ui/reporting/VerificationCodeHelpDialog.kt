@@ -8,7 +8,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.covidwatch.android.R
-import org.covidwatch.android.data.NextStepType
+import org.covidwatch.android.data.model.NextStepType
 import org.covidwatch.android.data.pref.PreferenceStorage
 import org.covidwatch.android.databinding.DialogTestVerificationCodeInfoBinding
 import org.covidwatch.android.databinding.ItemVerificationCodeStepBinding

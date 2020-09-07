@@ -1,3 +1,0 @@
-package org.covidwatch.android.data.diagnosisverification
-
-class DiagnosisVerificationLocalSource
