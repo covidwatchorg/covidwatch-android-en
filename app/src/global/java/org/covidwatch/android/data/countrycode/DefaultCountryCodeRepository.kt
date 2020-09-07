@@ -2,7 +2,7 @@ package org.covidwatch.android.data.countrycode
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.withContext
-import org.covidwatch.android.data.CountryCode
+import org.covidwatch.android.data.model.CountryCode
 import org.covidwatch.android.domain.AppCoroutineDispatchers
 import org.covidwatch.android.extension.io
 
