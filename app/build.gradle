@@ -79,11 +79,8 @@ android {
             resValue("string", "server_verification_endpoint", server_verification_endpoint)
             resValue("string", "server_upload_endpoint", server_upload_endpoint)
             resValue("string", "server_download_endpoint", server_download_endpoint)
-
-            firebaseCrashlytics {
-                mappingFileUploadEnabled true
-            }
         }
+
         production {
             dimension "releaseChannel"
             buildConfigField "long", "EXPOSURE_CHECKS_PERIOD", "6"
@@ -104,15 +101,13 @@ android {
             resValue("string", "server_verification_endpoint", server_verification_endpoint)
             resValue("string", "server_upload_endpoint", server_upload_endpoint)
             resValue("string", "server_download_endpoint", server_download_endpoint)
-
-            firebaseCrashlytics {
-                mappingFileUploadEnabled false
-            }
         }
+
         arizona {
             dimension "client"
             applicationId "gov.azdhs.covidwatch.android"
         }
+
         global {
             dimension "client"
             applicationId "org.covidwatch.main.android"
@@ -120,14 +115,27 @@ android {
     }
 
     applicationVariants.all { variant ->
-        if (variant.getName().startsWith("calibrationArizona")) {
+        def variantName = variant.getName()
+        // Upload mapping only with calibration release builds
+        if (variantName.startsWith("calibration") && variantName.endsWith("Release")) {
+            firebaseCrashlytics {
+                mappingFileUploadEnabled true
+            }
+        } else {
+            firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }
+        }
+
+        if (variantName.startsWith("calibrationArizona")) {
             buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/dev-covid-watch-arizona-regions/arizona-v4.json"'
-        } else if(variant.getName().startsWith("productionArizona")) {
+        } else if (variantName.startsWith("productionArizona")) {
             buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/covid-watch-arizona-regions/arizona-v4.json"'
         }
-        if (variant.getName().startsWith("calibrationGlobal")) {
+
+        if (variantName.startsWith("calibrationGlobal")) {
             buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/dev-covid-watch-main-regions/main-v4.json"'
-        } else if(variant.getName().startsWith("productionGlobal")) {
+        } else if (variantName.startsWith("productionGlobal")) {
             buildConfigField "String", "REGIONS_JSON", '"https://storage.googleapis.com/dev-covid-watch-main-regions/main-v4.json"'
         }
     }
