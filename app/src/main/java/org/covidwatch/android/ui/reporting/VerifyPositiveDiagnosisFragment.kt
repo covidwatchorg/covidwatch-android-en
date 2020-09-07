@@ -126,7 +126,7 @@ class VerifyPositiveDiagnosisFragment :
         // Day in the past or 14 days back
         val fromWhen = dayInPast ?: twoWeeksAgo
 
-        val untilNow = ntpTime.nowAsInstant().toEpochMilli()
+        val untilNow = ntpTime.currentTimeMillis()
 
         constraints
             .setValidator(BaseDateValidator { it in fromWhen..untilNow })

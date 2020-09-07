@@ -11,10 +11,9 @@ import java.time.ZoneId
 class NtpTime (context : Context) {
     private val kronosClock : KronosClock = AndroidClockFactory.createKronosClock(context)
 
-    private fun currentTimeMillis() : Long = kronosClock.getCurrentTimeMs()
+    fun currentTimeMillis() : Long = kronosClock.getCurrentTimeMs()
 
     fun syncInBackground() = kronosClock.syncInBackground()
 
-    fun nowAsInstant() : Instant =
-        Instant.ofEpochMilli(currentTimeMillis())
+    fun nowAsInstant() : Instant = Instant.ofEpochMilli(currentTimeMillis())
 }

@@ -1,9 +1,8 @@
 package org.covidwatch.android.extension
 
 import java.time.Instant
+import java.time.temporal.ChronoUnit
 
-// 1d * (24h/d) * (60m/h) * (60s/m)
-fun Instant.plusDays(daysToAdd : Long) : Instant =
-    plusSeconds(daysToAdd * 24 * 60 * 60)
+fun Instant.plusDays(daysToAdd : Long) : Instant = plus(daysToAdd, ChronoUnit.DAYS)
 
-fun Instant.minusDays(daysToSubtract : Long) : Instant = plusDays(-daysToSubtract)
+fun Instant.minusDays(daysToSubtract : Long) : Instant = minus(daysToSubtract, ChronoUnit.DAYS)
