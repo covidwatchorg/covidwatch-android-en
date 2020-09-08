@@ -28,16 +28,19 @@ class ExposureNotificationManager(
         return enabled.isLeft || enabled.right == false
     }
 
+    @Deprecated("Deprecated ExposureInformation logic")
     suspend fun provideDiagnosisKeys(
         keys: List<File>,
         token: String,
         exposureConfiguration: ExposureConfiguration
-    ) =
-        exposureNotification.provideDiagnosisKeys(
-            keys,
-            exposureConfiguration,
-            token
-        ).awaitNoResult()
+    ) = exposureNotification.provideDiagnosisKeys(
+        keys,
+        exposureConfiguration,
+        token
+    ).awaitNoResult()
+
+    suspend fun provideDiagnosisKeys(keys: List<File>) =
+        exposureNotification.provideDiagnosisKeys(keys).awaitNoResult()
 
     suspend fun getExposureSummary(token: String) =
         exposureNotification.getExposureSummary(token).await()

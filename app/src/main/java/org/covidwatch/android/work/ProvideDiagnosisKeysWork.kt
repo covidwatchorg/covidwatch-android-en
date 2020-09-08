@@ -37,22 +37,12 @@ class ProvideDiagnosisKeysWork(
 
     private val enManager by inject(ExposureNotificationManager::class.java)
     private val diagnosisRepository by inject(PositiveDiagnosisRepository::class.java)
-    private val diagnosisKeysTokenRepository by inject(DiagnosisKeysTokenRepository::class.java)
     private val updateRegionsUseCase by inject(UpdateRegionsUseCase::class.java)
     private val notifications by inject(Notifications::class.java)
     private val preferences by inject(PreferenceStorage::class.java)
     private val keyFileRepository by inject(KeyFileRepository::class.java)
 
-    private val base64 = BaseEncoding.base64()
-    private val randomTokenByteLength = 32
     private val retries = 2
-    private val secureRandom: SecureRandom = SecureRandom()
-
-    private fun randomToken(): String {
-        val bytes = ByteArray(randomTokenByteLength)
-        secureRandom.nextBytes(bytes)
-        return base64.encode(bytes)
-    }
 
     override suspend fun doWork(): Result {
         setForeground(
@@ -73,14 +63,11 @@ class ProvideDiagnosisKeysWork(
                 // Update regions data before we proceed because we need the latest exposure configuration
 
                 // If it fails we use default values
+                // TODO: 08/09/2020 Do we need to get any data from JSON since we don't use ExposureConfiguration?
                 updateRegionsUseCase()
 
                 val diagnosisKeys = diagnosisRepository.diagnosisKeys()
                 Timber.d("Adding ${diagnosisKeys.size} batches of diagnoses to EN framework")
-
-                val token = randomToken()
-                val covidExposureConfiguration = preferences.exposureConfiguration
-                val exposureConfiguration = covidExposureConfiguration.asExposureConfiguration()
 
                 preferences.lastCheckedForExposures = Instant.now()
 
@@ -90,9 +77,9 @@ class ProvideDiagnosisKeysWork(
                 diagnosisKeys.filter { it.keys.isNotEmpty() }.forEach { fileBatch ->
                     val keys = fileBatch.keys
 
-                    enManager.provideDiagnosisKeys(keys, token, exposureConfiguration).apply {
+                    enManager.provideDiagnosisKeys(keys).apply {
                         success {
-                            Timber.d("Added keys to EN with token: $token")
+                            Timber.d("Added keys to EN")
                             val dir = keys[0].parentFile
                             keys.forEachIndexed { i, file ->
                                 keyFileRepository.add(
@@ -117,10 +104,6 @@ class ProvideDiagnosisKeysWork(
                         }
                     }
                 }
-
-                diagnosisKeysTokenRepository.insert(
-                    DiagnosisKeysToken(token, covidExposureConfiguration)
-                )
 
                 Result.success()
             } catch (e: Exception) {
