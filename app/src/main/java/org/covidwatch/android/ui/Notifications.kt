@@ -47,6 +47,39 @@ class Notifications(private val context: Context) {
         notificationManager.notify(EXPOSURE_NOTIFICATION_ID, builder.build())
     }
 
+    fun postExposureNotificationsDisabled(enabled: Boolean) {
+        if (enabled) {
+            notificationManager.cancel(EXPOSURE_NOTIFICATION_ID)
+        } else {
+            createExposureNotificationChannel()
+
+            val intent = Intent(context, MainActivity::class.java)
+            intent.putExtra(POTENTIAL_EXPOSURE_NOTIFICATION, true)
+
+            val pendingIntent = PendingIntent.getActivity(
+                context,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+
+            val builder = NotificationCompat.Builder(context, EXPOSURE_NOTIFICATION_CHANNEL_ID)
+                .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle("Exposure Notifications Inactive")
+                .setContentText("Blah")
+                .setStyle(
+                    NotificationCompat.BigTextStyle()
+                        .bigText(context.getString(R.string.notification_message))
+                )
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+
+            notificationManager.notify(EXPOSURE_NOTIFICATION_ID, builder.build())
+        }
+    }
+
     private fun createExposureNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
