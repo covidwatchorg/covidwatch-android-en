@@ -45,30 +45,33 @@ sealed class Failure(val code: Int, val message: String? = null) {
          * */
         operator fun invoke(exception: Exception?) = when (exception) {
             is ApiException -> {
-                if (exception.status.hasResolution()) {
-                    EnStatus.NeedsResolution(exception)
-                } else {
-                    when (exception.status.connectionResult?.errorCode) {
-                        FAILED -> EnStatus.Failed
-                        FAILED_ALREADY_STARTED -> EnStatus.AlreadyStarted
-                        FAILED_NOT_SUPPORTED -> EnStatus.NotSupported
-                        FAILED_REJECTED_OPT_IN -> EnStatus.RejectedOptIn
-                        FAILED_SERVICE_DISABLED -> EnStatus.ServiceDisabled
-                        FAILED_BLUETOOTH_DISABLED -> EnStatus.BluetoothDisabled
-                        FAILED_TEMPORARILY_DISABLED -> EnStatus.TemporarilyDisabled
-                        FAILED_DISK_IO -> EnStatus.FailedDiskIO
-                        FAILED_UNAUTHORIZED -> EnStatus.Unauthorized
-                        FAILED_RATE_LIMITED -> EnStatus.RateLimited
-                        // This perhaps is redundant here and should be checked outside of the
-                        // ConnectionResult error code
-                        NETWORK_ERROR -> NetworkError
-                        REMOTE_EXCEPTION -> ServerError(exception.status.statusMessage)
-                        else -> EnStatus.Failed
-                    }
+                val connectionError = exception.status.connectionResult?.errorCode
+                when {
+                    exception.status.hasResolution() -> EnStatus.NeedsResolution(exception)
+                    connectionError != null -> status(connectionError)
+                    else -> status(exception.statusCode)
                 }
             }
             is NoConnectionException -> NetworkError
             is ServerException -> ServerError(exception.error)
+            else -> EnStatus.Failed
+        }
+
+        private fun status(code: Int) = when (code) {
+            FAILED -> EnStatus.Failed
+            FAILED_ALREADY_STARTED -> EnStatus.AlreadyStarted
+            FAILED_NOT_SUPPORTED -> EnStatus.NotSupported
+            FAILED_REJECTED_OPT_IN -> EnStatus.RejectedOptIn
+            FAILED_SERVICE_DISABLED -> EnStatus.ServiceDisabled
+            FAILED_BLUETOOTH_DISABLED -> EnStatus.BluetoothDisabled
+            FAILED_TEMPORARILY_DISABLED -> EnStatus.TemporarilyDisabled
+            FAILED_DISK_IO -> EnStatus.FailedDiskIO
+            FAILED_UNAUTHORIZED -> EnStatus.Unauthorized
+            FAILED_RATE_LIMITED -> EnStatus.RateLimited
+            // This perhaps is redundant here and should be checked outside of the
+            // ConnectionResult error code
+            NETWORK_ERROR -> NetworkError
+            REMOTE_EXCEPTION -> ServerError()
             else -> EnStatus.Failed
         }
 
