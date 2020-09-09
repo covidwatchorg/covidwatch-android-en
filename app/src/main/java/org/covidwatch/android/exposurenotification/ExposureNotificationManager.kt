@@ -20,6 +20,8 @@ class ExposureNotificationManager(
     suspend fun getExposureInformation(token: String) =
         exposureNotification.getExposureInformation(token).awaitWithStatus()
 
+    suspend fun exposureWindows() = exposureNotification.exposureWindows.awaitWithStatus()
+
     suspend fun stop() = exposureNotification.stop().awaitNoResult()
 
     suspend fun isEnabled() = exposureNotification.isEnabled.awaitWithStatus()
