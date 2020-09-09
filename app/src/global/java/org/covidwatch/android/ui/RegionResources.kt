@@ -24,7 +24,7 @@ val Region.logo
 val Region.logoDescription
     @StringRes
     get() = when (id) {
-        BERMUDA -> R.string.az_logo_content_description
+        BERMUDA -> R.string.bermuda_logo_content_description
         else -> R.string.generic_logo_content_description
     }
 

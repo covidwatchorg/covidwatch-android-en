@@ -7,6 +7,7 @@ import org.covidwatch.android.R
 import org.covidwatch.android.data.Region
 import org.covidwatch.android.data.RegionId.ARIZONA_STATE
 import org.covidwatch.android.data.RegionId.ASU
+import org.covidwatch.android.data.RegionId.BERMUDA
 import org.covidwatch.android.data.RegionId.NAU
 import org.covidwatch.android.data.RegionId.UOA
 
@@ -27,6 +28,7 @@ val Region.logo
         UOA -> R.drawable.uoa_logo
         ASU -> R.drawable.asu_logo
         NAU -> R.drawable.nau_logo
+        BERMUDA -> R.drawable.bermuda_logo
         else -> R.drawable.cw_logo
     }
 
@@ -37,6 +39,7 @@ val Region.logoDescription
         UOA -> R.string.uoa_logo_content_description
         ASU -> R.string.asu_logo_content_description
         NAU -> R.string.nau_logo_content_description
+        BERMUDA -> R.string.az_logo_content_description
         else -> R.string.generic_logo_content_description
     }
 
