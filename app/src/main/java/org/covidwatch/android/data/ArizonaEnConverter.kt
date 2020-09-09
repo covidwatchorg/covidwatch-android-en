@@ -62,16 +62,21 @@ class ArizonaEnConverter(private val prefs: PreferenceStorage) : EnConverter {
         return infectedRisk * 100
     }
 
+    override fun riskMetricsFromExposureWindows(
+        exposures: List<CovidExposureWindow>,
+        computeDate: Instant
+    ) = RiskMetrics(1.0, null, null)
+
     override fun mostRecentSignificantExposureDate(exposures: List<CovidExposureInformation>) =
         getDateExposureRisks(exposures)
             .filter { it.value > config.significantRiskLevelValueThreshold }
-            .maxBy { it.key }
+            .maxByOrNull { it.key }
             ?.key
 
     override fun leastRecentSignificantExposureDate(exposures: List<CovidExposureInformation>) =
         getDateExposureRisks(exposures)
             .filter { it.value > config.significantRiskLevelValueThreshold }
-            .minBy { it.key }
+            .minByOrNull { it.key }
             ?.key
 
     private fun getDateExposureRisks(exposures: List<CovidExposureInformation>): Map<Instant, Double> {

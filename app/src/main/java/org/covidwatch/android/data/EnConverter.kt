@@ -2,10 +2,7 @@ package org.covidwatch.android.data
 
 import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
-import org.covidwatch.android.data.model.CovidExposureInformation
-import org.covidwatch.android.data.model.DiagnosisKey
-import org.covidwatch.android.data.model.RiskMetrics
-import org.covidwatch.android.data.model.asDiagnosisKey
+import org.covidwatch.android.data.model.*
 import java.time.Instant
 
 // TODO: 20.07.2020 Rename and rework into ExposureRiskModeling interface similarly to iOS
@@ -22,6 +19,10 @@ interface EnConverter {
     fun mostRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Instant?
     fun leastRecentSignificantExposureDate(exposures: List<CovidExposureInformation>): Instant?
     fun riskMetrics(exposures: List<CovidExposureInformation>, computeDate: Instant): RiskMetrics
+    fun riskMetricsFromExposureWindows(
+        exposures: List<CovidExposureWindow>,
+        computeDate: Instant
+    ): RiskMetrics
 
     companion object {
         const val DEFAULT_ROLLING_PERIOD = 144
@@ -71,6 +72,13 @@ class DefaultEnConverter : EnConverter {
 
     override fun riskMetrics(
         exposures: List<CovidExposureInformation>,
+        computeDate: Instant
+    ): RiskMetrics {
+        TODO("not implemented")
+    }
+
+    override fun riskMetricsFromExposureWindows(
+        exposures: List<CovidExposureWindow>,
         computeDate: Instant
     ): RiskMetrics {
         TODO("not implemented")
