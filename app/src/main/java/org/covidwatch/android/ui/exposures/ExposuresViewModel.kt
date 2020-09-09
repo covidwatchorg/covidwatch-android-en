@@ -4,18 +4,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.covidwatch.android.data.exposureinformation.ExposureInformationRepository
 import org.covidwatch.android.data.model.CovidExposureInformation
 import org.covidwatch.android.data.pref.PreferenceStorage
+import org.covidwatch.android.domain.SetDiagnosisKeysDataMappingUseCase
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager.Companion.PERMISSION_START_REQUEST_CODE
+import org.covidwatch.android.extension.launchUseCase
 import org.covidwatch.android.ui.BaseViewModel
 import org.covidwatch.android.ui.event.Event
 
 class ExposuresViewModel(
     private val enManager: ExposureNotificationManager,
     private val preferenceStorage: PreferenceStorage,
+    private val setDiagnosisKeysDataMappingUseCase: SetDiagnosisKeysDataMappingUseCase,
     exposureInformationRepository: ExposureInformationRepository
 ) : BaseViewModel() {
 
@@ -52,6 +56,7 @@ class ExposuresViewModel(
                     enManager.start().apply {
                         success {
                             _enEnabled.value = true
+                            GlobalScope.launchUseCase(setDiagnosisKeysDataMappingUseCase)
                         }
                     }
                 }

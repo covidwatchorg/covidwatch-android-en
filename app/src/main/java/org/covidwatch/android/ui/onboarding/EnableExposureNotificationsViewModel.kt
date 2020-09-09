@@ -3,16 +3,20 @@ package org.covidwatch.android.ui.onboarding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.covidwatch.android.data.UserFlowRepository
 import org.covidwatch.android.data.model.FirstTimeUser
+import org.covidwatch.android.domain.SetDiagnosisKeysDataMappingUseCase
 import org.covidwatch.android.exposurenotification.ExposureNotificationManager
+import org.covidwatch.android.extension.launchUseCase
 import org.covidwatch.android.extension.send
 import org.covidwatch.android.ui.BaseViewModel
 import org.covidwatch.android.ui.event.Event
 
 class EnableExposureNotificationsViewModel(
     private val enManager: ExposureNotificationManager,
+    private val setDiagnosisKeysDataMappingUseCase: SetDiagnosisKeysDataMappingUseCase,
     private val userFlowRepository: UserFlowRepository
 ) : BaseViewModel() {
 
@@ -26,7 +30,10 @@ class EnableExposureNotificationsViewModel(
         viewModelScope.launch {
             withPermission(ExposureNotificationManager.PERMISSION_START_REQUEST_CODE) {
                 enManager.start().apply {
-                    success { handleFirstOrReturnUser() }
+                    success {
+                        GlobalScope.launchUseCase(setDiagnosisKeysDataMappingUseCase)
+                        handleFirstOrReturnUser()
+                    }
                 }
             }
         }

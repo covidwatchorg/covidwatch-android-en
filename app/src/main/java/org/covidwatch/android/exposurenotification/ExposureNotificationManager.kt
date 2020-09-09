@@ -1,5 +1,6 @@
 package org.covidwatch.android.exposurenotification
 
+import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import org.covidwatch.android.extension.await
@@ -44,6 +45,9 @@ class ExposureNotificationManager(
 
     suspend fun getExposureSummary(token: String) =
         exposureNotification.getExposureSummary(token).await()
+
+    suspend fun diagnosisKeysDataMapping(mapping: DiagnosisKeysDataMapping) =
+        exposureNotification.setDiagnosisKeysDataMapping(mapping).awaitWithStatus()
 
     companion object {
         const val PERMISSION_START_REQUEST_CODE = 100

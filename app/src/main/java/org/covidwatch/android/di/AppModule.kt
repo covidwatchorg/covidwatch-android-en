@@ -250,6 +250,13 @@ val appModule = module {
         )
     }
 
+    factory {
+        SetDiagnosisKeysDataMappingUseCase(
+            workManager = get(),
+            dispatchers = get()
+        )
+    }
+
     single {
         UserFlowRepository(
             prefs = get()
@@ -280,6 +287,7 @@ val appModule = module {
         ExposuresViewModel(
             enManager = get(),
             preferenceStorage = get(),
+            setDiagnosisKeysDataMappingUseCase = get(),
             exposureInformationRepository = get()
         )
     }
@@ -334,7 +342,11 @@ val appModule = module {
     // Onboarding start
 
     viewModel {
-        EnableExposureNotificationsViewModel(enManager = get(), userFlowRepository = get())
+        EnableExposureNotificationsViewModel(
+            enManager = get(),
+            setDiagnosisKeysDataMappingUseCase = get(),
+            userFlowRepository = get()
+        )
     }
 
     // Onboarding end
