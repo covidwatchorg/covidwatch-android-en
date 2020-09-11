@@ -16,8 +16,6 @@ open class BaseMainActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        // Prevent external apps to take screenshots and recording video of our app
-        window.setFlags(FLAG_SECURE, FLAG_SECURE)
 
         handleIntent(intent)
     }
