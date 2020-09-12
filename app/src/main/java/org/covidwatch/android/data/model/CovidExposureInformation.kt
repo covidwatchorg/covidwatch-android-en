@@ -11,6 +11,7 @@ import org.covidwatch.android.data.converter.AttenuationDurationsConverter
 import org.covidwatch.android.data.converter.ExposureConfigurationConverter
 import java.io.Serializable
 import java.time.Instant
+import java.time.ZoneId
 
 @Entity(tableName = "exposure_information")
 @TypeConverters(value = [AttenuationDurationsConverter::class, ExposureConfigurationConverter::class])
@@ -56,4 +57,8 @@ data class CovidExposureInformation(
 
     @Ignore
     val highRisk = riskScoreLevel == RiskLevel.HIGH
+
+    // date converted to to local time per the device's set time zone, for display purposes only
+    val localDate: Instant
+        get() = date.atZone(ZoneId.systemDefault()).toInstant()
 }
