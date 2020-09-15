@@ -19,7 +19,7 @@ androidGitVersion {
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "29.0.3"
+    buildToolsVersion "30.0.0"
 
     defaultConfig {
         applicationId "org.covidwatch.android"
