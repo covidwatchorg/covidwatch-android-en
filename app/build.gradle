@@ -260,6 +260,10 @@ dependencies {
     implementation "com.github.lisawray.groupie:groupie:$groupie_version"
     implementation "com.github.lisawray.groupie:groupie-viewbinding:$groupie_version"
 
+    // Kronos ntp clock
+    def kronos_latest_version = "0.0.1-alpha09"
+    implementation "com.lyft.kronos:kronos-android:$kronos_latest_version"
+
     //// TEST RELATED DEPENDENCIES
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit5:$kotlin_version"
 

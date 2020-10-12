@@ -181,6 +181,10 @@ val appModule = module {
         )
     }
 
+    single {
+        NtpTime(androidApplication())
+    }
+
     factory {
         ProvideDiagnosisKeysUseCase(
             workManager = get(),
